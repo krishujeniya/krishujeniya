@@ -3,7 +3,8 @@
  <h2 align="center">
         I'm 
         <a href="https://bit.ly/KrishUjeniya" >
-            Krish Ujeniya
+            <font face="'Times New Roman', Times, serif">Krish Ujeniya</font>
+    
         </a>
     </h2>
 <h3 align="left">🚀 Technical Experience and Interests:</h3>
