@@ -10,7 +10,7 @@
     <font face="'Times New Roman', Times, serif">This text uses the Times New Roman font family.</font>
     <font face="'Courier New', Courier, monospace">This text uses the Courier New font family.</font>
 
-    </h2>
+   </h2>
 <h3 align="left">🚀 Technical Experience and Interests:</h3>
 
 - Computer Vision
