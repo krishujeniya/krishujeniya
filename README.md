@@ -20,7 +20,7 @@
 #### You can also find me on- 
 
 [<img align="left" alt="c17hawke | LinkedIn" width="30px" src="https://img.icons8.com/color/48/000000/linkedin.png" />][linkedin]
-[<img align="left" alt="c17hawke | Twitter" width="30px" src="https://img.icons8.com/?size=100&id=phOKFKYpe00C&format=png&color=000000" />][twitter]
+[<img align="left" alt="c17hawke | Twitter" width="30px" src="https://img.icons8.com/?size=100&id=6Fsj3rv2DCmG&format=png&color=000000" />][twitter]
 [<img align="left" alt="c17hawke | Instagram" width="30px" src="https://img.icons8.com/fluent/48/000000/instagram-new.png" />][Instagram]
 [<img align="left" alt="c17hawke | YouTube" width="30px" src="https://www.vectorlogo.zone/logos/youtube/youtube-tile.svg" />][YouTube]
 
