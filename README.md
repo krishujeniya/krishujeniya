@@ -20,23 +20,16 @@
 #### You can also find me on- 
 
 [<img align="left" alt="c17hawke | LinkedIn" width="30px" src="https://img.icons8.com/color/48/000000/linkedin.png" />][linkedin]
-[<img align="left" alt="c17hawke | Twitter" width="30px" src="https://img.icons8.com/fluent/48/000000/twitter.png" />][twitter]
+[<img align="left" alt="c17hawke | Twitter" width="30px" src="https://icons8.com/icon/phOKFKYpe00C/twitterx" />][twitter]
 [<img align="left" alt="c17hawke | Instagram" width="30px" src="https://img.icons8.com/fluent/48/000000/instagram-new.png" />][Instagram]
 [<img align="left" alt="c17hawke | YouTube" width="30px" src="https://www.vectorlogo.zone/logos/youtube/youtube-tile.svg" />][YouTube]
-[<img align="left" alt="c17hawke | Pexels" width="80px" src="http://images.pexels.com/lib/api/pexels.png" />][Pexels]
 
 <br>
 
 <hr>
 
-[linkedin]: https://www.linkedin.com/in/c17hawke
-[twitter]: https://www.twitter.com/c17hawke
-[Instagram]: https://www.instagram.com/c17hawke
-[Pexels]: https://www.pexels.com/@c17hawke
-[YouTube]: https://www.youtube.com/c17hawke
+[linkedin]: https://www.linkedin.com/in/krishujeniya
+[twitter]: https://www.twitter.com/krishujeniya
+[Instagram]: https://www.instagram.com/krishujeniya
+[YouTube]: https://www.youtube.com/@AIDRAGO.
 
-
-
-<p align="left"> <img src="https://komarev.com/ghpvc/?username=c17hawke&label=Profile%20views&color=0e75b6&style=flat" alt="c17hawke" /> </p>
-
-<p><img align="center" src="https://github-readme-streak-stats.herokuapp.com/?user=c17hawke&" alt="c17hawke" /></p>
