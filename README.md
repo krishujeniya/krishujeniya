@@ -6,6 +6,10 @@
             <font face="'Times New Roman', Times, serif">Krish Ujeniya</font>
     
   </a>
+    <font face="Arial, sans-serif">This text uses the Arial font family.</font>
+    <font face="'Times New Roman', Times, serif">This text uses the Times New Roman font family.</font>
+    <font face="'Courier New', Courier, monospace">This text uses the Courier New font family.</font>
+
     </h2>
 <h3 align="left">🚀 Technical Experience and Interests:</h3>
 
