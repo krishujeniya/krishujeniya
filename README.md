@@ -1,5 +1,6 @@
 <h1 align="center"><img src="https://emojis.slackmojis.com/emojis/images/1531849430/4246/blob-sunglasses.gif?1531849430" width="30"/> Hey! Nice to see you.</h1>
-<h2 align="center">I'm Krish Ujeniya</h2>
+<h2 align="center">I'm <a href="https://bit.ly/KrishUjeniya" align="center" >Krish Ujeniya</a>
+</h2>
 
 <h3 align="left">🚀 Technical Experience and Interests:</h3>
 
