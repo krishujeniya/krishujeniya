@@ -1,8 +1,8 @@
 
 <h1 align="center"><img src="https://emojis.slackmojis.com/emojis/images/1531849430/4246/blob-sunglasses.gif?1531849430" width="30"/> Hey! Nice to see you.</h1>
- <h2 style="font-size: 2em; color: #333; text-align: center;">
+ <h2 align="center">
         I'm 
-        <a href="https://bit.ly/KrishUjeniya" style="text-decoration: none; color: green; font-weight: bold; transition: color 0.3s ease;">
+        <a href="https://bit.ly/KrishUjeniya" >
             Krish Ujeniya
         </a>
     </h2>
