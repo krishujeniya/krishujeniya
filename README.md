@@ -80,7 +80,7 @@
 
 <p align="center">
   <a href="https://twitter.com/krishujeniya" target="_blank">
-    <img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/twitter.svg" alt="Twitter" height="30" width="40" />
+    <img src="https://img.icons8.com/?size=100&id=phOKFKYpe00C&format=png&color=#FCC419" alt="Twitter" height="30" width="40" />
   </a>
   <a href="https://linkedin.com/in/krishujeniya" target="_blank">
     <img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="LinkedIn" height="30" width="40" />
@@ -95,9 +95,9 @@
     <img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/instagram.svg" alt="Instagram" height="30" width="40" />
   </a>
   <a href="https://medium.com/@krishujeniya" target="_blank">
-    <img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/medium.svg" alt="Medium" height="30" width="40" />
+    <img src="https://img.icons8.com/?size=100&id=D93y0uLB6LtR&format=png&color=000000" alt="Medium" height="30" width="40" />
   </a>
-  <a href="https://www.youtube.com/c/@aidrago." target="_blank">
+  <a href="https://www.youtube.com/c/@AIDRAGO." target="_blank">
     <img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/youtube.svg" alt="YouTube" height="30" width="40" />
   </a>
 </p>
