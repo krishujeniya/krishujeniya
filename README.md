@@ -83,21 +83,21 @@
     <img src="https://img.icons8.com/?size=512&id=phOKFKYpe00C&format=png&color=FCC419" alt="Twitter" height="40" width="40" />
   </a>
   <a href="https://linkedin.com/in/krishujeniya" target="_blank">
-    <img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="LinkedIn" height="40" width="40" />
+    <img src="https://img.icons8.com/?size=512&id=8808&format=png&color=FCC419" alt="LinkedIn" height="40" width="40" />
   </a>
   <a href="https://stackoverflow.com/users/krishujeniya" target="_blank">
-    <img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/stack-overflow.svg" alt="Stack Overflow" height="40" width="40" />
+    <img src="https://img.icons8.com/?size=512&id=38517&format=png&color=FCC419" alt="Stack Overflow" height="40" width="40" />
   </a>
   <a href="https://kaggle.com/krishujeniya" target="_blank">
-    <img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/kaggle.svg" alt="Kaggle" height="40" width="40" />
+    <img src="https://img.icons8.com/?size=512&id=1iP83OYM1FL-&format=png&color=FCC419" alt="Kaggle" height="40" width="40" />
   </a>
   <a href="https://instagram.com/krishujeniya" target="_blank">
-    <img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/instagram.svg" alt="Instagram" height="40" width="40" />
+    <img src="https://img.icons8.com/?size=512&id=32309&format=png&color=FCC419" alt="Instagram" height="40" width="40" />
   </a>
   <a href="https://medium.com/@krishujeniya" target="_blank">
-    <img src="https://img.icons8.com/?size=512&id=D93y0uLB6LtR&format=png&color=000000" alt="Medium" height="40" width="40" />
+    <img src="https://img.icons8.com/?size=512&id=kXpTR7n8QCEP&format=png&color=FCC419" alt="Medium" height="40" width="40" />
   </a>
   <a href="https://www.youtube.com/c/@AIDRAGO." target="_blank">
-    <img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/youtube.svg" alt="YouTube" height="40" width="40" />
+    <img src="https://img.icons8.com/?size=512&id=37326&format=png&color=FCC419" alt="YouTube" height="40" width="40" />
   </a>
 </p>
