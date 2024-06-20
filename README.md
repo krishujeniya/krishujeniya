@@ -1,5 +1,4 @@
 
-<img src="https://komarev.com/ghpvc/?username=krishujeniya&abbreviated=true" alt="KrishUjeniya" />
 
 <h1 align="center"><img src="https://emojis.slackmojis.com/emojis/images/1531849430/4246/blob-sunglasses.gif?1531849430" width="30"/> Hey! Nice to see you.</h1>
  <h2 align="center">
@@ -21,8 +20,11 @@
     <img src="https://stats.quine.sh/krishujeniya/github?theme=dark" alt="krishujeniya's GitHub Stats"/>
   </a>
   <a href="https://stats.quine.sh/krishujeniya/stack-overflow?theme=dark">
-    <img src="https://stats.quine.sh/krishujeniya/stack-overflow?theme=dark" alt="krishujeniya's Stack Overflow Stats"/>
+    <img src="https://stats.quine.sh/krishujeniya/stack-overflow?theme=dark" alt="krishujeniya Stack Overflow Stats"/>
   </a>
+ 
+ <img src="https://komarev.com/ghpvc/?username=krishujeniya&abbreviated=true" alt="KrishUjeniya" />
+
 </p>
 
 <h3 align="left">🛠️ Languages and Tools:</h3>
