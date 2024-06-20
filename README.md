@@ -100,4 +100,7 @@
   <a href="https://www.youtube.com/c/@AIDRAGO." target="_blank">
     <img src="https://img.icons8.com/?size=512&id=37326&format=png&color=FCC419" alt="YouTube" height="40" width="40" />
   </a>
+   <a href="https://huggingface.co/krishujeniya" target="_blank">
+    <img src="https://img.icons8.com/?size=512&id=2daS1gO4xkKS&format=png&color=FCC419" alt="Hugging Face" height="40" width="40" />
+  </a>
 </p>
