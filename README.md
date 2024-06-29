@@ -16,9 +16,10 @@
 - Robotics
 
 <h3 align="left">📚 Docs:</h3>
-Explore the comprehensive documentation for the tools and technologies used in this project:
 
-- [![Flutter](https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white)](https://flutter.dev/)
+- [![Flutter](https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white)](https://github.com/krishujeniya/krishujeniya/blob/main/Docs/FlutterLinuxSetup.md)
+
+<h3 align="left"> 🌟 Statistics:</h3>
 
 <p align="center">
   <a href="https://stats.quine.sh/krishujeniya/github?theme=dark">
