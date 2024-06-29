@@ -1,0 +1,50 @@
+step - 1: 
+
+sudo apt-get update -y && sudo apt-get upgrade -y;
+sudo apt-get install -y curl git unzip xz-utils zip libglu1-mesa
+
+
+step - 2:
+
+sudo apt install snapd
+sudo snap install core
+
+sudo snap install flutter --classic
+
+
+step - 3:
+
+sudo snap install --classic code
+( Install Flutter Extention )
+
+
+step - 4:
+
+Download & Extract Android Sdk from : https://t.me/krishujeniya/10
+
+and define file structure like following :
+
+    Android 
+      ├── Sdk
+            ├── build-tools
+            ├── emulator
+            ├── platforms
+            ├── skins
+            ├── system-images
+            ├── cmdline-tools
+            ├── licenses
+            ├── platform-tools
+            ├── sources
+            ├── tools
+
+
+step - 5:
+
+nano ~/.bashrc # Paste following in Last &  Press Ctrl + X to exit, then Y to confirm changes, and Enter to save 
+                  
+              export CHROME_EXECUTABLE=/snap/bin/chromium  
+
+source ~/.bashrc
+
+
+
