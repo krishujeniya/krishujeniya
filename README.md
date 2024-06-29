@@ -18,7 +18,7 @@
 <h3 align="left">📚 Docs:</h3>
 
 - [![Flutter](https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white)](https://github.com/krishujeniya/krishujeniya/blob/main/Docs/FlutterLinuxSetup.md)
-
+- [![Flutter](https://img.shields.io/badge/MLOps-02569B?style=for-the-badge&logo=mlops&logoColor=white)](https://github.com/krishujeniya/krishujeniya/blob/main/Docs/FlutterLinuxSetup.md)
 <h3 align="left"> 🌟 Statistics:</h3>
 
 <p align="center">
