@@ -2,14 +2,6 @@
 
 Welcome to the Flutter development setup guide! This guide will walk you through setting up your development environment for Flutter and integrating Firebase for your projects.
 
-## Prerequisites
-
-Before you begin, ensure you have the following installed:
-- Ubuntu Linux (or your preferred Linux distribution)
-- Git
-- Curl
-- Snapd
-
 ## Step 1: Update and Install Dependencies
 
 First, update and install necessary packages:
