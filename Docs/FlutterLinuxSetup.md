@@ -83,11 +83,3 @@ firebase init
 flutterfire configure
 ```
 
-
----
-
-**Keywords**: Flutter development, Firebase integration, Android SDK setup, Visual Studio Code, Linux development environment, Flutterfire, Firebase CLI
-
-**Contact**: For support and queries, contact [your contact details]
-
-**License**: This project is licensed under the [license name]. See the LICENSE file for details
