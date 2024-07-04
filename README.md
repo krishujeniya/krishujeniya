@@ -20,6 +20,8 @@
 - [![Flutter](https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white)](https://github.com/krishujeniya/krishujeniya/blob/main/Docs/FlutterLinuxSetup.md)
 
 - [![mlflow](https://img.shields.io/badge/MLOPS-%23d9ead3.svg?style=for-the-badge&logo=numpy&logoColor=blue)](https://github.com/krishujeniya/krishujeniya/blob/main/Docs/SetupMLOps.md)
+
+- [![PHP](https://img.shields.io/badge/php-%23777BB4.svg?style=for-the-badge&logo=php&logoColor=white)](https://github.com/krishujeniya/krishujeniya/blob/main/Docs/SetupPHP.md)
 <h3 align="left"> 🌟 Statistics:</h3>
 
 <p align="center">
