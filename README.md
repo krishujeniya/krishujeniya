@@ -23,7 +23,7 @@
 
 - [![PHP](https://img.shields.io/badge/php-%23777BB4.svg?style=for-the-badge&logo=php&logoColor=white)](https://github.com/krishujeniya/krishujeniya/blob/main/Docs/SetupPHP.md)
 
-- [](https://github.com/krishujeniya/SAMPLE_KIVY)
+- [![KivyMD](https://img.shields.io/badge/KivyMD-2C2255?style=for-the-badge&logo=python&logoColor=white)](https://github.com/krishujeniya/SAMPLE_KIVY)
 <h3 align="left"> 🌟 Statistics:</h3>
 
 <p align="center">
