@@ -29,13 +29,15 @@
 <p align="center">
  <h3 align="center"> <img src="https://komarev.com/ghpvc/?username=krishujeniya&abbreviated=true" alt="KrishUjeniya" />
 </h3>
-
-  <a href="https://stats.quine.sh/krishujeniya/github?theme=dark">
+<h3 align="center">  <a href="https://stats.quine.sh/krishujeniya/github?theme=dark">
     <img src="https://stats.quine.sh/krishujeniya/github?theme=dark" alt="krishujeniya's GitHub Stats"/>
   </a>
   <a href="https://stats.quine.sh/krishujeniya/stack-overflow?theme=dark">
     <img src="https://stats.quine.sh/krishujeniya/stack-overflow?theme=dark" alt="krishujeniya Stack Overflow Stats"/>
   </a>
+</h3>
+ 
+ 
  
 
 </p>
