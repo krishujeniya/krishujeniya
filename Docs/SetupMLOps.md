@@ -1,5 +1,7 @@
 # MLOps Project with ZenML, MLflow, Cookiecutter, Docker, GitHub Actions, and DVC 🚀
 
+- [Algorithms](https://github.com/RaviPatel04/machine-learning/tree/main)
+
 This project demonstrates how to set up a Machine Learning Operations (MLOps) pipeline using ZenML for orchestration, MLflow for experiment tracking, Cookiecutter for project structure, Docker for containerization, GitHub/GitHub Actions for CI/CD, and DVC (Data Version Control) for managing data versions.
 
 ### Step-by-Step Guide 📝
