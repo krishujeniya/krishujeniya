@@ -1,0 +1,255 @@
+A] CREATE TABLE ACCOUNT (
+    	acc_no VARCHAR2(255) PRIMARY KEY,
+    	name VARCHAR(255),
+    	city VARCHAR(255),
+    	balance NUMBER(15),
+    	loan_taken BOOLEAN);
+B]CREATE TABLE LOAN (
+    	loan_no VARCHAR2(255) PRIMARY KEY,
+    	acc_no INT,
+    	loan_amount NUMBER(15),
+    	interest_rate NUMBER(15),
+    	loan_date DATE,
+    	remaining_loan NUMBER(15));
+C]CREATE TABLE INSTALLMENT (
+  	loan_noVARCHAR2(255),
+  	installment_no VARCHAR2(255) PRIMARY KEY,
+  	installment_date DATE ,
+  	amount NUMBER(15));
+D]CREATE TABLE TRANSACTION (
+  	acc_no VARCHAR2(255),
+  	tr_date DATE ,
+  	amount NUMBER(15),
+  	type_of_tr VARCHAR2(255),
+  	mode_of_payment VARCHAR2(255));
+E]describe (account,loan,installment,transaction) NOTE: Only One at time
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+> > > > > THIS ALL QUERY FOR INSERT ! ROW IN TABLE
+A]insert into account(acc_no,name,city,balance,loan_taken) values('A001','Patel Jigar','Mehsana',50000,'YES');
+B]insert into transaction(acc_no,tr_date,amount,type_of_tr,mode_of_payment) values('A001','01-may-20',10000,'D','Cash');
+C]insert into loan(loan_no,acc_no,loan_amount,interest_rate,loan_date,remaining_loan) values('L001','A001',100000,7,'1-jan-20',75000);
+9D]insert into installment(acc_no,tr_date,ammount,type_of_tr,mode_of_payment) values ('L001','I001','02-FEB-04',15000);
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+A] select * from transaction;
+B] select acc_no,loan_amount from installment;
+C] seelct loan_no,loan_amount from loan where loan_no='L001';
+D] SELECT city, SUM(balance)  FROM account GROUP BY city;
+E] SELECT city FROM account GROUP BY city HAVING SUM(balance) > 100000;
+F] SELECT acc_no, name FROM account ORDER BY name DESC;
+G] SELECT * FROM transaction WHERE mode_of_payment = 'Cheque';
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+=========== FOR PRACTICAL 1,2,3,4 in exam practical , see the query of DBM practical 6 ================
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+=========== FOR PRACTICAL 5 in exam practical , see the query of DBM practical 7 ================
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+=========== FOR PRACTICAL 6 in exam practical , see the query of DBM practical 8 ================
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+=========== FOR PRACTICAL 7 in exam practical , see the query of DBM practical9 ================
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+=========== FOR PRACTICAL 8 in exam practical , see the query of DBM practical 10 ================
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+=========== FOR PRACTICAL 9,10 in exam practical , see the query of DBM practical 11 ================
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+=========== FOR PRACTICAL 11,12 in exam practical , see the query of DBM practical 12 ================
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+=========== FOR PRACTICAL 13 in exam practical , see the query of DBM practical 13 ================
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+=========== FOR PRACTICAL 14 in exam practical , see the query of DBM practical 14 ================
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+=========== FOR PRACTICAL 15 in exam practical , see the query of DBM practical 15 ================
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+Practical -16>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+CREATE OR REPLACE PROCEDURE swap_numbers (
+  a IN OUT NUMBER,
+  b IN OUT NUMBER,
+  temp IN OUT NUMBER) 
+AS
+BEGIN
+  temp := a; 
+  a := b;
+  b := temp;
+END;
+/
+DECLARE
+  num1 NUMBER := 10;
+  num2 NUMBER := 20;
+  temp NUMBER := 0;
+BEGIN
+  dbms_output.put_line ('Before Swapping');
+  dbms_output.put_line ('num1: ' || num1 || ', num2: ' || num2);
+  swap_numbers (num1, num2,temp);
+  dbms_output.put_line ('After Swapping');
+  dbms_output.put_line ('num1: ' || num1 || ', num2: ' || num2);
+END;
+/
+set SERVEROUT on;
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+Practical - 17 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+>>>> Program for maximum number /////////////////////////////////////////////////////////////////////////////////
+CREATE OR REPLACE PROCEDURE find_max (num1 NUMBER, num2 NUMBER)
+AS
+BEGIN
+  IF num1 > num2 THEN
+    DBMS_OUTPUT.PUT_LINE('The maximum is: ' || num1);
+  ELSE
+    DBMS_OUTPUT.PUT_LINE('The maximum is: ' || num2);
+  END IF;
+END;
+/
+BEGIN
+  find_max(10, 20);
+END;
+/
+set SERVEROUT on;
+>>>> Program for Find Prime number /////////////////////////////////////////////////////////////////////////////////
+CREATE OR REPLACE FUNCTION is_prime (num INTEGER)
+RETURN VARCHAR2
+IS
+  i INTEGER;
+  is_prime BOOLEAN := TRUE;
+BEGIN
+  FOR i IN 2 .. sqrt(num) LOOP
+    IF MOD(num, i) = 0 THEN
+      is_prime := FALSE;
+      EXIT;
+    END IF;
+  END LOOP;
+
+  IF is_prime THEN
+    RETURN 'Yes';
+  ELSE
+    RETURN 'No';
+  END IF;
+END;
+/
+
+DECLARE
+  prime_or_not VARCHAR2(3);
+BEGIN
+  prime_or_not := is_prime(7);
+  DBMS_OUTPUT.PUT_LINE('The number is prime: ' || prime_or_not);
+END;
+/
+set SERVEROUT on;
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+Practical - 18 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+create table account2(ID number(15),NAME VARCHAR2(255),BALANCE NUMBER(15));
+
+-- Insert 5 records into the ACCOUNT table
+CREATE OR REPLACE PROCEDURE insert_records_into_account AS
+BEGIN
+  FOR i IN 1..5 LOOP
+    INSERT INTO ACCOUNT2 (ID, NAME, BALANCE)
+    VALUES (i, 'ACCOUNT_' || i, 1000 * i);
+  END LOOP;
+END;
+/
+ EXECUTE insert_records_into_account;
+ select * from account2;
+>  >  >  >  >  >  >  >  >  >  >  >  >  >  >  >  >  >  >  >  >  >  >  >  >  >  
+ -- Delete the 2nd record from the ACCOUNT table
+CREATE OR REPLACE PROCEDURE delete_second_record_from_account AS
+BEGIN
+  DELETE FROM ACCOUNT2 WHERE ID = 2;
+END;
+/
+set SERVEROUT on;
+EXECUTE delete_second_record_from_account; 
+select * from account2;
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+Practical - 19 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+CREATE OR REPLACE FUNCTION sum_with_while
+RETURN NUMBER
+AS
+   sum1 NUMBER := 0;
+   i NUMBER := 1;
+BEGIN
+   -- Using while loop
+   WHILE i <= 10 LOOP
+      sum1 := sum1 + i;
+      i := i + 1;
+   END LOOP;
+   RETURN sum1;
+END;
+/
+
+CREATE OR REPLACE FUNCTION sum_with_for
+RETURN NUMBER
+AS
+   sum2 NUMBER := 0;
+BEGIN
+   -- Using for loop
+   FOR i IN 1..10 LOOP
+      sum2 := sum2 + i;
+   END LOOP;
+   RETURN sum2;
+END;
+/
+
+DECLARE
+   sum1 NUMBER;
+   sum2 NUMBER;
+BEGIN
+   sum1 := sum_with_while;
+   sum2 := sum_with_for;
+   DBMS_OUTPUT.PUT_LINE('Sum of first ten numbers using While Loop : ' || sum1);
+   DBMS_OUTPUT.PUT_LINE('Sum of first ten numbers using For Loop : ' || sum2);
+END;
+/
+set SERVEROUT on;
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+Practical - 20 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+create table transaction2 (tr_id NUMBER(15),amount NUMBER(15),mode_of_payment VARCHAR2(255));
+
+CREATE OR REPLACE PROCEDURE insert_transactions 
+AS 
+BEGIN 
+  -- insert 5 records into transaction table
+  FOR i IN 1..5 LOOP
+    INSERT INTO transaction2 (tr_id, amount, mode_of_payment) 
+    VALUES (i, i*100, 'Cash');
+  END LOOP;
+END;
+/
+set SERVEROUT on;
+EXECUTE insert_transactions;
+select * from transaction2;
+
+CREATE OR REPLACE PROCEDURE update_transactions 
+AS 
+BEGIN 
+  -- update all transactions with mode of payment as cash 
+  UPDATE transaction2
+  SET amount = amount + 75
+  WHERE mode_of_payment = 'Cash';
+END;
+/
+set SERVEROUT on;
+EXECUTE update_transactions;
+select * from transaction2;
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
