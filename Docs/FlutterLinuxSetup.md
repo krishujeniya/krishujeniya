@@ -30,7 +30,7 @@ sudo snap install --classic code
 ## Step 4: Configure Android SDK
 
 Download Android SDK and set up directory structure:
-- Download Android SDK from [link](https://t.me/krishujeniya/10)
+- Download Android SDK from [link](https://t.me/krishujeniya/11)
 - Extract and organize SDK files as follows:
   ```
   Android 
