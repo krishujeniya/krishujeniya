@@ -13,7 +13,9 @@
   </a>
    
    </h2>
-<h3 align="left">🚀 Technical Experience and Interests:</h3>
+<p align="left">  <img src="https://komarev.com/ghpvc/?username=krishujeniya&abbreviated=true" alt="KrishUjeniya" />
+ </p>
+
 
 - Computer Vision
 - Natural Language Processing
@@ -32,8 +34,7 @@
 <h3 align="left"> 🌟 Statistics:</h3>
 
 <p align="center">
- <h3 align="center"> <img src="https://komarev.com/ghpvc/?username=krishujeniya&abbreviated=true" alt="KrishUjeniya" />
-</h3>
+ 
 <h3 align="center">  <a href="https://stats.quine.sh/krishujeniya/github?theme=dark">
     <img src="https://stats.quine.sh/krishujeniya/github?theme=dark" alt="krishujeniya's GitHub Stats"/>
   </a>
