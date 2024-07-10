@@ -81,4 +81,3 @@
     <img src="https://img.icons8.com/?size=512&id=2daS1gO4xkKS&format=png&color=FCC419" alt="Hugging Face" height="40" width="40" />
   </a>
 </p>
-<img src="https://github.com/Anmol-Baranwal/Cool-GIFs-For-GitHub/assets/74038190/80728820-e06b-4f96-9c9e-9df46f0cc0a5">
