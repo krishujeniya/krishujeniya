@@ -20,11 +20,15 @@
 <p align="left">  <img src="https://komarev.com/ghpvc/?username=krishujeniya&abbreviated=true" alt="KrishUjeniya" />
  </p>
 
+- 🌱 I’m currently learning **new stuffs**
 
-- Computer Vision
-- Natural Language Processing
-- Generative AI
-- Robotics
+- 👨‍💻 All of my portfolio are available at [krishujeniya.com](https://bit.ly/KrishUjeniya)
+
+
+- 💬 Ask me about **Computer Vision, Natural Language Processing, Generative AI, Robotics and many more technogies**
+
+- 📫 How to reach me **ukideashare0021@gmail.com**
+
 
 <h3 align="left">📚 Docs:</h3>
 
