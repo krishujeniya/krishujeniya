@@ -14,7 +14,7 @@
 <p align="left">  <img src="https://komarev.com/ghpvc/?username=krishujeniya&abbreviated=true" alt="KrishUjeniya" />
  </p>
 
-- 🌱 I’m currently learning **new stuffs**
+- 🌱 I’m currently learning **MLOps**
 
 - 👨‍💻 All of my details are available at [krishujeniya.com](https://bit.ly/KrishUjeniya)
 
