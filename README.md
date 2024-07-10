@@ -2,7 +2,7 @@
  <img src='https://emojis.slackmojis.com/emojis/images/1531849430/4246/blob-sunglasses.gif?1531849430' width='50'/>
 
  
-[![Typing SVG](https://readme-typing-svg.herokuapp.com?font=poppins&color=%FCC419&size=28&lines=Krish+Ujeniya+....)](https://git.io/typing-svg)
+[![Typing SVG](https://readme-typing-svg.herokuapp.com?font=poppins&color=FCC419&size=28&lines=Krish+Ujeniya+....)](https://git.io/typing-svg)
 
 
    
@@ -16,7 +16,7 @@
 
 - 🌱 I’m currently learning **new stuffs**
 
-- 👨‍💻 All of my portfolio are available at [krishujeniya.com](https://bit.ly/KrishUjeniya)
+- 👨‍💻 All of my details are available at [krishujeniya.com](https://bit.ly/KrishUjeniya)
 
 
 - 💬 Ask me about **Computer Vision, Natural Language Processing, Generative AI, Robotics and many more technogies**
