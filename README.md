@@ -1,7 +1,9 @@
 <h1 align="center">
 
+ <img src='https://emojis.slackmojis.com/emojis/images/1531849430/4246/blob-sunglasses.gif?1531849430' width='50'/>
+
  
-[![Typing SVG](https://readme-typing-svg.herokuapp.com?font=poppins&color=%2302A700&size=28&lines=<img src='https://emojis.slackmojis.com/emojis/images/1531849430/4246/blob-sunglasses.gif?1531849430' width='30'/>+Hey!+Nice+to+see+you.+)](https://git.io/typing-svg)
+[![Typing SVG](https://readme-typing-svg.herokuapp.com?font=poppins&color=%2302A700&size=28&lines=Hey!+Nice+to+see+you.+)](https://git.io/typing-svg)
 
 </h1>
  <h2 align="center">
