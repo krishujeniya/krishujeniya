@@ -2,7 +2,7 @@
  <img src='https://emojis.slackmojis.com/emojis/images/1531849430/4246/blob-sunglasses.gif?1531849430' width='50'/>
 
  
-[![Typing SVG](https://readme-typing-svg.herokuapp.com?font=poppins&color=%2302A700&size=28&lines=Hey!+This+is+Krish+Ujeniya+....)](https://git.io/typing-svg)
+[![Typing SVG](https://readme-typing-svg.herokuapp.com?font=poppins&color=%2302A700&size=28&lines=Krish+Ujeniya+....)](https://git.io/typing-svg)
 
 
    
