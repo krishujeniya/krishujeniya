@@ -63,7 +63,7 @@
 
  
    
-<p align="left">  <img src="https://komarev.com/ghpvc/?username=krishujeniya&abbreviated=true" alt="KrishUjeniya" width=170 />
+<p align="left">  
  </p>
 
 - 🌱 I’m currently learning **MLOps**
@@ -144,8 +144,10 @@
 <img src="https://media.tenor.com/zhIZszouG8QAAAAi/line-divider.gif" width="100%" height="2px"  />
 </a>
  
+ <p align="center">
 
-
+<img src="https://komarev.com/ghpvc/?username=krishujeniya&abbreviated=true" alt="KrishUjeniya" width=170 />
+</p>
 
  <p align="center">
 <a href="https://github.com/krishujeniya">
