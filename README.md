@@ -100,29 +100,25 @@
 
 
 <img src="https://user-images.githubusercontent.com/74038190/229223263-cf2e4b07-2615-4f87-9c38-e37600f8381a.gif" height="300" align="right">
-<table width="120">
-  <tr>  
-         <td align="center" width="60">
- <a href="https://github.com/krishujeniya/krishujeniya/blob/main/Docs/FlutterLinuxSetup.md">
-<code><img height="36" width="65"  src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/flutter/flutter.png"></code>
-</a>
-         </td>  </tr>  <tr>  
 
-
- <td align="center" width="60">
- <a href="https://github.com/krishujeniya/krishujeniya/blob/main/Docs/SetupPHP.md">
-<code><img height="36" width="65"  src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/php/php.png"></code>
-</a>
-         </td>
-
-  </tr>
-  <tr>  
-         <td align="center" width="60">
- <a href="https://github.com/krishujeniya/krishujeniya/blob/main/Docs/SetupMLOps.md">
-<code><img height="36" width="65"  src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/flutter/flutter.png"></code>
-</a>
-         </td>  </tr>  
+<table width="100">
+    <tr>
+    <td align='center' width="190">
+      <a href="https://github.com/krishujeniya/krishujeniya/blob/main/Docs/FlutterLinuxSetup.md">
+        <img src="https://www.vectorlogo.zone/logos/flutterio/flutterio-ar21.svg"></a>
+    </td>
+    <td align='center' width="190">
+      <a href="https://github.com/krishujeniya/krishujeniya/blob/main/Docs/SetupPHP.md">
+        <img src="https://www.vectorlogo.zone/logos/php/php-ar21.svg"></a>
+    </td>
+    <td align='center' width="190">
+      <a href="https://github.com/krishujeniya/krishujeniya/blob/main/Docs/SetupMLOps.md">
+        <img src="https://www.vectorlogo.zone/logos/numpy/numpy-icon.svg" alt="icon"></a>
+    </td>
+   
+</tr>
 </table>
+
 
 
 
