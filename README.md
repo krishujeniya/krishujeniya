@@ -99,24 +99,30 @@
  
 
 
-<img src="https://user-images.githubusercontent.com/74038190/229223263-cf2e4b07-2615-4f87-9c38-e37600f8381a.gif" height="200" align="right">
+<img src="https://user-images.githubusercontent.com/74038190/229223263-cf2e4b07-2615-4f87-9c38-e37600f8381a.gif" height="300" align="right">
+<table width="120">
+  <tr>  
+         <td align="center" width="60">
+ <a href="https://github.com/krishujeniya/krishujeniya/blob/main/Docs/FlutterLinuxSetup.md">
+<code><img height="36" width="65"  src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/flutter/flutter.png"></code>
+</a>
+         </td>
+ <td align="center" width="60">
+ <a href="https://github.com/krishujeniya/krishujeniya/blob/main/Docs/FlutterLinuxSetup.md">
+<code><img height="36" width="65"  src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/php/php.png"></code>
+</a>
+         </td>
 
+  </tr>
+</table>
 
-<code><img height="20" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/react-native/react-native.png"></code>
-<code><img height="20" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/angular/angular.png"></code>
+<a href="https://github.com/krishujeniya/krishujeniya/blob/main/Docs/SetupPHP.md)">
 <code><img height="20" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/flutter/flutter.png"></code>
-<code><img height="20" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/dart/dart.png"></code>
-<code><img height="20" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/javascript/javascript.png"></code>
-<code><img height="20" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/php/php.png"></code>
-<code><img height="20" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/swift/swift.png"></code>
-<code><img height="20" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/xcode/xcode.png"></code>
+</a>
 
 
-- [![Flutter](https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/flutter/flutter.png)](https://github.com/krishujeniya/krishujeniya/blob/main/Docs/FlutterLinuxSetup.md)
 
 - [![mlflow](https://img.shields.io/badge/MLOPS-%23d9ead3.svg?style=for-the-badge&logo=numpy&logoColor=blue)](https://github.com/krishujeniya/krishujeniya/blob/main/Docs/SetupMLOps.md)
-
-- [![PHP](https://img.shields.io/badge/php-%23777BB4.svg?style=for-the-badge&logo=php&logoColor=white)](https://github.com/krishujeniya/krishujeniya/blob/main/Docs/SetupPHP.md)
 
 - [![KivyMD](https://img.shields.io/badge/KivyMD-2C2255?style=for-the-badge&logo=python&logoColor=white)](https://github.com/krishujeniya/SAMPLE_KIVY)
 
