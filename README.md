@@ -6,12 +6,26 @@
 <img align="right" width="30%" src="images/Programming.gif">
 
 
-<a href="https://github.com/krishujeniya">   
 <img src="https://user-images.githubusercontent.com/74038190/229223156-0cbdaba9-3128-4d8e-8719-b6b4cf741b67.gif" width="170">
+<br/>
  
  [![Typing SVG](https://readme-typing-svg.herokuapp.com?font=poppins&color=FCC419&size=28&lines=Krish+Ujeniya+....)](https://bit.ly/KrishUjeniya)
 
-</a>
+
+ 
+   
+<p align="left">  
+ </p>
+
+- 🌱 I’m currently learning **MLOps**
+
+- 👨‍💻 All of my details are available at [krishujeniya.com](https://bit.ly/KrishUjeniya)
+
+
+- 💬 Ask me about **Computer Vision, Natural Language Processing, Generative AI, Robotics and many more technogies**
+
+- 📫 How to reach me **ukideashare0021@gmail.com**
+
 
  <!--Social Media-->   
 <table width="120">
@@ -61,19 +75,8 @@
 </table>
 
 
- 
-   
-<p align="left">  
- </p>
-
-- 🌱 I’m currently learning **MLOps**
-
-- 👨‍💻 All of my details are available at [krishujeniya.com](https://bit.ly/KrishUjeniya)
 
 
-- 💬 Ask me about **Computer Vision, Natural Language Processing, Generative AI, Robotics and many more technogies**
-
-- 📫 How to reach me **ukideashare0021@gmail.com**
 
 <!--DOCS-->
 
