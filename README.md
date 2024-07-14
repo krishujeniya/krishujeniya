@@ -1,119 +1,3 @@
-
-
-
-
-
-<!--Intro-->
-
- 
-## 𝐇𝐞𝐥𝐥𝐨 𝐭𝐡𝐞𝐫𝐞, 𝐟𝐞𝐥𝐥𝐨𝐰 <𝚌𝚘𝚍𝚎𝚛 />! <a href="https://github.com/krishujeniya"><img src="https://user-images.githubusercontent.com/74038190/214644152-52f47eb3-5e31-4f47-8758-05c9468d5596.gif" width="30px"></a><a href="https://github.com/krishujeniya"><img align="right" width ="%" src="https://komarev.com/ghpvc/?username=krishujeniya&style=for-the-badge&color=blue"></a>
-
-
-
-<a href="https://github.com/krishujeniya">   
-<img align="right" src="https://user-images.githubusercontent.com/74038190/229223156-0cbdaba9-3128-4d8e-8719-b6b4cf741b67.gif" width="170">
-</a>
-
-
-
-<!--STATS-->
-
-
-<h3 align="center">
- <a href="https://github.com/krishujeniya">
-<img src="https://img1.picmix.com/output/stamp/original/9/8/7/3/473789_94059.gif" width="22" height="22" align="left" /> 
-    </a> <a href="https://github.com/krishujeniya">
-  <img src="https://img1.picmix.com/output/stamp/original/9/8/7/3/473789_94059.gif" width="22" height="22" align="right" />
-   </a> 【﻿Ｓｔａｔｓ】 
-
-</h3>
-
-<a href="https://github.com/krishujeniya">
-<img src="https://media.tenor.com/zhIZszouG8QAAAAi/line-divider.gif" width="100%" height="2px"  />
-</a>
- 
-
-
-
-<p align="center">
- <br/>
-<a href="https://github.com/krishujeniya"><img align="center" width ="%" src="https://img.shields.io/github/followers/krishujeniya?logo=github&logoColor=41c350&labelColor=01102d&color=blue&style=for-the-badge"></a>
-
-
-
-<p align="center"> 
-<a href="https://user-badge.committers.top/morocco/krishujeniya"> 
-<!--  <img align="center" src="https://aktive.kerolloz.dev/morocco/krishujeniya?label=%F0%9F%92%BB%20Top%20Commiters%20In%20Morocco&labelColor=01102d&rnkPrefix=Rank%20&color=6eb9f2&style=for-the-badge" width="" />     -->
-</a></p >
-
- <p align="center">
-<a href="https://github.com/krishujeniya">
-
-   <img align="center" src="https://github-readme-stats.vercel.app/api?username=krishujeniya&show_icons=true&line_height=30&rank_icon=github&show=discussions_answered&theme=algolia" alt="Walid's github stats"/>
-
-</a>
-
-<br/>
-
-</p >
-
-
- <!--More Stats-->
-
- 
-
-<details open align="center">
-  <summary>📈 More Stats</summary>
-  <br>
- 
-<p align="center">
-<a href="https://github.com/krishujeniya"> 
-<img align="center" src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fkrishujeniya%2Fhit-counter&count_bg=%236EB9F2&title_bg=%2301102D&icon=workplace.svg&icon_color=%2341C350&title=Profile+Views+(since+03/2024)&edge_flat=true" width="">    
-</a></p>
-
-<p align="center">
-<div align="center">
- <a href="https://github.com/krishujeniya"> 
-<img src="http://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=krishujeniya&theme=algolia" width="100%" /> </br></br>
-
-<img src="http://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=krishujeniya&theme=algolia" width="31%" align="left"/>
-<img src="http://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=krishujeniya&theme=algolia" width="31%" align="right" />
-<img src="https://github-profile-summary-cards.vercel.app/api/cards/productive-time?username=krishujeniya&theme=algolia" width="31%" align="center" title="🦉 Night owl" />  
-</br></br>
- </a>
-<a href="https://github.com/krishujeniya"> 
- <img src="./profile-3d-contrib/profile-night-view.svg" alt="Contribution sts" width="%" /></br></br>
-  </a> 
-  
- [![Walid's github streak](https://github-readme-streak-stats.herokuapp.com/?user=krishujeniya&theme=algolia&card_width=1000)](https://github.com/krishujeniya) </br></br>
-[![𝚐𝚒𝚝𝚑𝚞𝚋 𝚐𝚛𝚊𝚙𝚑](https://github-readme-activity-graph.vercel.app/graph?username=krishujeniya&theme=react-dark&hide_border=true&area=true&bg_color=01102d&color=6eb9f2&line=41c350&point=ffffff)](https://github.com/krishujeniya) </br>
-[![𝚝𝚛𝚘𝚙𝚑𝚢](https://github-profile-trophy.vercel.app/?username=krishujeniya&column=8&margin-w=20&margin-h=20&no-frame=true&theme=algolia&title=Stars,Followers,MultiLanguage,Repositories,Organizations,Commits,PullRequest,Issues)](https://github.com/krishujeniya) 
-</div>
-
-
-
-<a href="https://youtube.com/shorts/HWNQxME4r5E?feature=share"> 
- 
-
-<!--  <img align="center" src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fkrishujeniya%2Fhit-counter&count_bg=%6EB9F2&title_bg=%01102D&icon=workplace.svg&icon_color=%41C350&title=Profile+Views&edge_flat=true" width="">    
- <img align="center" src="https://img.shields.io/badge/%20%20Press%20to%20watch%20my%202023-%20Github%20unwrapped%20-41c350.svg?logo=github&logoColor=41c350&labelColor=01102d&color=6eb9f2&style=for-the-badge" width="">     -->
-</a><br/><br/>
- <div align="center">
-</p >
-<br/>
-</details>
-
-
-<!-- views-->
-  <img align="left" width="0px" src="https://visitcount.itsvg.in/api?id=krishujeniya&label=Profile%20Views&color=1&icon=3&pretty=true" />
-
-
-
-
-
-
-
-
 <img align="right" width="30%" src="images/Programming.gif">
 
 
@@ -170,9 +54,29 @@
 - [![PHP](https://img.shields.io/badge/php-%23777BB4.svg?style=for-the-badge&logo=php&logoColor=white)](https://github.com/krishujeniya/krishujeniya/blob/main/Docs/SetupPHP.md)
 
 - [![KivyMD](https://img.shields.io/badge/KivyMD-2C2255?style=for-the-badge&logo=python&logoColor=white)](https://github.com/krishujeniya/SAMPLE_KIVY)
-<img src="https://i.imgur.com/dBaSKWF.gif" height="20" width="100%">
+<img src="https://i.imgur.com/dBaSKWF.gif" height="30" width="100%">
 
-<h3 align="left">Statistics 🌟 </h3>
+
+
+
+<!--STATS-->
+
+
+<h3 align="center">
+ <a href="https://github.com/krishujeniya">
+<img src="https://img1.picmix.com/output/stamp/original/9/8/7/3/473789_94059.gif" width="22" height="22" align="left" /> 
+    </a> <a href="https://github.com/krishujeniya">
+  <img src="https://img1.picmix.com/output/stamp/original/9/8/7/3/473789_94059.gif" width="22" height="22" align="right" />
+   </a> 【﻿ Ｓｔａｔｓ 🌟 】 
+
+</h3>
+
+<a href="https://github.com/krishujeniya">
+<img src="https://media.tenor.com/zhIZszouG8QAAAAi/line-divider.gif" width="100%" height="2px"  />
+</a>
+ 
+
+
 
 <p align="center">
  <br/>
@@ -182,8 +86,63 @@
 
 <p align="center"> 
 <a href="https://user-badge.committers.top/morocco/krishujeniya"> 
-<!--  <img align="center" src="https://aktive.kerolloz.dev/morocco/krishujeniya?label=%F0%9F%92%BB%20Top%20Commiters%20In%20Morocco&labelColor=01102d&rnkPrefix=Rank%20&color=6eb9f2&style=for-the-badge" width="" />     -->
+  <img align="center" src="https://aktive.kerolloz.dev/morocco/krishujeniya?label=%F0%9F%92%BB%20Top%20Commiters%20In%20Morocco&labelColor=01102d&rnkPrefix=Rank%20&color=6eb9f2&style=for-the-badge" width="" />     
 </a></p >
+
+ <p align="center">
+<a href="https://github.com/krishujeniya">
+
+   <img align="center" src="https://github-readme-stats.vercel.app/api?username=krishujeniya&show_icons=true&line_height=30&rank_icon=github&show=discussions_answered&theme=algolia" alt="Walid's github stats"/>
+
+</a>
+
+<br/>
+
+</p >
+
+
+ <!--More Stats-->
+
+ 
+
+<details open align="center">
+  <summary>📈 More Stats</summary>
+  <br>
+ 
+<p align="center">
+<a href="https://github.com/krishujeniya"> 
+<img align="center" src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fkrishujeniya%2Fhit-counter&count_bg=%236EB9F2&title_bg=%2301102D&icon=workplace.svg&icon_color=%2341C350&title=Profile+Views+(since+03/2024)&edge_flat=true" width="">    
+</a></p>
+
+<p align="center">
+<div align="center">
+ <a href="https://github.com/krishujeniya"> 
+<img src="http://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=krishujeniya&theme=algolia" width="100%" /> </br></br>
+
+<img src="http://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=krishujeniya&theme=algolia" width="31%" align="left"/>
+<img src="http://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=krishujeniya&theme=algolia" width="31%" align="right" />
+<img src="https://github-profile-summary-cards.vercel.app/api/cards/productive-time?username=krishujeniya&theme=algolia" width="31%" align="center" title="🦉 Night owl" />  
+</br></br>
+ </a>
+
+  
+ [![Krish's github streak](https://github-readme-streak-stats.herokuapp.com/?user=krishujeniya&theme=algolia&card_width=1000)](https://github.com/krishujeniya) </br></br>
+[![𝚐𝚒𝚝𝚑𝚞𝚋 𝚐𝚛𝚊𝚙𝚑](https://github-readme-activity-graph.vercel.app/graph?username=krishujeniya&theme=react-dark&hide_border=true&area=true&bg_color=01102d&color=6eb9f2&line=41c350&point=ffffff)](https://github.com/krishujeniya) </br>
+
+</div>
+
+
+
+<a href="https://youtube.com/shorts/HWNQxME4r5E?feature=share"> 
+ 
+
+ <img align="center" src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fkrishujeniya%2Fhit-counter&count_bg=%6EB9F2&title_bg=%01102D&icon=workplace.svg&icon_color=%41C350&title=Profile+Views&edge_flat=true" width="">    
+ <img align="center" src="https://img.shields.io/badge/%20%20Press%20to%20watch%20my%202023-%20Github%20unwrapped%20-41c350.svg?logo=github&logoColor=41c350&labelColor=01102d&color=6eb9f2&style=for-the-badge" width="">    
+</a><br/><br/>
+ <div align="center">
+</p >
+<br/>
+</details>
 
  <p align="center">
 <a href="https://github.com/krishujeniya">
