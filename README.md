@@ -1,4 +1,4 @@
-<img align="right" width="30%" src="assets/Programming.gif">
+<img align="right" width="30%" src="images/Programming.gif">
 
 
 <img src='https://emojis.slackmojis.com/emojis/images/1531849430/4246/blob-sunglasses.gif?1531849430' width='50'/>
