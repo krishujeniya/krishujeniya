@@ -131,24 +131,15 @@
 <img align="right" width="30%" src="images/Programming.gif">
 
 
-<img src='https://emojis.slackmojis.com/emojis/images/1531849430/4246/blob-sunglasses.gif?1531849430' width='50'/>
-
-
 <a href="https://github.com/krishujeniya">   
 <img align="left" src="https://user-images.githubusercontent.com/74038190/229223156-0cbdaba9-3128-4d8e-8719-b6b4cf741b67.gif" width="170">
+ 
+ [![Typing SVG](https://readme-typing-svg.herokuapp.com?font=poppins&color=FCC419&size=28&lines=Krish+Ujeniya+....)](https://bit.ly/KrishUjeniya)
+
 </a>
 
-
- 
-[![Typing SVG](https://readme-typing-svg.herokuapp.com?font=poppins&color=FCC419&size=28&lines=Krish+Ujeniya+....)](https://bit.ly/KrishUjeniya)
-
-
    
-   </h2>
-
-
-   
-<p align="left">  <img src="https://komarev.com/ghpvc/?username=krishujeniya&abbreviated=true" alt="KrishUjeniya" />
+<p align="left">  <img src="https://komarev.com/ghpvc/?username=krishujeniya&abbreviated=true" alt="KrishUjeniya" width=170 />
  </p>
 
 - 🌱 I’m currently learning **MLOps**
