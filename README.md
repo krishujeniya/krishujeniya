@@ -84,13 +84,6 @@
 
 
 
-<p align="center">
- <br/>
-<a href="https://github.com/krishujeniya"><img align="center" width ="%" src="https://img.shields.io/github/followers/krishujeniya?logo=github&logoColor=41c350&labelColor=01102d&color=blue&style=for-the-badge"></a>
-
-
-
-
  <p align="center">
 <a href="https://github.com/krishujeniya">
 
@@ -98,7 +91,6 @@
 
 </a>
 
-<br/>
 
 </p >
 
@@ -108,13 +100,9 @@
  
 
 <details open align="center">
-  <summary>📈 More Stats</summary>
+  <summary> More Stats 📈 </summary>
   <br>
  
-<p align="center">
-<a href="https://github.com/krishujeniya"> 
-<img align="center" src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fkrishujeniya%2Fhit-counter&count_bg=%236EB9F2&title_bg=%2301102D&icon=workplace.svg&icon_color=%2341C350&title=Profile+Views+(since+03/2024)&edge_flat=true" width="">    
-</a></p>
 
 <p align="center">
 <div align="center">
@@ -178,7 +166,7 @@
 </p>
 
  
-<img src="https://i.imgur.com/dBaSKWF.gif" height="20" width="100%">
+<img src="https://i.imgur.com/dBaSKWF.gif" height="50" width="100%">
 
 
 <img src="https://media.giphy.com/media/LnQjpWaON8nhr21vNW/giphy.gif" width="60"> <em><b>I love connecting with different people</b> so if you want to say <b>hi, I'll be happy to meet you more!</b> :)</em>
