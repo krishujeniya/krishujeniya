@@ -113,7 +113,7 @@
     </td>
     <td align='center' width="190">
       <a href="https://github.com/krishujeniya/krishujeniya/blob/main/Docs/SetupMLOps.md">
-        <img src="https://www.vectorlogo.zone/logos/numpy/numpy-icon.svg" alt="icon"> MLOps</a>
+        <img src="https://x.com/MLOps_Org/photo" alt="icon"> </a>
     </td>
    
 </tr>
