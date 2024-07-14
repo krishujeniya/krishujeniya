@@ -11,6 +11,55 @@
 
 </a>
 
+ <!--Social Media-->   
+<table width="120" align="left">
+  <tr>  
+         <td align="center" width="60">
+ <a href="https://twitter.com/krishujeniya" target="_blank">
+    <img src="https://img.icons8.com/?size=512&id=phOKFKYpe00C&format=png&color=FCC419" alt="Twitter" height="36" width="65"  />
+  </a>
+         </td>
+<td align="center" width="60">
+ <a href="https://linkedin.com/in/krishujeniya" target="_blank">
+    <img src="https://img.icons8.com/?size=512&id=8808&format=png&color=FCC419" alt="LinkedIn" height="36" width="65"  />
+  </a>
+         </td>
+<td align="center" width="60">
+ <a href="https://stackoverflow.com/users/krishujeniya" target="_blank">
+    <img src="https://img.icons8.com/?size=512&id=38517&format=png&color=FCC419" alt="Stack Overflow" height="36" width="65"  />
+  </a>
+         </td>
+<td align="center" width="60">
+ <a href="https://kaggle.com/krishujeniya" target="_blank">
+    <img src="https://img.icons8.com/?size=512&id=1iP83OYM1FL-&format=png&color=FCC419" alt="Kaggle" height="36" width="65"  />
+  </a>
+         </td>
+<td align="center" width="60">
+ <a href="https://instagram.com/krishujeniya" target="_blank">
+    <img src="https://img.icons8.com/?size=512&id=32309&format=png&color=FCC419" alt="Instagram" height="36" width="65"  />
+  </a>
+         </td>
+<td align="center" width="60">
+ <a href="https://medium.com/@krishujeniya" target="_blank">
+    <img src="https://img.icons8.com/?size=512&id=kXpTR7n8QCEP&format=png&color=FCC419" alt="Medium" height="36" width="65"  />
+  </a>
+         </td>
+<td align="center" width="60">
+ <a href="https://www.youtube.com/c/@AIDRAGO." target="_blank">
+    <img src="https://img.icons8.com/?size=512&id=37326&format=png&color=FCC419" alt="YouTube" height="36" width="65"  />
+  </a>
+         </td>
+<td align="center" width="60">
+  <a href="https://huggingface.co/krishujeniya" target="_blank">
+    <img src="https://img.icons8.com/?size=512&id=2daS1gO4xkKS&format=png&color=FCC419" alt="Hugging Face" height="36" width="65"  />
+  </a>    </td>
+
+
+  </tr>
+</table>
+
+
+ 
    
 <p align="left">  <img src="https://komarev.com/ghpvc/?username=krishujeniya&abbreviated=true" alt="KrishUjeniya" width=170 />
  </p>
@@ -134,55 +183,7 @@
 <img src="https://i.imgur.com/dBaSKWF.gif" height="20" width="100%">
 
 <h3 align="left">Let's colab 🚀</h3>
- <!--🌐💬Social Media-->   
-<table width="120" align="center">
-  <tr>  
-         <td align="center" width="60">
- <a href="https://twitter.com/krishujeniya" target="_blank">
-    <img src="https://img.icons8.com/?size=512&id=phOKFKYpe00C&format=png&color=FCC419" alt="Twitter" height="36" width="65"  />
-  </a>
-         </td>
-<td align="center" width="60">
- <a href="https://linkedin.com/in/krishujeniya" target="_blank">
-    <img src="https://img.icons8.com/?size=512&id=8808&format=png&color=FCC419" alt="LinkedIn" height="36" width="65"  />
-  </a>
-         </td>
-<td align="center" width="60">
- <a href="https://stackoverflow.com/users/krishujeniya" target="_blank">
-    <img src="https://img.icons8.com/?size=512&id=38517&format=png&color=FCC419" alt="Stack Overflow" height="36" width="65"  />
-  </a>
-         </td>
-<td align="center" width="60">
- <a href="https://kaggle.com/krishujeniya" target="_blank">
-    <img src="https://img.icons8.com/?size=512&id=1iP83OYM1FL-&format=png&color=FCC419" alt="Kaggle" height="36" width="65"  />
-  </a>
-         </td>
-<td align="center" width="60">
- <a href="https://instagram.com/krishujeniya" target="_blank">
-    <img src="https://img.icons8.com/?size=512&id=32309&format=png&color=FCC419" alt="Instagram" height="36" width="65"  />
-  </a>
-         </td>
-<td align="center" width="60">
- <a href="https://medium.com/@krishujeniya" target="_blank">
-    <img src="https://img.icons8.com/?size=512&id=kXpTR7n8QCEP&format=png&color=FCC419" alt="Medium" height="36" width="65"  />
-  </a>
-         </td>
-<td align="center" width="60">
- <a href="https://www.youtube.com/c/@AIDRAGO." target="_blank">
-    <img src="https://img.icons8.com/?size=512&id=37326&format=png&color=FCC419" alt="YouTube" height="36" width="65"  />
-  </a>
-         </td>
-<td align="center" width="60">
-  <a href="https://huggingface.co/krishujeniya" target="_blank">
-    <img src="https://img.icons8.com/?size=512&id=2daS1gO4xkKS&format=png&color=FCC419" alt="Hugging Face" height="36" width="65"  />
-  </a>    </td>
 
-
-  </tr>
-</table>
-
-
- 
 <img src="https://i.imgur.com/dBaSKWF.gif" height="50" width="100%">
 
 
