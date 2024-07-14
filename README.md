@@ -12,7 +12,7 @@
 </a>
 
  <!--Social Media-->   
-<table width="120" align="left">
+<table width="120">
   <tr>  
          <td align="center" width="60">
  <a href="https://twitter.com/krishujeniya" target="_blank">
