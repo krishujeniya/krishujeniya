@@ -106,25 +106,24 @@
  <a href="https://github.com/krishujeniya/krishujeniya/blob/main/Docs/FlutterLinuxSetup.md">
 <code><img height="36" width="65"  src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/flutter/flutter.png"></code>
 </a>
-         </td>
+         </td>  </tr>  <tr>  
+
+
  <td align="center" width="60">
- <a href="https://github.com/krishujeniya/krishujeniya/blob/main/Docs/FlutterLinuxSetup.md">
+ <a href="https://github.com/krishujeniya/krishujeniya/blob/main/Docs/SetupPHP.md">
 <code><img height="36" width="65"  src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/php/php.png"></code>
 </a>
          </td>
 
   </tr>
+  <tr>  
+         <td align="center" width="60">
+ <a href="https://github.com/krishujeniya/krishujeniya/blob/main/Docs/SetupMLOps.md">
+<code><img height="36" width="65"  src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/flutter/flutter.png"></code>
+</a>
+         </td>  </tr>  
 </table>
 
-<a href="https://github.com/krishujeniya/krishujeniya/blob/main/Docs/SetupPHP.md)">
-<code><img height="20" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/flutter/flutter.png"></code>
-</a>
-
-
-
-- [![mlflow](https://img.shields.io/badge/MLOPS-%23d9ead3.svg?style=for-the-badge&logo=numpy&logoColor=blue)](https://github.com/krishujeniya/krishujeniya/blob/main/Docs/SetupMLOps.md)
-
-- [![KivyMD](https://img.shields.io/badge/KivyMD-2C2255?style=for-the-badge&logo=python&logoColor=white)](https://github.com/krishujeniya/SAMPLE_KIVY)
 
 
 
