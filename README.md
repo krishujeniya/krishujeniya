@@ -1,5 +1,10 @@
+<p align="center"><a href="https://anuraghazra.github.io"> <img src='https://emojis.slackmojis.com/emojis/images/1531849430/4246/blob-sunglasses.gif?1531849430' width='50'/><img width="80%" alt="Hey, Nice to see you !" src="./assets/gh-readme-header.png" /></a></p>
 
- <img src='https://emojis.slackmojis.com/emojis/images/1531849430/4246/blob-sunglasses.gif?1531849430' width='50'/>
+
+
+I'm a self-taught passionate FrontEnd developer from India 🇮🇳
+
+
 
  
 [![Typing SVG](https://readme-typing-svg.herokuapp.com?font=poppins&color=FCC419&size=28&lines=Krish+Ujeniya+....)](https://bit.ly/KrishUjeniya)
