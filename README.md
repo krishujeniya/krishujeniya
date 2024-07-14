@@ -145,8 +145,9 @@
 </a>
  
  <p align="center">
-
-<img src="https://komarev.com/ghpvc/?username=krishujeniya&abbreviated=true&style=flat-square&color=brightgreen" alt="KrishUjeniya" width=170 />
+ <br/>
+<!-- views-->
+<img src="https://komarev.com/ghpvc/?username=krishujeniya&abbreviated=true&label=Profile+Views+Since+2024&style=flat-square&color=brightgreen" alt="KrishUjeniya" width=50% />
 </p>
 
  <p align="center">
