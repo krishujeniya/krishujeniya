@@ -1,8 +1,5 @@
-<p align="center"><img src='https://emojis.slackmojis.com/emojis/images/1531849430/4246/blob-sunglasses.gif?1531849430' width='50'/><<a href="https://anuraghazra.github.io"> img width="80%" alt="Hey, Nice to see you !" src="./assets/gh-readme-header.png" /></a></p>
+<img src='https://emojis.slackmojis.com/emojis/images/1531849430/4246/blob-sunglasses.gif?1531849430' width='50'/>
 
-
-
-I'm a self-taught passionate FrontEnd developer from India 🇮🇳
 
 
 
