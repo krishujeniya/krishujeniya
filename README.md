@@ -1,4 +1,4 @@
-<p align="center"><a href="https://anuraghazra.github.io"> <img src='https://emojis.slackmojis.com/emojis/images/1531849430/4246/blob-sunglasses.gif?1531849430' width='50'/><img width="80%" alt="Hey, Nice to see you !" src="./assets/gh-readme-header.png" /></a></p>
+<p align="center"><img src='https://emojis.slackmojis.com/emojis/images/1531849430/4246/blob-sunglasses.gif?1531849430' width='50'/><<a href="https://anuraghazra.github.io"> img width="80%" alt="Hey, Nice to see you !" src="./assets/gh-readme-header.png" /></a></p>
 
 
 
