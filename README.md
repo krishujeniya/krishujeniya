@@ -109,7 +109,7 @@
     </td>
     <td align='center' width="190">
       <a href="https://github.com/krishujeniya/krishujeniya/blob/main/Docs/SetupPHP.md">
-        <img src="https://www.vectorlogo.zone/logos/php/php-ar21.svg"></a>
+        <img src="https://static-00.iconduck.com/assets.00/php-icon-512x512-og0oh3rg.png"></a>
     </td>
     <td align='center' width="190">
       <a href="https://github.com/krishujeniya/krishujeniya/blob/main/Docs/SetupMLOps.md">
