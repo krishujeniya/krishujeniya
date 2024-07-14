@@ -150,7 +150,7 @@
  <p align="center">
  <br/>
 <!-- views-->
-<img src="https://komarev.com/ghpvc/?username=krishujeniya&abbreviated=true&label=Profile+Views+Since+2024&style=flat-square&color=brightgreen" alt="KrishUjeniya" width=50% />
+<img src="https://komarev.com/ghpvc/?username=krishujeniya&abbreviated=true&label=Profile+Views+Since+2024&style=flat-square&color=FCC419" alt="KrishUjeniya" width=50% />
 </p>
 
  <p align="center">
