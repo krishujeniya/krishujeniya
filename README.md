@@ -29,7 +29,6 @@
 
 - 📫 How to reach me **ukideashare0021@gmail.com**
 
-<img src="https://i.imgur.com/dBaSKWF.gif" height="20" width="100%">
 
 <h3 align="left">📚 Docs:</h3>
 
