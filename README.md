@@ -1,3 +1,10 @@
+<img align="left" src="https://user-images.githubusercontent.com/65187002/144930161-2f783401-8d27-4fdf-a2f7-cc0ba32f1f1f.gif" width="21%" style="display:inline;">
+
+
+
+
+
+
 <img src='https://emojis.slackmojis.com/emojis/images/1531849430/4246/blob-sunglasses.gif?1531849430' width='50'/>
 
 
@@ -86,6 +93,18 @@
   <a href="https://www.youtube.com/c/@AIDRAGO." target="_blank">
     <img src="https://img.icons8.com/?size=512&id=37326&format=png&color=FCC419" alt="YouTube" height="40" width="40" />
   </a>
+
+
+ 
+<img src="https://i.imgur.com/dBaSKWF.gif" height="20" width="100%">
+
+
+<img src="https://media.giphy.com/media/LnQjpWaON8nhr21vNW/giphy.gif" width="60"> <em><b>I love connecting with different people</b> so if you want to say <b>hi, I'll be happy to meet you more!</b> :)</em>
+
+<br>
+<p align="right" > Created with 🧡 by <a href="https://bit.ly/KrishUjeniya">Krish Ujeniya</a></p>
+
+
    <a href="https://huggingface.co/krishujeniya" target="_blank">
     <img src="https://img.icons8.com/?size=512&id=2daS1gO4xkKS&format=png&color=FCC419" alt="Hugging Face" height="40" width="40" />
   </a>
