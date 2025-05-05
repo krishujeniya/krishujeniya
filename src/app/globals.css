@@ -1,0 +1,185 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Remove font-family declaration as it's now handled by Tailwind config and GeistSans variable */
+/* body {
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+} */
+
+@layer base {
+  :root {
+    /* Updated Dark Theme: Tech-inspired with blue/green hues */
+    --background: 210 30% 8%; /* Darker, slightly blue background */
+    --foreground: 210 40% 98%; /* Almost White */
+    --card: 210 25% 12%; /* Slightly lighter card background, still dark blueish */
+    --card-foreground: 210 40% 96%; /* Slightly adjusted card foreground */
+    --popover: 210 30% 8%; /* Match background */
+    --popover-foreground: 210 40% 98%; /* Match foreground */
+    --primary: 210 40% 98%; /* Keep primary as almost white for contrast */
+    --primary-foreground: 222.2 47.4% 11.2%; /* Dark text on primary */
+    --secondary: 190 30% 15%; /* Dark cyan/teal secondary */
+    --secondary-foreground: 210 40% 98%; /* Foreground on secondary */
+    --muted: 190 20% 20%; /* Muted cyan/teal */
+    --muted-foreground: 215 20.2% 70%; /* Lighter muted foreground for readability */
+    --accent: 183 96% 74%; /* Electric Blue - Retained */
+    --accent-foreground: 222.2 47.4% 11.2%; /* Darker color for text on accent */
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 190 25% 22%; /* Cyan/teal border, slightly lighter than muted */
+    --input: 190 30% 15%; /* Match secondary */
+    --ring: 183 96% 74%; /* Electric Blue for rings */
+    --chart-1: 183 70% 50%;
+    --chart-2: 210 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+    --radius: 0.5rem;
+
+    /* Sidebar remains consistent with main theme */
+    --sidebar-background: 210 30% 8%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 183 96% 74%;
+    --sidebar-primary-foreground: 222.2 47.4% 11.2%;
+    --sidebar-accent: 190 30% 15%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 190 25% 22%;
+    --sidebar-ring: 183 96% 74%;
+  }
+
+  /* Keep .dark class for potential future theme switching, but apply dark vars by default */
+  .dark {
+    --background: 210 30% 8%;
+    --foreground: 210 40% 98%;
+    --card: 210 25% 12%;
+    --card-foreground: 210 40% 96%;
+    --popover: 210 30% 8%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 190 30% 15%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 190 20% 20%;
+    --muted-foreground: 215 20.2% 70%;
+    --accent: 183 96% 74%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 190 25% 22%;
+    --input: 190 30% 15%;
+    --ring: 183 96% 74%;
+    --chart-1: 183 70% 50%;
+    --chart-2: 210 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+
+    /* Sidebar remains consistent with main theme */
+    --sidebar-background: 210 30% 8%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 183 96% 74%;
+    --sidebar-primary-foreground: 222.2 47.4% 11.2%;
+    --sidebar-accent: 190 30% 15%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 190 25% 22%;
+    --sidebar-ring: 183 96% 74%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+     scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground text-base md:text-lg; /* Slightly larger base font */
+    /* Apply fade-in animation to the body */
+     animation: fadeIn 0.8s ease-out forwards;
+     opacity: 0;
+  }
+  section {
+    @apply py-24 md:py-32 lg:py-40; /* Increased padding for more white space */
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold tracking-tight;
+     text-shadow: 1px 1px 3px hsl(var(--background) / 0.4); /* Subtle text shadow for depth */
+  }
+
+  h1 { @apply text-4xl sm:text-5xl md:text-6xl lg:text-7xl; } /* Make H1 largest */
+  h2 { @apply text-3xl md:text-4xl lg:text-5xl; }
+  h3 { @apply text-2xl md:text-3xl lg:text-4xl; }
+
+  p {
+    @apply leading-relaxed text-muted-foreground; /* Use 1.5+ line-height */
+    line-height: 1.7; /* Explicitly set line-height */
+  }
+
+  /* Enhanced card hover effect */
+  .card-hover {
+    @apply transition-all duration-300 ease-in-out;
+  }
+  .card-hover:hover {
+     @apply shadow-xl shadow-accent/10 border-accent/40 scale-[1.03]; /* Adjusted shadow */
+  }
+
+}
+
+/* Keyframes for fade-in */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+
+/* Styling for 3D canvas */
+canvas {
+  display: block;
+  position: fixed !important; /* Ensure fixed positioning */
+  top: 0;
+  left: 0;
+  width: 100% !important; /* Ensure full coverage */
+  height: 100% !important; /* Ensure full coverage */
+  z-index: -1 !important; /* Explicitly set z-index */
+  background-color: transparent !important; /* Make canvas background transparent */
+  touch-action: none; /* Improve touch interaction */
+  pointer-events: none !important; /* Ensure clicks pass through the canvas itself */
+}
+
+/* Ensure the mount div for the canvas doesn't interfere */
+div[style*="position: fixed"][style*="z-index: -1"] {
+    pointer-events: none !important; /* Allow clicks to pass through the container div */
+}
+
+/* Ensure content is above the background */
+.relative.z-10 {
+  position: relative;
+  z-index: 10; /* Ensure content is above the background canvas */
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 12px; /* Slightly wider scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--background) / 0.7); /* Slightly more opaque track */
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--accent) / 0.7); /* More visible thumb, slightly stronger */
+  border-radius: 10px;
+  border: 3px solid hsl(var(--background)); /* Thicker border for better definition */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--accent)); /* Brighter on hover */
+}
+
+/* Improve focus states for accessibility */
+*:focus-visible {
+  @apply outline-none ring-2 ring-offset-2 ring-ring ring-offset-background rounded-sm; /* Added rounded-sm */
+}
