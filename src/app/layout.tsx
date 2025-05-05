@@ -42,7 +42,7 @@ export const metadata: Metadata = {
   },
   metadataBase: new URL('https://krishujeniya.github.io/krishujeniya/'), // Keep metadataBase
   icons: { // Keep favicon link
-    icon: '../../images/img1120.png?v=2',
+    icon: 'https://github.com/krishujeniya/krishujeniya/blob/63330f3970a76d5cbe9cb75b4ec3e8c0c3331089/images/img1120.png',
   },
 };
 
