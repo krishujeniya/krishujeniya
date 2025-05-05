@@ -1,7 +1,7 @@
 import type {NextConfig} from 'next';
 
 // Assuming the repository name is 'Krish-Ujeniya-Portfolio' for GitHub Pages deployment
-const repoName = 'krishujeniya21';
+const repoName = 'krishujeniya';
 
 const nextConfig: NextConfig = {
   /* config options here */
