@@ -21,7 +21,7 @@ const projects = [
   {
     title: 'Face Lock Desktop App',
     category: 'Python / Computer Vision / GUI',
-    imageUrl: 'https://picsum.photos/seed/facelock/600/400',
+    imageUrl: 'https://github.com/krishujeniya/FACE_LOCK_TKINTER/raw/main/logo.png',
     description: 'Created a desktop application using Tkinter and face recognition technology to secure access via facial identification.',
     link: 'https://github.com/krishujeniya/FACE_LOCK_TKINTER',
     aiHint: 'face recognition security software interface',
@@ -30,7 +30,7 @@ const projects = [
   {
     title: 'SnapText - OCR App',
     category: 'Flutter / Computer Vision',
-    imageUrl: 'https://picsum.photos/seed/snaptext/600/400',
+    imageUrl: 'https://github.com/krishujeniya/SNAPTEXT_OCR_FLUTTER/raw/main/assets/Screenshot%20from%202024-06-17%2011-33-12.png',
     description: 'Built a Flutter-based Optical Character Recognition (OCR) app for easy text extraction from images on mobile devices.',
     link: 'https://github.com/krishujeniya/SNAPTEXT_OCR_FLUTTER',
     aiHint: 'mobile app document scanner ocr',
@@ -39,7 +39,7 @@ const projects = [
   {
     title: 'Fitness Tracker ML Analysis',
     category: 'Machine Learning / Data Analysis',
-    imageUrl: 'https://picsum.photos/seed/fitnessml/600/400',
+    imageUrl: 'https://storage.googleapis.com/kaggle-datasets-images/5817988/9548984/ffc2841e628ea82c25a8b08b56b873ff/dataset-cover.png?t=2024-10-04-18-47-18',
     description: 'Analyzed fitness data using machine learning techniques in a Jupyter Notebook to uncover patterns and insights.',
     link: 'https://github.com/krishujeniya/Fitness-Tracker-ML',
     aiHint: 'fitness data dashboard chart',
@@ -48,7 +48,7 @@ const projects = [
   {
     title: 'EchoNest - Social Media App',
     category: 'Flutter Mobile App',
-    imageUrl: 'https://picsum.photos/seed/echonest/600/400',
+    imageUrl: 'https://github.com/krishujeniya/EchoNest-The-Social-Media-App/raw/main/assets/iw.png',
     description: 'Developed a cross-platform social media application using Flutter, focusing on real-time features and user engagement.',
     link: 'https://github.com/krishujeniya/EchoNest-The-Social-Media-App',
     aiHint: 'mobile app social media interface chat',
@@ -57,7 +57,7 @@ const projects = [
   {
     title: 'All-In-One Discord Bot',
     category: 'JavaScript / Bot Development',
-    imageUrl: 'https://picsum.photos/seed/discordbot/600/400',
+    imageUrl: 'https://github.com/krishujeniya/ALL-IN-ONE-DISCORD-BOT-USING-JS/raw/main/docs/.gitbook/assets/strange.png',
     description: 'Developed a multi-functional Discord bot using JavaScript, enhancing server interaction and management capabilities.',
     link: 'https://github.com/krishujeniya/ALL-IN-ONE-DISCORD-BOT-USING-JS',
     aiHint: 'discord bot interface code',
@@ -66,7 +66,7 @@ const projects = [
   {
     title: 'Coursly - E-learning platform',
     category: 'PHP / Web Development',
-    imageUrl: 'https://picsum.photos/seed/coursly/600/400',
+    imageUrl: 'https://github.com/krishujeniya/krishujeniya/blob/main/images/coursly11.png?raw=true',
     description: 'Built a robust e-learning platform with PHP, enabling delivery of online courses effectively and user management.',
     link: 'https://bit.ly/Coursly',
     aiHint: 'elearning website student dashboard online course',
