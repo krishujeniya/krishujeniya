@@ -23,7 +23,7 @@ export const FeaturedPostSection: FC = () => { // Renamed component
          {/* Placeholder for AI-generated image */}
          <div className="md:w-1/3 relative aspect-video md:aspect-auto">
              <Image
-                src="https://picsum.photos/seed/aimedium/600/400" // Placeholder image URL
+                src="https://github.com/krishujeniya/krishujeniya/blob/main/images/m1.png?raw=true" // Placeholder image URL
                 alt="AI predicting salaries concept"
                 fill
                 style={{ objectFit: 'cover' }}
