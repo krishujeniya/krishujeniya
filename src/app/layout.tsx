@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     siteName: 'Krish Ujeniya | AI Freelancer Portfolio', // Keep OG Site Name relevant
     images: [
       {
-        url: 'https://krishujeniya.github.io/krishujeniya/og.png', // Keep placeholder OG image URL
+        url: 'https://github.com/krishujeniya/krishujeniya/blob/63330f3970a76d5cbe9cb75b4ec3e8c0c3331089/images/img1120.png', // Keep placeholder OG image URL
         width: 1200,
         height: 630,
         alt: 'Krish Ujeniya Portfolio - Data Scientist, ML Engineer, LLM, MLOps', // Keep alt text relevant
