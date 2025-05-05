@@ -12,7 +12,7 @@ const projects = [
   {
     title: 'Salary Predictions For Data Professions',
     category: 'Machine Learning / MLOps',
-    imageUrl: 'https://github.com/krishujeniya/krishujeniya/blob/b37b9228d3737b5fd725b2a81ae89193c9fd43c4/images/echonest11.png',
+    imageUrl: 'https://github.com/krishujeniya/krishujeniya/blob/main/images/m1.png?raw=true',
     description: 'Engineered an ML pipeline using ZenML to predict data professional salaries, enabling data-driven compensation strategies.',
     link: 'https://huggingface.co/spaces/krishujeniya/Salary_Predictions_For_Data_Professions',
     aiHint: 'data science dashboard graph salary',
