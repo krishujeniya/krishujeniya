@@ -18,13 +18,13 @@ export const metadata: Metadata = {
   ],
   viewport: 'width=device-width, initial-scale=1',
   openGraph: {
-    title: 'Krish Ujeniya | Data Scientist & ML Engineer', // Keep OG Title relevant
+    title: 'Krish Ujeniya | Data Scientist', // Keep OG Title relevant
     description: 'Expert Freelance Data Scientist & ML Engineer specializing in AI Agents, LLMs, RAG, and MLOps pipelines.', // Keep OG Description relevant
-    url: 'https://krishujeniya.github.io/Krish-Ujeniya-Portfolio/', // Keep updated URL
+    url: 'https://krishujeniya.github.io/krishhujeniya/', // Keep updated URL
     siteName: 'Krish Ujeniya | AI Freelancer Portfolio', // Keep OG Site Name relevant
     images: [
       {
-        url: 'https://krishujeniya.github.io/Krish-Ujeniya-Portfolio/og.png', // Keep placeholder OG image URL
+        url: 'https://krishujeniya.github.io/krishujeniya/og.png', // Keep placeholder OG image URL
         width: 1200,
         height: 630,
         alt: 'Krish Ujeniya Portfolio - Data Scientist, ML Engineer, LLM, MLOps', // Keep alt text relevant
@@ -37,12 +37,12 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Krish Ujeniya | Data Scientist & ML Engineer', // Keep Twitter Title relevant
     description: 'Expert Freelance Data Scientist & ML Engineer specializing in AI Agents, LLMs, RAG, and MLOps pipelines.', // Keep Twitter Description relevant
-    images: ['https://krishujeniya.github.io/Krish-Ujeniya-Portfolio/twitter.png'], // Keep placeholder Twitter image URL
+    images: ['https://krishujeniya.github.io/krishujeniya/twitter.png'], // Keep placeholder Twitter image URL
     creator: '@krishujeniya',
   },
-  metadataBase: new URL('https://krishujeniya.github.io/Krish-Ujeniya-Portfolio/'), // Keep metadataBase
+  metadataBase: new URL('https://krishujeniya.github.io/krishujeniya/'), // Keep metadataBase
   icons: { // Keep favicon link
-    icon: '/favicon.ico?v=2',
+    icon: 'images/img1120.png?v=2',
   },
 };
 
