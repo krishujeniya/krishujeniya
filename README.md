@@ -111,7 +111,7 @@
     </td>
     <td align='center' width="190">
       <a href="https://github.com/krishujeniya/krishujeniya/blob/main/Docs/SetupPHP.md">
-        <img src="https://w7.pngwing.com/pngs/751/3/png-transparent-logo-php-html-others-text-trademark-logo-thumbnail.png"></a>
+        <img src="https://github.com/krishujeniya/krishujeniya/blob/main/images/php.png?raw=true"></a>
     </td>
     <td align='center' width="190">
       <a href="https://github.com/krishujeniya/krishujeniya/blob/main/Docs/SetupMLOps.md">
