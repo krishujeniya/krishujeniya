@@ -117,6 +117,10 @@
       <a href="https://github.com/krishujeniya/krishujeniya/blob/main/Docs/SetupMLOps.md">
         <img src="https://pbs.twimg.com/profile_images/1037085575642316801/A0nR3UsW_400x400.jpg" alt="icon"> </a>
     </td>
+    <td align='center' width="190">
+      <a href="https://github.com/krishujeniya/krishujeniya/blob/main/Docs/SetupN8N.md">
+        <img src="https://github.com/n8n-io/n8n/blob/master/assets/n8n-logo.png?raw=true" alt="icon"> </a>
+    </td>
    
 </tr>
 </table>
