@@ -105,19 +105,19 @@
 
 <table width="100">
     <tr>
-    <td align='center' width="120">
+    <td align='center' width="140">
       <a href="https://github.com/krishujeniya/krishujeniya/blob/main/Docs/FlutterLinuxSetup.md">
         <img src="https://www.vectorlogo.zone/logos/flutterio/flutterio-ar21.svg"></a>
     </td>
-    <td align='center' width="120">
+    <td align='center' width="140">
       <a href="https://github.com/krishujeniya/krishujeniya/blob/main/Docs/SetupPHP.md">
         <img src="https://github.com/krishujeniya/krishujeniya/blob/main/images/php.png?raw=true"></a>
     </td>
-    <td align='center' width="120">
+    <td align='center' width="140">
       <a href="https://github.com/krishujeniya/krishujeniya/blob/main/Docs/SetupMLOps.md">
         <img src="https://pbs.twimg.com/profile_images/1037085575642316801/A0nR3UsW_400x400.jpg" alt="icon"> </a>
     </td>
-    <td align='center' width="120">
+    <td align='center' width="140">
       <a href="https://github.com/krishujeniya/krishujeniya/blob/main/Docs/SetupN8N.md">
         <img src="https://github.com/n8n-io/n8n/blob/master/assets/n8n-logo.png?raw=true" alt="icon"> </a>
     </td>
