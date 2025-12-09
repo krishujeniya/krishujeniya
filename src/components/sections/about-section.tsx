@@ -1,6 +1,7 @@
 import type { FC } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, cardHoverClasses } from '@/components/ui/card'; // Import cardHoverClasses
 import { Sparkles } from 'lucide-react'; // Icon for passion/innovation
+import { cn } from '@/lib/utils';
 
 export const AboutSection: FC = () => {
   return (
