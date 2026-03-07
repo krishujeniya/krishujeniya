@@ -1,12 +1,14 @@
 
 import type { FC } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Briefcase, BrainCircuit, Smartphone, Code2 } from 'lucide-react'; // Replaced Python with BrainCircuit
 import { cn } from '@/lib/utils'; // Import cn utility
 import { cardHoverClasses } from '@/components/ui/card'; // Import cardHoverClasses
+import { AnimatedSection } from '@/components/ui/animated-section';
+import { GlassCard } from '@/components/ui/glass-card';
 
 const workExperience = [
-   {
+  {
     role: 'Freelance ML & Software Engineer',
     company: 'Self-Employed',
     duration: '2023 - Present',
@@ -46,34 +48,34 @@ const workExperience = [
 
 export const ExperienceSection: FC = () => {
   return (
-    <section id="experience" className="container mx-auto px-4">
+    <AnimatedSection id="experience" className="container mx-auto px-4">
       <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-accent">Professional Journey</h2>
       <div className="space-y-8 max-w-4xl mx-auto">
         {workExperience.map((exp, index) => (
-           <Card key={index} className={cn(
-             "bg-card/80 border border-border shadow-lg",
-             cardHoverClasses // Apply cardHoverClasses
-           )}>
+          <GlassCard key={index} className={cn(
+            "border border-border shadow-lg",
+            cardHoverClasses // Apply cardHoverClasses
+          )}>
             <CardHeader>
-               <div className="flex items-start gap-4">
-                 <exp.icon className="h-8 w-8 text-accent mt-1 shrink-0" />
-                 <div>
-                   <CardTitle className="text-xl text-foreground">{exp.role} - <span className="font-normal text-muted-foreground">{exp.company}</span></CardTitle>
-                   <CardDescription className="text-muted-foreground mt-1">
+              <div className="flex items-start gap-4">
+                <exp.icon className="h-8 w-8 text-accent mt-1 shrink-0" />
+                <div>
+                  <CardTitle className="text-xl text-foreground">{exp.role} - <span className="font-normal text-muted-foreground">{exp.company}</span></CardTitle>
+                  <CardDescription className="text-muted-foreground mt-1">
                     {exp.duration} | {exp.location}
-                   </CardDescription>
-                 </div>
+                  </CardDescription>
+                </div>
               </div>
             </CardHeader>
             <CardContent>
               <p className="text-foreground leading-relaxed mb-3">{exp.description}</p> {/* Added margin bottom */}
               <p className="text-sm text-accent font-medium bg-accent/10 px-3 py-1 rounded-md inline-block"> {/* Highlight achievement */}
-                 {exp.achievement} {/* Display simplified achievement/tool text */}
+                {exp.achievement} {/* Display simplified achievement/tool text */}
               </p>
             </CardContent>
-          </Card>
+          </GlassCard>
         ))}
       </div>
-    </section>
+    </AnimatedSection>
   );
 };

@@ -14,10 +14,18 @@ const socialLinks = [
 ];
 
 
+import { motion } from 'framer-motion';
+
 export const FooterSection: FC = () => {
-    const currentYear = new Date().getFullYear();
+  const currentYear = new Date().getFullYear();
   return (
-    <footer id="contact" className="py-16 mt-20 border-t border-border bg-card/80"> {/* Adjusted background */}
+    <motion.footer
+      id="contact"
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.8 }}
+      className="py-16 mt-20 border-t border-border bg-black/20 backdrop-blur-xl supports-[backdrop-filter]:bg-black/10 shadow-[0_-8px_32px_0_rgba(0,0,0,0.3)]">
       <div className="container mx-auto px-4 text-center">
         <h3 className="text-3xl md:text-4xl font-bold text-accent mb-6">Let's Build Something Intelligent</h3> {/* Updated title */}
         <p className="text-muted-foreground mb-8 max-w-lg mx-auto">
@@ -26,26 +34,26 @@ export const FooterSection: FC = () => {
 
         {/* Email Button */}
         <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-12">
-           <Button size="lg" asChild className="bg-accent text-accent-foreground hover:bg-accent/90 focus:ring-accent transition-all duration-300 shadow-lg hover:shadow-xl">
-              <Link href="mailto:ukideashare0021@gmail.com">
-                 <Mail className="mr-2 h-5 w-5" /> Email Me
-              </Link>
-            </Button>
-             {/* Removed Schedule a Call button */}
+          <Button size="lg" asChild className="bg-accent text-accent-foreground hover:bg-accent/90 focus:ring-accent transition-all duration-300 shadow-lg hover:shadow-xl">
+            <Link href="mailto:ukideashare0021@gmail.com">
+              <Mail className="mr-2 h-5 w-5" /> Email Me
+            </Link>
+          </Button>
+          {/* Removed Schedule a Call button */}
         </div>
 
         {/* Social Links */}
-         <p className="text-muted-foreground mb-6">Connect on social media:</p>
+        <p className="text-muted-foreground mb-6">Connect on social media:</p>
         <div className="flex flex-wrap justify-center gap-4 mb-10">
           {socialLinks.map((link) => (
             <Button key={link.name} variant="outline" size="icon" asChild className="border-accent/50 hover:bg-accent hover:text-accent-foreground transition-colors duration-300 focus:ring-accent tooltip-container">
-               <Link href={link.url} target="_blank" rel="noopener noreferrer" aria-label={link.name}>
-                 <span className="inline-flex items-center justify-center">
-                    <link.icon />
-                    <span className="tooltip-text bg-popover text-popover-foreground text-xs rounded py-1 px-2 absolute -top-8 left-1/2 transform -translate-x-1/2 whitespace-nowrap opacity-0 transition-opacity duration-300 pointer-events-none">
-                        {link.name}
-                    </span>
-                 </span>
+              <Link href={link.url} target="_blank" rel="noopener noreferrer" aria-label={link.name}>
+                <span className="inline-flex items-center justify-center">
+                  <link.icon />
+                  <span className="tooltip-text bg-popover text-popover-foreground text-xs rounded py-1 px-2 absolute -top-8 left-1/2 transform -translate-x-1/2 whitespace-nowrap opacity-0 transition-opacity duration-300 pointer-events-none">
+                    {link.name}
+                  </span>
+                </span>
               </Link>
             </Button>
           ))}
@@ -58,11 +66,11 @@ export const FooterSection: FC = () => {
           © {currentYear} Krish Ujeniya. All Rights Reserved.
         </p>
       </div>
-       <style jsx>{`
+      <style jsx>{`
         .tooltip-container:hover .tooltip-text {
           opacity: 1;
         }
       `}</style>
-    </footer>
+    </motion.footer>
   );
 };

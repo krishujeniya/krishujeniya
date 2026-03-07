@@ -1,8 +1,10 @@
 
 import type { FC } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, cardHoverClasses } from '@/components/ui/card'; // Import cardHoverClasses
+import { CardContent, CardDescription, CardHeader, CardTitle, cardHoverClasses } from '@/components/ui/card'; // Import cardHoverClasses
 import { Award, BrainCircuit, BotMessageSquare, Sparkles, Megaphone } from 'lucide-react'; // Added more relevant icons
 import { cn } from '@/lib/utils'; // Import cn utility
+import { AnimatedSection } from '@/components/ui/animated-section';
+import { GlassCard } from '@/components/ui/glass-card';
 
 // Define certificate data with icons
 const certificates = [
@@ -34,15 +36,15 @@ const certificates = [
 
 export const CertificatesSection: FC = () => {
   return (
-    <section id="certificates" className="container mx-auto px-4">
+    <AnimatedSection id="certificates" className="container mx-auto px-4">
       <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-accent">Credentials & Certifications</h2>
       <p className="text-center text-muted-foreground mb-12 max-w-3xl mx-auto">
         Validated expertise in cutting-edge fields like Machine Learning, Generative AI, and Digital Marketing through industry-recognized certifications.
       </p>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8"> {/* Changed to 4 columns on large screens */}
         {certificates.map((cert, index) => (
-          <Card key={index} className={cn(
-            "bg-card/80 border border-border shadow-lg flex flex-col items-center text-center p-6",
+          <GlassCard key={index} className={cn(
+            "border border-border shadow-lg flex flex-col items-center text-center p-6",
             cardHoverClasses, // Apply cardHoverClasses
             "hover:scale-[1.03]" // Keep scale effect separate if desired
           )}>
@@ -54,9 +56,9 @@ export const CertificatesSection: FC = () => {
             <CardContent className="p-0 flex-grow"> {/* Removed padding */}
               <p className="text-foreground/90 text-sm leading-relaxed">{cert.description}</p> {/* Slightly dimmer description text */}
             </CardContent>
-          </Card>
+          </GlassCard>
         ))}
       </div>
-    </section>
+    </AnimatedSection>
   );
 };
