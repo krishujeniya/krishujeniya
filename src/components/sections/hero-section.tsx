@@ -15,11 +15,11 @@ export const HeroSection: FC = () => {
   return (
     <section id="home" className="min-h-screen flex flex-col items-center justify-center text-center px-4 relative">
       <div className="absolute inset-0 " aria-hidden="true"></div> {/* Optional: Add a subtle gradient overlay if needed */}
-      <GlassCard className="relative z-10 p-10 md:p-16 max-w-4xl mx-auto flex flex-col items-center justify-center"> {/* Content wrapper */}
+      <GlassCard className="relative z-10 p-6 sm:p-10 md:p-16 max-w-4xl mx-auto flex flex-col items-center justify-center"> {/* Content wrapper */}
         {/* Headline: Updated, Largest, boldest */}
-        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 text-foreground animate-fade-in-up flex items-center justify-center gap-4">
-          <Sparkles className="h-10 w-10 md:h-12 md:w-12 text-accent inline-block" /> {/* Added icon */}
-          Krish Ujeniya | Data Scientist {/* Updated Title */}
+        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 text-foreground animate-fade-in-up flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-center">
+          <Sparkles className="h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 text-accent" /> {/* Added icon */}
+          <span>Krish Ujeniya | Data Scientist</span> {/* Updated Title */}
         </h1>
         {/* Subhead: Updated, Smaller, accent color */}
         <p className="text-lg sm:text-xl md:text-2xl text-accent mb-8 animate-fade-in-up animation-delay-200 max-w-2xl mx-auto">

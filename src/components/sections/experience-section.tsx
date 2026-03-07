@@ -59,8 +59,8 @@ export const ExperienceSection: FC = () => {
             <CardHeader>
               <div className="flex items-start gap-4">
                 <exp.icon className="h-8 w-8 text-accent mt-1 shrink-0" />
-                <div>
-                  <CardTitle className="text-xl text-foreground">{exp.role} - <span className="font-normal text-muted-foreground">{exp.company}</span></CardTitle>
+                <div className="flex-1 min-w-0">
+                  <CardTitle className="text-lg md:text-xl text-foreground break-words">{exp.role} - <span className="font-normal text-muted-foreground">{exp.company}</span></CardTitle>
                   <CardDescription className="text-muted-foreground mt-1">
                     {exp.duration} | {exp.location}
                   </CardDescription>
