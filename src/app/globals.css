@@ -10,80 +10,80 @@
 
 @layer base {
   :root {
-    /* Updated Dark Theme: Tech-inspired with blue/green hues */
-    --background: 210 30% 8%; /* Darker, slightly blue background */
-    --foreground: 210 40% 98%; /* Almost White */
-    --card: 210 25% 12%; /* Slightly lighter card background, still dark blueish */
-    --card-foreground: 210 40% 96%; /* Slightly adjusted card foreground */
-    --popover: 210 30% 8%; /* Match background */
-    --popover-foreground: 210 40% 98%; /* Match foreground */
-    --primary: 210 40% 98%; /* Keep primary as almost white for contrast */
-    --primary-foreground: 222.2 47.4% 11.2%; /* Dark text on primary */
-    --secondary: 190 30% 15%; /* Dark cyan/teal secondary */
-    --secondary-foreground: 210 40% 98%; /* Foreground on secondary */
-    --muted: 190 20% 20%; /* Muted cyan/teal */
-    --muted-foreground: 215 20.2% 70%; /* Lighter muted foreground for readability */
-    --accent: 183 96% 74%; /* Electric Blue - Retained */
-    --accent-foreground: 222.2 47.4% 11.2%; /* Darker color for text on accent */
+    /* AMOLED Dark Theme: Pure Black and White */
+    --background: 0 0% 0%; /* AMOLED Pure Black */
+    --foreground: 0 0% 100%; /* Pure White */
+    --card: 0 0% 3%; /* Very dark grey card */
+    --card-foreground: 0 0% 100%; /* Pure White */
+    --popover: 0 0% 0%; /* Pure Black */
+    --popover-foreground: 0 0% 100%; /* Pure White */
+    --primary: 0 0% 100%; /* Pure White */
+    --primary-foreground: 0 0% 0%; /* Pure Black */
+    --secondary: 0 0% 5%; /* Very dark grey */
+    --secondary-foreground: 0 0% 100%; /* Pure White */
+    --muted: 0 0% 10%; /* Dark grey */
+    --muted-foreground: 0 0% 65%; /* Light grey */
+    --accent: 0 0% 100%; /* Pure White */
+    --accent-foreground: 0 0% 0%; /* Pure Black */
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 190 25% 22%; /* Cyan/teal border, slightly lighter than muted */
-    --input: 190 30% 15%; /* Match secondary */
-    --ring: 183 96% 74%; /* Electric Blue for rings */
-    --chart-1: 183 70% 50%;
-    --chart-2: 210 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 12%; /* Dark grey border */
+    --input: 0 0% 5%; /* Very dark grey input */
+    --ring: 0 0% 100%; /* Pure White ring */
+    --chart-1: 0 0% 50%;
+    --chart-2: 0 0% 45%;
+    --chart-3: 0 0% 40%;
+    --chart-4: 0 0% 35%;
+    --chart-5: 0 0% 30%;
     --radius: 0.5rem;
 
     /* Sidebar remains consistent with main theme */
-    --sidebar-background: 210 30% 8%;
-    --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 183 96% 74%;
-    --sidebar-primary-foreground: 222.2 47.4% 11.2%;
-    --sidebar-accent: 190 30% 15%;
-    --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 190 25% 22%;
-    --sidebar-ring: 183 96% 74%;
+    --sidebar-background: 0 0% 0%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 0 0% 100%;
+    --sidebar-primary-foreground: 0 0% 0%;
+    --sidebar-accent: 0 0% 5%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 0 0% 12%;
+    --sidebar-ring: 0 0% 100%;
   }
 
   /* Keep .dark class for potential future theme switching, but apply dark vars by default */
   .dark {
-    --background: 210 30% 8%;
-    --foreground: 210 40% 98%;
-    --card: 210 25% 12%;
-    --card-foreground: 210 40% 96%;
-    --popover: 210 30% 8%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 190 30% 15%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 190 20% 20%;
-    --muted-foreground: 215 20.2% 70%;
-    --accent: 183 96% 74%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
+    --card: 0 0% 3%;
+    --card-foreground: 0 0% 100%;
+    --popover: 0 0% 0%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 0 0% 100%;
+    --primary-foreground: 0 0% 0%;
+    --secondary: 0 0% 5%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 0 0% 10%;
+    --muted-foreground: 0 0% 65%;
+    --accent: 0 0% 100%;
+    --accent-foreground: 0 0% 0%;
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 190 25% 22%;
-    --input: 190 30% 15%;
-    --ring: 183 96% 74%;
-    --chart-1: 183 70% 50%;
-    --chart-2: 210 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 12%;
+    --input: 0 0% 5%;
+    --ring: 0 0% 100%;
+    --chart-1: 0 0% 50%;
+    --chart-2: 0 0% 45%;
+    --chart-3: 0 0% 40%;
+    --chart-4: 0 0% 35%;
+    --chart-5: 0 0% 30%;
 
     /* Sidebar remains consistent with main theme */
-    --sidebar-background: 210 30% 8%;
-    --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 183 96% 74%;
-    --sidebar-primary-foreground: 222.2 47.4% 11.2%;
-    --sidebar-accent: 190 30% 15%;
-    --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 190 25% 22%;
-    --sidebar-ring: 183 96% 74%;
+    --sidebar-background: 0 0% 0%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 0 0% 100%;
+    --sidebar-primary-foreground: 0 0% 0%;
+    --sidebar-accent: 0 0% 5%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 0 0% 12%;
+    --sidebar-ring: 0 0% 100%;
   }
 }
 
