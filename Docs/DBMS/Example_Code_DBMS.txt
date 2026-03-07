@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 A] CREATE TABLE ACCOUNT (
     	acc_no VARCHAR2(255) PRIMARY KEY,
     	name VARCHAR(255),
