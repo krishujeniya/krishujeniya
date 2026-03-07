@@ -7,6 +7,12 @@ import { Toaster } from '@/components/ui/toaster';
 import { ThemeProvider } from '@/components/theme-provider';
 
 
+export const viewport: import('next').Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+};
+
 export const metadata: Metadata = {
   title: 'Krish Ujeniya | Data Scientist', // Updated Title
   description: 'Krish Ujeniya - Freelance Data Scientist & ML Engineer specializing in building intelligent systems with AI Agents, LLMs, RAG, and MLOps pipelines that transform businesses.', // Keep description relevant
@@ -16,7 +22,6 @@ export const metadata: Metadata = {
     'Python Developer', 'Generative AI', 'Vector Databases', 'ML Pipelines', 'ZenML', 'MLflow',
     'Data Science Consultant', 'AI Development', 'Krish Ujeniya', 'Portfolio', 'Freelancer'
   ],
-  viewport: 'width=device-width, initial-scale=1',
   openGraph: {
     title: 'Krish Ujeniya | Data Scientist', // Keep OG Title relevant
     description: 'Expert Freelance Data Scientist & ML Engineer specializing in AI Agents, LLMs, RAG, and MLOps pipelines.', // Keep OG Description relevant
