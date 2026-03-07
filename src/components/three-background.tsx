@@ -22,17 +22,17 @@ export const ThreeBackground = () => {
     const points = [];
     for (let i = 0; i < NUM_POINTS; i++) {
       // Distribute points somewhat evenly within a sphere volume
-       const phi = Math.acos(-1 + (2 * i) / NUM_POINTS);
-       const theta = Math.sqrt(NUM_POINTS * Math.PI) * phi;
+      const phi = Math.acos(-1 + (2 * i) / NUM_POINTS);
+      const theta = Math.sqrt(NUM_POINTS * Math.PI) * phi;
 
-       let x = SPHERE_RADIUS * Math.sin(phi) * Math.cos(theta);
-       let y = SPHERE_RADIUS * Math.sin(phi) * Math.sin(theta);
-       let z = SPHERE_RADIUS * Math.cos(phi);
+      let x = SPHERE_RADIUS * Math.sin(phi) * Math.cos(theta);
+      let y = SPHERE_RADIUS * Math.sin(phi) * Math.sin(theta);
+      let z = SPHERE_RADIUS * Math.cos(phi);
 
-        // Add slight random perturbation for less grid-like appearance
-        x += (Math.random() - 0.5) * 0.1 * SPHERE_RADIUS;
-        y += (Math.random() - 0.5) * 0.1 * SPHERE_RADIUS;
-        z += (Math.random() - 0.5) * 0.1 * SPHERE_RADIUS;
+      // Add slight random perturbation for less grid-like appearance
+      x += (Math.random() - 0.5) * 0.1 * SPHERE_RADIUS;
+      y += (Math.random() - 0.5) * 0.1 * SPHERE_RADIUS;
+      z += (Math.random() - 0.5) * 0.1 * SPHERE_RADIUS;
 
 
       points.push(new THREE.Vector3(x, y, z));
@@ -85,34 +85,34 @@ export const ThreeBackground = () => {
     // Lighting (Adjusted slightly for points/lines)
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.4); // Reduced ambient light
     scene.add(ambientLight);
-    const pointLight = new THREE.PointLight(0x7DF9FF, 0.8, 150); // Reduced point light intensity
+    const pointLight = new THREE.PointLight(0xffffff, 0.8, 150); // White point light
     pointLight.position.set(0, 3, 4); // Adjusted position
     scene.add(pointLight);
     const directionalLight = new THREE.DirectionalLight(0xffffff, 0.3); // Reduced directional light
     directionalLight.position.set(-5, 5, 5);
     scene.add(directionalLight);
-    const backLight = new THREE.PointLight(0x7DF9FF, 0.5, 100); // Reduced backlight intensity
+    const backLight = new THREE.PointLight(0xffffff, 0.5, 100); // White backlight
     backLight.position.set(0, -3, -4); // Adjusted position
     scene.add(backLight);
 
     // Create Points Object
     const pointsMaterial = new THREE.PointsMaterial({
-        color: 0x7DF9FF, // Electric Blue
-        size: POINT_SIZE,
-        sizeAttenuation: true, // Points scale with distance
-        transparent: true,
-        opacity: 0.7, // Slightly reduced opacity
-        blending: THREE.NormalBlending, // Changed from AdditiveBlending
+      color: 0xffffff, // White
+      size: POINT_SIZE,
+      sizeAttenuation: true, // Points scale with distance
+      transparent: true,
+      opacity: 0.7, // Slightly reduced opacity
+      blending: THREE.NormalBlending, // Changed from AdditiveBlending
     });
     const pointCloud = new THREE.Points(pointsGeometry, pointsMaterial);
 
     // Create Lines Object
     const linesMaterial = new THREE.LineBasicMaterial({
-        color: 0x7DF9FF, // Electric Blue
-        transparent: true,
-        opacity: LINE_OPACITY,
-        blending: THREE.NormalBlending, // Changed from AdditiveBlending
-        depthWrite: false, // Prevents lines from obscuring points behind them too much
+      color: 0xffffff, // White
+      transparent: true,
+      opacity: LINE_OPACITY,
+      blending: THREE.NormalBlending, // Changed from AdditiveBlending
+      depthWrite: false, // Prevents lines from obscuring points behind them too much
     });
     const lineSegmentsMesh = new THREE.LineSegments(linesGeometry, linesMaterial);
 
@@ -137,7 +137,7 @@ export const ThreeBackground = () => {
 
     // Scroll listener
     const onScroll = () => {
-        scrollY.current = window.scrollY;
+      scrollY.current = window.scrollY;
     }
 
     window.addEventListener('mousemove', onMouseMove);
@@ -184,9 +184,9 @@ export const ThreeBackground = () => {
       window.removeEventListener('scroll', onScroll);
 
       // Safely remove the canvas
-       if (currentMount && renderer.domElement.parentNode === currentMount) {
-         currentMount.removeChild(renderer.domElement);
-       }
+      if (currentMount && renderer.domElement.parentNode === currentMount) {
+        currentMount.removeChild(renderer.domElement);
+      }
 
       // Dispose Three.js objects
       renderer.dispose();
