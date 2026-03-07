@@ -1,6 +1,8 @@
 import type { FC } from 'react';
 import Image from 'next/image';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, cardHoverClasses } from '@/components/ui/card';
+import { CardContent, CardDescription, CardFooter, CardHeader, CardTitle, cardHoverClasses } from '@/components/ui/card';
+import { GlassCard } from '@/components/ui/glass-card';
+import { AnimatedSection } from '@/components/ui/animated-section';
 import { Button } from '@/components/ui/button';
 import { ExternalLink, Layers } from 'lucide-react'; // Layers icon is imported but will be removed from use
 import Link from 'next/link';
@@ -43,7 +45,7 @@ const projects = [
     description: 'Analyzed fitness data using machine learning techniques in a Jupyter Notebook to uncover patterns and insights.',
     link: 'https://github.com/krishujeniya/Fitness-Tracker-ML',
     aiHint: 'fitness data dashboard chart',
-     techStack: ['Python', 'Jupyter', 'Pandas', 'Matplotlib'],
+    techStack: ['Python', 'Jupyter', 'Pandas', 'Matplotlib'],
   },
   {
     title: 'EchoNest - Social Media App',
@@ -77,15 +79,15 @@ const projects = [
 
 export const ProjectsSection: FC = () => {
   return (
-    <section id="projects" className="container mx-auto px-4">
+    <AnimatedSection id="projects" className="container mx-auto px-4">
       <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-accent">Featured AI Projects</h2> {/* Updated Title */}
-       <p className="text-center text-muted-foreground mb-12 max-w-3xl mx-auto">
+      <p className="text-center text-muted-foreground mb-12 max-w-3xl mx-auto">
         Explore practical applications of AI and Machine Learning, from MLOps pipelines to computer vision and full-stack solutions. Each project demonstrates innovative problem-solving and technical expertise.
       </p>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
         {projects.map((project, index) => (
-          <Card key={index} className={cn(
-            "bg-card/80 border border-border shadow-lg overflow-hidden flex flex-col group/card",
+          <GlassCard key={index} className={cn(
+            "overflow-hidden flex flex-col group/card",
             cardHoverClasses // Apply consistent hover effect
           )}>
             <CardHeader className="p-0 relative">
@@ -100,32 +102,32 @@ export const ProjectsSection: FC = () => {
                   data-ai-hint={project.aiHint}
                   priority={index < 4} // Prioritize loading images above the fold
                 />
-                 {/* Removed Case Study overlay */}
+                {/* Removed Case Study overlay */}
               </div>
             </CardHeader>
             <CardContent className="p-4 md:p-6 flex-grow">
               <CardTitle className="text-lg md:text-xl text-foreground mb-2 leading-snug">{project.title}</CardTitle>
               <CardDescription className="text-xs md:text-sm text-accent font-medium mb-3">{project.category}</CardDescription>
               <p className="text-muted-foreground text-sm leading-relaxed mb-4">{project.description}</p>
-               <div className="flex flex-wrap gap-1.5 mt-auto pt-2 border-t border-border/20">
-                 {/* Removed Layers icon */}
-                 {project.techStack.map((tech) => (
-                   <Badge key={tech} variant="secondary" className="text-xs font-normal">{tech}</Badge>
-                 ))}
-               </div>
+              <div className="flex flex-wrap gap-1.5 mt-auto pt-2 border-t border-border/20">
+                {/* Removed Layers icon */}
+                {project.techStack.map((tech) => (
+                  <Badge key={tech} variant="secondary" className="text-xs font-normal">{tech}</Badge>
+                ))}
+              </div>
             </CardContent>
             <CardFooter className="p-4 md:p-6 pt-0">
               <Button variant="outline" asChild className="w-full hover:bg-accent hover:text-accent-foreground focus:ring-accent group/link">
                 <Link href={project.link} target="_blank" rel="noopener noreferrer">
-                   <span className="inline-flex items-center">
-                     View Details <ExternalLink className="ml-2 h-4 w-4 group-hover/link:translate-x-1 transition-transform duration-200" />
-                   </span>
+                  <span className="inline-flex items-center">
+                    View Details <ExternalLink className="ml-2 h-4 w-4 group-hover/link:translate-x-1 transition-transform duration-200" />
+                  </span>
                 </Link>
               </Button>
             </CardFooter>
-          </Card>
+          </GlassCard>
         ))}
       </div>
-    </section>
+    </AnimatedSection>
   );
 };
