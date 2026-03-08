@@ -1,72 +1,198 @@
-'use client'; // Keep as client component for onClick handlers
+'use client';
 
 import type { FC } from 'react';
-import { Button } from '@/components/ui/button';
-import { Eye, Send as SendIcon, Sparkles } from 'lucide-react'; // Added Sparkles icon
-import Link from 'next/link';
-// import { TypeAnimation } from 'react-type-animation'; // Import removed as type animation isn't implemented
-import { GlassCard } from '@/components/ui/glass-card';
+import { useEffect, useRef, useState } from 'react';
+import { motion } from 'framer-motion';
+import { ChevronDown } from 'lucide-react';
+
+const TITLE_TEXT = 'KRISH UJENIYA';
+const SUBTITLE_TEXT = 'DATA SCIENTIST & ML ENGINEER';
+const TAGLINE = 'Building intelligent systems with AI Agents, LLMs & MLOps pipelines that transform businesses.';
+
+const letterVariants = {
+  hidden: { opacity: 0, y: 60, rotateX: -90, filter: 'blur(8px)' },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    rotateX: 0,
+    filter: 'blur(0px)',
+    transition: {
+      delay: 0.6 + i * 0.04,
+      duration: 0.6,
+      ease: [0.22, 1, 0.36, 1] as const,
+    },
+  }),
+};
+
+const subtitleVariants = {
+  hidden: { opacity: 0, y: 30, letterSpacing: '0.5em' },
+  visible: {
+    opacity: 1,
+    y: 0,
+    letterSpacing: '0.3em',
+    transition: {
+      delay: 1.8,
+      duration: 1,
+      ease: [0.22, 1, 0.36, 1] as const,
+    },
+  },
+};
+
+const taglineVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: 2.4,
+      duration: 0.8,
+      ease: [0.22, 1, 0.36, 1] as const,
+    },
+  },
+};
+
+const ctaVariants = {
+  hidden: { opacity: 0, scale: 0.8 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: {
+      delay: 2.8,
+      duration: 0.6,
+      ease: [0.22, 1, 0.36, 1] as const,
+    },
+  },
+};
+
+const scrollIndicatorVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { delay: 3.2, duration: 0.8 },
+  },
+};
 
 export const HeroSection: FC = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!sectionRef.current) return;
+      const rect = sectionRef.current.getBoundingClientRect();
+      setMousePos({
+        x: ((e.clientX - rect.left) / rect.width - 0.5) * 20,
+        y: ((e.clientY - rect.top) / rect.height - 0.5) * 20,
+      });
+    };
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
   const handleScrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
-    <section id="home" className="min-h-screen flex flex-col items-center justify-center text-center px-4 relative">
-      <div className="absolute inset-0 " aria-hidden="true"></div> {/* Optional: Add a subtle gradient overlay if needed */}
-      <GlassCard className="relative z-10 p-6 sm:p-10 md:p-16 max-w-4xl mx-auto flex flex-col items-center justify-center"> {/* Content wrapper */}
-        {/* Headline: Updated, Largest, boldest */}
-        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 text-foreground animate-fade-in-up flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-center">
-          <Sparkles className="h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 text-accent" /> {/* Added icon */}
-          <span>Krish Ujeniya | Data Scientist</span> {/* Updated Title */}
-        </h1>
-        {/* Subhead: Updated, Smaller, accent color */}
-        <p className="text-lg sm:text-xl md:text-2xl text-accent mb-8 animate-fade-in-up animation-delay-200 max-w-2xl mx-auto">
-          Building intelligent systems with LLMs, AI Agents & MLOps pipelines that transform businesses
-        </p>
+    <section
+      ref={sectionRef}
+      id="home"
+      className="hero-section"
+    >
+      {/* Radial gradient overlay */}
+      <div className="hero-gradient-overlay" aria-hidden="true" />
 
-        {/* REMOVED: Sub-subhead for dynamic typing */}
-        {/* <div className="text-xl md:text-2xl text-muted-foreground mb-8 animate-fade-in-up animation-delay-600">
-           Placeholder for future dynamic text/typing animation
-           Exploring MLOps, Generative AI, and Vibe Coding...
-        </div> */}
+      <div className="hero-content">
+        {/* Main title - staggered letter reveal */}
+        <motion.h1
+          className="hero-title"
+          initial="hidden"
+          animate="visible"
+          style={{
+            transform: `translate3d(${mousePos.x * 0.3}px, ${mousePos.y * 0.3}px, 0)`,
+          }}
+        >
+          {TITLE_TEXT.split('').map((char, i) => (
+            <motion.span
+              key={i}
+              custom={i}
+              variants={letterVariants}
+              className="hero-letter"
+            >
+              {char === ' ' ? '\u00A0' : char}
+            </motion.span>
+          ))}
+        </motion.h1>
 
+        {/* Subtitle */}
+        <motion.p
+          className="hero-subtitle"
+          variants={subtitleVariants}
+          initial="hidden"
+          animate="visible"
+          style={{
+            transform: `translate3d(${mousePos.x * 0.15}px, ${mousePos.y * 0.15}px, 0)`,
+          }}
+        >
+          {SUBTITLE_TEXT}
+        </motion.p>
 
-        {/* CTA Buttons: Updated text, Side-by-side, primary/secondary colors, animations */}
-        <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-4 animate-fade-in-up animation-delay-400">
-          <Button
-            size="lg"
+        {/* Horizontal rule */}
+        <motion.div
+          className="hero-divider"
+          initial={{ scaleX: 0, opacity: 0 }}
+          animate={{ scaleX: 1, opacity: 1 }}
+          transition={{ delay: 2.0, duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+        />
+
+        {/* Tagline */}
+        <motion.p
+          className="hero-tagline"
+          variants={taglineVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          {TAGLINE}
+        </motion.p>
+
+        {/* CTA buttons */}
+        <motion.div
+          className="hero-cta-group"
+          variants={ctaVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          <button
             onClick={() => handleScrollTo('contact')}
-            className="bg-accent text-accent-foreground hover:bg-accent/90 focus:ring-accent transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95"
+            className="btn-primary magnetic-btn"
           >
-            Hire Me for Your AI Project <SendIcon className="ml-2 h-4 w-4" />
-          </Button>
-          <Button
-            variant="outline"
-            size="lg"
+            <span>Start a Project</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
+          </button>
+          <button
             onClick={() => handleScrollTo('projects')}
-            className="border-accent text-accent bg-transparent hover:bg-accent/10 hover:text-accent focus:ring-accent transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 active:scale-95"
+            className="btn-outline magnetic-btn"
           >
-            View My Projects <Eye className="ml-2 h-4 w-4" />
-          </Button>
-        </div>
-      </GlassCard>
-      {/* styled-jsx requires the component to be a Client Component */}
-      <style jsx>{`
-        @keyframes fade-in-up {
-          from { opacity: 0; transform: translateY(25px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fade-in-up {
-          animation: fade-in-up 0.8s ease-out forwards;
-          opacity: 0;
-        }
-        .animation-delay-200 { animation-delay: 0.25s; }
-        .animation-delay-400 { animation-delay: 0.5s; }
-        .animation-delay-600 { animation-delay: 0.75s; } /* Delay still applies if element reintroduced */
-      `}</style>
+            <span>View Work</span>
+          </button>
+        </motion.div>
+      </div>
+
+      {/* Scroll indicator */}
+      <motion.div
+        className="scroll-indicator"
+        variants={scrollIndicatorVariants}
+        initial="hidden"
+        animate="visible"
+      >
+        <span className="scroll-indicator-text">Scroll to explore</span>
+        <motion.div
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+        >
+          <ChevronDown className="scroll-indicator-icon" />
+        </motion.div>
+      </motion.div>
     </section>
   );
 };
-
