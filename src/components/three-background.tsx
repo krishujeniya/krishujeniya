@@ -1,210 +1,198 @@
 
 'use client';
 
-import { useEffect, useRef, useMemo } from 'react';
+import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
-// Configuration for the graph - Reduced complexity
-const NUM_POINTS = 200; // Reduced from 300
-const SPHERE_RADIUS = 1.5;
-const CONNECTION_DISTANCE_THRESHOLD = 0.5; // Reduced from 0.6
-const POINT_SIZE = 0.02; // Reduced from 0.03
-const LINE_OPACITY = 0.2; // Reduced from 0.3
+const STAR_COUNT = 2000;
+const STAR_SPREAD = 600;
+const STAR_DEPTH = 1200;
 
 export const ThreeBackground = () => {
   const mountRef = useRef<HTMLDivElement>(null);
-  const mouse = useRef(new THREE.Vector2(0, 0)); // Use ref for mouse coordinates
-  const targetRotation = useRef({ x: 0, y: 0 }); // Use ref for target rotation
-  const scrollY = useRef(0); // Initialize scrollY ref to 0
-
-  // Memoize points and lines generation to avoid recalculation on every render
-  const { pointsGeometry, linesGeometry } = useMemo(() => {
-    const points = [];
-    for (let i = 0; i < NUM_POINTS; i++) {
-      // Distribute points somewhat evenly within a sphere volume
-      const phi = Math.acos(-1 + (2 * i) / NUM_POINTS);
-      const theta = Math.sqrt(NUM_POINTS * Math.PI) * phi;
-
-      let x = SPHERE_RADIUS * Math.sin(phi) * Math.cos(theta);
-      let y = SPHERE_RADIUS * Math.sin(phi) * Math.sin(theta);
-      let z = SPHERE_RADIUS * Math.cos(phi);
-
-      // Add slight random perturbation for less grid-like appearance
-      x += (Math.random() - 0.5) * 0.1 * SPHERE_RADIUS;
-      y += (Math.random() - 0.5) * 0.1 * SPHERE_RADIUS;
-      z += (Math.random() - 0.5) * 0.1 * SPHERE_RADIUS;
-
-
-      points.push(new THREE.Vector3(x, y, z));
-    }
-
-    const positions = new Float32Array(NUM_POINTS * 3);
-    for (let i = 0; i < NUM_POINTS; i++) {
-      positions[i * 3] = points[i].x;
-      positions[i * 3 + 1] = points[i].y;
-      positions[i * 3 + 2] = points[i].z;
-    }
-
-    const pointsGeom = new THREE.BufferGeometry();
-    pointsGeom.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-
-    const lineSegments = [];
-    for (let i = 0; i < NUM_POINTS; i++) {
-      for (let j = i + 1; j < NUM_POINTS; j++) {
-        const dist = points[i].distanceTo(points[j]);
-        if (dist < CONNECTION_DISTANCE_THRESHOLD) {
-          lineSegments.push(points[i].x, points[i].y, points[i].z);
-          lineSegments.push(points[j].x, points[j].y, points[j].z);
-        }
-      }
-    }
-
-    const linesGeom = new THREE.BufferGeometry();
-    linesGeom.setAttribute('position', new THREE.Float32BufferAttribute(lineSegments, 3));
-
-    return { pointsGeometry: pointsGeom, linesGeometry: linesGeom };
-  }, []);
-
+  const mouseRef = useRef({ x: 0, y: 0 });
+  const scrollRef = useRef(0);
 
   useEffect(() => {
     if (!mountRef.current) return;
+    const currentMount = mountRef.current;
+    scrollRef.current = window.scrollY;
 
-    const currentMount = mountRef.current; // Capture mountRef.current
-
-    // Initialize scrollY inside useEffect
-    scrollY.current = window.scrollY;
-
-    // Scene setup
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true }); // alpha: true for transparent background
+    const camera = new THREE.PerspectiveCamera(
+      60,
+      window.innerWidth / window.innerHeight,
+      1,
+      2000
+    );
+    camera.position.z = 400;
+
+    const renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setClearColor(0x000000, 0); // Set clear color to black with 0 alpha
+    renderer.setClearColor(0x000000, 0);
     currentMount.appendChild(renderer.domElement);
 
-    // Lighting (Adjusted slightly for points/lines)
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.4); // Reduced ambient light
-    scene.add(ambientLight);
-    const pointLight = new THREE.PointLight(0xffffff, 0.8, 150); // White point light
-    pointLight.position.set(0, 3, 4); // Adjusted position
-    scene.add(pointLight);
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.3); // Reduced directional light
-    directionalLight.position.set(-5, 5, 5);
-    scene.add(directionalLight);
-    const backLight = new THREE.PointLight(0xffffff, 0.5, 100); // White backlight
-    backLight.position.set(0, -3, -4); // Adjusted position
-    scene.add(backLight);
+    // Create starfield geometry
+    const starsGeometry = new THREE.BufferGeometry();
+    const positions = new Float32Array(STAR_COUNT * 3);
+    const sizes = new Float32Array(STAR_COUNT);
+    const opacities = new Float32Array(STAR_COUNT);
 
-    // Create Points Object
-    const pointsMaterial = new THREE.PointsMaterial({
-      color: 0xffffff, // White
-      size: POINT_SIZE,
-      sizeAttenuation: true, // Points scale with distance
-      transparent: true,
-      opacity: 0.7, // Slightly reduced opacity
-      blending: THREE.NormalBlending, // Changed from AdditiveBlending
-    });
-    const pointCloud = new THREE.Points(pointsGeometry, pointsMaterial);
-
-    // Create Lines Object
-    const linesMaterial = new THREE.LineBasicMaterial({
-      color: 0xffffff, // White
-      transparent: true,
-      opacity: LINE_OPACITY,
-      blending: THREE.NormalBlending, // Changed from AdditiveBlending
-      depthWrite: false, // Prevents lines from obscuring points behind them too much
-    });
-    const lineSegmentsMesh = new THREE.LineSegments(linesGeometry, linesMaterial);
-
-    // Group points and lines for easier rotation
-    const group = new THREE.Group();
-    group.add(pointCloud);
-    group.add(lineSegmentsMesh);
-    scene.add(group);
-
-    camera.position.z = 3.5; // Increased camera distance slightly
-
-    // Mouse move listener
-    const onMouseMove = (event: MouseEvent) => {
-      // Normalize mouse coordinates (-1 to +1)
-      mouse.current.x = (event.clientX / window.innerWidth) * 2 - 1;
-      mouse.current.y = -(event.clientY / window.innerHeight) * 2 + 1;
-
-      // Update target rotation based on mouse position, slightly reduced sensitivity
-      targetRotation.current.x = mouse.current.y * 0.3;
-      targetRotation.current.y = mouse.current.x * 0.3;
-    };
-
-    // Scroll listener
-    const onScroll = () => {
-      scrollY.current = window.scrollY;
+    for (let i = 0; i < STAR_COUNT; i++) {
+      const i3 = i * 3;
+      positions[i3] = (Math.random() - 0.5) * STAR_SPREAD * 2;
+      positions[i3 + 1] = (Math.random() - 0.5) * STAR_SPREAD * 2;
+      positions[i3 + 2] = (Math.random() - 0.5) * STAR_DEPTH * 2;
+      sizes[i] = Math.random() * 2.5 + 0.5;
+      opacities[i] = Math.random() * 0.6 + 0.4;
     }
 
-    window.addEventListener('mousemove', onMouseMove);
-    window.addEventListener('scroll', onScroll);
+    starsGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    starsGeometry.setAttribute('aSize', new THREE.BufferAttribute(sizes, 1));
+    starsGeometry.setAttribute('aOpacity', new THREE.BufferAttribute(opacities, 1));
 
+    // Custom shader material for performant, beautiful stars
+    const starsMaterial = new THREE.ShaderMaterial({
+      uniforms: {
+        uTime: { value: 0 },
+        uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) },
+      },
+      vertexShader: `
+        attribute float aSize;
+        attribute float aOpacity;
+        varying float vOpacity;
+        varying float vSize;
+        uniform float uTime;
+        uniform float uPixelRatio;
 
-    // Animation loop
+        void main() {
+          vec4 modelPosition = modelMatrix * vec4(position, 1.0);
+          vec4 viewPosition = viewMatrix * modelPosition;
+          vec4 projectedPosition = projectionMatrix * viewPosition;
+          gl_Position = projectedPosition;
+
+          // Twinkle effect
+          float twinkle = sin(uTime * 2.0 + position.x * 0.01 + position.y * 0.013) * 0.3 + 0.7;
+          vOpacity = aOpacity * twinkle;
+          vSize = aSize;
+
+          // Size attenuation
+          gl_PointSize = aSize * uPixelRatio * (200.0 / -viewPosition.z);
+          gl_PointSize = max(gl_PointSize, 0.5);
+        }
+      `,
+      fragmentShader: `
+        varying float vOpacity;
+        varying float vSize;
+
+        void main() {
+          // Circular point with soft glow
+          float dist = length(gl_PointCoord - vec2(0.5));
+          if (dist > 0.5) discard;
+
+          float alpha = 1.0 - smoothstep(0.0, 0.5, dist);
+          alpha *= vOpacity;
+
+          // Slight warm white color variation
+          vec3 color = vec3(0.95, 0.95, 1.0);
+          gl_FragColor = vec4(color, alpha);
+        }
+      `,
+      transparent: true,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+    });
+
+    const stars = new THREE.Points(starsGeometry, starsMaterial);
+    scene.add(stars);
+
+    // Second layer - distant dim stars for depth
+    const farStarsGeo = new THREE.BufferGeometry();
+    const farPositions = new Float32Array(800 * 3);
+    const farSizes = new Float32Array(800);
+    const farOpacities = new Float32Array(800);
+
+    for (let i = 0; i < 800; i++) {
+      const i3 = i * 3;
+      farPositions[i3] = (Math.random() - 0.5) * STAR_SPREAD * 3;
+      farPositions[i3 + 1] = (Math.random() - 0.5) * STAR_SPREAD * 3;
+      farPositions[i3 + 2] = (Math.random() - 0.5) * STAR_DEPTH * 3;
+      farSizes[i] = Math.random() * 1.2 + 0.3;
+      farOpacities[i] = Math.random() * 0.3 + 0.1;
+    }
+
+    farStarsGeo.setAttribute('position', new THREE.BufferAttribute(farPositions, 3));
+    farStarsGeo.setAttribute('aSize', new THREE.BufferAttribute(farSizes, 1));
+    farStarsGeo.setAttribute('aOpacity', new THREE.BufferAttribute(farOpacities, 1));
+
+    const farStars = new THREE.Points(farStarsGeo, starsMaterial);
+    scene.add(farStars);
+
+    // Mouse parallax
+    const onMouseMove = (e: MouseEvent) => {
+      mouseRef.current.x = (e.clientX / window.innerWidth - 0.5) * 2;
+      mouseRef.current.y = (e.clientY / window.innerHeight - 0.5) * 2;
+    };
+
+    const onScroll = () => {
+      scrollRef.current = window.scrollY;
+    };
+
+    window.addEventListener('mousemove', onMouseMove, { passive: true });
+    window.addEventListener('scroll', onScroll, { passive: true });
+
     const clock = new THREE.Clock();
+    let animId: number;
+
     const animate = () => {
-      requestAnimationFrame(animate);
-      const elapsedTime = clock.getElapsedTime();
+      animId = requestAnimationFrame(animate);
+      const elapsed = clock.getElapsedTime();
 
-      // Basic rotation remains subtle
-      group.rotation.x += 0.0004; // Slightly slower base rotation
-      group.rotation.y += 0.0006;
+      starsMaterial.uniforms.uTime.value = elapsed;
 
-      // Smooth rotation towards target based on mouse position (slower interpolation)
-      group.rotation.x += (targetRotation.current.x - group.rotation.x) * 0.03;
-      group.rotation.y += (targetRotation.current.y - group.rotation.y) * 0.03;
+      // Smooth mouse-based camera movement
+      camera.position.x += (mouseRef.current.x * 30 - camera.position.x) * 0.02;
+      camera.position.y += (-mouseRef.current.y * 30 - camera.position.y) * 0.02;
 
-      // Rotation based on scroll position + subtle oscillation
-      group.rotation.z = scrollY.current * 0.0006 + Math.sin(elapsedTime * 0.4) * 0.04;
+      // Scroll parallax
+      const scrollOffset = scrollRef.current * 0.15;
+      stars.position.y = scrollOffset * 0.3;
+      farStars.position.y = scrollOffset * 0.1;
 
-      // Subtle pulsing effect using scale (Applied to the group) - Removed for less distraction
-      // const scalePulse = 1.0 + Math.sin(elapsedTime * 0.6) * 0.015;
-      // group.scale.set(scalePulse, scalePulse, scalePulse);
+      // Slow continuous rotation for depth feel
+      stars.rotation.y = elapsed * 0.02;
+      stars.rotation.x = elapsed * 0.01;
+      farStars.rotation.y = elapsed * 0.008;
+      farStars.rotation.x = elapsed * 0.005;
 
+      camera.lookAt(scene.position);
       renderer.render(scene, camera);
     };
     animate();
 
-    // Handle window resize
     const handleResize = () => {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
+      starsMaterial.uniforms.uPixelRatio.value = Math.min(window.devicePixelRatio, 2);
     };
     window.addEventListener('resize', handleResize);
 
-    // Cleanup on component unmount
     return () => {
+      cancelAnimationFrame(animId);
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('mousemove', onMouseMove);
       window.removeEventListener('scroll', onScroll);
-
-      // Safely remove the canvas
       if (currentMount && renderer.domElement.parentNode === currentMount) {
         currentMount.removeChild(renderer.domElement);
       }
-
-      // Dispose Three.js objects
       renderer.dispose();
-      pointsGeometry.dispose();
-      linesGeometry.dispose();
-      pointsMaterial.dispose();
-      linesMaterial.dispose();
-      // Dispose lights if necessary (usually managed by scene disposal)
-      scene.remove(ambientLight);
-      scene.remove(pointLight);
-      scene.remove(directionalLight);
-      scene.remove(backLight);
-      scene.remove(group); // Remove the group
+      starsGeometry.dispose();
+      farStarsGeo.dispose();
+      starsMaterial.dispose();
     };
-  }, [pointsGeometry, linesGeometry]); // Add geometries to dependencies
+  }, []);
 
-  // The div will contain the canvas, positioned behind other content via CSS
-  // Using `fixed` positioning and `z-index: -1` via CSS in globals.css
-  return <div ref={mountRef} />;
+  return <div ref={mountRef} aria-hidden="true" />;
 };
-
