@@ -1061,6 +1061,45 @@ div[style*="position: fixed"][style*="z-index: -1"] {
   color: rgba(255, 255, 255, 0.8);
 }
 
+/* Clickable file download link */
+.doc-file-link {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex: 1;
+  min-width: 0;
+  text-decoration: none;
+  color: inherit;
+  padding: 0.15rem 0;
+  border-radius: 4px;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.doc-file-link:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.doc-file-link:hover .doc-file-name {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.doc-file-link:hover .doc-file-icon {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.doc-file-download-icon {
+  width: 10px;
+  height: 10px;
+  color: rgba(255, 255, 255, 0.15);
+  flex-shrink: 0;
+  transition: color 0.2s;
+}
+
+.doc-file-link:hover .doc-file-download-icon {
+  color: rgba(255, 255, 255, 0.5);
+}
+
 /* ============================================
    CONTACT / LEAD GENERATION
    ============================================ */
@@ -1161,6 +1200,12 @@ div[style*="position: fixed"][style*="z-index: -1"] {
 .form-submit-btn {
   align-self: flex-start;
   margin-top: 0.25rem;
+}
+
+.form-submit-success {
+  background: #22c55e !important;
+  color: #ffffff !important;
+  pointer-events: none;
 }
 
 .contact-info {
@@ -1536,6 +1581,45 @@ div[style*="position: fixed"][style*="z-index: -1"] {
 .chatbot-send:hover {
   transform: scale(1.05);
   box-shadow: 0 2px 8px rgba(255, 255, 255, 0.15);
+}
+
+/* Typing indicator */
+.chatbot-typing {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0.65rem 0.875rem !important;
+}
+
+.typing-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  animation: typingBounce 1.4s ease-in-out infinite;
+}
+
+.typing-dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typing-dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes typingBounce {
+
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+
+  30% {
+    transform: translateY(-4px);
+    opacity: 1;
+  }
 }
 
 /* ============================================
