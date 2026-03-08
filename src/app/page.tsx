@@ -4,7 +4,6 @@ import { CoreExpertiseSection } from '@/components/sections/core-expertise-secti
 import { ProjectsSection } from '@/components/sections/projects-section';
 import { ExperienceSection } from '@/components/sections/experience-section';
 import { DocumentsSection } from '@/components/sections/documents-section';
-import { ArchiveSection } from '@/components/sections/archive-section';
 import { ContactSection } from '@/components/sections/contact-section';
 import { ThreeBackground } from '@/components/three-background';
 
@@ -18,7 +17,6 @@ const Home: FC = () => {
         <ProjectsSection />
         <ExperienceSection />
         <DocumentsSection />
-        <ArchiveSection />
         <ContactSection />
       </div>
     </>

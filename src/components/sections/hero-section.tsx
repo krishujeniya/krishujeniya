@@ -4,6 +4,7 @@ import type { FC } from 'react';
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
+import Image from 'next/image';
 
 const TITLE_TEXT = 'KRISH UJENIYA';
 const SUBTITLE_TEXT = 'DATA SCIENTIST & ML ENGINEER';
@@ -72,6 +73,20 @@ const scrollIndicatorVariants = {
   },
 };
 
+const avatarVariants = {
+  hidden: { opacity: 0, scale: 0, rotate: -180 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    rotate: 0,
+    transition: {
+      delay: 0.3,
+      duration: 0.8,
+      ease: [0.22, 1, 0.36, 1] as const,
+    },
+  },
+};
+
 export const HeroSection: FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -103,6 +118,24 @@ export const HeroSection: FC = () => {
       <div className="hero-gradient-overlay" aria-hidden="true" />
 
       <div className="hero-content">
+        {/* Profile avatar */}
+        <motion.div
+          className="hero-avatar"
+          variants={avatarVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          <Image
+            src="https://github.com/krishujeniya/krishujeniya/blob/main/images/1765004211200.jpg?raw=true"
+            alt="Krish Ujeniya"
+            width={120}
+            height={120}
+            className="hero-avatar-img"
+            priority
+            data-ai-hint="professional headshot portrait"
+          />
+        </motion.div>
+
         {/* Main title - staggered letter reveal */}
         <motion.h1
           className="hero-title"
@@ -142,7 +175,7 @@ export const HeroSection: FC = () => {
           className="hero-divider"
           initial={{ scaleX: 0, opacity: 0 }}
           animate={{ scaleX: 1, opacity: 1 }}
-          transition={{ delay: 2.0, duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ delay: 2.0, duration: 1.2, ease: [0.22, 1, 0.36, 1] as const }}
         />
 
         {/* Tagline */}
