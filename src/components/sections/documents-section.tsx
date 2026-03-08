@@ -20,6 +20,7 @@ import {
     ChevronDown,
     ChevronUp,
     File,
+    ExternalLink,
 } from 'lucide-react';
 import { AnimatedSection } from '@/components/ui/animated-section';
 
@@ -30,14 +31,18 @@ interface DocFile {
 
 interface DocFolder {
     name: string;
+    path: string;
     icon: LucideIcon;
     description: string;
     files: DocFile[];
 }
 
+const DOCS_BASE_URL = 'https://github.com/krishujeniya/krishujeniya/raw/main/Docs';
+
 const docsData: DocFolder[] = [
     {
         name: 'Certificates',
+        path: 'Certificates',
         icon: Award,
         description: 'Industry-recognized certifications in AI, ML, NLP and more.',
         files: [
@@ -54,6 +59,7 @@ const docsData: DocFolder[] = [
     },
     {
         name: 'MLOps',
+        path: 'MLOps',
         icon: BrainCircuit,
         description: 'Machine Learning operations, DSA, NLP, and Neural Networks resources.',
         files: [
@@ -78,6 +84,7 @@ const docsData: DocFolder[] = [
     },
     {
         name: 'Cloud',
+        path: 'Cloud',
         icon: Cloud,
         description: 'Cloud computing, security, virtualization, and data center guides.',
         files: [
@@ -92,6 +99,7 @@ const docsData: DocFolder[] = [
     },
     {
         name: 'CyberSecurity',
+        path: 'CyberSecurity',
         icon: Shield,
         description: 'Cryptography, ethical hacking, network security, and forensics.',
         files: [
@@ -103,6 +111,7 @@ const docsData: DocFolder[] = [
     },
     {
         name: 'DBMS',
+        path: 'DBMS',
         icon: Database,
         description: 'Database management — SQL, normalization, ER diagrams, and transactions.',
         files: [
@@ -119,6 +128,7 @@ const docsData: DocFolder[] = [
     },
     {
         name: 'DevOps',
+        path: 'DevOps',
         icon: GitBranch,
         description: 'Software development lifecycle, Agile, SRS, and risk management.',
         files: [
@@ -135,6 +145,7 @@ const docsData: DocFolder[] = [
     },
     {
         name: 'BlockChain',
+        path: 'BlockChain',
         icon: Link2,
         description: 'Introduction to blockchain technology and distributed ledger concepts.',
         files: [
@@ -143,6 +154,7 @@ const docsData: DocFolder[] = [
     },
     {
         name: 'Digital Marketing',
+        path: 'DigitalMarketing',
         icon: Megaphone,
         description: 'Digital marketing strategy, entrepreneurship, and GPT prompting guides.',
         files: [
@@ -209,10 +221,19 @@ const DocFolderCard: FC<{ folder: DocFolder; index: number }> = ({ folder, index
                                 exit={{ opacity: 0, height: 0 }}
                                 transition={{ duration: 0.2, delay: fi * 0.03 }}
                             >
-                                <div className="doc-file-info">
-                                    <File className="doc-file-icon" />
-                                    <span className="doc-file-name">{file.name.split('/').pop()}</span>
-                                </div>
+                                <a
+                                    href={`${DOCS_BASE_URL}/${folder.path}/${encodeURIComponent(file.name)}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    download
+                                    className="doc-file-link"
+                                >
+                                    <div className="doc-file-info">
+                                        <File className="doc-file-icon" />
+                                        <span className="doc-file-name">{file.name.split('/').pop()}</span>
+                                    </div>
+                                    <ExternalLink className="doc-file-download-icon" />
+                                </a>
                                 <span className="doc-file-type">{file.type}</span>
                             </motion.div>
                         ))}
