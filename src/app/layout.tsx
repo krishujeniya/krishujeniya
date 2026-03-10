@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils';
 import { Toaster } from '@/components/ui/toaster';
 import { ThemeProvider } from '@/components/theme-provider';
 import { CustomCursor } from '@/components/custom-cursor';
+import { ChatBot } from '@/components/chat-bot';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -83,6 +84,7 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
           <CustomCursor />
           {children}
+          <ChatBot />
           <Toaster />
         </ThemeProvider>
       </body>
