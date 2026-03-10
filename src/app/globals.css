@@ -95,6 +95,22 @@
     scroll-behavior: smooth;
     overflow-x: hidden;
     width: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeSpeed;
+  }
+
+  /* Respect reduced motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 
   body {
@@ -105,6 +121,7 @@
     overflow-x: hidden;
     width: 100%;
     max-width: 100vw;
+    transform: translateZ(0);
   }
 
   section {
@@ -202,6 +219,7 @@ canvas {
   background-color: transparent !important;
   touch-action: none;
   pointer-events: none !important;
+  will-change: transform;
 }
 
 div[style*="position: fixed"][style*="z-index: -1"] {
@@ -280,6 +298,19 @@ div[style*="position: fixed"][style*="z-index: -1"] {
   padding: 2rem 1rem;
   position: relative;
   overflow: hidden;
+  --mouse-x: 0;
+  --mouse-y: 0;
+}
+
+/* GPU-accelerated parallax via CSS custom properties (no re-renders) */
+.hero-parallax-title {
+  transform: translate3d(calc(var(--mouse-x) * 0.3px), calc(var(--mouse-y) * 0.3px), 0);
+  will-change: transform;
+}
+
+.hero-parallax-subtitle {
+  transform: translate3d(calc(var(--mouse-x) * 0.15px), calc(var(--mouse-y) * 0.15px), 0);
+  will-change: transform;
 }
 
 .hero-gradient-overlay {
@@ -497,6 +528,8 @@ div[style*="position: fixed"][style*="z-index: -1"] {
   gap: 1.25rem;
   max-width: 72rem;
   margin: 0 auto;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 600px;
 }
 
 @media (min-width: 768px) {
@@ -516,9 +549,10 @@ div[style*="position: fixed"][style*="z-index: -1"] {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1);
   cursor: pointer;
   overflow: hidden;
+  contain: layout style paint;
 }
 
 .expertise-card::before {
@@ -611,6 +645,8 @@ div[style*="position: fixed"][style*="z-index: -1"] {
   gap: 1.25rem;
   max-width: 72rem;
   margin: 0 auto;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
 }
 
 @media (min-width: 640px) {
@@ -632,7 +668,8 @@ div[style*="position: fixed"][style*="z-index: -1"] {
   border-radius: 16px;
   overflow: hidden;
   cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  contain: layout style paint;
 }
 
 .portfolio-card:hover {
@@ -811,7 +848,7 @@ div[style*="position: fixed"][style*="z-index: -1"] {
   border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 12px;
   padding: 1.25rem;
-  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: border-color 0.3s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .timeline-content:hover {
@@ -886,6 +923,8 @@ div[style*="position: fixed"][style*="z-index: -1"] {
   gap: 1.25rem;
   max-width: 72rem;
   margin: 0 auto;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 800px;
 }
 
 @media (min-width: 480px) {
@@ -910,8 +949,9 @@ div[style*="position: fixed"][style*="z-index: -1"] {
   align-items: center;
   text-align: center;
   cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1);
   overflow: hidden;
+  contain: layout style paint;
 }
 
 .document-card:hover {

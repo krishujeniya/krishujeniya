@@ -1,7 +1,7 @@
 'use client';
 
 import type { FC } from 'react';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 import Image from 'next/image';
@@ -89,19 +89,29 @@ const avatarVariants = {
 
 export const HeroSection: FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    // Use RAF-throttled direct DOM updates instead of setState
+    let rafId: number;
     const handleMouseMove = (e: MouseEvent) => {
-      if (!sectionRef.current) return;
-      const rect = sectionRef.current.getBoundingClientRect();
-      setMousePos({
-        x: ((e.clientX - rect.left) / rect.width - 0.5) * 20,
-        y: ((e.clientY - rect.top) / rect.height - 0.5) * 20,
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        if (!section) return;
+        const rect = section.getBoundingClientRect();
+        const mx = ((e.clientX - rect.left) / rect.width - 0.5) * 20;
+        const my = ((e.clientY - rect.top) / rect.height - 0.5) * 20;
+        section.style.setProperty('--mouse-x', `${mx}`);
+        section.style.setProperty('--mouse-y', `${my}`);
       });
     };
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    return () => {
+      cancelAnimationFrame(rafId);
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
   }, []);
 
   const handleScrollTo = (id: string) => {
@@ -138,12 +148,9 @@ export const HeroSection: FC = () => {
 
         {/* Main title - staggered letter reveal */}
         <motion.h1
-          className="hero-title"
+          className="hero-title hero-parallax-title"
           initial="hidden"
           animate="visible"
-          style={{
-            transform: `translate3d(${mousePos.x * 0.3}px, ${mousePos.y * 0.3}px, 0)`,
-          }}
         >
           {TITLE_TEXT.split('').map((char, i) => (
             <motion.span
@@ -159,13 +166,10 @@ export const HeroSection: FC = () => {
 
         {/* Subtitle */}
         <motion.p
-          className="hero-subtitle"
+          className="hero-subtitle hero-parallax-subtitle"
           variants={subtitleVariants}
           initial="hidden"
           animate="visible"
-          style={{
-            transform: `translate3d(${mousePos.x * 0.15}px, ${mousePos.y * 0.15}px, 0)`,
-          }}
         >
           {SUBTITLE_TEXT}
         </motion.p>

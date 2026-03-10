@@ -10,7 +10,7 @@ const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
   display: 'swap',
-  weight: ['300', '400', '500', '600', '700', '800', '900'],
+  weight: ['400', '500', '600', '700'],
 });
 
 export const viewport: import('next').Viewport = {
@@ -67,6 +67,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning className={inter.variable}>
+      <head>
+        {/* Preconnect to external image hosts for faster loading */}
+        <link rel="preconnect" href="https://github.com" />
+        <link rel="preconnect" href="https://raw.githubusercontent.com" />
+        <link rel="dns-prefetch" href="https://github.com" />
+        <link rel="dns-prefetch" href="https://raw.githubusercontent.com" />
+        <link rel="dns-prefetch" href="https://storage.googleapis.com" />
+      </head>
       <body
         className={cn(
           'min-h-screen bg-background font-sans antialiased dark'
