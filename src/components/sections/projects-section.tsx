@@ -119,7 +119,8 @@ export const ProjectsSection: FC = () => {
                 style={{ objectFit: 'cover' }}
                 className="portfolio-card-img"
                 data-ai-hint={project.aiHint}
-                priority={index < 3}
+                priority={index < 2}
+                loading={index < 2 ? undefined : 'lazy'}
               />
               <div className="portfolio-card-overlay">
                 <Link

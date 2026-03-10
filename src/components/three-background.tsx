@@ -1,24 +1,33 @@
 
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 import * as THREE from 'three';
 
-const STAR_COUNT = 3000;
-const FAR_STAR_COUNT = 1200;
+// Adaptive particle counts based on device capability
+const isMobileDevice = () =>
+  typeof window !== 'undefined' && (window.innerWidth < 768 || /Mobi|Android/i.test(navigator.userAgent));
+
+const getStarCount = () => (isMobileDevice() ? 1000 : 1800);
+const getFarStarCount = () => (isMobileDevice() ? 300 : 600);
 const STAR_SPREAD = 600;
 const STAR_DEPTH = 1200;
-const SHOOTING_STAR_COUNT = 5;
+const SHOOTING_STAR_COUNT = 3;
 
 export const ThreeBackground = () => {
   const mountRef = useRef<HTMLDivElement>(null);
   const mouseRef = useRef({ x: 0, y: 0 });
   const scrollRef = useRef(0);
+  const isVisibleRef = useRef(true);
+  const animIdRef = useRef<number>(0);
 
   useEffect(() => {
     if (!mountRef.current) return;
     const currentMount = mountRef.current;
     scrollRef.current = window.scrollY;
+
+    const STAR_COUNT = getStarCount();
+    const FAR_STAR_COUNT = getFarStarCount();
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(
@@ -29,8 +38,16 @@ export const ThreeBackground = () => {
     );
     camera.position.z = 400;
 
-    const renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    // Cap pixel ratio more aggressively on mobile
+    const maxPixelRatio = isMobileDevice() ? 1.5 : 2;
+    const pixelRatio = Math.min(window.devicePixelRatio, maxPixelRatio);
+
+    const renderer = new THREE.WebGLRenderer({
+      antialias: false,
+      alpha: true,
+      powerPreference: 'high-performance',
+    });
+    renderer.setPixelRatio(pixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setClearColor(0x000000, 0);
     currentMount.appendChild(renderer.domElement);
@@ -39,7 +56,7 @@ export const ThreeBackground = () => {
     const starShaderMaterial = new THREE.ShaderMaterial({
       uniforms: {
         uTime: { value: 0 },
-        uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) },
+        uPixelRatio: { value: pixelRatio },
       },
       vertexShader: `
         attribute float aSize;
@@ -162,8 +179,9 @@ export const ThreeBackground = () => {
       ss.mesh.geometry.attributes.position.needsUpdate = true;
     };
 
+    const shootingStarTimers: ReturnType<typeof setTimeout>[] = [];
     for (let i = 0; i < SHOOTING_STAR_COUNT; i++) {
-      const tailLength = 12;
+      const tailLength = 10;
       const geom = new THREE.BufferGeometry();
       const positions = new Float32Array(tailLength * 3);
       geom.setAttribute('position', new THREE.BufferAttribute(positions, 3));
@@ -180,10 +198,12 @@ export const ThreeBackground = () => {
       shootingStars.push(ss);
 
       // Stagger initial spawn
-      setTimeout(() => resetShootingStar(ss), i * 3000 + Math.random() * 5000);
+      shootingStarTimers.push(
+        setTimeout(() => resetShootingStar(ss), i * 3000 + Math.random() * 5000)
+      );
     }
 
-    // --- Mouse & scroll ---
+    // --- Mouse & scroll (passive, no state updates) ---
     const onMouseMove = (e: MouseEvent) => {
       mouseRef.current.x = (e.clientX / window.innerWidth - 0.5) * 2;
       mouseRef.current.y = (e.clientY / window.innerHeight - 0.5) * 2;
@@ -194,12 +214,24 @@ export const ThreeBackground = () => {
     window.addEventListener('mousemove', onMouseMove, { passive: true });
     window.addEventListener('scroll', onScroll, { passive: true });
 
-    // --- Animation loop ---
+    // --- Visibility API: pause when tab is hidden ---
+    const onVisibilityChange = () => {
+      isVisibleRef.current = !document.hidden;
+      if (isVisibleRef.current) {
+        clock.getDelta(); // Reset delta to avoid large time jumps
+      }
+    };
+    document.addEventListener('visibilitychange', onVisibilityChange);
+
+    // --- Animation loop with visibility check ---
     const clock = new THREE.Clock();
-    let animId: number;
 
     const animate = () => {
-      animId = requestAnimationFrame(animate);
+      animIdRef.current = requestAnimationFrame(animate);
+
+      // Skip rendering entirely when tab is hidden
+      if (!isVisibleRef.current) return;
+
       const elapsed = clock.getElapsedTime();
 
       starShaderMaterial.uniforms.uTime.value = elapsed;
@@ -251,7 +283,9 @@ export const ThreeBackground = () => {
           ss.active = false;
           (ss.mesh.material as THREE.LineBasicMaterial).opacity = 0;
           // Respawn after random delay
-          setTimeout(() => resetShootingStar(ss), 2000 + Math.random() * 8000);
+          shootingStarTimers.push(
+            setTimeout(() => resetShootingStar(ss), 2000 + Math.random() * 8000)
+          );
         }
       }
 
@@ -260,20 +294,29 @@ export const ThreeBackground = () => {
     };
     animate();
 
-    // --- Resize ---
+    // --- Debounced Resize ---
+    let resizeTimer: ReturnType<typeof setTimeout>;
     const handleResize = () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      starShaderMaterial.uniforms.uPixelRatio.value = Math.min(window.devicePixelRatio, 2);
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        const newPixelRatio = Math.min(window.devicePixelRatio, maxPixelRatio);
+        renderer.setPixelRatio(newPixelRatio);
+        starShaderMaterial.uniforms.uPixelRatio.value = newPixelRatio;
+      }, 150);
     };
-    window.addEventListener('resize', handleResize);
+    window.addEventListener('resize', handleResize, { passive: true });
 
     return () => {
-      cancelAnimationFrame(animId);
+      cancelAnimationFrame(animIdRef.current);
+      clearTimeout(resizeTimer);
+      shootingStarTimers.forEach(clearTimeout);
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('mousemove', onMouseMove);
       window.removeEventListener('scroll', onScroll);
+      document.removeEventListener('visibilitychange', onVisibilityChange);
       if (currentMount && renderer.domElement.parentNode === currentMount) {
         currentMount.removeChild(renderer.domElement);
       }
@@ -288,5 +331,5 @@ export const ThreeBackground = () => {
     };
   }, []);
 
-  return <div ref={mountRef} aria-hidden="true" />;
+  return <div ref={mountRef} aria-hidden="true" style={{ willChange: 'transform' }} />;
 };

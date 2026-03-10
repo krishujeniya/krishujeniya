@@ -39,33 +39,37 @@ export const CustomCursor = () => {
         document.addEventListener('mouseleave', onMouseLeaveWindow);
         document.addEventListener('mouseenter', onMouseEnterWindow);
 
-        // Add hover detection for interactive elements
+        // Add hover detection for interactive elements (with deduplication)
         const interactiveSelectors = 'a, button, input, textarea, [role="button"], .magnetic-btn';
-        const interactiveElements = document.querySelectorAll(interactiveSelectors);
-        interactiveElements.forEach((el) => {
+        const trackedElements = new WeakSet<Element>();
+
+        const attachListeners = (el: Element) => {
+            if (trackedElements.has(el)) return;
+            trackedElements.add(el);
             el.addEventListener('mouseenter', onMouseEnterInteractive);
             el.addEventListener('mouseleave', onMouseLeaveInteractive);
-        });
+        };
 
-        // MutationObserver to handle dynamically added elements
+        const interactiveElements = document.querySelectorAll(interactiveSelectors);
+        interactiveElements.forEach(attachListeners);
+
+        // Debounced MutationObserver to handle dynamically added elements
+        let mutationTimer: ReturnType<typeof setTimeout>;
         const observer = new MutationObserver(() => {
-            const newElements = document.querySelectorAll(interactiveSelectors);
-            newElements.forEach((el) => {
-                el.addEventListener('mouseenter', onMouseEnterInteractive);
-                el.addEventListener('mouseleave', onMouseLeaveInteractive);
-            });
+            clearTimeout(mutationTimer);
+            mutationTimer = setTimeout(() => {
+                const newElements = document.querySelectorAll(interactiveSelectors);
+                newElements.forEach(attachListeners);
+            }, 300);
         });
         observer.observe(document.body, { childList: true, subtree: true });
 
         return () => {
+            clearTimeout(mutationTimer);
             window.removeEventListener('mousemove', onMouseMove);
             document.removeEventListener('mouseleave', onMouseLeaveWindow);
             document.removeEventListener('mouseenter', onMouseEnterWindow);
             window.removeEventListener('touchstart', detectTouch);
-            interactiveElements.forEach((el) => {
-                el.removeEventListener('mouseenter', onMouseEnterInteractive);
-                el.removeEventListener('mouseleave', onMouseLeaveInteractive);
-            });
             observer.disconnect();
         };
     }, [cursorX, cursorY]);
