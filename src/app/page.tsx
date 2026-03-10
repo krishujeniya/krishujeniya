@@ -11,7 +11,10 @@ const Home: FC = () => {
   return (
     <>
       <ThreeBackground />
-      <div className="relative z-10">
+      <div
+        className="relative z-10"
+        style={{ animation: 'fadeIn 0.8s ease-out forwards', opacity: 0 }}
+      >
         <HeroSection />
         <CoreExpertiseSection />
         <ProjectsSection />
