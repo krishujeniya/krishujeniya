@@ -1,4 +1,4 @@
-import type {NextConfig} from 'next';
+import type { NextConfig } from 'next';
 
 // Assuming the repository name is 'Krish-Ujeniya-Portfolio' for GitHub Pages deployment
 const repoName = 'krishujeniya';
@@ -14,12 +14,30 @@ const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-   images: {
-     unoptimized: true, // Disable Next.js Image Optimization for static export compatibility
-     remotePatterns: [
+  images: {
+    unoptimized: true, // Disable Next.js Image Optimization for static export compatibility
+    remotePatterns: [
       {
         protocol: 'https',
         hostname: 'picsum.photos',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'github.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'raw.githubusercontent.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'storage.googleapis.com',
         port: '',
         pathname: '/**',
       },

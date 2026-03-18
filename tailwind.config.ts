@@ -90,7 +90,7 @@ export default {
 					}
 				},
 				// Added fade-in keyframes (though defined in globals.css, useful for utilities)
-				'fade-in': {
+				'fadeIn': {
 					'0%': { opacity: '0' },
 					'100%': { opacity: '1' },
 				},
@@ -98,7 +98,7 @@ export default {
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
-				'fade-in': 'fade-in 0.8s ease-out forwards', // Added fade-in animation utility
+				'fadeIn': 'fadeIn 0.8s ease-out forwards', // Aligned with globals.css or component usage
 			}
 		}
 	},

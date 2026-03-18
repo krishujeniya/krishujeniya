@@ -148,6 +148,7 @@ export const ThreeBackground = () => {
       life: number;
       maxLife: number;
       active: boolean;
+      id: number;
     }
 
     const shootingStars: ShootingStar[] = [];
@@ -157,6 +158,7 @@ export const ThreeBackground = () => {
       opacity: 0.7,
       blending: THREE.AdditiveBlending,
     });
+    const shootingStarTimers: (ReturnType<typeof setTimeout> | null)[] = new Array(SHOOTING_STAR_COUNT).fill(null);
 
     const resetShootingStar = (ss: ShootingStar) => {
       const startX = (Math.random() - 0.5) * STAR_SPREAD * 1.5;
@@ -179,7 +181,6 @@ export const ThreeBackground = () => {
       ss.mesh.geometry.attributes.position.needsUpdate = true;
     };
 
-    const shootingStarTimers: ReturnType<typeof setTimeout>[] = [];
     for (let i = 0; i < SHOOTING_STAR_COUNT; i++) {
       const tailLength = 10;
       const geom = new THREE.BufferGeometry();
@@ -194,13 +195,12 @@ export const ThreeBackground = () => {
         life: 0,
         maxLife: 60,
         active: false,
+        id: i,
       };
       shootingStars.push(ss);
 
       // Stagger initial spawn
-      shootingStarTimers.push(
-        setTimeout(() => resetShootingStar(ss), i * 3000 + Math.random() * 5000)
-      );
+      shootingStarTimers[i] = setTimeout(() => resetShootingStar(ss), i * 3000 + Math.random() * 5000);
     }
 
     // --- Mouse & scroll (passive, no state updates) ---
@@ -283,9 +283,8 @@ export const ThreeBackground = () => {
           ss.active = false;
           (ss.mesh.material as THREE.LineBasicMaterial).opacity = 0;
           // Respawn after random delay
-          shootingStarTimers.push(
-            setTimeout(() => resetShootingStar(ss), 2000 + Math.random() * 8000)
-          );
+          const timer = setTimeout(() => resetShootingStar(ss), 2000 + Math.random() * 8000);
+          shootingStarTimers[ss.id] = timer;
         }
       }
 
@@ -312,7 +311,7 @@ export const ThreeBackground = () => {
     return () => {
       cancelAnimationFrame(animIdRef.current);
       clearTimeout(resizeTimer);
-      shootingStarTimers.forEach(clearTimeout);
+      shootingStarTimers.forEach(t => t && clearTimeout(t));
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('mousemove', onMouseMove);
       window.removeEventListener('scroll', onScroll);

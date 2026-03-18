@@ -57,7 +57,7 @@ export const metadata: Metadata = {
   },
   metadataBase: new URL('https://krishujeniya.github.io/krishujeniya/'),
   icons: {
-    icon: 'https://github.com/krishujeniya/krishujeniya/blob/main/images/img1120.png?raw=true',
+    icon: '/favicon.ico',
   },
 };
 
