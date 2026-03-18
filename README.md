@@ -13,15 +13,14 @@
 
  
    
-<p align="left">  
- </p>
+
 
 - 🌱 I’m currently learning **MLOps**
 
 - 👨‍💻 All of my details are available at [krishujeniya.com](https://bit.ly/KrishUjeniya)
 
 
-- 💬 Ask me about **Computer Vision, Natural Language Processing, Generative AI, Robotics and many more technogies**
+- 💬 Ask me about **Computer Vision, Natural Language Processing, Generative AI, Robotics and many more technologies**
 
 - 📫 How to reach me **ukideashare0021@gmail.com**
 
@@ -159,12 +158,12 @@
  <p align="center">
 <a href="https://github.com/krishujeniya">
 
-   <img align="center" src="https://github-readme-stats.vercel.app/api?username=krishujeniya&show_icons=true&line_height=30&rank_icon=github&show=discussions_answered&theme=algolia" alt="Walid's github stats"/>
+   <img align="center" src="https://github-readme-stats.vercel.app/api?username=krishujeniya&show_icons=true&line_height=30&rank_icon=github&show=discussions_answered&theme=algolia" alt="Krish's github stats"/>
 
 </a>
 
 
-</p >
+</p>
 
 
  <!--More Stats-->
@@ -179,10 +178,10 @@
 <p align="center">
 <div align="center">
  <a href="https://github.com/krishujeniya"> 
-<img src="http://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=krishujeniya&theme=algolia" width="100%" /> </br></br>
+<img src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=krishujeniya&theme=algolia" width="100%" /> </br></br>
 
-<img src="http://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=krishujeniya&theme=algolia" width="31%" align="left"/>
-<img src="http://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=krishujeniya&theme=algolia" width="31%" align="right" />
+<img src="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=krishujeniya&theme=algolia" width="31%" align="left"/>
+<img src="https://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=krishujeniya&theme=algolia" width="31%" align="right" />
 <img src="https://github-profile-summary-cards.vercel.app/api/cards/productive-time?username=krishujeniya&theme=algolia" width="31%" align="center" title="🦉 Night owl" />  
 </br></br>
  </a>
@@ -194,8 +193,7 @@
 </div>
 
 <br/><br/>
- <div align="center">
-</p >
+</p>
 <br/>
 </details>
 
