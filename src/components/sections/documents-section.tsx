@@ -90,7 +90,7 @@ const docsData: DocFolder[] = [
         files: [
             { name: 'Overview_Cloud.pdf', type: 'PDF' },
             { name: 'Intro_Cloud_Computing.pdf', type: 'PDF' },
-            { name: 'Cloud_Security_and_Compilance.pdf', type: 'PDF' },
+            { name: 'Cloud_Security_and_Compliance.pdf', type: 'PDF' },
             { name: 'Cloud_Storage_and_Database_Services.pdf', type: 'PDF' },
             { name: 'Data_Center_Architecture.pdf', type: 'PDF' },
             { name: 'Emerging_Technologies_with_Cloud_Computing.pdf', type: 'PDF' },
@@ -135,7 +135,7 @@ const docsData: DocFolder[] = [
             { name: 'Overview_SD.pdf', type: 'PDF' },
             { name: 'About_Software_Development.pdf', type: 'PDF' },
             { name: 'SDLC.pptx', type: 'PPTX' },
-            { name: 'Aglie.pptx', type: 'PPTX' },
+            { name: 'Agile.pptx', type: 'PPTX' },
             { name: 'SRS.pptx', type: 'PPTX' },
             { name: 'Risk_Management.pptx', type: 'PPTX' },
             { name: 'Software_Design.pdf', type: 'PDF' },
@@ -222,7 +222,7 @@ const DocFolderCard: FC<{ folder: DocFolder; index: number }> = ({ folder, index
                                 transition={{ duration: 0.2, delay: fi * 0.03 }}
                             >
                                 <a
-                                    href={`${DOCS_BASE_URL}/${folder.path}/${encodeURIComponent(file.name)}`}
+                                    href={`${DOCS_BASE_URL}/${folder.path}/${file.name.split('/').map(segment => encodeURIComponent(segment)).join('/')}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     download
