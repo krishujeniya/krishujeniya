@@ -5,7 +5,12 @@ import { ProjectsSection } from '@/components/sections/projects-section';
 import { ExperienceSection } from '@/components/sections/experience-section';
 import { DocumentsSection } from '@/components/sections/documents-section';
 import { ContactSection } from '@/components/sections/contact-section';
-import { ThreeBackground } from '@/components/three-background';
+import dynamic from 'next/dynamic';
+
+const ThreeBackground = dynamic(
+  () => import('@/components/three-background').then(mod => ({ default: mod.ThreeBackground })),
+  { ssr: false }
+);
 
 const Home: FC = () => {
   return (

@@ -226,7 +226,7 @@ export const ChatBot = () => {
                         <div className="chatbot-messages">
                             {chatMessages.map((msg, i) => (
                                 <motion.div
-                                    key={i}
+                                    key={`msg-${i}-${msg.from}`}
                                     className={`chatbot-msg ${msg.from === 'bot' ? 'chatbot-msg-bot' : 'chatbot-msg-user'}`}
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{ opacity: 1, y: 0 }}

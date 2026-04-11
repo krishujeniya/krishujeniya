@@ -2,7 +2,7 @@
 
 import type { FC } from 'react';
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import {
     Send,
     Github,
@@ -23,13 +23,12 @@ const socialLinks = [
     { name: 'GitHub', icon: Github, url: 'https://github.com/krishujeniya' },
 ];
 
-
+const currentYear = new Date().getFullYear();
 
 export const ContactSection: FC = () => {
     const [formData, setFormData] = useState({ name: '', email: '', message: '' });
     const [focusedField, setFocusedField] = useState<string | null>(null);
     const [formSent, setFormSent] = useState(false);
-    const currentYear = new Date().getFullYear();
 
     const handleFormSubmit = (e: React.FormEvent) => {
         e.preventDefault();
