@@ -1203,7 +1203,7 @@ div[style*="position: fixed"][style*="z-index: -1"] {
 }
 
 .form-input:focus {
-  border-color: rgba(255, 255, 255, 0.4);
+  border-color: rgba(255, 255, 255, 0.1);
   outline: none;
   box-shadow: none;
 }
