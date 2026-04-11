@@ -13,6 +13,7 @@ import {
     Check,
 } from 'lucide-react';
 import Link from 'next/link';
+import Script from 'next/script';
 import { AnimatedSection } from '@/components/ui/animated-section';
 
 const socialLinks = [
@@ -165,6 +166,20 @@ export const ContactSection: FC = () => {
                                 <Mail className="w-5 h-5" />
                                 <span>ukideashare0021@gmail.com</span>
                             </Link>
+                        </div>
+
+                        {/* Contra Hire Me Button */}
+                        <div className="contra-button-wrapper" style={{ marginTop: '1.5rem' }}>
+                            <div
+                                className="contra-hire-me-button"
+                                data-analyticsuserid="6a3d79a0-be8d-49aa-af6b-9f647644d9ed"
+                                data-theme="dark"
+                                data-username="krishujeniya"
+                            />
+                            <Script
+                                src="https://contra.com/static/embed/sdk.js"
+                                strategy="lazyOnload"
+                            />
                         </div>
 
                         <div className="contact-socials">
