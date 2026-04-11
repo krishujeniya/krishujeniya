@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     siteName: 'Krish Ujeniya | AI Freelancer Portfolio',
     images: [
       {
-        url: 'https://github.com/krishujeniya/krishujeniya/blob/main/images/img1120.png?raw=true',
+        url: '/images/img1120.png',
         width: 1200,
         height: 630,
         alt: 'Krish Ujeniya Portfolio',
