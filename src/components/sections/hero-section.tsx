@@ -115,7 +115,13 @@ export const HeroSection: FC = () => {
   }, []);
 
   const handleScrollTo = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.scrollIntoView({ behavior: 'smooth' });
+    // Re-scroll after in-view animations settle to correct any position drift
+    setTimeout(() => {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }, 800);
   };
 
   return (
