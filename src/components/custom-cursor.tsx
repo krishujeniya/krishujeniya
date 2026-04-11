@@ -15,12 +15,14 @@ export const CustomCursor = () => {
     const springY = useSpring(cursorY, springConfig);
 
     useEffect(() => {
-        // Detect touch device
-        const detectTouch = () => {
-            hasTouchRef.current = true;
-            setIsHidden(true);
+        // Continuous detection for hybrid devices (touch + mouse)
+        const hoverMedia = window.matchMedia('(hover: hover) and (pointer: fine)');
+        const checkCapabilities = () => {
+            setIsHidden(!hoverMedia.matches);
         };
-        window.addEventListener('touchstart', detectTouch, { once: true });
+        
+        checkCapabilities();
+        hoverMedia.addEventListener('change', checkCapabilities);
 
         const onMouseMove = (e: MouseEvent) => {
             if (hasTouchRef.current) return;
@@ -69,7 +71,7 @@ export const CustomCursor = () => {
             window.removeEventListener('mousemove', onMouseMove);
             document.removeEventListener('mouseleave', onMouseLeaveWindow);
             document.removeEventListener('mouseenter', onMouseEnterWindow);
-            window.removeEventListener('touchstart', detectTouch);
+            hoverMedia.removeEventListener('change', checkCapabilities);
             observer.disconnect();
         };
     }, [cursorX, cursorY]);

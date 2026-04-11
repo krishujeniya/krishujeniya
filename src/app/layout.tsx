@@ -51,10 +51,10 @@ export const metadata: Metadata = {
     title: 'Krish Ujeniya | Data Scientist & ML Engineer',
     description:
       'Expert Freelance Data Scientist & ML Engineer specializing in AI Agents, LLMs, RAG, and MLOps pipelines.',
-    images: ['https://krishujeniya.github.io/krishujeniya/twitter.png'],
+    images: ['/images/1765004211200.jpg'],
     creator: '@krishujeniya',
   },
-  metadataBase: new URL('https://krishujeniya.github.io/krishujeniya/'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://krishujeniya.github.io/krishujeniya/'),
   icons: {
     icon: '/favicon.ico',
   },

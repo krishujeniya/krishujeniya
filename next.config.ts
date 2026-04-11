@@ -9,10 +9,10 @@ const nextConfig: NextConfig = {
   basePath: process.env.NODE_ENV === 'production' ? `/${repoName}` : '', // Set base path for GitHub Pages
   assetPrefix: process.env.NODE_ENV === 'production' ? `/${repoName}/` : '', // Set asset prefix for GitHub Pages
   typescript: {
-    ignoreBuildErrors: true,
+    ignoreBuildErrors: false,
   },
   eslint: {
-    ignoreDuringBuilds: true,
+    ignoreDuringBuilds: false,
   },
   images: {
     unoptimized: true, // Disable Next.js Image Optimization for static export compatibility

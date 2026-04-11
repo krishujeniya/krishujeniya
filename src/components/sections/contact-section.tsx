@@ -41,7 +41,7 @@ export const ContactSection: FC = () => {
         );
         const mailtoLink = `mailto:ukideashare0021@gmail.com?subject=${subject}&body=${body}`;
 
-        window.open(mailtoLink, '_self');
+        window.location.href = mailtoLink;
         setFormSent(true);
         setFormData({ name: '', email: '', message: '' });
 
