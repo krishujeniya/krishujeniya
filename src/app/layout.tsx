@@ -4,8 +4,17 @@ import './globals.css';
 import { cn } from '@/lib/utils';
 import { Toaster } from '@/components/ui/toaster';
 import { ThemeProvider } from '@/components/theme-provider';
-import { CustomCursor } from '@/components/custom-cursor';
-import { ChatBot } from '@/components/chat-bot';
+import dynamic from 'next/dynamic';
+
+const CustomCursor = dynamic(
+  () => import('@/components/custom-cursor').then(mod => ({ default: mod.CustomCursor })),
+  { ssr: false }
+);
+
+const ChatBot = dynamic(
+  () => import('@/components/chat-bot').then(mod => ({ default: mod.ChatBot })),
+  { ssr: false }
+);
 
 const inter = Inter({
   subsets: ['latin'],

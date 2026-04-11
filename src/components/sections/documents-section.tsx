@@ -5,9 +5,6 @@ import type { LucideIcon } from 'lucide-react';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-    FileText,
-    Download,
-    Eye,
     Award,
     Database,
     Shield,
@@ -16,7 +13,6 @@ import {
     Megaphone,
     Link2,
     BrainCircuit,
-    FolderOpen,
     ChevronDown,
     ChevronUp,
     File,

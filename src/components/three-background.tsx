@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useEffect, useRef, useCallback } from 'react';
+import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
 // Adaptive particle counts based on device capability
@@ -330,5 +330,5 @@ export const ThreeBackground = () => {
     };
   }, []);
 
-  return <div ref={mountRef} aria-hidden="true" style={{ willChange: 'transform' }} />;
+  return <div ref={mountRef} aria-hidden="true" />;
 };
