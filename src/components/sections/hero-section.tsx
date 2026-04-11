@@ -118,10 +118,14 @@ export const HeroSection: FC = () => {
     const el = document.getElementById(id);
     if (!el) return;
     el.scrollIntoView({ behavior: 'smooth' });
-    // Re-scroll after in-view animations settle to correct any position drift
-    setTimeout(() => {
-      el.scrollIntoView({ behavior: 'smooth' });
-    }, 800);
+    // Staggered re-scrolls to correct position drift from in-view animations
+    // Mobile needs more passes since cards stack vertically and animate slower
+    const delays = [600, 1200, 1800];
+    delays.forEach((ms) => {
+      setTimeout(() => {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }, ms);
+    });
   };
 
   return (
