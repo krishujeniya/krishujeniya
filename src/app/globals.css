@@ -299,16 +299,8 @@ div[style*="position: fixed"][style*="z-index: -1"] {
   --mouse-y: 0;
 }
 
-/* GPU-accelerated parallax via CSS custom properties (no re-renders) */
-.hero-parallax-title {
-  transform: translate3d(calc(var(--mouse-x) * 0.3px), calc(var(--mouse-y) * 0.3px), 0);
-  will-change: transform;
-}
-
-.hero-parallax-subtitle {
-  transform: translate3d(calc(var(--mouse-x) * 0.15px), calc(var(--mouse-y) * 0.15px), 0);
-  will-change: transform;
-}
+/* Parallax transforms removed — framer-motion inline styles override CSS transforms,
+   and keeping will-change:transform on these created stacking/overlap on scroll-back */
 
 .hero-gradient-overlay {
   position: absolute;
@@ -373,7 +365,6 @@ div[style*="position: fixed"][style*="z-index: -1"] {
 
 .hero-letter {
   display: inline-block;
-  will-change: transform, opacity, filter;
 }
 
 .hero-subtitle {
@@ -382,7 +373,6 @@ div[style*="position: fixed"][style*="z-index: -1"] {
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.4);
   margin-top: 1.5rem;
-  will-change: transform, opacity, letter-spacing;
   letter-spacing: 0.2em;
   max-width: 100%;
   word-break: break-word;
