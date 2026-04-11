@@ -5,11 +5,6 @@ import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
 // Adaptive particle counts based on device capability
-const isMobileDevice = () =>
-  typeof window !== 'undefined' && (window.innerWidth < 768 || /Mobi|Android/i.test(navigator.userAgent));
-
-const getStarCount = () => (isMobileDevice() ? 1000 : 1800);
-const getFarStarCount = () => (isMobileDevice() ? 300 : 600);
 const STAR_SPREAD = 600;
 const STAR_DEPTH = 1200;
 const SHOOTING_STAR_COUNT = 3;
@@ -24,10 +19,13 @@ export const ThreeBackground = () => {
   useEffect(() => {
     if (!mountRef.current) return;
     const currentMount = mountRef.current;
+    
+    // Modern robust device detection using matchMedia
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    const STAR_COUNT = isMobile ? 1000 : 1800;
+    const FAR_STAR_COUNT = isMobile ? 300 : 600;
+    
     scrollRef.current = window.scrollY;
-
-    const STAR_COUNT = getStarCount();
-    const FAR_STAR_COUNT = getFarStarCount();
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(
@@ -39,7 +37,7 @@ export const ThreeBackground = () => {
     camera.position.z = 400;
 
     // Cap pixel ratio more aggressively on mobile
-    const maxPixelRatio = isMobileDevice() ? 1.5 : 2;
+    const maxPixelRatio = isMobile ? 1.5 : 2;
     const pixelRatio = Math.min(window.devicePixelRatio, maxPixelRatio);
 
     const renderer = new THREE.WebGLRenderer({

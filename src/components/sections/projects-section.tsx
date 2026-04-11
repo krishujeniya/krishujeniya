@@ -13,7 +13,7 @@ const projects = [
   {
     title: 'Salary Predictions For Data Professions',
     category: 'Machine Learning / MLOps',
-    imageUrl: 'https://github.com/krishujeniya/krishujeniya/blob/main/images/m1.png?raw=true',
+    imageUrl: '/images/m1.png',
     description: 'Engineered an ML pipeline using ZenML to predict data professional salaries, enabling data-driven compensation strategies.',
     link: 'https://huggingface.co/spaces/krishujeniya/Salary_Predictions_For_Data_Professions',
     aiHint: 'data science dashboard graph salary',
@@ -120,7 +120,6 @@ export const ProjectsSection: FC = () => {
                 className="portfolio-card-img"
                 data-ai-hint={project.aiHint}
                 priority={index < 2}
-                loading={index < 2 ? undefined : 'lazy'}
               />
               <div className="portfolio-card-overlay">
                 <Link

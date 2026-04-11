@@ -109,7 +109,12 @@ const knowledgeBase: KnowledgeEntry[] = [
 ];
 
 const getAIResponse = (userMessage: string): string => {
-    const msg = userMessage.toLowerCase().trim();
+    const rawMsg = userMessage.toLowerCase().trim();
+    const words = rawMsg.split(/\s+/);
+    
+    // Check for negation (simple implementation)
+    const negations = ['no', 'not', 'don\'t', 'dont', 'stop', 'quit', 'never'];
+    const isNegated = negations.some(n => words.includes(n));
 
     // Score each knowledge entry
     let bestMatch: KnowledgeEntry | null = null;
@@ -117,12 +122,20 @@ const getAIResponse = (userMessage: string): string => {
 
     for (const entry of knowledgeBase) {
         let score = 0;
+        let matchCount = 0;
+
         for (const keyword of entry.keywords) {
-            if (msg.includes(keyword)) {
-                score += keyword.split(' ').length; // Multi-word matches score higher
+            if (rawMsg.includes(keyword)) {
+                // Multi-word matches score significantly higher
+                const keywordWeight = keyword.split(' ').length;
+                score += keywordWeight * 10;
+                matchCount++;
             }
         }
+        
+        // Contextual adjustments
         if (entry.priority) score *= entry.priority;
+        if (isNegated) score *= 0.2; // Drastically reduce score if negation is present
 
         if (score > bestScore) {
             bestScore = score;
@@ -130,15 +143,15 @@ const getAIResponse = (userMessage: string): string => {
         }
     }
 
-    if (bestMatch && bestScore > 0) {
+    if (bestMatch && bestScore >= 10) {
         return bestMatch.response;
     }
 
     // Fallback responses
     const fallbacks = [
         "Interesting question! While I may not have a specific answer for that, I can tell you about Krish's services, projects, skills, pricing, or availability. What would you like to know? 😊",
-        "I'm not sure about that one, but I can help you with info about Krish's AI/ML services, his portfolio projects, or help you get started with a project inquiry. Try asking about his skills or services!",
-        "That's outside my knowledge area, but feel free to ask about Krish's expertise in AI Agents, LLMs, RAG, MLOps, or mobile development. Or you can email him at ukideashare0021@gmail.com for specific questions!",
+        "I'm not sure about that one, but I can help you with info about Krish's AI/ML services, his portfolio projects, or help you get started with a project inquiry.",
+        "That's outside my knowledge area, but feel free to ask about Krish's expertise in AI Agents, LLMs, RAG, MLOps, or mobile development.",
     ];
     return fallbacks[Math.floor(Math.random() * fallbacks.length)];
 };
@@ -161,10 +174,18 @@ export const ChatBot = () => {
     const [chatInput, setChatInput] = useState('');
     const [isTyping, setIsTyping] = useState(false);
     const chatEndRef = useRef<HTMLDivElement>(null);
+    const inputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
         chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, [chatMessages, isTyping]);
+
+    // Handle focus trap and auto-focus on open
+    useEffect(() => {
+        if (chatOpen) {
+            inputRef.current?.focus();
+        }
+    }, [chatOpen]);
 
     const handleChatSend = () => {
         if (!chatInput.trim() || isTyping) return;
@@ -194,6 +215,9 @@ export const ChatBot = () => {
                 {chatOpen && (
                     <motion.div
                         className="chatbot-window"
+                        id="chat-window"
+                        role="dialog"
+                        aria-label="AI Assistant"
                         initial={{ opacity: 0, scale: 0.85, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.85, y: 20 }}
@@ -223,7 +247,11 @@ export const ChatBot = () => {
                         </div>
 
                         {/* Chat messages */}
-                        <div className="chatbot-messages">
+                        <div 
+                            className="chatbot-messages" 
+                            aria-live="polite"
+                            aria-atomic="false"
+                        >
                             {chatMessages.map((msg, i) => (
                                 <motion.div
                                     key={`msg-${i}-${msg.from}`}
@@ -263,12 +291,14 @@ export const ChatBot = () => {
                         {/* Chat input */}
                         <div className="chatbot-input-area">
                             <input
+                                ref={inputRef}
                                 type="text"
                                 value={chatInput}
                                 onChange={(e) => setChatInput(e.target.value)}
                                 onKeyDown={(e) => e.key === 'Enter' && handleChatSend()}
                                 placeholder="Type a message..."
                                 className="chatbot-input"
+                                aria-label="Chat message"
                             />
                             <button
                                 onClick={handleChatSend}
@@ -289,6 +319,8 @@ export const ChatBot = () => {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
                 aria-label="Toggle AI chat"
+                aria-expanded={chatOpen}
+                aria-controls="chat-window"
             >
                 <AnimatePresence mode="wait">
                     {chatOpen ? (

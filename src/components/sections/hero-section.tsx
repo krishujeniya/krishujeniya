@@ -117,15 +117,7 @@ export const HeroSection: FC = () => {
   const handleScrollTo = (id: string) => {
     const el = document.getElementById(id);
     if (!el) return;
-    el.scrollIntoView({ behavior: 'smooth' });
-    // Staggered re-scrolls to correct position drift from in-view animations
-    // Mobile needs more passes since cards stack vertically and animate slower
-    const delays = [600, 1200, 1800];
-    delays.forEach((ms) => {
-      setTimeout(() => {
-        el.scrollIntoView({ behavior: 'smooth' });
-      }, ms);
-    });
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   return (
@@ -146,7 +138,7 @@ export const HeroSection: FC = () => {
           animate="visible"
         >
           <Image
-            src="https://github.com/krishujeniya/krishujeniya/blob/main/images/1765004211200.jpg?raw=true"
+            src="/images/1765004211200.jpg"
             alt="Krish Ujeniya"
             width={240}
             height={240}
