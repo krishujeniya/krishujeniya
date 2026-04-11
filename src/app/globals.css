@@ -1176,6 +1176,7 @@ div[style*="position: fixed"][style*="z-index: -1"] {
   pointer-events: none;
   transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
   font-weight: 500;
+  z-index: 1;
 }
 
 .form-field.active .form-label,
