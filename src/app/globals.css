@@ -1203,7 +1203,7 @@ div[style*="position: fixed"][style*="z-index: -1"] {
 }
 
 .form-input:focus {
-  border-color: rgba(255, 255, 255, 0.4);
+  border-color: rgba(255, 255, 255, 0.1);
 }
 
 .form-textarea {
@@ -1212,17 +1212,7 @@ div[style*="position: fixed"][style*="z-index: -1"] {
 }
 
 .form-field-border {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 1px;
-  background: #ffffff;
-  transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.form-field:focus-within .form-field-border {
-  width: 100%;
+  display: none;
 }
 
 .form-submit-btn {
