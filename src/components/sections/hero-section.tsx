@@ -144,7 +144,6 @@ export const HeroSection: FC = () => {
             height={240}
             className="hero-avatar-img"
             priority
-            data-ai-hint="professional headshot portrait"
           />
         </motion.div>
 

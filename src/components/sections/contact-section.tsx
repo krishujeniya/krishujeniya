@@ -24,8 +24,6 @@ const socialLinks = [
     { name: 'GitHub', icon: Github, url: 'https://github.com/krishujeniya' },
 ];
 
-const currentYear = new Date().getFullYear();
-
 export const ContactSection: FC = () => {
     const [formData, setFormData] = useState({ name: '', email: '', message: '' });
     const [focusedField, setFocusedField] = useState<string | null>(null);
@@ -34,6 +32,7 @@ export const ContactSection: FC = () => {
     const handleFormSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) return;
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) return;
 
         const subject = encodeURIComponent(`Portfolio Inquiry from ${formData.name}`);
         const body = encodeURIComponent(
@@ -207,8 +206,8 @@ export const ContactSection: FC = () => {
                     <p className="footer-text">
                         Proudly building open-source AI tools since 2022.
                     </p>
-                    <p className="footer-copyright">
-                        © {currentYear} Krish Ujeniya. All Rights Reserved.
+                    <p className="footer-copyright" suppressHydrationWarning>
+                        © {new Date().getFullYear()} Krish Ujeniya. All Rights Reserved.
                     </p>
                 </div>
             </AnimatedSection>

@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     siteName: 'Krish Ujeniya | AI Freelancer Portfolio',
     images: [
       {
-        url: '/images/img1120.png',
+        url: 'images/img1120.png',
         width: 1200,
         height: 630,
         alt: 'Krish Ujeniya Portfolio',
@@ -51,7 +51,7 @@ export const metadata: Metadata = {
     title: 'Krish Ujeniya | Data Scientist & ML Engineer',
     description:
       'Expert Freelance Data Scientist & ML Engineer specializing in AI Agents, LLMs, RAG, and MLOps pipelines.',
-    images: ['/images/1765004211200.jpg'],
+    images: ['images/1765004211200.jpg'],
     creator: '@krishujeniya',
   },
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://krishujeniya.github.io/krishujeniya/'),
@@ -80,7 +80,7 @@ export default function RootLayout({
           'min-h-screen bg-background font-sans antialiased dark'
         )}
       >
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
+        <ThemeProvider>
           <CustomCursor />
           {children}
           <ChatBot />
