@@ -135,7 +135,7 @@ const getAIResponse = (userMessage: string): string => {
         
         // Contextual adjustments
         if (entry.priority) score *= entry.priority;
-        if (isNegated) score *= 0.2; // Drastically reduce score if negation is present
+        if (isNegated && words.length <= 4) score *= 0.2; // Only penalize short negation queries
 
         if (score > bestScore) {
             bestScore = score;
@@ -170,7 +170,10 @@ const botMessages = [
 
 export const ChatBot = () => {
     const [chatOpen, setChatOpen] = useState(false);
-    const [chatMessages, setChatMessages] = useState<Array<{ from: 'bot' | 'user'; text: string }>>(botMessages);
+    const nextIdRef = useRef(botMessages.length);
+    const [chatMessages, setChatMessages] = useState<Array<{ id: number; from: 'bot' | 'user'; text: string }>>(
+        botMessages.map((m, i) => ({ ...m, id: i }))
+    );
     const [chatInput, setChatInput] = useState('');
     const [isTyping, setIsTyping] = useState(false);
     const chatEndRef = useRef<HTMLDivElement>(null);
@@ -190,10 +193,11 @@ export const ChatBot = () => {
     const handleChatSend = () => {
         if (!chatInput.trim() || isTyping) return;
         const userMsg = chatInput.trim();
+        const userMsgId = nextIdRef.current++;
         setChatMessages((prev) => [
             ...prev,
-            { from: 'user' as const, text: userMsg },
-        ]);
+            { id: userMsgId, from: 'user' as const, text: userMsg },
+        ].slice(-50));
         setChatInput('');
         setIsTyping(true);
 
@@ -201,10 +205,11 @@ export const ChatBot = () => {
         const thinkTime = 400 + Math.random() * 600;
         setTimeout(() => {
             const aiResponse = getAIResponse(userMsg);
+            const botMsgId = nextIdRef.current++;
             setChatMessages((prev) => [
                 ...prev,
-                { from: 'bot' as const, text: aiResponse },
-            ]);
+                { id: botMsgId, from: 'bot' as const, text: aiResponse },
+            ].slice(-50));
             setIsTyping(false);
         }, thinkTime);
     };
@@ -252,13 +257,13 @@ export const ChatBot = () => {
                             aria-live="polite"
                             aria-atomic="false"
                         >
-                            {chatMessages.map((msg, i) => (
+                            {chatMessages.map((msg) => (
                                 <motion.div
-                                    key={`msg-${i}-${msg.from}`}
+                                    key={msg.id}
                                     className={`chatbot-msg ${msg.from === 'bot' ? 'chatbot-msg-bot' : 'chatbot-msg-user'}`}
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: i * 0.1, duration: 0.3 }}
+                                    transition={{ duration: 0.3 }}
                                 >
                                     <div className={`chatbot-msg-avatar ${msg.from === 'bot' ? 'chatbot-msg-avatar-bot' : 'chatbot-msg-avatar-user'}`}>
                                         {msg.from === 'bot' ? <Bot className="w-3 h-3" /> : <User className="w-3 h-3" />}

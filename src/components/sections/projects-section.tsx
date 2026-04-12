@@ -16,7 +16,6 @@ const projects = [
     imageUrl: '/images/m1.png',
     description: 'Engineered an ML pipeline using ZenML to predict data professional salaries, enabling data-driven compensation strategies.',
     link: 'https://huggingface.co/spaces/krishujeniya/Salary_Predictions_For_Data_Professions',
-    aiHint: 'data science dashboard graph salary',
     techStack: ['Python', 'ZenML', 'Scikit-learn', 'MLflow'],
   },
   {
@@ -25,7 +24,6 @@ const projects = [
     imageUrl: 'https://github.com/krishujeniya/FACE_LOCK_TKINTER/raw/main/logo.png',
     description: 'Created a desktop application using Tkinter and face recognition technology to secure access via facial identification.',
     link: 'https://github.com/krishujeniya/FACE_LOCK_TKINTER',
-    aiHint: 'face recognition security software',
     techStack: ['Python', 'Tkinter', 'OpenCV', 'face_recognition'],
   },
   {
@@ -34,7 +32,6 @@ const projects = [
     imageUrl: 'https://github.com/krishujeniya/SNAPTEXT_OCR_FLUTTER/raw/main/assets/Screenshot%20from%202024-06-17%2011-33-12.png',
     description: 'Built a Flutter-based OCR app for easy text extraction from images on mobile devices.',
     link: 'https://github.com/krishujeniya/SNAPTEXT_OCR_FLUTTER',
-    aiHint: 'mobile app document scanner',
     techStack: ['Flutter', 'Dart', 'ML Kit'],
   },
   {
@@ -43,7 +40,6 @@ const projects = [
     imageUrl: 'https://storage.googleapis.com/kaggle-datasets-images/5817988/9548984/ffc2841e628ea82c25a8b08b56b873ff/dataset-cover.png?t=2024-10-04-18-47-18',
     description: 'Analyzed fitness data using ML techniques in Jupyter to uncover patterns and insights.',
     link: 'https://github.com/krishujeniya/Fitness-Tracker-ML',
-    aiHint: 'fitness data dashboard',
     techStack: ['Python', 'Jupyter', 'Pandas', 'Matplotlib'],
   },
   {
@@ -52,7 +48,6 @@ const projects = [
     imageUrl: 'https://github.com/krishujeniya/EchoNest-The-Social-Media-App/raw/main/assets/iw.png',
     description: 'Developed a cross-platform social media app focusing on real-time features and engagement.',
     link: 'https://github.com/krishujeniya/EchoNest-The-Social-Media-App',
-    aiHint: 'mobile social media',
     techStack: ['Flutter', 'Dart', 'Firebase'],
   },
   {
@@ -61,7 +56,6 @@ const projects = [
     imageUrl: 'https://github.com/krishujeniya/ALL-IN-ONE-DISCORD-BOT-USING-JS/raw/main/docs/.gitbook/assets/strange.png',
     description: 'Developed a multi-functional Discord bot enhancing server interaction and management.',
     link: 'https://github.com/krishujeniya/ALL-IN-ONE-DISCORD-BOT-USING-JS',
-    aiHint: 'discord bot interface',
     techStack: ['JavaScript', 'Node.js', 'Discord.js'],
   },
 ];
@@ -102,7 +96,7 @@ export const ProjectsSection: FC = () => {
       <div ref={containerRef} className="portfolio-grid">
         {projects.map((project, index) => (
           <motion.div
-            key={index}
+            key={project.title}
             custom={index}
             variants={cardVariants}
             initial="hidden"
@@ -118,7 +112,6 @@ export const ProjectsSection: FC = () => {
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 style={{ objectFit: 'cover' }}
                 className="portfolio-card-img"
-                data-ai-hint={project.aiHint}
                 priority={index < 2}
               />
               <div className="portfolio-card-overlay">

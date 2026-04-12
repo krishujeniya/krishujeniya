@@ -53,7 +53,7 @@ export const CoreExpertiseSection: FC = () => {
       <div className="expertise-grid">
         {coreServices.map((service, index) => (
           <motion.div
-            key={`service-${index}`}
+            key={service.title}
             custom={index}
             variants={cardVariants}
             initial="hidden"

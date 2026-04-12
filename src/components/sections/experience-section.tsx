@@ -87,7 +87,7 @@ export const ExperienceSection: FC = () => {
 
         {workExperience.map((exp, index) => (
           <motion.div
-            key={index}
+            key={exp.role}
             custom={index}
             variants={itemVariants}
             initial="hidden"

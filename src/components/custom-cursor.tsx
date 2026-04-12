@@ -44,12 +44,17 @@ export const CustomCursor = () => {
         // Add hover detection for interactive elements (with deduplication)
         const interactiveSelectors = 'a, button, input, textarea, [role="button"], .magnetic-btn';
         const trackedElements = new WeakSet<Element>();
+        const elementCleanups: (() => void)[] = [];
 
         const attachListeners = (el: Element) => {
             if (trackedElements.has(el)) return;
             trackedElements.add(el);
             el.addEventListener('mouseenter', onMouseEnterInteractive);
             el.addEventListener('mouseleave', onMouseLeaveInteractive);
+            elementCleanups.push(() => {
+                el.removeEventListener('mouseenter', onMouseEnterInteractive);
+                el.removeEventListener('mouseleave', onMouseLeaveInteractive);
+            });
         };
 
         const interactiveElements = document.querySelectorAll(interactiveSelectors);
@@ -68,6 +73,7 @@ export const CustomCursor = () => {
 
         return () => {
             clearTimeout(mutationTimer);
+            elementCleanups.forEach(fn => fn());
             window.removeEventListener('mousemove', onMouseMove);
             document.removeEventListener('mouseleave', onMouseLeaveWindow);
             document.removeEventListener('mouseenter', onMouseEnterWindow);
