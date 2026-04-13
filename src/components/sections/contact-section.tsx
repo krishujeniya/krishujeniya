@@ -40,7 +40,11 @@ export const ContactSection: FC = () => {
         );
         const mailtoLink = `mailto:ukideashare0021@gmail.com?subject=${subject}&body=${body}`;
 
-        window.location.href = mailtoLink;
+        const a = document.createElement('a');
+        a.href = mailtoLink;
+        a.target = '_blank';
+        a.click();
+        
         setFormSent(true);
         setFormData({ name: '', email: '', message: '' });
 
@@ -154,9 +158,16 @@ export const ContactSection: FC = () => {
                     >
                         <div className="contact-info-block">
                             <h3 className="contact-info-title">Get in Touch</h3>
-                            <p className="contact-info-text">
+                            <p className="contact-info-text text-white/50 mb-2">
                                 Ready to discuss your AI project or need an MLOps consultation?
                                 Reach out via email or connect on social media.
+                            </p>
+                            <p className="text-sm font-medium text-green-400/90 flex items-center gap-2 mb-6">
+                                <span className="relative flex h-2 w-2">
+                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                                    <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                                </span>
+                                Typically responds within 24 hours
                             </p>
                             <Link
                                 href="mailto:ukideashare0021@gmail.com"

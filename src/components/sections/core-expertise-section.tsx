@@ -59,7 +59,7 @@ export const CoreExpertiseSection: FC = () => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: '-60px' }}
-            className="expertise-card group"
+            className="expertise-card group h-full flex flex-col items-center"
           >
             <span className="expertise-card-number">{service.number}</span>
             <div className="expertise-card-icon-wrapper">
@@ -67,12 +67,30 @@ export const CoreExpertiseSection: FC = () => {
             </div>
             <h3 className="expertise-card-title">{service.title}</h3>
             <p className="expertise-card-desc">{service.description}</p>
-            <div className="expertise-card-reveal">
-              <span className="text-xs text-white/70 font-medium tracking-wider uppercase">Discover Solutions →</span>
+            <div className="expertise-card-reveal mt-auto">
+              <span className="text-xs text-white/70 font-medium tracking-wider uppercase flex items-center gap-1">
+                Discover Solutions <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+              </span>
             </div>
           </motion.div>
         ))}
       </div>
+
+      <motion.div 
+        className="mt-16 text-center"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-60px' }}
+        transition={{ delay: 0.6, duration: 0.6 }}
+      >
+        <p className="text-sm font-medium tracking-widest uppercase text-white/50">
+          <span className="inline-block mx-3">4+ years</span>
+          <span className="inline-block mx-3 text-white/20">•</span>
+          <span className="inline-block mx-3">6 projects shipped</span>
+          <span className="inline-block mx-3 text-white/20">•</span>
+          <span className="inline-block mx-3">Open to remote worldwide</span>
+        </p>
+      </motion.div>
     </AnimatedSection>
   );
 };

@@ -40,15 +40,21 @@ export const ThreeBackground = () => {
     const maxPixelRatio = isMobile ? 1.5 : 2;
     const pixelRatio = Math.min(window.devicePixelRatio, maxPixelRatio);
 
-    const renderer = new THREE.WebGLRenderer({
-      antialias: false,
-      alpha: true,
-      powerPreference: 'high-performance',
-    });
-    renderer.setPixelRatio(pixelRatio);
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setClearColor(0x000000, 0);
-    currentMount.appendChild(renderer.domElement);
+    let renderer: THREE.WebGLRenderer;
+    try {
+      renderer = new THREE.WebGLRenderer({
+        antialias: false,
+        alpha: true,
+        powerPreference: 'high-performance',
+      });
+      renderer.setPixelRatio(pixelRatio);
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setClearColor(0x000000, 0);
+      currentMount.appendChild(renderer.domElement);
+    } catch (e) {
+      console.warn('WebGL is not supported or disabled. Falling back to simple background.', e);
+      return;
+    }
 
     // --- Shared star shader material ---
     const starShaderMaterial = new THREE.ShaderMaterial({
