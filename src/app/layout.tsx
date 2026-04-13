@@ -1,10 +1,12 @@
 import type { Metadata } from 'next';
+import ReactDOM from 'react-dom';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { cn } from '@/lib/utils';
 import { Toaster } from '@/components/ui/toaster';
 import { ThemeProvider } from '@/components/theme-provider';
 import { DynamicCustomCursor as CustomCursor, DynamicChatBot as ChatBot } from '@/components/client-dynamic';
+import { Navbar } from '@/components/navbar';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -20,24 +22,30 @@ export const viewport: import('next').Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: 'Krish Ujeniya | Data Scientist & ML Engineer',
+  title: 'Krish Ujeniya | Freelance Data Scientist & ML Engineer',
   description:
-    'Krish Ujeniya - Freelance Data Scientist & ML Engineer specializing in building intelligent systems with AI Agents, LLMs, RAG, and MLOps pipelines that transform businesses.',
+    'Krish Ujeniya is a freelance Data Scientist and ML Engineer specializing in AI Agents, LLMs, RAG systems, and MLOps. Available for hire globally.',
   keywords: [
-    'Freelance Data Scientist', 'Machine Learning Engineer', 'MLOps Expert', 'LLM Consultant',
-    'AI Agent Developer', 'Large Language Models', 'RAG Systems', 'Retrieval Augmented Generation',
-    'Python Developer', 'Generative AI', 'Vector Databases', 'ML Pipelines', 'ZenML', 'MLflow',
-    'Data Science Consultant', 'AI Development', 'Krish Ujeniya', 'Portfolio', 'Freelancer',
+    'Data Scientist', 'ML Engineer', 'AI Agent', 'LLM',
+    'RAG', 'MLOps', 'ZenML', 'Freelance AI', 'Machine Learning Consultant'
   ],
+  authors: [{ name: 'Krish Ujeniya' }],
+  robots: {
+    index: true,
+    follow: true,
+  },
+  alternates: {
+    canonical: 'https://krishujeniya.github.io/krishujeniya/',
+  },
   openGraph: {
-    title: 'Krish Ujeniya | Data Scientist',
+    title: 'Krish Ujeniya | Freelance Data Scientist & ML Engineer',
     description:
-      'Expert Freelance Data Scientist & ML Engineer specializing in AI Agents, LLMs, RAG, and MLOps pipelines.',
+      'Building intelligent systems with AI Agents, LLMs & MLOps pipelines. Available for freelance projects.',
     url: 'https://krishujeniya.github.io/krishujeniya/',
     siteName: 'Krish Ujeniya | AI Freelancer Portfolio',
     images: [
       {
-        url: 'images/img1120.png',
+        url: 'https://krishujeniya.github.io/images/1765004211200.jpg',
         width: 1200,
         height: 630,
         alt: 'Krish Ujeniya Portfolio',
@@ -50,8 +58,8 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Krish Ujeniya | Data Scientist & ML Engineer',
     description:
-      'Expert Freelance Data Scientist & ML Engineer specializing in AI Agents, LLMs, RAG, and MLOps pipelines.',
-    images: ['images/1765004211200.jpg'],
+      'Freelance AI & ML Engineer. Building agents, LLMs, and MLOps pipelines.',
+    images: ['https://krishujeniya.github.io/images/1765004211200.jpg'],
     creator: '@krishujeniya',
   },
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://krishujeniya.github.io/krishujeniya/'),
@@ -65,23 +73,38 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  ReactDOM.preconnect('https://github.com');
+  ReactDOM.preconnect('https://raw.githubusercontent.com');
+  ReactDOM.preconnect('https://storage.googleapis.com');
+
   return (
     <html lang="en" suppressHydrationWarning className={inter.variable}>
       <head>
-        {/* Preconnect to external image hosts for faster loading */}
-        <link rel="preconnect" href="https://github.com" />
-        <link rel="preconnect" href="https://raw.githubusercontent.com" />
-        <link rel="dns-prefetch" href="https://github.com" />
-        <link rel="dns-prefetch" href="https://raw.githubusercontent.com" />
-        <link rel="dns-prefetch" href="https://storage.googleapis.com" />
+        {/* Preconnect handled by ReactDOM */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              "name": "Krish Ujeniya",
+              "jobTitle": "Data Scientist & ML Engineer",
+              "url": "https://krishujeniya.github.io/krishujeniya/",
+              "email": "ukideashare0021@gmail.com",
+              "knowsAbout": ["Machine Learning","AI Agents","LLMs","MLOps","ZenML","MLflow","Flutter"],
+              "availableFor": "Freelance"
+            })
+          }}
+        />
       </head>
       <body
         className={cn(
-          'min-h-screen bg-background font-sans antialiased dark'
+          'min-h-screen bg-background font-sans antialiased dark pt-0'
         )}
       >
         <ThemeProvider>
           <CustomCursor />
+          <Navbar />
           {children}
           <ChatBot />
           <Toaster />

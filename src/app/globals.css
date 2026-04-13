@@ -83,13 +83,13 @@
     font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     overflow-x: hidden;
     width: 100%;
-    max-width: 100vw;
+    max-width: 100%;
   }
 
   section {
     @apply py-20 md:py-28 lg:py-36;
     overflow-x: hidden;
-    max-width: 100vw;
+    max-width: 100%;
   }
 
   h1,
@@ -432,8 +432,9 @@ div[style*="position: fixed"][style*="z-index: -1"] {
 }
 
 .btn-outline:hover {
-  border-color: rgba(255, 255, 255, 0.6);
-  background: rgba(255, 255, 255, 0.05);
+  border-color: #ffffff;
+  background: #ffffff;
+  color: #000000;
   transform: translateY(-2px);
 }
 

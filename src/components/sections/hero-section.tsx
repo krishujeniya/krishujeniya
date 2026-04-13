@@ -148,22 +148,42 @@ export const HeroSection: FC = () => {
         </motion.div>
 
         {/* Main title - staggered letter reveal */}
-        <motion.h1
-          className="hero-title hero-parallax-title"
-          initial="hidden"
-          animate="visible"
+        <motion.div 
+          className="flex flex-col items-center gap-4"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          {TITLE_TEXT.split('').map((char, i) => (
-            <motion.span
-              key={i}
-              custom={i}
-              variants={letterVariants}
-              className="hero-letter"
-            >
-              {char === ' ' ? '\u00A0' : char}
-            </motion.span>
-          ))}
-        </motion.h1>
+          <motion.div 
+            className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-background/50 border border-white/10 backdrop-blur-sm"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.5, duration: 0.5 }}
+          >
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+            </span>
+            <span className="text-xs font-medium text-white/90 uppercase tracking-wider">Available for hire</span>
+          </motion.div>
+
+          <motion.h1
+            className="hero-title hero-parallax-title"
+            initial="hidden"
+            animate="visible"
+          >
+            {TITLE_TEXT.split('').map((char, i) => (
+              <motion.span
+                key={i}
+                custom={i}
+                variants={letterVariants}
+                className="hero-letter"
+              >
+                {char === ' ' ? '\u00A0' : char}
+              </motion.span>
+            ))}
+          </motion.h1>
+        </motion.div>
 
         {/* Subtitle */}
         <motion.p

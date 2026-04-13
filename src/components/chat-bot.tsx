@@ -190,6 +190,12 @@ export const ChatBot = () => {
         }
     }, [chatOpen]);
 
+    const isMounted = useRef(true);
+    useEffect(() => {
+        isMounted.current = true;
+        return () => { isMounted.current = false; };
+    }, []);
+
     const handleChatSend = () => {
         if (!chatInput.trim() || isTyping) return;
         const userMsg = chatInput.trim();
@@ -204,6 +210,7 @@ export const ChatBot = () => {
         // Simulate AI thinking delay (400-1000ms)
         const thinkTime = 400 + Math.random() * 600;
         setTimeout(() => {
+            if (!isMounted.current) return;
             const aiResponse = getAIResponse(userMsg);
             const botMsgId = nextIdRef.current++;
             setChatMessages((prev) => [

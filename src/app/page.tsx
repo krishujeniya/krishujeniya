@@ -22,6 +22,13 @@ const Home: FC = () => {
         <DocumentsSection />
         <ContactSection />
       </div>
+
+      <a
+        href="#contact"
+        className="fixed bottom-6 right-6 z-50 inline-flex items-center gap-2 px-4 py-2 bg-white text-black font-semibold text-sm rounded-full shadow-[0_4px_20px_rgba(255,255,255,0.2)] hover:scale-105 hover:bg-neutral-100 transition-all duration-300"
+      >
+        Hire Me <span aria-hidden="true">→</span>
+      </a>
     </>
   );
 };
