@@ -61,11 +61,10 @@ const projects = [
 ];
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 60, rotateY: -5 },
+  hidden: { opacity: 0, y: 30 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    rotateY: 0,
     transition: {
       delay: i * 0.12,
       duration: 0.7,

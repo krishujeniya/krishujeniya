@@ -56,11 +56,9 @@
     box-sizing: border-box;
   }
 
-  html {
-    width: 100%;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
   }
 
   /* Respect reduced motion preferences */
@@ -479,8 +477,6 @@ div[style*="position: fixed"][style*="z-index: -1"] {
   gap: 1.25rem;
   max-width: 72rem;
   margin: 0 auto;
-  content-visibility: auto;
-  contain-intrinsic-size: auto 600px;
 }
 
 @media (min-width: 768px) {
@@ -503,7 +499,6 @@ div[style*="position: fixed"][style*="z-index: -1"] {
   transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1);
   cursor: pointer;
   overflow: hidden;
-  contain: layout style paint;
 }
 
 .expertise-card::before {
@@ -596,8 +591,6 @@ div[style*="position: fixed"][style*="z-index: -1"] {
   gap: 1.25rem;
   max-width: 72rem;
   margin: 0 auto;
-  content-visibility: auto;
-  contain-intrinsic-size: auto 900px;
 }
 
 @media (min-width: 640px) {
@@ -620,7 +613,6 @@ div[style*="position: fixed"][style*="z-index: -1"] {
   overflow: hidden;
   cursor: pointer;
   transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-  contain: layout style paint;
 }
 
 .portfolio-card:hover {
