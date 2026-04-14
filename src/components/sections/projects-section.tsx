@@ -32,7 +32,7 @@ const projects: Project[] = [
   {
     title: 'Salary Predictions For Data Professions',
     category: 'Machine Learning / MLOps',
-    imageUrl: '/krishujeniya/images/m1.png',
+    imageUrl: '/krishujeniya/images/m1.webp',
     description: 'Engineered an ML pipeline using ZenML to predict data professional salaries, enabling data-driven compensation strategies.',
     link: 'https://huggingface.co/spaces/krishujeniya/Salary_Predictions_For_Data_Professions',
     techStack: ['Python', 'ZenML', 'Scikit-learn', 'MLflow'],
@@ -46,7 +46,7 @@ const projects: Project[] = [
   {
     title: 'Face Lock Desktop App',
     category: 'Python / Computer Vision',
-    imageUrl: 'https://github.com/krishujeniya/FACE_LOCK_TKINTER/raw/main/logo.png',
+    imageUrl: '/krishujeniya/images/projects/face-lock.webp',
     description: 'Created a desktop application using Tkinter and face recognition technology to secure access via facial identification.',
     link: 'https://github.com/krishujeniya/FACE_LOCK_TKINTER',
     techStack: ['Python', 'Tkinter', 'OpenCV', 'face_recognition'],
@@ -60,7 +60,7 @@ const projects: Project[] = [
   {
     title: 'SnapText — OCR App',
     category: 'Flutter / Computer Vision',
-    imageUrl: 'https://github.com/krishujeniya/SNAPTEXT_OCR_FLUTTER/raw/main/assets/Screenshot%20from%202024-06-17%2011-33-12.png',
+    imageUrl: '/krishujeniya/images/projects/snaptext.webp',
     description: 'Built a Flutter-based OCR app for easy text extraction from images on mobile devices.',
     link: 'https://github.com/krishujeniya/SNAPTEXT_OCR_FLUTTER',
     techStack: ['Flutter', 'Dart', 'ML Kit'],
@@ -74,7 +74,7 @@ const projects: Project[] = [
   {
     title: 'Fitness Tracker ML Analysis',
     category: 'Machine Learning / Data Analysis',
-    imageUrl: 'https://storage.googleapis.com/kaggle-datasets-images/5817988/9548984/ffc2841e628ea82c25a8b08b56b873ff/dataset-cover.png?t=2024-10-04-18-47-18',
+    imageUrl: '/krishujeniya/images/projects/fitness-tracker.webp',
     description: 'Analyzed fitness data using ML techniques in Jupyter to uncover patterns and insights.',
     link: 'https://github.com/krishujeniya/Fitness-Tracker-ML',
     techStack: ['Python', 'Jupyter', 'Pandas', 'Matplotlib'],
@@ -88,7 +88,7 @@ const projects: Project[] = [
   {
     title: 'EchoNest — Social Media',
     category: 'Flutter Mobile App',
-    imageUrl: 'https://github.com/krishujeniya/EchoNest-The-Social-Media-App/raw/main/assets/iw.png',
+    imageUrl: '/krishujeniya/images/projects/echonest.webp',
     description: 'Developed a cross-platform social media app focusing on real-time features and engagement.',
     link: 'https://github.com/krishujeniya/EchoNest-The-Social-Media-App',
     techStack: ['Flutter', 'Dart', 'Firebase'],
@@ -102,7 +102,7 @@ const projects: Project[] = [
   {
     title: 'All-In-One Discord Bot',
     category: 'JavaScript / Bot',
-    imageUrl: 'https://github.com/krishujeniya/ALL-IN-ONE-DISCORD-BOT-USING-JS/raw/main/docs/.gitbook/assets/strange.png',
+    imageUrl: '/krishujeniya/images/projects/discord-bot.webp',
     description: 'Developed a multi-functional Discord bot enhancing server interaction and management.',
     link: 'https://github.com/krishujeniya/ALL-IN-ONE-DISCORD-BOT-USING-JS',
     techStack: ['JavaScript', 'Node.js', 'Discord.js'],

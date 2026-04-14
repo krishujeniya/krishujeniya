@@ -2,7 +2,20 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import * as THREE from 'three';
+import { 
+  Scene, 
+  PerspectiveCamera, 
+  WebGLRenderer, 
+  ShaderMaterial, 
+  BufferGeometry, 
+  BufferAttribute, 
+  Points, 
+  LineBasicMaterial, 
+  Line, 
+  Vector3, 
+  Clock, 
+  AdditiveBlending 
+} from 'three';
 
 // Adaptive particle counts based on device capability
 const STAR_SPREAD = 600;
@@ -27,8 +40,8 @@ export const ThreeBackground = () => {
     
     scrollRef.current = window.scrollY;
 
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(
+    const scene = new Scene();
+    const camera = new PerspectiveCamera(
       60,
       window.innerWidth / window.innerHeight,
       1,
@@ -40,9 +53,9 @@ export const ThreeBackground = () => {
     const maxPixelRatio = isMobile ? 1.2 : 2;
     const pixelRatio = Math.min(window.devicePixelRatio, maxPixelRatio);
 
-    let renderer: THREE.WebGLRenderer;
+    let renderer: WebGLRenderer;
     try {
-      renderer = new THREE.WebGLRenderer({
+      renderer = new WebGLRenderer({
         antialias: false,
         alpha: true,
         powerPreference: 'high-performance',
@@ -57,7 +70,7 @@ export const ThreeBackground = () => {
     }
 
     // --- Shared star shader material ---
-    const starShaderMaterial = new THREE.ShaderMaterial({
+    const starShaderMaterial = new ShaderMaterial({
       uniforms: {
         uTime: { value: 0 },
         uPixelRatio: { value: pixelRatio },
@@ -99,11 +112,11 @@ export const ThreeBackground = () => {
       `,
       transparent: true,
       depthWrite: false,
-      blending: THREE.AdditiveBlending,
+      blending: AdditiveBlending,
     });
 
     // --- Primary stars ---
-    const starsGeo = new THREE.BufferGeometry();
+    const starsGeo = new BufferGeometry();
     const pos = new Float32Array(STAR_COUNT * 3);
     const sizes = new Float32Array(STAR_COUNT);
     const opacities = new Float32Array(STAR_COUNT);
@@ -117,15 +130,15 @@ export const ThreeBackground = () => {
       opacities[i] = Math.random() * 0.6 + 0.4;
     }
 
-    starsGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-    starsGeo.setAttribute('aSize', new THREE.BufferAttribute(sizes, 1));
-    starsGeo.setAttribute('aOpacity', new THREE.BufferAttribute(opacities, 1));
+    starsGeo.setAttribute('position', new BufferAttribute(pos, 3));
+    starsGeo.setAttribute('aSize', new BufferAttribute(sizes, 1));
+    starsGeo.setAttribute('aOpacity', new BufferAttribute(opacities, 1));
 
-    const stars = new THREE.Points(starsGeo, starShaderMaterial);
+    const stars = new Points(starsGeo, starShaderMaterial);
     scene.add(stars);
 
     // --- Far distant stars layer ---
-    const farGeo = new THREE.BufferGeometry();
+    const farGeo = new BufferGeometry();
     const farPos = new Float32Array(FAR_STAR_COUNT * 3);
     const farSizes = new Float32Array(FAR_STAR_COUNT);
     const farOpacities = new Float32Array(FAR_STAR_COUNT);
@@ -139,17 +152,17 @@ export const ThreeBackground = () => {
       farOpacities[i] = Math.random() * 0.3 + 0.1;
     }
 
-    farGeo.setAttribute('position', new THREE.BufferAttribute(farPos, 3));
-    farGeo.setAttribute('aSize', new THREE.BufferAttribute(farSizes, 1));
-    farGeo.setAttribute('aOpacity', new THREE.BufferAttribute(farOpacities, 1));
+    farGeo.setAttribute('position', new BufferAttribute(farPos, 3));
+    farGeo.setAttribute('aSize', new BufferAttribute(farSizes, 1));
+    farGeo.setAttribute('aOpacity', new BufferAttribute(farOpacities, 1));
 
-    const farStars = new THREE.Points(farGeo, starShaderMaterial);
+    const farStars = new Points(farGeo, starShaderMaterial);
     scene.add(farStars);
 
     // --- Shooting stars ---
     interface ShootingStar {
-      mesh: THREE.Line;
-      velocity: THREE.Vector3;
+      mesh: Line;
+      velocity: Vector3;
       life: number;
       maxLife: number;
       active: boolean;
@@ -157,11 +170,11 @@ export const ThreeBackground = () => {
     }
 
     const shootingStars: ShootingStar[] = [];
-    const shootingMat = new THREE.LineBasicMaterial({
+    const shootingMat = new LineBasicMaterial({
       color: 0xffffff,
       transparent: true,
       opacity: 0.7,
-      blending: THREE.AdditiveBlending,
+      blending: AdditiveBlending,
     });
     const shootingStarTimers: (ReturnType<typeof setTimeout> | null)[] = new Array(SHOOTING_STAR_COUNT).fill(null);
 
@@ -188,15 +201,15 @@ export const ThreeBackground = () => {
 
     for (let i = 0; i < SHOOTING_STAR_COUNT; i++) {
       const tailLength = 10;
-      const geom = new THREE.BufferGeometry();
+      const geom = new BufferGeometry();
       const positions = new Float32Array(tailLength * 3);
-      geom.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-      const line = new THREE.Line(geom, shootingMat);
+      geom.setAttribute('position', new BufferAttribute(positions, 3));
+      const line = new Line(geom, shootingMat);
       scene.add(line);
 
       const ss: ShootingStar = {
         mesh: line,
-        velocity: new THREE.Vector3(),
+        velocity: new Vector3(),
         life: 0,
         maxLife: 60,
         active: false,
@@ -229,7 +242,7 @@ export const ThreeBackground = () => {
     document.addEventListener('visibilitychange', onVisibilityChange);
 
     // --- Animation loop with visibility check ---
-    const clock = new THREE.Clock();
+    const clock = new Clock();
 
     const animate = () => {
       animIdRef.current = requestAnimationFrame(animate);
@@ -280,13 +293,13 @@ export const ThreeBackground = () => {
 
         // Fade
         const progress = ss.life / ss.maxLife;
-        (ss.mesh.material as THREE.LineBasicMaterial).opacity = progress < 0.1
+        (ss.mesh.material as LineBasicMaterial).opacity = progress < 0.1
           ? progress * 10 * 0.7
           : (1 - progress) * 0.7;
 
         if (ss.life >= ss.maxLife) {
           ss.active = false;
-          (ss.mesh.material as THREE.LineBasicMaterial).opacity = 0;
+          (ss.mesh.material as LineBasicMaterial).opacity = 0;
           // Respawn after random delay
           const timer = setTimeout(() => resetShootingStar(ss), 2000 + Math.random() * 8000);
           shootingStarTimers[ss.id] = timer;
