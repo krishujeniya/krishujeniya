@@ -89,6 +89,7 @@
     @apply py-20 md:py-28 lg:py-36;
     overflow-x: hidden;
     max-width: 100%;
+    scroll-margin-top: 100px;
   }
 
   h1,

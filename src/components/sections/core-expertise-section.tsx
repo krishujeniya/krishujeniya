@@ -77,21 +77,7 @@ export const CoreExpertiseSection: FC = memo(() => {
         ))}
       </div>
 
-      <motion.div 
-        className="mt-16 text-center"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-60px' }}
-        transition={{ delay: 0.6, duration: 0.6 }}
-      >
-        <p className="text-sm font-medium tracking-widest uppercase text-white/50">
-          <span className="inline-block mx-3">4+ years</span>
-          <span className="inline-block mx-3 text-white/20">•</span>
-          <span className="inline-block mx-3">6 projects shipped</span>
-          <span className="inline-block mx-3 text-white/20">•</span>
-          <span className="inline-block mx-3">Open to remote worldwide</span>
-        </p>
-      </motion.div>
+
     </AnimatedSection>
   );
 });

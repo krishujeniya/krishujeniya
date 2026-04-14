@@ -22,8 +22,8 @@ export const ThreeBackground = () => {
     
     // Modern robust device detection using matchMedia
     const isMobile = window.matchMedia('(max-width: 768px)').matches;
-    const STAR_COUNT = isMobile ? 1000 : 1800;
-    const FAR_STAR_COUNT = isMobile ? 300 : 600;
+    const STAR_COUNT = isMobile ? 600 : 1800;
+    const FAR_STAR_COUNT = isMobile ? 200 : 600;
     
     scrollRef.current = window.scrollY;
 

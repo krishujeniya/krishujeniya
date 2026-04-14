@@ -61,11 +61,14 @@ export const Navbar = () => {
   }, []);
 
   const handleNavClick = (href: string) => {
-    setIsMobileMenuOpen(false);
     const id = href.substring(1);
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      // Delay closing menu for better touch feedback/transition
+      setTimeout(() => setIsMobileMenuOpen(false), 150);
+    } else {
+      setIsMobileMenuOpen(false);
     }
   };
 
@@ -89,43 +92,48 @@ export const Navbar = () => {
       className={cn(
         'fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out border-b border-transparent',
         isScrolled
-          ? 'bg-background/80 backdrop-blur-[16px] border-white/10 py-3 shadow-md'
+          ? 'bg-background/80 backdrop-blur-md md:backdrop-blur-[16px] border-white/10 py-3 shadow-md'
           : 'bg-transparent py-5'
       )}
     >
       <div className="container mx-auto px-4 md:px-8 flex justify-between items-center max-w-7xl">
-        <a 
-          href="#home" 
-          onClick={(e) => { e.preventDefault(); handleNavClick('#home'); }}
-          className="text-lg font-bold tracking-tight text-white hover:text-green-400 transition-colors"
-          aria-label="Home"
-        >
-          KRISH
-        </a>
+        <div /> {/* Invisible spacer to keep layout balanced if needed, or just remove branding */}
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              onClick={(e) => { e.preventDefault(); handleNavClick(link.href); }}
-              className={cn(
-                'text-sm font-medium transition-all duration-200 hover:text-green-400 relative',
-                activeSection === link.href.substring(1) ? 'text-green-400' : 'text-zinc-400'
-              )}
-            >
-              {link.name}
-              {activeSection === link.href.substring(1) && (
-                <motion.div
-                  layoutId="activeNav"
-                  className="absolute -bottom-1 left-0 right-0 h-0.5 bg-green-400"
-                  transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                />
-              )}
-            </a>
-          ))}
-        </nav>
+        <div className="hidden md:flex items-center gap-8">
+          <nav className="flex items-center gap-8 mr-4">
+            {navLinks.map((link) => (
+              <a
+                key={link.name}
+                href={link.href}
+                onClick={(e) => { e.preventDefault(); handleNavClick(link.href); }}
+                className={cn(
+                  'text-sm font-medium transition-all duration-200 hover:text-green-400 relative',
+                  activeSection === link.href.substring(1) ? 'text-green-400' : 'text-zinc-400'
+                )}
+              >
+                {link.name}
+                {activeSection === link.href.substring(1) && (
+                  <motion.div
+                    layoutId="activeNav"
+                    className="absolute -bottom-1 left-0 right-0 h-0.5 bg-green-400"
+                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                  />
+                )}
+              </a>
+            ))}
+          </nav>
+
+          <a
+            href="https://contra.com/krish_ujeniya_0lyitk1s"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden lg:flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-xs font-semibold hover:bg-white/10 hover:border-white/20 transition-all text-white"
+          >
+            <span>Hire me on Contra</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+          </a>
+        </div>
 
         {/* Mobile Hamburger Button */}
         <button
@@ -170,6 +178,15 @@ export const Navbar = () => {
                   {link.name}
                 </a>
               ))}
+              <a
+                href="https://contra.com/krish_ujeniya_0lyitk1s"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-4 flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-sm font-semibold text-white hover:bg-white/10"
+              >
+                <span>Hire me on Contra</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+              </a>
             </nav>
           </motion.div>
         )}

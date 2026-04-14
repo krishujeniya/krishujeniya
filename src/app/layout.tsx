@@ -30,14 +30,17 @@ export const metadata: Metadata = {
   keywords: ['Data Scientist','ML Engineer','AI Agent','LLM','RAG','MLOps','ZenML','MLflow','Flutter','Freelance AI','Machine Learning Consultant','India'],
   authors: [{ name: 'Krish Ujeniya', url: 'https://krishujeniya.github.io/krishujeniya' }],
   creator: 'Krish Ujeniya',
+  applicationName: 'Krish Portfolio',
+  category: 'technology',
   robots: { index: true, follow: true, googleBot: { index: true, follow: true } },
   icons: {
     icon: [
-      { url: '/krishujeniya/images/img1120.png', sizes: '32x32', type: 'image/png' },
-      { url: '/krishujeniya/images/img1120.png', sizes: '96x96', type: 'image/png' },
+      { url: '/krishujeniya/images/img1120.png?v=2', sizes: '32x32', type: 'image/png' },
+      { url: '/krishujeniya/images/img1120.png?v=2', sizes: '192x192', type: 'image/png' },
     ],
-    shortcut: '/krishujeniya/images/img1120.png',
-    apple: '/krishujeniya/images/img1120.png',
+    apple: [
+      { url: '/krishujeniya/images/img1120.png?v=2', sizes: '180x180', type: 'image/png' },
+    ],
   },
   manifest: '/krishujeniya/site.webmanifest',
   openGraph: {
