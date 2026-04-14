@@ -39,11 +39,11 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: '/krishujeniya/favicon.ico' },
-      { url: '/krishujeniya/images/img1120.png?v=2', sizes: '32x32', type: 'image/png' },
-      { url: '/krishujeniya/images/img1120.png?v=2', sizes: '192x192', type: 'image/png' },
+      { url: '/krishujeniya/images/icon-32.webp', sizes: '32x32', type: 'image/webp' },
+      { url: '/krishujeniya/images/icon-192.webp', sizes: '192x192', type: 'image/webp' },
     ],
     apple: [
-      { url: '/krishujeniya/images/img1120.png?v=2', sizes: '180x180', type: 'image/png' },
+      { url: '/krishujeniya/images/apple-icon.webp', sizes: '180x180', type: 'image/webp' },
     ],
   },
   manifest: '/krishujeniya/site.webmanifest',
@@ -68,6 +68,8 @@ export const metadata: Metadata = {
   },
 };
 
+import { LazyMotion, domAnimation } from 'framer-motion';
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -86,18 +88,18 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Person",
-              "name": "Krish Ujeniya",
-              "jobTitle": "Data Scientist & ML Engineer",
-              "url": "https://krishujeniya.github.io/krishujeniya/",
-              "email": "ukideashare0021@gmail.com",
-              "description": "Freelance Data Scientist and ML Engineer",
-              "knowsAbout": ["Machine Learning","AI Agents","LLMs","MLOps","ZenML","MLflow","Python","Flutter"],
-              "availableFor": "Freelance work globally",
-              "sameAs": ["https://github.com/krishujeniya","https://linkedin.com/in/krishujeniya"]
-            })
+             __html: JSON.stringify({
+               "@context": "https://schema.org",
+               "@type": "Person",
+               "name": "Krish Ujeniya",
+               "jobTitle": "Data Scientist & ML Engineer",
+               "url": "https://krishujeniya.github.io/krishujeniya/",
+               "email": "ukideashare0021@gmail.com",
+               "description": "Freelance Data Scientist and ML Engineer",
+               "knowsAbout": ["Machine Learning","AI Agents","LLMs","MLOps","ZenML","MLflow","Python","Flutter"],
+               "availableFor": "Freelance work globally",
+               "sameAs": ["https://github.com/krishujeniya","https://linkedin.com/in/krishujeniya"]
+             })
           }}
         />
       </head>
@@ -113,12 +115,14 @@ export default function RootLayout({
           Skip to main content
         </a>
         <ThemeProvider>
-          <CustomCursor />
-          <main id="main-content">
-            {children}
-          </main>
-          <ChatBot />
-          <Toaster />
+          <LazyMotion features={domAnimation}>
+            <CustomCursor />
+            <main id="main-content">
+              {children}
+            </main>
+            <ChatBot />
+            <Toaster />
+          </LazyMotion>
         </ThemeProvider>
       </body>
     </html>
