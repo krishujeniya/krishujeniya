@@ -68,8 +68,6 @@ export const metadata: Metadata = {
   },
 };
 
-import { LazyMotion, domAnimation } from 'framer-motion';
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -115,14 +113,12 @@ export default function RootLayout({
           Skip to main content
         </a>
         <ThemeProvider>
-          <LazyMotion features={domAnimation}>
-            <CustomCursor />
-            <main id="main-content">
-              {children}
-            </main>
-            <ChatBot />
-            <Toaster />
-          </LazyMotion>
+          <CustomCursor />
+          <main id="main-content">
+            {children}
+          </main>
+          <ChatBot />
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>
