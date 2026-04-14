@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     siteName: 'Krish Ujeniya | AI Freelancer Portfolio',
     images: [
       {
-        url: 'https://krishujeniya.github.io/images/1765004211200.jpg',
+        url: 'https://krishujeniya.github.io/krishujeniya/images/1765004211200.jpg',
         width: 1200,
         height: 630,
         alt: 'Krish Ujeniya Portfolio',
@@ -59,10 +59,10 @@ export const metadata: Metadata = {
     title: 'Krish Ujeniya | Data Scientist & ML Engineer',
     description:
       'Freelance AI & ML Engineer. Building agents, LLMs, and MLOps pipelines.',
-    images: ['https://krishujeniya.github.io/images/1765004211200.jpg'],
+    images: ['https://krishujeniya.github.io/krishujeniya/images/1765004211200.jpg'],
     creator: '@krishujeniya',
   },
-  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://krishujeniya.github.io/krishujeniya/'),
+  metadataBase: new URL('https://krishujeniya.github.io/krishujeniya/'),
   icons: {
     icon: '/favicon.ico',
   },
@@ -73,14 +73,12 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  ReactDOM.preconnect('https://github.com');
-  ReactDOM.preconnect('https://raw.githubusercontent.com');
-  ReactDOM.preconnect('https://storage.googleapis.com');
-
   return (
     <html lang="en" suppressHydrationWarning className={inter.variable}>
       <head>
-        {/* Preconnect handled by ReactDOM */}
+        <link rel="preconnect" href="https://github.com" />
+        <link rel="preconnect" href="https://raw.githubusercontent.com" />
+        <link rel="preconnect" href="https://storage.googleapis.com" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
