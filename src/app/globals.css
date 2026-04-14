@@ -57,6 +57,8 @@
   }
 
   html {
+    width: 100%;
+    max-width: 100%;
     text-rendering: optimizeLegibility;
     scroll-behavior: smooth;
     scroll-padding-top: 80px;
