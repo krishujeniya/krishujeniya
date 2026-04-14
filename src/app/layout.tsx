@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 import { Toaster } from '@/components/ui/toaster';
 import { ThemeProvider } from '@/components/theme-provider';
 import { DynamicCustomCursor as CustomCursor, DynamicChatBot as ChatBot } from '@/components/client-dynamic';
-import { Navbar } from '@/components/navbar';
+
 
 const inter = Inter({
   subsets: ['latin'],
@@ -35,6 +35,7 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true, googleBot: { index: true, follow: true } },
   icons: {
     icon: [
+      { url: '/krishujeniya/favicon.ico' },
       { url: '/krishujeniya/images/img1120.png?v=2', sizes: '32x32', type: 'image/png' },
       { url: '/krishujeniya/images/img1120.png?v=2', sizes: '192x192', type: 'image/png' },
     ],
@@ -110,7 +111,6 @@ export default function RootLayout({
         </a>
         <ThemeProvider>
           <CustomCursor />
-          <Navbar />
           <main id="main-content">
             {children}
           </main>
