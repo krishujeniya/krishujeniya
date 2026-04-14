@@ -31,6 +31,15 @@ export const metadata: Metadata = {
   authors: [{ name: 'Krish Ujeniya', url: 'https://krishujeniya.github.io/krishujeniya' }],
   creator: 'Krish Ujeniya',
   robots: { index: true, follow: true, googleBot: { index: true, follow: true } },
+  icons: {
+    icon: [
+      { url: '/krishujeniya/favicon.ico' },
+      { url: '/krishujeniya/images/img1120.png', sizes: '96x96', type: 'image/png' },
+    ],
+    shortcut: '/krishujeniya/favicon.ico',
+    apple: '/krishujeniya/images/img1120.png',
+  },
+  manifest: '/krishujeniya/site.webmanifest',
   openGraph: {
     type: 'website',
     locale: 'en_US',

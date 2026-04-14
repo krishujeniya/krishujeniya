@@ -57,12 +57,10 @@
   }
 
   html {
-    scroll-behavior: smooth;
-    overflow-x: hidden;
     width: 100%;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeSpeed;
+    text-rendering: optimizeLegibility;
   }
 
   /* Respect reduced motion preferences */

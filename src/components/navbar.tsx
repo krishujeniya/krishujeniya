@@ -100,8 +100,8 @@ export const Navbar = () => {
           href="#home" 
           onClick={(e) => { e.preventDefault(); handleNavClick('#home'); }}
           className="text-lg font-bold tracking-tight text-white hover:text-green-400 transition-colors"
+          aria-label="Home"
         >
-          K.U
         </a>
 
         {/* Desktop Nav */}
