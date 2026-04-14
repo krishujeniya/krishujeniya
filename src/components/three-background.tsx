@@ -37,7 +37,7 @@ export const ThreeBackground = () => {
     camera.position.z = 400;
 
     // Cap pixel ratio more aggressively on mobile
-    const maxPixelRatio = isMobile ? 1.5 : 2;
+    const maxPixelRatio = isMobile ? 1.2 : 2;
     const pixelRatio = Math.min(window.devicePixelRatio, maxPixelRatio);
 
     let renderer: THREE.WebGLRenderer;
@@ -83,6 +83,7 @@ export const ThreeBackground = () => {
         }
       `,
       fragmentShader: `
+        precision lowp float;
         varying float vOpacity;
 
         void main() {
