@@ -61,13 +61,13 @@ const projects = [
 ];
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 30 },
+  hidden: { opacity: 0, y: 10 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
     transition: {
-      delay: i * 0.12,
-      duration: 0.7,
+      delay: i * 0.1,
+      duration: 0.4,
       ease: [0.22, 1, 0.36, 1] as const,
     },
   }),
@@ -95,7 +95,7 @@ export const ProjectsSection: FC = memo(() => {
             variants={cardVariants}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: '-80px' }}
+            viewport={{ once: true, margin: '10px' }}
             className="portfolio-card group"
           >
             <div className="portfolio-card-image">

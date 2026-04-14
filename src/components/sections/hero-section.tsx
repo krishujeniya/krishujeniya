@@ -11,53 +11,53 @@ const SUBTITLE_TEXT = 'DATA SCIENTIST & ML ENGINEER';
 const TAGLINE = 'Building intelligent systems with AI Agents, LLMs & MLOps pipelines that transform businesses.';
 
 const letterVariants = {
-  hidden: { opacity: 0, y: 20, filter: 'blur(4px)' },
+  hidden: { opacity: 0, y: 10, filter: 'blur(4px)' },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
     filter: 'blur(0px)',
     transition: {
-      delay: 0.6 + i * 0.04,
-      duration: 0.6,
+      delay: 0.1 + i * 0.03,
+      duration: 0.4,
       ease: [0.22, 1, 0.36, 1] as const,
     },
   }),
 };
 
 const subtitleVariants = {
-  hidden: { opacity: 0, y: 30, letterSpacing: '0.5em' },
+  hidden: { opacity: 0, y: 10, letterSpacing: '0.4em' },
   visible: {
     opacity: 1,
     y: 0,
-    letterSpacing: '0.3em',
+    letterSpacing: '0.25em',
     transition: {
-      delay: 1.8,
-      duration: 1,
+      delay: 0.4,
+      duration: 0.6,
       ease: [0.22, 1, 0.36, 1] as const,
     },
   },
 };
 
 const taglineVariants = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 10 },
   visible: {
     opacity: 1,
     y: 0,
     transition: {
-      delay: 2.4,
-      duration: 0.8,
+      delay: 0.6,
+      duration: 0.4,
       ease: [0.22, 1, 0.36, 1] as const,
     },
   },
 };
 
 const ctaVariants = {
-  hidden: { opacity: 0, scale: 0.8 },
+  hidden: { opacity: 0, scale: 0.9 },
   visible: {
     opacity: 1,
     scale: 1,
     transition: {
-      delay: 2.8,
+      delay: 0.8,
       duration: 0.6,
       ease: [0.22, 1, 0.36, 1] as const,
     },
@@ -116,7 +116,16 @@ export const HeroSection: FC = memo(() => {
   const handleScrollTo = (id: string) => {
     const el = document.getElementById(id);
     if (!el) return;
-    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    
+    // More robust offset calculation
+    const rect = el.getBoundingClientRect();
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const targetY = rect.top + scrollTop;
+    
+    window.scrollTo({
+      top: targetY - 10,
+      behavior: 'smooth'
+    });
   };
 
   return (
@@ -188,7 +197,7 @@ export const HeroSection: FC = memo(() => {
           className="hero-divider"
           initial={{ scaleX: 0, opacity: 0 }}
           animate={{ scaleX: 1, opacity: 1 }}
-          transition={{ delay: 2.0, duration: 1.2, ease: [0.22, 1, 0.36, 1] as const }}
+          transition={{ delay: 0.6, duration: 1.2, ease: [0.22, 1, 0.36, 1] as const }}
         />
 
         {/* Tagline */}
@@ -197,6 +206,7 @@ export const HeroSection: FC = memo(() => {
           variants={taglineVariants}
           initial="hidden"
           animate="visible"
+          transition={{ delay: 0.8 }}
         >
           {TAGLINE}
         </motion.p>

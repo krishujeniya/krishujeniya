@@ -14,11 +14,11 @@ export const AnimatedSection = ({ children, className, delay = 0, id }: Animated
     return (
         <motion.section
             id={id}
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
+            viewport={{ once: true, margin: "20px" }}
             transition={{
-                duration: 0.5,
+                duration: 0.4,
                 ease: [0.22, 1, 0.36, 1],
                 delay: delay,
             }}
