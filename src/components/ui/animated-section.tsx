@@ -22,7 +22,7 @@ export const AnimatedSection = ({ children, className, delay = 0, id }: Animated
                 ease: [0.22, 1, 0.36, 1],
                 delay: delay,
             }}
-            className={cn("w-full py-20 px-4 md:px-8 max-w-7xl mx-auto will-change-transform", className)}
+            className={cn("w-full py-20 px-4 md:px-8 max-w-7xl mx-auto", className)}
         >
             {children}
         </motion.section>

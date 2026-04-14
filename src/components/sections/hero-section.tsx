@@ -117,15 +117,7 @@ export const HeroSection: FC = memo(() => {
     const el = document.getElementById(id);
     if (!el) return;
     
-    // More robust offset calculation
-    const rect = el.getBoundingClientRect();
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    const targetY = rect.top + scrollTop;
-    
-    window.scrollTo({
-      top: targetY - 10,
-      behavior: 'smooth'
-    });
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   return (

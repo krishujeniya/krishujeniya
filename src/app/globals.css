@@ -870,8 +870,6 @@ div[style*="position: fixed"][style*="z-index: -1"] {
   gap: 1.25rem;
   max-width: 72rem;
   margin: 0 auto;
-  content-visibility: auto;
-  contain-intrinsic-size: auto 800px;
 }
 
 @media (min-width: 480px) {
@@ -898,7 +896,6 @@ div[style*="position: fixed"][style*="z-index: -1"] {
   cursor: pointer;
   transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1);
   overflow: hidden;
-  contain: layout style paint;
 }
 
 .document-card:hover {
