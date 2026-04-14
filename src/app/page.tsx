@@ -1,24 +1,13 @@
 import type { FC } from 'react';
-import dynamic from 'next/dynamic';
 import { HeroSection } from '@/components/sections/hero-section';
 import { CoreExpertiseSection } from '@/components/sections/core-expertise-section';
 import { ProjectsSection } from '@/components/sections/projects-section';
-import { DynamicThreeBackground as ThreeBackground } from '@/components/client-dynamic';
-
-const ExperienceSection = dynamic(() => import('@/components/sections/experience-section').then(mod => mod.ExperienceSection), {
-  loading: () => <div className="h-96 animate-pulse bg-white/5 rounded-3xl m-8" />,
-  ssr: false
-});
-
-const DocumentsSection = dynamic(() => import('@/components/sections/documents-section').then(mod => mod.DocumentsSection), {
-  loading: () => <div className="h-96 animate-pulse bg-white/5 rounded-3xl m-8" />,
-  ssr: false
-});
-
-const ContactSection = dynamic(() => import('@/components/sections/contact-section').then(mod => mod.ContactSection), {
-  loading: () => <div className="h-96 animate-pulse bg-white/5 rounded-3xl m-8" />,
-  ssr: false
-});
+import { 
+  DynamicThreeBackground as ThreeBackground,
+  DynamicExperienceSection as ExperienceSection,
+  DynamicDocumentsSection as DocumentsSection,
+  DynamicContactSection as ContactSection 
+} from '@/components/client-dynamic';
 
 const Home: FC = () => {
   return (
