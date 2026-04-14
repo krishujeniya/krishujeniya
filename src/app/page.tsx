@@ -1,5 +1,7 @@
 import type { FC } from 'react';
 import { HeroSection } from '@/components/sections/hero-section';
+import { AboutSection } from '@/components/sections/about-section';
+import { SkillsSection } from '@/components/sections/skills-section';
 import { CoreExpertiseSection } from '@/components/sections/core-expertise-section';
 import { ProjectsSection } from '@/components/sections/projects-section';
 import { 
@@ -15,6 +17,8 @@ const Home: FC = () => {
       <ThreeBackground />
       <div className="relative z-10 min-h-screen">
         <HeroSection />
+        <AboutSection />
+        <SkillsSection />
         <CoreExpertiseSection />
         <ProjectsSection />
         <ExperienceSection />
