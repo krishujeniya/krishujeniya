@@ -23,15 +23,18 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL('https://krishujeniya.github.io'),
   title: {
-    default: 'Krish Ujeniya | Freelance Data Scientist & ML Engineer',
+    default: 'Krish Ujeniya | Freelance ML Engineer & Data Scientist',
     template: '%s | Krish Ujeniya'
   },
-  description: 'Freelance Data Scientist and ML Engineer specializing in AI Agents, LLMs, RAG systems, and MLOps pipelines. Available for hire globally. Based in India.',
-  keywords: ['Data Scientist','ML Engineer','AI Agent','LLM','RAG','MLOps','ZenML','MLflow','Flutter','Freelance AI','Machine Learning Consultant','India'],
+  description: 'Freelance ML Engineer & Data Scientist specializing in AI Agents, LLMs, RAG systems, and MLOps. Available for hire globally. Based in India.',
+  keywords: ['ML Engineer','Data Scientist','AI Agent','LLM','RAG','MLOps','ZenML','MLflow','Flutter','Freelance AI','Machine Learning Consultant','India'],
   authors: [{ name: 'Krish Ujeniya', url: 'https://krishujeniya.github.io/krishujeniya' }],
   creator: 'Krish Ujeniya',
   applicationName: 'Krish Portfolio',
   category: 'technology',
+  alternates: {
+    canonical: '/krishujeniya/',
+  },
   robots: { index: true, follow: true, googleBot: { index: true, follow: true } },
   icons: {
     icon: [
@@ -49,18 +52,18 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: 'https://krishujeniya.github.io/krishujeniya/',
     siteName: 'Krish Ujeniya Portfolio',
-    title: 'Krish Ujeniya | Freelance Data Scientist & ML Engineer',
-    description: 'Building intelligent systems with AI Agents, LLMs and MLOps. Available for freelance projects.',
+    title: 'Krish Ujeniya | Freelance ML Engineer & Data Scientist',
+    description: 'Specializing in AI Agents, LLMs, and MLOps. Building production-ready intelligent systems for global clients.',
     images: [{
       url: '/krishujeniya/images/1765004211200.jpg',
       width: 1200, height: 630,
-      alt: 'Krish Ujeniya - Data Scientist & ML Engineer'
+      alt: 'Krish Ujeniya - ML Engineer & Data Scientist'
     }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Krish Ujeniya | Data Scientist & ML Engineer',
-    description: 'Freelance AI & ML Engineer. Building agents, LLMs, and MLOps pipelines.',
+    title: 'Krish Ujeniya | Freelance ML Engineer & Data Scientist',
+    description: 'Building production-ready AI Agents, LLMs, and MLOps pipelines. Available for freelance projects.',
     images: ['/krishujeniya/images/1765004211200.jpg'],
   },
 };
