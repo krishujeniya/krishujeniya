@@ -4,10 +4,10 @@ import { CoreExpertiseSection } from '@/components/sections/core-expertise-secti
 import { ProjectsSection } from '@/components/sections/projects-section';
 import { 
   DynamicThreeBackground as ThreeBackground,
-  DynamicExperienceSection as ExperienceSection,
-  DynamicDocumentsSection as DocumentsSection,
-  DynamicContactSection as ContactSection 
 } from '@/components/client-dynamic';
+import { ExperienceSection } from '@/components/sections/experience-section';
+import { DocumentsSection } from '@/components/sections/documents-section';
+import { ContactSection } from '@/components/sections/contact-section';
 
 const Home: FC = () => {
   return (

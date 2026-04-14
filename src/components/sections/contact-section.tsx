@@ -73,7 +73,7 @@ export const ContactSection: FC = memo(() => {
 
     return (
         <>
-            <AnimatedSection id="contact" className="container mx-auto px-4">
+            <AnimatedSection id="contact" className="container mx-auto px-4 pb-32">
                 <h2 className="section-title">
                     <span className="section-title-accent">/</span> Let&apos;s Connect
                 </h2>
