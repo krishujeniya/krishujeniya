@@ -65,9 +65,7 @@ export const Navbar = () => {
     const id = href.substring(1);
     const element = document.getElementById(id);
     if (element) {
-      const navHeight = 80;
-      const top = element.getBoundingClientRect().top + window.scrollY - navHeight;
-      window.scrollTo({ top, behavior: 'smooth' });
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
 
@@ -102,6 +100,7 @@ export const Navbar = () => {
           className="text-lg font-bold tracking-tight text-white hover:text-green-400 transition-colors"
           aria-label="Home"
         >
+          KRISH
         </a>
 
         {/* Desktop Nav */}

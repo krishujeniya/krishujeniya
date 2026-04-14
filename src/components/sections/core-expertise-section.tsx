@@ -28,7 +28,7 @@ const coreServices = [
 ];
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 50, scale: 0.95 },
+  hidden: { opacity: 0, y: 20, scale: 0.98 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,

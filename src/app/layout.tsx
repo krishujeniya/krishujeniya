@@ -33,10 +33,10 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true, googleBot: { index: true, follow: true } },
   icons: {
     icon: [
-      { url: '/krishujeniya/favicon.ico' },
+      { url: '/krishujeniya/images/img1120.png', sizes: '32x32', type: 'image/png' },
       { url: '/krishujeniya/images/img1120.png', sizes: '96x96', type: 'image/png' },
     ],
-    shortcut: '/krishujeniya/favicon.ico',
+    shortcut: '/krishujeniya/images/img1120.png',
     apple: '/krishujeniya/images/img1120.png',
   },
   manifest: '/krishujeniya/site.webmanifest',

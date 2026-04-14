@@ -11,11 +11,10 @@ const SUBTITLE_TEXT = 'DATA SCIENTIST & ML ENGINEER';
 const TAGLINE = 'Building intelligent systems with AI Agents, LLMs & MLOps pipelines that transform businesses.';
 
 const letterVariants = {
-  hidden: { opacity: 0, y: 60, rotateX: -90, filter: 'blur(8px)' },
+  hidden: { opacity: 0, y: 20, filter: 'blur(4px)' },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    rotateX: 0,
     filter: 'blur(0px)',
     transition: {
       delay: 0.6 + i * 0.04,
