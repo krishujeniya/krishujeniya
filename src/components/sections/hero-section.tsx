@@ -117,7 +117,11 @@ export const HeroSection: FC = memo(() => {
     const el = document.getElementById(id);
     if (!el) return;
     
-    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // Slight delay ensures the scroll starts after the interaction event has been fully processed
+    // and helps prevent the scroll from being interrupted on first-time loads.
+    setTimeout(() => {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 10);
   };
 
   return (
@@ -211,6 +215,7 @@ export const HeroSection: FC = memo(() => {
           animate="visible"
         >
           <button
+            type="button"
             onClick={() => handleScrollTo('contact')}
             className="btn-primary magnetic-btn"
           >
@@ -218,6 +223,7 @@ export const HeroSection: FC = memo(() => {
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
           </button>
           <button
+            type="button"
             onClick={() => handleScrollTo('projects')}
             className="btn-outline magnetic-btn"
           >

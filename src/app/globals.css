@@ -179,7 +179,6 @@ canvas {
   height: 100% !important;
   z-index: -1 !important;
   background-color: transparent !important;
-  touch-action: none;
   pointer-events: none !important;
   will-change: transform;
 }
