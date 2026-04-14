@@ -138,7 +138,7 @@ export const HeroSection: FC = memo(() => {
           animate="visible"
         >
           <Image
-            src="/images/1765004211200.jpg"
+            src="/krishujeniya/images/1765004211200.jpg"
             alt="Krish Ujeniya"
             width={240}
             height={240}

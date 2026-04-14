@@ -4,7 +4,7 @@ import type { FC } from 'react';
 import { useRef, memo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ExternalLink } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { AnimatedSection } from '@/components/ui/animated-section';
@@ -13,7 +13,7 @@ const projects = [
   {
     title: 'Salary Predictions For Data Professions',
     category: 'Machine Learning / MLOps',
-    imageUrl: '/images/m1.png',
+    imageUrl: '/krishujeniya/images/m1.png',
     description: 'Engineered an ML pipeline using ZenML to predict data professional salaries, enabling data-driven compensation strategies.',
     link: 'https://huggingface.co/spaces/krishujeniya/Salary_Predictions_For_Data_Professions',
     techStack: ['Python', 'ZenML', 'Scikit-learn', 'MLflow'],
@@ -76,22 +76,17 @@ const cardVariants = {
 
 export const ProjectsSection: FC = memo(() => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start end', 'end start'],
-  });
-  const parallaxY = useTransform(scrollYProgress, [0, 1], [40, -40]);
 
   return (
     <AnimatedSection id="projects" className="container mx-auto px-4">
-      <motion.div style={{ y: parallaxY }}>
+      <div>
         <h2 className="section-title">
           <span className="section-title-accent">/</span> Selected Work
         </h2>
         <p className="section-subtitle">
           Each project represents a unique challenge solved through innovative engineering and design thinking.
         </p>
-      </motion.div>
+      </div>
 
       <div ref={containerRef} className="portfolio-grid">
         {projects.map((project, index) => (
