@@ -1,48 +1,22 @@
 import type { NextConfig } from 'next';
 
-// Assuming the repository name is 'Krish-Ujeniya-Portfolio' for GitHub Pages deployment
-const repoName = 'krishujeniya';
-
 const nextConfig: NextConfig = {
-  /* config options here */
-  output: 'export', // Export as static site
-  basePath: process.env.NODE_ENV === 'production' ? `/${repoName}` : '', // Set base path for GitHub Pages
-  assetPrefix: process.env.NODE_ENV === 'production' ? `/${repoName}/` : '', // Set asset prefix for GitHub Pages
-  typescript: {
-    ignoreBuildErrors: false,
-  },
-  eslint: {
-    ignoreDuringBuilds: false,
-  },
+  output: 'export',
+  basePath: '/krishujeniya',
+  assetPrefix: '/krishujeniya/',
+  trailingSlash: true,
   images: {
-    unoptimized: true, // Disable Next.js Image Optimization for static export compatibility
+    unoptimized: true,
     remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'picsum.photos',
-        port: '',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'github.com',
-        port: '',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'raw.githubusercontent.com',
-        port: '',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'storage.googleapis.com',
-        port: '',
-        pathname: '/**',
-      },
+      { protocol: 'https', hostname: 'raw.githubusercontent.com' },
+      { protocol: 'https', hostname: 'github.com' },
+      { protocol: 'https', hostname: 'storage.googleapis.com' },
+      { protocol: 'https', hostname: 'huggingface.co' },
     ],
   },
+  compress: true,
+  poweredByHeader: false,
+  reactStrictMode: true,
 };
 
 export default nextConfig;

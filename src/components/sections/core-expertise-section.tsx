@@ -1,6 +1,7 @@
 'use client';
 
 import type { FC } from 'react';
+import { memo } from 'react';
 import { motion } from 'framer-motion';
 import { Bot, BrainCircuit, GitBranchPlus } from 'lucide-react';
 import { AnimatedSection } from '@/components/ui/animated-section';
@@ -40,7 +41,7 @@ const cardVariants = {
   }),
 };
 
-export const CoreExpertiseSection: FC = () => {
+export const CoreExpertiseSection: FC = memo(() => {
   return (
     <AnimatedSection id="expertise" className="container mx-auto px-4">
       <h2 className="section-title">
@@ -93,4 +94,6 @@ export const CoreExpertiseSection: FC = () => {
       </motion.div>
     </AnimatedSection>
   );
-};
+});
+
+CoreExpertiseSection.displayName = 'CoreExpertiseSection';

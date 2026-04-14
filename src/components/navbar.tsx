@@ -22,45 +22,76 @@ export const Navbar = () => {
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
-
-      // Simple active section highlight based on scroll position
-      const sections = navLinks.map((link) => link.href.substring(1));
-      let current = '';
-      
-      for (const section of sections) {
-        const element = document.getElementById(section);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          if (rect.top <= 100 && rect.bottom >= 100) {
-            current = section;
-            break;
-          }
-        }
-      }
-      
-      if (current) {
-        setActiveSection(current);
-      }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    // IntersectionObserver for active section
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -80% 0px' }
+    );
+
+    const sections = navLinks.map((link) => link.href.substring(1));
+    sections.forEach((section) => {
+      const el = document.getElementById(section);
+      if (el) observer.observe(el);
+    });
+
+    // Escape key listener
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsMobileMenuOpen(false);
+    };
+    document.addEventListener('keydown', handleEsc);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      sections.forEach((section) => {
+        const el = document.getElementById(section);
+        if (el) observer.unobserve(el);
+      });
+      document.removeEventListener('keydown', handleEsc);
+    };
   }, []);
 
   const handleNavClick = (href: string) => {
     setIsMobileMenuOpen(false);
-    const element = document.querySelector(href);
+    const id = href.substring(1);
+    const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      const navHeight = 80;
+      const top = element.getBoundingClientRect().top + window.scrollY - navHeight;
+      window.scrollTo({ top, behavior: 'smooth' });
     }
   };
+
+  // Close mobile menu on outside click
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      const handleClick = () => setIsMobileMenuOpen(false);
+      // Use setTimeout to avoid immediate closure from the menu button click
+      const timer = setTimeout(() => {
+        window.addEventListener('click', handleClick);
+      }, 0);
+      return () => {
+        clearTimeout(timer);
+        window.removeEventListener('click', handleClick);
+      };
+    }
+  }, [isMobileMenuOpen]);
 
   return (
     <header
       className={cn(
         'fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out border-b border-transparent',
         isScrolled
-          ? 'bg-background/80 backdrop-blur-[12px] border-white/10 py-3 shadow-md'
+          ? 'bg-background/80 backdrop-blur-[16px] border-white/10 py-3 shadow-md'
           : 'bg-transparent py-5'
       )}
     >
@@ -81,11 +112,18 @@ export const Navbar = () => {
               href={link.href}
               onClick={(e) => { e.preventDefault(); handleNavClick(link.href); }}
               className={cn(
-                'text-sm font-medium transition-colors hover:text-green-400',
+                'text-sm font-medium transition-all duration-200 hover:text-green-400 relative',
                 activeSection === link.href.substring(1) ? 'text-green-400' : 'text-zinc-400'
               )}
             >
               {link.name}
+              {activeSection === link.href.substring(1) && (
+                <motion.div
+                  layoutId="activeNav"
+                  className="absolute -bottom-1 left-0 right-0 h-0.5 bg-green-400"
+                  transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                />
+              )}
             </a>
           ))}
         </nav>
@@ -93,9 +131,13 @@ export const Navbar = () => {
         {/* Mobile Hamburger Button */}
         <button
           className="md:hidden text-white/90 hover:text-white transition-colors"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          aria-label="Toggle menu"
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsMobileMenuOpen(!isMobileMenuOpen);
+          }}
+          aria-label="Toggle navigation menu"
           aria-expanded={isMobileMenuOpen}
+          aria-controls="mobile-nav"
         >
           {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
@@ -105,11 +147,13 @@ export const Navbar = () => {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
+            id="mobile-nav"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3, ease: 'easeInOut' }}
             className="md:hidden border-b border-white/10 bg-background/95 backdrop-blur-xl overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
           >
             <nav className="flex flex-col py-4 px-4 gap-4">
               {navLinks.map((link) => (

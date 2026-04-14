@@ -1,7 +1,7 @@
 'use client';
 
 import type { FC } from 'react';
-import { useRef } from 'react';
+import { useRef, memo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, useScroll, useTransform } from 'framer-motion';
@@ -74,7 +74,7 @@ const cardVariants = {
   }),
 };
 
-export const ProjectsSection: FC = () => {
+export const ProjectsSection: FC = memo(() => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -144,4 +144,6 @@ export const ProjectsSection: FC = () => {
       </div>
     </AnimatedSection>
   );
-};
+});
+
+ProjectsSection.displayName = 'ProjectsSection';

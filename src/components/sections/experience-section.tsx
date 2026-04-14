@@ -1,6 +1,7 @@
 'use client';
 
 import type { FC } from 'react';
+import { memo } from 'react';
 import { motion } from 'framer-motion';
 import { Briefcase, BrainCircuit, Smartphone, Code2 } from 'lucide-react';
 import { AnimatedSection } from '@/components/ui/animated-section';
@@ -65,7 +66,7 @@ const itemVariants = {
   }),
 };
 
-export const ExperienceSection: FC = () => {
+export const ExperienceSection: FC = memo(() => {
   return (
     <AnimatedSection id="experience" className="container mx-auto px-4">
       <h2 className="section-title">
@@ -119,4 +120,6 @@ export const ExperienceSection: FC = () => {
       </div>
     </AnimatedSection>
   );
-};
+});
+
+ExperienceSection.displayName = 'ExperienceSection';
