@@ -1,7 +1,7 @@
 'use client';
 
 import type { FC } from 'react';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, memo } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 import Image from 'next/image';
@@ -87,7 +87,7 @@ const avatarVariants = {
   },
 };
 
-export const HeroSection: FC = () => {
+export const HeroSection: FC = memo(() => {
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -253,4 +253,6 @@ export const HeroSection: FC = () => {
       </motion.div>
     </section>
   );
-};
+});
+
+HeroSection.displayName = 'HeroSection';

@@ -2,7 +2,7 @@
 
 import type { FC } from 'react';
 import type { LucideIcon } from 'lucide-react';
-import { useState } from 'react';
+import { useState, memo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     Award,
@@ -180,7 +180,7 @@ const cardVariants = {
     }),
 };
 
-const DocFolderCard: FC<{ folder: DocFolder; index: number }> = ({ folder, index }) => {
+const DocFolderCard: FC<{ folder: DocFolder; index: number }> = memo(({ folder, index }) => {
     const [expanded, setExpanded] = useState(false);
     const Icon = folder.icon;
     const displayFiles = expanded ? folder.files : folder.files.slice(0, 3);
@@ -249,9 +249,11 @@ const DocFolderCard: FC<{ folder: DocFolder; index: number }> = ({ folder, index
             </div>
         </motion.div>
     );
-};
+});
 
-export const DocumentsSection: FC = () => {
+DocFolderCard.displayName = 'DocFolderCard';
+
+export const DocumentsSection: FC = memo(() => {
     return (
         <AnimatedSection id="documents" className="container mx-auto px-4">
             <h2 className="section-title">
@@ -268,4 +270,6 @@ export const DocumentsSection: FC = () => {
             </div>
         </AnimatedSection>
     );
-};
+});
+
+DocumentsSection.displayName = 'DocumentsSection';

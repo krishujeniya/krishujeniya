@@ -1,7 +1,7 @@
 'use client';
 
 import type { FC } from 'react';
-import { useState } from 'react';
+import { useState, useEffect, memo } from 'react';
 import { motion } from 'framer-motion';
 import {
     Send,
@@ -24,32 +24,49 @@ const socialLinks = [
     { name: 'GitHub', icon: Github, url: 'https://github.com/krishujeniya' },
 ];
 
-export const ContactSection: FC = () => {
+export const ContactSection: FC = memo(() => {
     const [formData, setFormData] = useState({ name: '', email: '', message: '' });
     const [focusedField, setFocusedField] = useState<string | null>(null);
     const [formSent, setFormSent] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [year, setYear] = useState(2026);
 
-    const handleFormSubmit = (e: React.FormEvent) => {
+    useEffect(() => {
+        setYear(new Date().getFullYear());
+    }, []);
+
+    const handleFormSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        
+        if (isSubmitting) return;
+
         if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) return;
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) return;
 
-        const subject = encodeURIComponent(`Portfolio Inquiry from ${formData.name}`);
-        const body = encodeURIComponent(
-            `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
-        );
-        const mailtoLink = `mailto:ukideashare0021@gmail.com?subject=${subject}&body=${body}`;
+        setIsSubmitting(true);
 
-        const a = document.createElement('a');
-        a.href = mailtoLink;
-        a.target = '_blank';
-        a.click();
-        
-        setFormSent(true);
-        setFormData({ name: '', email: '', message: '' });
+        try {
+            const response = await fetch('https://formspree.io/f/xvgoverp', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name: formData.name,
+                    email: formData.email,
+                    message: formData.message,
+                }),
+            });
 
-        // Reset success state after 3s
-        setTimeout(() => setFormSent(false), 3000);
+            if (response.ok) {
+                setFormSent(true);
+                setFormData({ name: '', email: '', message: '' });
+                // Reset success state after 5s
+                setTimeout(() => setFormSent(false), 5000);
+            }
+        } catch (error) {
+            console.error('Submission error:', error);
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     const isFieldActive = (field: string) =>
@@ -132,12 +149,17 @@ export const ContactSection: FC = () => {
                         <button
                             type="submit"
                             className={`btn-primary magnetic-btn form-submit-btn ${formSent ? 'form-submit-success' : ''}`}
-                            disabled={formSent}
+                            disabled={isSubmitting || formSent}
                         >
-                            {formSent ? (
+                            {isSubmitting ? (
+                                <>
+                                    <span className="animate-spin mr-2">◌</span>
+                                    <span>Sending...</span>
+                                </>
+                            ) : formSent ? (
                                 <>
                                     <Check className="w-4 h-4" />
-                                    <span>Email Client Opened!</span>
+                                    <span>Message Sent!</span>
                                 </>
                             ) : (
                                 <>
@@ -218,10 +240,12 @@ export const ContactSection: FC = () => {
                         Proudly building open-source AI tools since 2022.
                     </p>
                     <p className="footer-copyright" suppressHydrationWarning>
-                        © {new Date().getFullYear()} Krish Ujeniya. All Rights Reserved.
+                        © {year} Krish Ujeniya. All Rights Reserved.
                     </p>
                 </div>
             </AnimatedSection>
         </>
     );
-};
+});
+
+ContactSection.displayName = 'ContactSection';
