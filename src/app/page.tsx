@@ -11,11 +11,7 @@ import {
     Target, 
     Lightbulb, 
     TrendingUp, 
-    File, 
-    Menu,
-    X,
-    Github,
-    BrainCircuit,
+    File,
 } from 'lucide-react';
 
 
@@ -26,7 +22,6 @@ const DOCS_BASE_URL = 'https://github.com/krishujeniya/krishujeniya/raw/main/Doc
 export default function Portfolio() {
     const [activeSection, setActiveSection] = useState('home');
     const [scrolled, setScrolled] = useState(false);
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [selectedProject, setSelectedProject] = useState<typeof portfolioData.projects[0] | null>(null);
     const [expandedFolder, setExpandedFolder] = useState<string | null>(null);
 
@@ -58,23 +53,26 @@ export default function Portfolio() {
 
     const scrollTo = (id: string) => {
         const el = document.getElementById(id);
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
+        if (el) {
+            el.scrollIntoView({ behavior: 'smooth' });
+            setActiveSection(id);
+        }
     };
 
     return (
         <div className="min-h-screen bg-[#050505] text-[#FAFAFA] font-sans selection:bg-[#474747] selection:text-white overflow-x-hidden">
             <ThreeBackground />
 
-            <nav className={`fixed top-0 left-0 w-full z-[100] transition-all duration-300 ${scrolled || isMenuOpen ? 'bg-black/90 backdrop-blur-md py-4 border-b border-white/5' : 'py-8'}`}>
+            <nav className={`fixed top-0 left-0 w-full z-[100] transition-all duration-300 ${scrolled ? 'bg-black/95 backdrop-blur-md py-4 border-b border-white/5' : 'py-6'}`}>
                 <div className="max-w-[1440px] mx-auto px-6 md:px-12 flex items-center justify-between">
                     <div 
-                        className="text-xl md:text-2xl font-black tracking-tighter cursor-pointer hover:opacity-70 transition-opacity flex items-center gap-2"
+                        className="text-lg sm:text-2xl font-black tracking-tighter cursor-pointer hover:opacity-70 transition-opacity flex items-center gap-2 whitespace-nowrap"
                         onClick={() => scrollTo('home')}
                     >
-                        KRISH <span className="text-[#474747]">U.</span>
+                        KRISH <span className="text-[#474747]">UJENIYA</span>
                     </div>
                     
-                    <div className="hidden md:flex items-center gap-10">
+                    <div className="hidden lg:flex items-center gap-8">
                         {['home', 'about', 'experience', 'projects', 'documents', 'contact'].map((item) => (
                             <button
                                 key={item}
@@ -86,67 +84,13 @@ export default function Portfolio() {
                         ))}
                     </div>
 
-                    <div className="flex items-center gap-4">
-                        <button 
-                            onClick={() => scrollTo('contact')}
-                            className="hidden sm:flex group items-center gap-3 bg-white text-black text-[10px] font-black uppercase tracking-[0.2em] px-6 py-3 rounded-full hover:bg-[#474747] hover:text-white transition-all duration-500"
-                        >
-                            Hire Me <span className="material-symbols-outlined text-[16px]" data-icon="login">login</span>
-                        </button>
-                        
-                        <button 
-                            onClick={() => setIsMenuOpen(!isMenuOpen)}
-                            className="md:hidden w-10 h-10 flex items-center justify-center bg-white/5 rounded-full text-white"
-                        >
-                            {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
-                        </button>
-                    </div>
+                    <button 
+                        onClick={() => scrollTo('contact')}
+                        className="flex group items-center gap-2 sm:gap-3 bg-white text-black text-[9px] sm:text-[10px] font-black uppercase tracking-[0.2em] px-4 sm:px-6 py-2.5 sm:py-3 rounded-full hover:bg-[#474747] hover:text-white transition-all duration-500 shadow-xl shadow-white/5"
+                    >
+                        Hire Me <span className="material-symbols-outlined text-[14px] sm:text-[16px]" data-icon="login">login</span>
+                    </button>
                 </div>
-
-                <AnimatePresence>
-                    {isMenuOpen && (
-                        <motion.div 
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: 'auto' }}
-                            exit={{ opacity: 0, height: 0 }}
-                            className="absolute top-full left-0 w-full bg-black/95 backdrop-blur-2xl border-b border-white/5 overflow-hidden md:hidden"
-                        >
-                            <div className="p-8 flex flex-col gap-6">
-                                {['home', 'about', 'experience', 'projects', 'documents', 'contact'].map((item) => (
-                                    <button
-                                        key={item}
-                                        onClick={() => {
-                                            scrollTo(item);
-                                            setIsMenuOpen(false);
-                                        }}
-                                        className={`text-2xl font-black uppercase tracking-tighter text-left transition-all ${activeSection === item ? 'text-white' : 'text-[#474747] hover:text-[#A1A1A1]'}`}
-                                    >
-                                        {item}
-                                    </button>
-                                ))}
-                                <div className="pt-8 mt-4 border-t border-white/5 flex items-center justify-between">
-                                    <div className="flex gap-8">
-                                        <a href={portfolioData.profile.socials.github} target="_blank" rel="noopener noreferrer" className="text-[#474747] hover:text-white transition-colors">
-                                            <Github size={24} />
-                                        </a>
-                                        <a href={portfolioData.profile.socials.huggingface} target="_blank" rel="noopener noreferrer" className="text-[#474747] hover:text-white transition-colors">
-                                            <BrainCircuit size={24} />
-                                        </a>
-                                    </div>
-                                    <button 
-                                        onClick={() => {
-                                            scrollTo('contact');
-                                            setIsMenuOpen(false);
-                                        }}
-                                        className="bg-white text-black text-[10px] font-black uppercase tracking-[0.2em] px-6 py-3 rounded-full"
-                                    >
-                                        Hire Me
-                                    </button>
-                                </div>
-                            </div>
-                        </motion.div>
-                    )}
-                </AnimatePresence>
             </nav>
 
 
@@ -167,7 +111,7 @@ export default function Portfolio() {
                                 initial={{ opacity: 0, y: 30 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.1 }}
-                                className="text-[12vw] sm:text-[10vw] md:text-[8vw] lg:text-[7vw] font-black tracking-tighter leading-[0.85] uppercase break-words overflow-hidden"
+                                className="text-[12vw] sm:text-[10vw] md:text-[9vw] lg:text-[8vw] font-black tracking-tighter leading-[0.8] uppercase break-words overflow-visible"
                             >
                                 Machine <br />
                                 <span className="text-[#474747]">Learning</span> <br />
@@ -190,16 +134,16 @@ export default function Portfolio() {
                                 className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 w-full sm:w-auto pt-4"
                             >
                                 <button 
-                                    onClick={() => scrollTo('projects')}
-                                    className="group w-full sm:w-auto flex items-center justify-center gap-4 bg-white text-black px-10 py-5 rounded-full text-xs font-black uppercase tracking-[0.2em] hover:bg-[#474747] hover:text-white transition-all duration-500"
+                                    onClick={() => scrollTo('contact')}
+                                    className="group w-full sm:w-auto flex items-center justify-center gap-4 bg-white text-black px-12 py-5 rounded-full text-xs font-black uppercase tracking-[0.2em] hover:bg-[#474747] hover:text-white transition-all duration-500 shadow-2xl shadow-white/5"
                                 >
-                                    Explore Works <span className="material-symbols-outlined group-hover:rotate-45 transition-transform" data-icon="arrow_outward">arrow_outward</span>
+                                    Hire Me <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform" data-icon="east">east</span>
                                 </button>
                                 <button 
-                                    onClick={() => window.open(portfolioData.profile.socials.calendly, '_blank')}
-                                    className="w-full sm:w-auto flex items-center justify-center gap-4 border border-white/10 px-10 py-5 rounded-full text-xs font-black uppercase tracking-[0.2em] hover:bg-white/5 transition-all duration-500"
+                                    onClick={() => scrollTo('projects')}
+                                    className="w-full sm:w-auto flex items-center justify-center gap-4 border border-white/10 px-12 py-5 rounded-full text-xs font-black uppercase tracking-[0.2em] hover:bg-white/5 transition-all duration-500"
                                 >
-                                    Book Call <span className="material-symbols-outlined" data-icon="calendar_today">calendar_today</span>
+                                    Portfolio <span className="material-symbols-outlined" data-icon="explore">explore</span>
                                 </button>
                             </motion.div>
                         </div>
@@ -211,24 +155,23 @@ export default function Portfolio() {
                         <div className="flex flex-col items-start gap-8 mb-20">
                             <div className="flex flex-col gap-4">
                                 <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#999999]">/ Info</span>
-                                <h2 className="text-4xl sm:text-6xl md:text-9xl font-black tracking-tighter uppercase leading-none">About <br /><span className="text-[#E0E0E0]">Krish</span></h2>
+                                <h2 className="text-5xl sm:text-7xl md:text-9xl font-black tracking-tighter uppercase leading-none">About <br /><span className="text-[#E0E0E0]">Krish</span></h2>
                             </div>
                             
-                            {/* Injected Full Image Here */}
+                            {/* Square Image Below Krish */}
                             <motion.div 
                                 initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
-                                className="relative w-full max-w-xl aspect-[3/2] rounded-[32px] overflow-hidden border border-black/5"
+                                className="relative w-full max-w-sm aspect-square rounded-[20px] sm:rounded-[40px] overflow-hidden border border-black/5 bg-[#F5F5F5]"
                             >
-                                <picture>
-                                    <source srcSet={portfolioData.profile.photo.webp} type="image/webp" />
-                                    <img 
-                                        src={portfolioData.profile.photo.jpg} 
-                                        alt={portfolioData.profile.name} 
-                                        className="w-full h-full object-cover"
-                                    />
-                                </picture>
+                                <Image 
+                                    src={portfolioData.profile.photo.jpg} 
+                                    alt={portfolioData.profile.name} 
+                                    fill
+                                    className="object-cover"
+                                    priority
+                                />
                             </motion.div>
                         </div>
 
@@ -253,7 +196,7 @@ export default function Portfolio() {
                     <div className="max-w-[1440px] mx-auto">
                         <div className="flex flex-col items-center text-center gap-6 mb-32">
                             <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#474747]">/ Path</span>
-                            <h2 className="text-4xl sm:text-5xl md:text-8xl font-black tracking-tighter uppercase leading-none">Professional <br />Experience</h2>
+                            <h2 className="text-5xl sm:text-7xl md:text-8xl font-black tracking-tighter uppercase leading-none">Professional <br />Experience</h2>
                         </div>
 
                         <div className="space-y-12">
@@ -292,7 +235,7 @@ export default function Portfolio() {
                     <div className="max-w-[1440px] mx-auto">
                         <div className="flex flex-col items-start gap-4 mb-24">
                             <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#474747]">/ Catalog</span>
-                            <h2 className="text-4xl sm:text-6xl md:text-9xl font-black tracking-tighter uppercase leading-none">Selected <br />Case Studies</h2>
+                            <h2 className="text-5xl sm:text-7xl md:text-9xl font-black tracking-tighter uppercase leading-none">Selected <br />Case Studies</h2>
                         </div>
 
                         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
@@ -338,7 +281,7 @@ export default function Portfolio() {
                     <div className="max-w-[1440px] mx-auto">
                         <div className="flex flex-col items-center text-center gap-6 mb-32">
                             <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#474747]">/ Archive</span>
-                            <h2 className="text-6xl md:text-8xl font-black tracking-tighter uppercase leading-none">Technical <br />Knowledge Base</h2>
+                            <h2 className="text-5xl sm:text-7xl md:text-8xl font-black tracking-tighter uppercase leading-none">Technical <br />Knowledge Base</h2>
                         </div>
 
                         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -407,76 +350,82 @@ export default function Portfolio() {
                                 <p className="text-xl text-black/60 leading-relaxed max-w-sm">
                                     Ready to empower your business with high-performance AI systems? Let&apos;s start a conversation.
                                 </p>
-                                <div className="flex flex-col gap-4 mt-8">
-                                    <a href="mailto:hello@krish.ai" className="text-2xl font-black tracking-tight hover:opacity-50 transition-opacity underline decoration-4 decoration-[#E0E0E0] underline-offset-8 uppercase">hello@krish.ai</a>
+                                 <div className="flex flex-col gap-4 mt-8">
+                                    <a href="mailto:ukideashare0021@gmail.com" className="text-xl sm:text-2xl font-black tracking-tight hover:opacity-50 transition-opacity underline decoration-4 decoration-[#E0E0E0] underline-offset-8 uppercase truncate">ukideashare0021@gmail.com</a>
                                     <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Based in India · Working Worldwide</span>
                                 </div>
                             </div>
 
                             <div className="lg:col-span-6">
-                                <form className="flex flex-col gap-8" onSubmit={(e) => e.preventDefault()}>
-                                    <div className="grid md:grid-cols-2 gap-8">
+                                <form className="flex flex-col gap-8" onSubmit={(e) => e.preventDefault()}>                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                                         <div className="flex flex-col gap-3">
-                                            <label className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999] px-2">Label: Your Name</label>
-                                            <input type="text" placeholder="John Doe" className="w-full bg-[#F5F5F5] border-none rounded-2xl p-6 text-sm font-bold focus:ring-2 focus:ring-black transition-all" />
+                                            <input type="text" placeholder="NAME" className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-6 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all placeholder:text-[#999999]" />
                                         </div>
                                         <div className="flex flex-col gap-3">
-                                            <label className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999] px-2">Label: Email</label>
-                                            <input type="email" placeholder="john@company.com" className="w-full bg-[#F5F5F5] border-none rounded-2xl p-6 text-sm font-bold focus:ring-2 focus:ring-black transition-all" />
+                                            <input type="email" placeholder="EMAIL" className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-6 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all placeholder:text-[#999999]" />
                                         </div>
                                     </div>
                                     <div className="flex flex-col gap-3">
-                                        <label className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999] px-2">Label: Project Goal</label>
-                                        <textarea rows={5} placeholder="Tell me about your AI vision..." className="w-full bg-[#F5F5F5] border-none rounded-2xl p-6 text-sm font-bold focus:ring-2 focus:ring-black transition-all" />
+                                        <textarea rows={4} placeholder="TELL ME ABOUT YOUR PROJECT" className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-6 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all placeholder:text-[#999999] resize-none" />
                                     </div>
-                                    <button className="group flex items-center justify-between bg-black text-white px-8 py-6 rounded-full text-xs font-black uppercase tracking-[0.2em] hover:bg-[#474747] transition-all duration-500">
+                                    <button 
+                                        onClick={() => window.location.href = `mailto:ukideashare0021@gmail.com?subject=Project Inquiry`}
+                                        className="w-full flex items-center justify-center gap-4 bg-black text-white py-8 rounded-none text-sm font-black uppercase tracking-[0.3em] hover:bg-[#474747] transition-all duration-500 mt-8"
+                                    >
                                         Send Message <span className="material-symbols-outlined" data-icon="east">east</span>
                                     </button>
                                 </form>
+
                             </div>
                         </div>
                     </div>
                 </section>
             </main>
 
-            {/* Footer */}
-            <footer className="py-20 px-6 md:px-12 border-t border-white/5">
-                <div className="max-w-[1440px] mx-auto flex flex-col md:flex-row items-center justify-between gap-12">
-                    <div className="text-[10px] font-black uppercase tracking-[0.2em] text-[#474747]">
-                        © 2024 KRISH UJENIYA · ALL RIGHTS RESERVED
+            <footer className="py-24 px-6 md:px-12 border-t border-white/5 bg-[#0A0A0A]">
+                <div className="max-w-[1440px] mx-auto flex flex-col items-center gap-12 sm:gap-16">
+                    <div className="flex flex-col items-center gap-6">
+                        <div className="text-2xl font-black tracking-tighter text-white">KRISH UJENIYA</div>
+                        <div className="text-[9px] font-black uppercase tracking-[0.4em] text-[#474747] text-center max-w-xs leading-relaxed">
+                            © 2024 · BUILDING THE FUTURE WITH MACHINE LEARNING
+                        </div>
                     </div>
-                    <div className="flex gap-10">
+                    
+                    <div className="flex flex-wrap justify-center gap-8 sm:gap-12">
                         {['LinkedIn', 'HuggingFace', 'GitHub', 'Medium'].map(link => (
-                            <a key={link} href="#" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#474747] hover:text-white transition-colors">{link}</a>
+                            <a key={link} href="#" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#474747] hover:text-white transition-colors border-b border-transparent hover:border-white/20 pb-1">{link}</a>
                         ))}
                     </div>
+
                     <button 
-                        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                        className="flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.2em] text-[#474747] hover:text-white transition-colors"
+                        onClick={() => scrollTo('home')}
+                        className="group flex flex-col items-center gap-4 text-[9px] font-black uppercase tracking-[0.3em] text-[#474747] hover:text-white transition-all"
                     >
-                        Back to Top <span className="material-symbols-outlined text-[16px]" data-icon="arrow_upward">arrow_upward</span>
+                        <span className="w-10 h-10 rounded-full border border border-white/5 flex items-center justify-center group-hover:border-white/20 transition-all">
+                            <span className="material-symbols-outlined text-[16px]" data-icon="arrow_upward">arrow_upward</span>
+                        </span>
+                        Back to Top
                     </button>
                 </div>
             </footer>
 
-            {/* Project Case Study Modal */}
             <AnimatePresence>
                 {selectedProject && (
                     <motion.div 
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-[200] flex items-center justify-center px-6 md:px-12 py-24 bg-black/90 backdrop-blur-xl"
+                        className="fixed inset-0 z-[500] flex items-center justify-center p-4 sm:p-12 bg-black/95 backdrop-blur-2xl"
                         onClick={() => setSelectedProject(null)}
                     >
                         <motion.div 
                             initial={{ scale: 0.9, y: 20 }}
                             animate={{ scale: 1, y: 0 }}
                             exit={{ scale: 0.9, y: 20 }}
-                            className="w-full max-w-5xl bg-[#0A0A0A] border border-white/10 rounded-[40px] overflow-hidden grid lg:grid-cols-12 max-h-full"
+                            className="w-full max-w-6xl bg-[#0A0A0A] border border-white/10 rounded-[32px] sm:rounded-[64px] overflow-hidden grid lg:grid-cols-12 max-h-full overflow-y-auto relative"
                             onClick={(e) => e.stopPropagation()}
                         >
-                            <div className="lg:col-span-5 relative min-h-[300px] lg:min-h-full">
+                            <div className="lg:col-span-5 relative h-[350px] lg:h-auto">
                                 <Image
                                     src={selectedProject.imageUrl}
                                     alt={selectedProject.title}
@@ -493,7 +442,7 @@ export default function Portfolio() {
                                     </button>
                                 </div>
                             </div>
-                            <div className="lg:col-span-7 p-10 md:p-16 overflow-y-auto">
+                            <div className="lg:col-span-7 p-8 md:p-16 overflow-y-auto max-h-[92vh]">
                                 <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#474747] mb-4 block">{selectedProject.category}</span>
                                 <h3 className="text-4xl md:text-5xl font-black uppercase tracking-tighter mb-8">{selectedProject.title}</h3>
                                 
