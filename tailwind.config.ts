@@ -11,15 +11,29 @@ export default {
   theme: {
     extend: {
       colors: {
+        // Design System Colors from Space Edition
+        "background": "#131313",
+        "foreground": "#e2e2e2",
+        "primary": "#ffffff",
+        "primary-foreground": "#1a1c1c",
+        "secondary": "#c6c6cf",
+        "secondary-foreground": "#1a1b22",
+        "tertiary": "#e2e2e2",
+        "tertiary-foreground": "#1a1c1c",
+        "outline": "#919191",
+        "outline-variant": "#474747",
+        "border": "#474747", // For compatibility with border-border
+        "input": "#1b1b1b",
+        "ring": "#ffffff",
+        
+        // Extended Palette from HTML
         "on-error-container": "#ffdad6",
         "surface-container-low": "#1b1b1b",
         "on-secondary-container": "#e2e1eb",
         "on-error": "#690005",
         "surface-container-lowest": "#0e0e0e",
-        "secondary": "#c6c6cf",
         "primary-fixed": "#5d5f5f",
         "tertiary-fixed-dim": "#454747",
-        "tertiary": "#e2e2e2",
         "surface-variant": "#353535",
         "primary-fixed-dim": "#454747",
         "on-primary-container": "#000000",
@@ -30,9 +44,7 @@ export default {
         "surface-container-high": "#2a2a2a",
         "tertiary-fixed": "#5d5f5f",
         "on-tertiary-container": "#000000",
-        "primary": "#ffffff",
         "secondary-fixed": "#c6c6cf",
-        "outline": "#919191",
         "primary-container": "#d4d4d4",
         "inverse-surface": "#e2e2e2",
         "secondary-fixed-dim": "#aaaab3",
@@ -45,7 +57,6 @@ export default {
         "error-container": "#93000a",
         "on-primary-fixed-variant": "#e2e2e2",
         "on-secondary-fixed": "#1a1b22",
-        "background": "#131313",
         "secondary-container": "#45464e",
         "surface-container-highest": "#353535",
         "surface-dim": "#131313",
@@ -55,9 +66,30 @@ export default {
         "tertiary-container": "#909191",
         "surface": "#131313",
         "on-tertiary-fixed": "#ffffff",
-        "outline-variant": "#474747",
         "on-tertiary-fixed-variant": "#e2e2e2",
         "on-surface-variant": "#c6c6c6",
+        
+        // Original HSL hooks for any residual usage
+        "card": {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
+        "popover": {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
+        "muted": {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        "accent": {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        "destructive": {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
       },
       borderRadius: {
         "DEFAULT": "0px",
@@ -66,9 +98,9 @@ export default {
         "full": "9999px"
       },
       fontFamily: {
-        "headline": ["Space Grotesk", "sans-serif"],
-        "body": ["Inter", "sans-serif"],
-        "label": ["Inter", "sans-serif"]
+        "headline": ["var(--font-space-grotesk)", "sans-serif"],
+        "body": ["var(--font-inter)", "sans-serif"],
+        "label": ["var(--font-inter)", "sans-serif"]
       }
     },
   },
