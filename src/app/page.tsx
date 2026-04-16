@@ -248,7 +248,7 @@ export default function Portfolio() {
                     <div className="max-w-[1440px] mx-auto">
                         <div className="flex flex-col items-start gap-4 mb-20">
                             <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#999999]">/ Info</span>
-                            <h2 className="text-7xl md:text-9xl font-black tracking-tighter uppercase leading-none">About <br /><span className="text-[#E0E0E0]">Krish</span></h2>
+                            <h2 className="text-5xl md:text-9xl font-black tracking-tighter uppercase leading-none">About <br /><span className="text-[#E0E0E0]">Krish</span></h2>
                         </div>
 
                         <div className="grid md:grid-cols-3 gap-12">
@@ -272,7 +272,7 @@ export default function Portfolio() {
                     <div className="max-w-[1440px] mx-auto">
                         <div className="flex flex-col items-center text-center gap-6 mb-32">
                             <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#474747]">/ Path</span>
-                            <h2 className="text-6xl md:text-8xl font-black tracking-tighter uppercase leading-none">Professional <br />Experience</h2>
+                            <h2 className="text-4xl md:text-8xl font-black tracking-tighter uppercase leading-none">Professional <br />Experience</h2>
                         </div>
 
                         <div className="space-y-12">
