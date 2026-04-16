@@ -15,7 +15,6 @@ import {
     Menu,
     X,
     Github,
-    Twitter
 } from 'lucide-react';
 
 
