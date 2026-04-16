@@ -35,12 +35,18 @@ export default function Portfolio() {
         const handleScroll = () => {
             setScrolled(window.scrollY > 50);
             
-            const sections = ['home', 'about', 'services', 'experience', 'projects', 'documents', 'contact'];
+            // Check if we are at the bottom of the page
+            if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 100) {
+                setActiveSection('contact');
+                return;
+            }
+
+            const sections = ['home', 'about', 'experience', 'projects', 'documents', 'contact'];
             const current = sections.find(section => {
                 const element = document.getElementById(section);
                 if (element) {
                     const rect = element.getBoundingClientRect();
-                    return rect.top <= 100 && rect.bottom >= 100;
+                    return rect.top <= 200 && rect.bottom >= 200;
                 }
                 return false;
             });
@@ -59,11 +65,10 @@ export default function Portfolio() {
         <div className="min-h-screen bg-[#050505] text-[#FAFAFA] font-sans selection:bg-[#474747] selection:text-white overflow-x-hidden">
             <ThreeBackground />
 
-            {/* Navigation */}
-            <nav className={`fixed top-0 left-0 w-full z-[100] transition-all duration-300 ${scrolled || isMenuOpen ? 'bg-black/90 backdrop-blur-md py-4' : 'py-8'}`}>
+            <nav className={`fixed top-0 left-0 w-full z-[100] transition-all duration-300 ${scrolled || isMenuOpen ? 'bg-black/90 backdrop-blur-md py-4 border-b border-white/5' : 'py-8'}`}>
                 <div className="max-w-[1440px] mx-auto px-6 md:px-12 flex items-center justify-between">
                     <div 
-                        className="text-2xl font-black tracking-tighter cursor-pointer hover:opacity-70 transition-opacity flex items-center gap-2"
+                        className="text-xl md:text-2xl font-black tracking-tighter cursor-pointer hover:opacity-70 transition-opacity flex items-center gap-2"
                         onClick={() => scrollTo('home')}
                     >
                         KRISH <span className="text-[#474747]">U.</span>
@@ -114,7 +119,7 @@ export default function Portfolio() {
                                             scrollTo(item);
                                             setIsMenuOpen(false);
                                         }}
-                                        className={`text-3xl font-black uppercase tracking-tighter text-left transition-all ${activeSection === item ? 'text-white' : 'text-[#474747] hover:text-[#A1A1A1]'}`}
+                                        className={`text-2xl font-black uppercase tracking-tighter text-left transition-all ${activeSection === item ? 'text-white' : 'text-[#474747] hover:text-[#A1A1A1]'}`}
                                     >
                                         {item}
                                     </button>
@@ -122,10 +127,10 @@ export default function Portfolio() {
                                 <div className="pt-8 mt-4 border-t border-white/5 flex items-center justify-between">
                                     <div className="flex gap-8">
                                         <a href={portfolioData.profile.socials.github} target="_blank" rel="noopener noreferrer" className="text-[#474747] hover:text-white transition-colors">
-                                            <Github size={28} />
+                                            <Github size={24} />
                                         </a>
                                         <a href={portfolioData.profile.socials.huggingface} target="_blank" rel="noopener noreferrer" className="text-[#474747] hover:text-white transition-colors">
-                                            <BrainCircuit size={28} />
+                                            <BrainCircuit size={24} />
                                         </a>
                                     </div>
                                     <button 
@@ -142,14 +147,13 @@ export default function Portfolio() {
                         </motion.div>
                     )}
                 </AnimatePresence>
-
             </nav>
 
 
             <main>
                 <section id="home" className="relative min-h-screen flex flex-col justify-center px-6 md:px-12 pt-32 md:pt-20">
-                    <div className="max-w-[1440px] mx-auto w-full grid lg:grid-cols-12 gap-12 items-center">
-                        <div className="lg:col-span-8 flex flex-col items-start gap-6 md:gap-8 order-2 lg:order-1">
+                    <div className="max-w-[1440px] mx-auto w-full">
+                        <div className="flex flex-col items-start gap-6 md:gap-8">
                             <motion.div 
                                 initial={{ opacity: 0, x: -20 }}
                                 animate={{ opacity: 1, x: 0 }}
@@ -163,7 +167,7 @@ export default function Portfolio() {
                                 initial={{ opacity: 0, y: 30 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.1 }}
-                                className="text-[14vw] sm:text-[10vw] md:text-[8vw] lg:text-[7vw] font-black tracking-tighter leading-[0.85] uppercase"
+                                className="text-[12vw] sm:text-[10vw] md:text-[8vw] lg:text-[7vw] font-black tracking-tighter leading-[0.85] uppercase break-words overflow-hidden"
                             >
                                 Machine <br />
                                 <span className="text-[#474747]">Learning</span> <br />
@@ -174,7 +178,7 @@ export default function Portfolio() {
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.2 }}
-                                className="text-base md:text-xl text-[#A1A1A1] max-w-xl leading-relaxed font-medium"
+                                className="text-sm md:text-xl text-[#A1A1A1] max-w-xl leading-relaxed font-medium"
                             >
                                 {portfolioData.profile.tagline}
                             </motion.p>
@@ -199,56 +203,33 @@ export default function Portfolio() {
                                 </button>
                             </motion.div>
                         </div>
+                    </div>
+                </section>
 
-                        {/* Profile Photo */}
-                        <motion.div 
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ delay: 0.4 }}
-                            className="lg:col-span-4 flex justify-center lg:justify-end order-1 lg:order-2"
-                        >
-                            <div className="relative w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 rounded-[40px] overflow-hidden border border-white/10 group">
+                <section id="about" className="py-24 md:py-32 px-6 md:px-12 bg-white text-black rounded-[40px] md:rounded-[80px] mt-20 relative z-10">
+                    <div className="max-w-[1440px] mx-auto">
+                        <div className="flex flex-col items-start gap-8 mb-20">
+                            <div className="flex flex-col gap-4">
+                                <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#999999]">/ Info</span>
+                                <h2 className="text-4xl sm:text-6xl md:text-9xl font-black tracking-tighter uppercase leading-none">About <br /><span className="text-[#E0E0E0]">Krish</span></h2>
+                            </div>
+                            
+                            {/* Injected Full Image Here */}
+                            <motion.div 
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                className="relative w-full max-w-xl aspect-[3/2] rounded-[32px] overflow-hidden border border-black/5"
+                            >
                                 <picture>
                                     <source srcSet={portfolioData.profile.photo.webp} type="image/webp" />
                                     <img 
                                         src={portfolioData.profile.photo.jpg} 
                                         alt={portfolioData.profile.name} 
-                                        className="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-105"
+                                        className="w-full h-full object-cover"
                                     />
                                 </picture>
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60"></div>
-                                <div className="absolute bottom-6 left-6 flex flex-col">
-                                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/50">Status</span>
-                                    <span className="text-xs font-black uppercase tracking-[0.1em] text-white">Shaping the Future</span>
-                                </div>
-                            </div>
-                        </motion.div>
-                    </div>
-
-                    <div className="hidden sm:flex absolute bottom-12 left-6 md:left-12 items-center gap-12">
-
-                        {portfolioData.profile.metrics.map((metric, i) => (
-                            <div key={i} className="flex flex-col gap-1">
-                                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#474747]">{metric.label.split(' ')[0]}</span>
-                                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#A1A1A1]">{metric.label.split(' ').slice(1).join(' ')}</span>
-                            </div>
-                        ))}
-                    </div>
-
-                    {/* Social links sidebar */}
-                    <div className="absolute right-6 md:right-12 bottom-12 flex flex-col gap-6 items-center">
-                        <div className="w-[1px] h-20 bg-gradient-to-b from-transparent to-white/10"></div>
-                        <a href={portfolioData.profile.socials.huggingface} target="_blank" className="text-[#474747] hover:text-white transition-colors">HF</a>
-                        <a href={portfolioData.profile.socials.github} target="_blank" className="text-[#474747] hover:text-white transition-colors">GH</a>
-                    </div>
-                </section>
-
-                {/* About Section */}
-                <section id="about" className="py-32 px-6 md:px-12 bg-white text-black rounded-[40px] md:rounded-[80px] mt-20 relative z-10 transition-transform duration-700">
-                    <div className="max-w-[1440px] mx-auto">
-                        <div className="flex flex-col items-start gap-4 mb-20">
-                            <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#999999]">/ Info</span>
-                            <h2 className="text-5xl md:text-9xl font-black tracking-tighter uppercase leading-none">About <br /><span className="text-[#E0E0E0]">Krish</span></h2>
+                            </motion.div>
                         </div>
 
                         <div className="grid md:grid-cols-3 gap-12">
@@ -272,7 +253,7 @@ export default function Portfolio() {
                     <div className="max-w-[1440px] mx-auto">
                         <div className="flex flex-col items-center text-center gap-6 mb-32">
                             <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#474747]">/ Path</span>
-                            <h2 className="text-4xl md:text-8xl font-black tracking-tighter uppercase leading-none">Professional <br />Experience</h2>
+                            <h2 className="text-4xl sm:text-5xl md:text-8xl font-black tracking-tighter uppercase leading-none">Professional <br />Experience</h2>
                         </div>
 
                         <div className="space-y-12">
@@ -311,7 +292,7 @@ export default function Portfolio() {
                     <div className="max-w-[1440px] mx-auto">
                         <div className="flex flex-col items-start gap-4 mb-24">
                             <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#474747]">/ Catalog</span>
-                            <h2 className="text-6xl md:text-9xl font-black tracking-tighter uppercase leading-none">Selected <br />Case Studies</h2>
+                            <h2 className="text-4xl sm:text-6xl md:text-9xl font-black tracking-tighter uppercase leading-none">Selected <br />Case Studies</h2>
                         </div>
 
                         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
