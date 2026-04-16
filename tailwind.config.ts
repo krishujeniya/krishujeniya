@@ -1,106 +1,76 @@
 import type { Config } from "tailwindcss";
-const { fontFamily } = require("tailwindcss/defaultTheme")
-
 
 export default {
-	darkMode: ["class"],
-	content: [
-		"./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-		"./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-		"./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-	],
-	theme: {
-		extend: {
-			fontFamily: {
-				sans: ["var(--font-inter)", ...fontFamily.sans],
-				mono: [...fontFamily.mono],
-			},
-			colors: {
-				background: 'hsl(var(--background))',
-				foreground: 'hsl(var(--foreground))',
-				card: {
-					DEFAULT: 'hsl(var(--card))',
-					foreground: 'hsl(var(--card-foreground))'
-				},
-				popover: {
-					DEFAULT: 'hsl(var(--popover))',
-					foreground: 'hsl(var(--popover-foreground))'
-				},
-				primary: {
-					DEFAULT: 'hsl(var(--primary))',
-					foreground: 'hsl(var(--primary-foreground))'
-				},
-				secondary: {
-					DEFAULT: 'hsl(var(--secondary))',
-					foreground: 'hsl(var(--secondary-foreground))'
-				},
-				muted: {
-					DEFAULT: 'hsl(var(--muted))',
-					foreground: 'hsl(var(--muted-foreground))'
-				},
-				accent: {
-					DEFAULT: 'hsl(var(--accent))',
-					foreground: 'hsl(var(--accent-foreground))'
-				},
-				destructive: {
-					DEFAULT: 'hsl(var(--destructive))',
-					foreground: 'hsl(var(--destructive-foreground))'
-				},
-				border: 'hsl(var(--border))',
-				input: 'hsl(var(--input))',
-				ring: 'hsl(var(--ring))',
-				chart: {
-					'1': 'hsl(var(--chart-1))',
-					'2': 'hsl(var(--chart-2))',
-					'3': 'hsl(var(--chart-3))',
-					'4': 'hsl(var(--chart-4))',
-					'5': 'hsl(var(--chart-5))'
-				},
-				sidebar: {
-					DEFAULT: 'hsl(var(--sidebar-background))',
-					foreground: 'hsl(var(--sidebar-foreground))',
-					primary: 'hsl(var(--sidebar-primary))',
-					'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
-					accent: 'hsl(var(--sidebar-accent))',
-					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
-					border: 'hsl(var(--sidebar-border))',
-					ring: 'hsl(var(--sidebar-ring))'
-				}
-			},
-			borderRadius: {
-				lg: 'var(--radius)',
-				md: 'calc(var(--radius) - 2px)',
-				sm: 'calc(var(--radius) - 4px)'
-			},
-			keyframes: {
-				'accordion-down': {
-					from: {
-						height: '0'
-					},
-					to: {
-						height: 'var(--radix-accordion-content-height)'
-					}
-				},
-				'accordion-up': {
-					from: {
-						height: 'var(--radix-accordion-content-height)'
-					},
-					to: {
-						height: '0'
-					}
-				},
-				// Added fade-in keyframes (though defined in globals.css, useful for utilities)
-				'fadeIn': {
-					'0%': { opacity: '0' },
-					'100%': { opacity: '1' },
-				},
-			},
-			animation: {
-				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out',
-				'fadeIn': 'fadeIn 0.8s ease-out forwards', // Aligned with globals.css or component usage
-			}
-		}
-	},
-	plugins: [require("tailwindcss-animate")],
+  darkMode: ["class"],
+  content: [
+    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        "on-error-container": "#ffdad6",
+        "surface-container-low": "#1b1b1b",
+        "on-secondary-container": "#e2e1eb",
+        "on-error": "#690005",
+        "surface-container-lowest": "#0e0e0e",
+        "secondary": "#c6c6cf",
+        "primary-fixed": "#5d5f5f",
+        "tertiary-fixed-dim": "#454747",
+        "tertiary": "#e2e2e2",
+        "surface-variant": "#353535",
+        "primary-fixed-dim": "#454747",
+        "on-primary-container": "#000000",
+        "on-secondary": "#1a1b22",
+        "on-secondary-fixed-variant": "#3a3b42",
+        "on-surface": "#e2e2e2",
+        "inverse-primary": "#5d5f5f",
+        "surface-container-high": "#2a2a2a",
+        "tertiary-fixed": "#5d5f5f",
+        "on-tertiary-container": "#000000",
+        "primary": "#ffffff",
+        "secondary-fixed": "#c6c6cf",
+        "outline": "#919191",
+        "primary-container": "#d4d4d4",
+        "inverse-surface": "#e2e2e2",
+        "secondary-fixed-dim": "#aaaab3",
+        "surface-tint": "#c6c6c7",
+        "on-primary": "#1a1c1c",
+        "inverse-on-surface": "#303030",
+        "on-tertiary": "#1a1c1c",
+        "on-primary-fixed": "#ffffff",
+        "surface-container": "#1f1f1f",
+        "error-container": "#93000a",
+        "on-primary-fixed-variant": "#e2e2e2",
+        "on-secondary-fixed": "#1a1b22",
+        "background": "#131313",
+        "secondary-container": "#45464e",
+        "surface-container-highest": "#353535",
+        "surface-dim": "#131313",
+        "on-background": "#e2e2e2",
+        "error": "#ffb4ab",
+        "surface-bright": "#393939",
+        "tertiary-container": "#909191",
+        "surface": "#131313",
+        "on-tertiary-fixed": "#ffffff",
+        "outline-variant": "#474747",
+        "on-tertiary-fixed-variant": "#e2e2e2",
+        "on-surface-variant": "#c6c6c6",
+      },
+      borderRadius: {
+        "DEFAULT": "0px",
+        "lg": "0px",
+        "xl": "0px",
+        "full": "9999px"
+      },
+      fontFamily: {
+        "headline": ["Space Grotesk", "sans-serif"],
+        "body": ["Inter", "sans-serif"],
+        "label": ["Inter", "sans-serif"]
+      }
+    },
+  },
+  plugins: [require("tailwindcss-animate"), require("@tailwindcss/forms"), require("@tailwindcss/container-queries")],
 } satisfies Config;
