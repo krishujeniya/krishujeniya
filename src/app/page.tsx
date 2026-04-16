@@ -12,7 +12,12 @@ import {
     Lightbulb, 
     TrendingUp, 
     File, 
+    Menu,
+    X,
+    Github,
+    Twitter
 } from 'lucide-react';
+
 
 
 const DOCS_BASE_URL = 'https://github.com/krishujeniya/krishujeniya/raw/main/Docs';
@@ -20,8 +25,10 @@ const DOCS_BASE_URL = 'https://github.com/krishujeniya/krishujeniya/raw/main/Doc
 export default function Portfolio() {
     const [activeSection, setActiveSection] = useState('home');
     const [scrolled, setScrolled] = useState(false);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [selectedProject, setSelectedProject] = useState<typeof portfolioData.projects[0] | null>(null);
     const [expandedFolder, setExpandedFolder] = useState<string | null>(null);
+
 
     useEffect(() => {
         const handleScroll = () => {
@@ -52,10 +59,10 @@ export default function Portfolio() {
             <ThreeBackground />
 
             {/* Navigation */}
-            <nav className={`fixed top-0 left-0 w-full z-[100] transition-all duration-300 ${scrolled ? 'bg-black/80 backdrop-blur-md py-4 border-b border-white/5' : 'py-8'}`}>
+            <nav className={`fixed top-0 left-0 w-full z-[100] transition-all duration-300 ${scrolled || isMenuOpen ? 'bg-black/90 backdrop-blur-md py-4' : 'py-8'}`}>
                 <div className="max-w-[1440px] mx-auto px-6 md:px-12 flex items-center justify-between">
                     <div 
-                        className="text-2xl font-black tracking-tighter cursor-pointer hover:opacity-70 transition-opacity"
+                        className="text-2xl font-black tracking-tighter cursor-pointer hover:opacity-70 transition-opacity flex items-center gap-2"
                         onClick={() => scrollTo('home')}
                     >
                         KRISH <span className="text-[#474747]">U.</span>
@@ -73,20 +80,62 @@ export default function Portfolio() {
                         ))}
                     </div>
 
-                    <button 
-                        onClick={() => scrollTo('contact')}
-                        className="group flex items-center gap-3 bg-white text-black text-[10px] font-black uppercase tracking-[0.2em] px-6 py-3 rounded-full hover:bg-[#474747] hover:text-white transition-all duration-500"
-                    >
-                        Hire Me <span className="material-symbols-outlined text-[16px]" data-icon="login">login</span>
-                    </button>
+                    <div className="flex items-center gap-4">
+                        <button 
+                            onClick={() => scrollTo('contact')}
+                            className="hidden sm:flex group items-center gap-3 bg-white text-black text-[10px] font-black uppercase tracking-[0.2em] px-6 py-3 rounded-full hover:bg-[#474747] hover:text-white transition-all duration-500"
+                        >
+                            Hire Me <span className="material-symbols-outlined text-[16px]" data-icon="login">login</span>
+                        </button>
+                        
+                        <button 
+                            onClick={() => setIsMenuOpen(!isMenuOpen)}
+                            className="md:hidden w-10 h-10 flex items-center justify-center bg-white/5 rounded-full text-white"
+                        >
+                            {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+                        </button>
+                    </div>
                 </div>
+
+                {/* Mobile Menu Overlay */}
+                <AnimatePresence>
+                    {isMenuOpen && (
+                        <motion.div 
+                            initial={{ opacity: 0, y: -20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -20 }}
+                            className="absolute top-full left-0 w-full bg-black/95 backdrop-blur-2xl border-b border-white/5 p-8 flex flex-col gap-6 md:hidden"
+                        >
+                            {['home', 'about', 'experience', 'projects', 'documents', 'contact'].map((item) => (
+                                <button
+                                    key={item}
+                                    onClick={() => {
+                                        scrollTo(item);
+                                        setIsMenuOpen(false);
+                                    }}
+                                    className={`text-2xl font-black uppercase tracking-tighter text-left ${activeSection === item ? 'text-white' : 'text-[#474747]'}`}
+                                >
+                                    {item}
+                                </button>
+                            ))}
+                            <div className="pt-6 border-t border-white/5 flex gap-6">
+                                <a href={portfolioData.profile.socials.github} target="_blank" rel="noopener noreferrer" className="text-[#474747] hover:text-white transition-colors">
+                                    <Github size={24} />
+                                </a>
+                                <a href={portfolioData.profile.socials.huggingface} target="_blank" rel="noopener noreferrer" className="text-[#474747] hover:text-white transition-colors">
+                                    <BrainCircuit size={24} />
+                                </a>
+                            </div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
             </nav>
 
+
             <main>
-                {/* Hero Section */}
-                <section id="home" className="relative min-h-screen flex flex-col justify-center px-6 md:px-12 pt-20">
-                    <div className="max-w-[1440px] mx-auto w-full grid md:grid-cols-12 gap-12 items-center">
-                        <div className="md:col-span-12 lg:col-span-8 flex flex-col items-start gap-8">
+                <section id="home" className="relative min-h-screen flex flex-col justify-center px-6 md:px-12 pt-32 md:pt-20">
+                    <div className="max-w-[1440px] mx-auto w-full grid lg:grid-cols-12 gap-12 items-center">
+                        <div className="lg:col-span-8 flex flex-col items-start gap-6 md:gap-8 order-2 lg:order-1">
                             <motion.div 
                                 initial={{ opacity: 0, x: -20 }}
                                 animate={{ opacity: 1, x: 0 }}
@@ -111,7 +160,7 @@ export default function Portfolio() {
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.2 }}
-                                className="text-lg md:text-xl text-[#A1A1A1] max-w-xl leading-relaxed font-medium"
+                                className="text-base md:text-xl text-[#A1A1A1] max-w-xl leading-relaxed font-medium"
                             >
                                 {portfolioData.profile.tagline}
                             </motion.p>
@@ -120,25 +169,50 @@ export default function Portfolio() {
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.3 }}
-                                className="flex flex-wrap items-center gap-6 pt-4"
+                                className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 w-full sm:w-auto pt-4"
                             >
                                 <button 
                                     onClick={() => scrollTo('projects')}
-                                    className="group flex items-center gap-4 bg-white text-black px-10 py-5 rounded-full text-xs font-black uppercase tracking-[0.2em] hover:bg-[#474747] hover:text-white transition-all duration-500"
+                                    className="group w-full sm:w-auto flex items-center justify-center gap-4 bg-white text-black px-10 py-5 rounded-full text-xs font-black uppercase tracking-[0.2em] hover:bg-[#474747] hover:text-white transition-all duration-500"
                                 >
                                     Explore Works <span className="material-symbols-outlined group-hover:rotate-45 transition-transform" data-icon="arrow_outward">arrow_outward</span>
                                 </button>
                                 <button 
                                     onClick={() => window.open(portfolioData.profile.socials.calendly, '_blank')}
-                                    className="flex items-center gap-4 border border-white/10 px-10 py-5 rounded-full text-xs font-black uppercase tracking-[0.2em] hover:bg-white/5 transition-all duration-500"
+                                    className="w-full sm:w-auto flex items-center justify-center gap-4 border border-white/10 px-10 py-5 rounded-full text-xs font-black uppercase tracking-[0.2em] hover:bg-white/5 transition-all duration-500"
                                 >
                                     Book Call <span className="material-symbols-outlined" data-icon="calendar_today">calendar_today</span>
                                 </button>
                             </motion.div>
                         </div>
+
+                        {/* Profile Photo */}
+                        <motion.div 
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ delay: 0.4 }}
+                            className="lg:col-span-4 flex justify-center lg:justify-end order-1 lg:order-2"
+                        >
+                            <div className="relative w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 rounded-[40px] overflow-hidden border border-white/10 group">
+                                <picture>
+                                    <source srcSet={portfolioData.profile.photo.webp} type="image/webp" />
+                                    <img 
+                                        src={portfolioData.profile.photo.jpg} 
+                                        alt={portfolioData.profile.name} 
+                                        className="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-105"
+                                    />
+                                </picture>
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60"></div>
+                                <div className="absolute bottom-6 left-6 flex flex-col">
+                                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/50">Status</span>
+                                    <span className="text-xs font-black uppercase tracking-[0.1em] text-white">Shaping the Future</span>
+                                </div>
+                            </div>
+                        </motion.div>
                     </div>
 
-                    <div className="absolute bottom-12 left-6 md:left-12 flex items-center gap-12">
+                    <div className="hidden sm:flex absolute bottom-12 left-6 md:left-12 items-center gap-12">
+
                         {portfolioData.profile.metrics.map((metric, i) => (
                             <div key={i} className="flex flex-col gap-1">
                                 <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#474747]">{metric.label.split(' ')[0]}</span>
