@@ -15,7 +15,9 @@ import {
     Menu,
     X,
     Github,
+    BrainCircuit,
 } from 'lucide-react';
+
 
 
 
@@ -96,38 +98,51 @@ export default function Portfolio() {
                     </div>
                 </div>
 
-                {/* Mobile Menu Overlay */}
                 <AnimatePresence>
                     {isMenuOpen && (
                         <motion.div 
-                            initial={{ opacity: 0, y: -20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -20 }}
-                            className="absolute top-full left-0 w-full bg-black/95 backdrop-blur-2xl border-b border-white/5 p-8 flex flex-col gap-6 md:hidden"
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: 'auto' }}
+                            exit={{ opacity: 0, height: 0 }}
+                            className="absolute top-full left-0 w-full bg-black/95 backdrop-blur-2xl border-b border-white/5 overflow-hidden md:hidden"
                         >
-                            {['home', 'about', 'experience', 'projects', 'documents', 'contact'].map((item) => (
-                                <button
-                                    key={item}
-                                    onClick={() => {
-                                        scrollTo(item);
-                                        setIsMenuOpen(false);
-                                    }}
-                                    className={`text-2xl font-black uppercase tracking-tighter text-left ${activeSection === item ? 'text-white' : 'text-[#474747]'}`}
-                                >
-                                    {item}
-                                </button>
-                            ))}
-                            <div className="pt-6 border-t border-white/5 flex gap-6">
-                                <a href={portfolioData.profile.socials.github} target="_blank" rel="noopener noreferrer" className="text-[#474747] hover:text-white transition-colors">
-                                    <Github size={24} />
-                                </a>
-                                <a href={portfolioData.profile.socials.huggingface} target="_blank" rel="noopener noreferrer" className="text-[#474747] hover:text-white transition-colors">
-                                    <BrainCircuit size={24} />
-                                </a>
+                            <div className="p-8 flex flex-col gap-6">
+                                {['home', 'about', 'experience', 'projects', 'documents', 'contact'].map((item) => (
+                                    <button
+                                        key={item}
+                                        onClick={() => {
+                                            scrollTo(item);
+                                            setIsMenuOpen(false);
+                                        }}
+                                        className={`text-3xl font-black uppercase tracking-tighter text-left transition-all ${activeSection === item ? 'text-white' : 'text-[#474747] hover:text-[#A1A1A1]'}`}
+                                    >
+                                        {item}
+                                    </button>
+                                ))}
+                                <div className="pt-8 mt-4 border-t border-white/5 flex items-center justify-between">
+                                    <div className="flex gap-8">
+                                        <a href={portfolioData.profile.socials.github} target="_blank" rel="noopener noreferrer" className="text-[#474747] hover:text-white transition-colors">
+                                            <Github size={28} />
+                                        </a>
+                                        <a href={portfolioData.profile.socials.huggingface} target="_blank" rel="noopener noreferrer" className="text-[#474747] hover:text-white transition-colors">
+                                            <BrainCircuit size={28} />
+                                        </a>
+                                    </div>
+                                    <button 
+                                        onClick={() => {
+                                            scrollTo('contact');
+                                            setIsMenuOpen(false);
+                                        }}
+                                        className="bg-white text-black text-[10px] font-black uppercase tracking-[0.2em] px-6 py-3 rounded-full"
+                                    >
+                                        Hire Me
+                                    </button>
+                                </div>
                             </div>
                         </motion.div>
                     )}
                 </AnimatePresence>
+
             </nav>
 
 
