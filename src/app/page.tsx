@@ -134,17 +134,19 @@ export default function Portfolio() {
                                 className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 w-full sm:w-auto pt-4"
                             >
                                 <button 
-                                    onClick={() => scrollTo('contact')}
-                                    className="group w-full sm:w-auto flex items-center justify-center gap-4 bg-white text-black px-12 py-5 rounded-full text-xs font-black uppercase tracking-[0.2em] hover:bg-[#474747] hover:text-white transition-all duration-500 shadow-2xl shadow-white/5"
-                                >
-                                    Hire Me <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform" data-icon="east">east</span>
-                                </button>
-                                <button 
                                     onClick={() => scrollTo('projects')}
-                                    className="w-full sm:w-auto flex items-center justify-center gap-4 border border-white/10 px-12 py-5 rounded-full text-xs font-black uppercase tracking-[0.2em] hover:bg-white/5 transition-all duration-500"
+                                    className="group w-full sm:w-auto flex items-center justify-center gap-4 bg-white text-black px-12 py-5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] hover:bg-black hover:text-white transition-all duration-500 shadow-2xl shadow-white/5"
                                 >
-                                    Portfolio <span className="material-symbols-outlined" data-icon="explore">explore</span>
+                                    Explore Work <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform" data-icon="explore">explore</span>
                                 </button>
+                                <a 
+                                    href="https://calendly.com/krishujeniya"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="w-full sm:w-auto flex items-center justify-center gap-4 border border-white/10 px-12 py-5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] hover:bg-white/5 transition-all duration-500"
+                                >
+                                    Book a Call <span className="material-symbols-outlined" data-icon="calendar_today">calendar_today</span>
+                                </a>
                             </motion.div>
                         </div>
                     </div>
@@ -345,13 +347,13 @@ export default function Portfolio() {
                             <div className="lg:col-span-6 flex flex-col gap-10">
                                 <div className="flex flex-col gap-4">
                                     <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#999999]">/ Inquiry</span>
-                                    <h2 className="text-7xl md:text-9xl font-black tracking-tighter uppercase leading-[0.85]">Let&apos;s <br />Build <br /><span className="text-[#E0E0E0]">Future</span></h2>
+                                    <h2 className="text-5xl sm:text-7xl md:text-9xl font-black tracking-tighter uppercase leading-[0.85]">Let&apos;s <br />Build <br /><span className="text-[#E0E0E0]">Future</span></h2>
                                 </div>
                                 <p className="text-xl text-black/60 leading-relaxed max-w-sm">
                                     Ready to empower your business with high-performance AI systems? Let&apos;s start a conversation.
                                 </p>
                                  <div className="flex flex-col gap-4 mt-8">
-                                    <a href="mailto:ukideashare0021@gmail.com" className="text-xl sm:text-2xl font-black tracking-tight hover:opacity-50 transition-opacity underline decoration-4 decoration-[#E0E0E0] underline-offset-8 uppercase truncate">ukideashare0021@gmail.com</a>
+                                    <a href="mailto:ukideashare0021@gmail.com" className="text-lg sm:text-2xl font-black tracking-tight hover:opacity-50 transition-opacity underline decoration-4 decoration-[#E0E0E0] underline-offset-8 uppercase break-all">ukideashare0021@gmail.com</a>
                                     <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Based in India · Working Worldwide</span>
                                 </div>
                             </div>
