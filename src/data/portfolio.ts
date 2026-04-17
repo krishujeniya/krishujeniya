@@ -56,21 +56,21 @@ export const portfolioData = {
   ],
   services: [
     {
-      title: "RAG Systems",
-      description: "High-performance retrieval systems using Vector Databases, Hybrid Search, and Re-ranking techniques.",
-      features: ["Vector DBs (Pinecone/Milvus)", "Hybrid Search & Reranking", "Document Processing Pipelines"],
+      title: "Enterprise RAG",
+      description: "Building production-grade Retrieval Augmented Generation systems with advanced retrieval strategies and evaluation frameworks.",
+      features: ["Self-Querying & Hybrid Search", "Advanced Chunking Strategies", "RAGAS Evaluation & Observability", "Multi-Vector Indexing"],
       icon: BrainCircuit
     },
     {
-      title: "AI Agents",
-      description: "Autonomous multi-agent systems built for complex task execution and reasoning.",
-      features: ["LangGraph Orchestration", "Multi-agent Systems", "Tool & API Integration"],
+      title: "Agentic AI",
+      description: "Developing autonomous AI agents capable of multi-step reasoning, tool usage, and long-term memory integration.",
+      features: ["LangGraph/CrewAI Frameworks", "Function Calling & Tool Use", "Memory & State Management", "HIL (Human-in-the-loop) Design"],
       icon: Smartphone
     },
     {
-      title: "MLOps",
-      description: "Productionizing ML models with observable, scalable, and reproducible pipelines.",
-      features: ["ZenML & MLflow", "CI/CD for ML", "Cloud & K8s Deployment"],
+      title: "MLOps Architect",
+      description: "Designing resilient infrastructure for the machine learning lifecycle, from automated training to edge deployment.",
+      features: ["CI/CD for Machine Learning", "ZenML/MLflow Infrastructure", "Model Monitoring & Drift Detection", "Kubernetes/Cloud Orchestration"],
       icon: Database
     }
   ],

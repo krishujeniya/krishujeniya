@@ -257,11 +257,11 @@ export default function Portfolio() {
                 </section>
 
                 {/* Services Section */}
-                <section id="services" className="py-24 px-6 md:px-12 bg-white text-black rounded-[40px] md:rounded-[80px] scroll-mt-20">
+                <section id="services" className="py-32 px-6 md:px-12 bg-[#FAFAFA] text-black rounded-[40px] md:rounded-[80px] scroll-mt-20 relative z-20 shadow-[0_-20px_50px_rgba(0,0,0,0.05)]">
                     <div className="max-w-[1440px] mx-auto">
                         <div className="flex flex-col items-start gap-4 mb-24">
-                            <span className="text-[11px] font-black uppercase tracking-[0.4em] text-[#A1A1A1]">/ Services</span>
-                            <h2 className="text-5xl sm:text-7xl md:text-9xl font-black tracking-tighter uppercase leading-none">Services</h2>
+                            <span className="text-[11px] font-black uppercase tracking-[0.4em] text-[#A1A1A1]">/ Expertise</span>
+                            <h2 className="text-5xl sm:text-7xl md:text-9xl font-black tracking-tighter uppercase leading-none">Core <br /><span className="text-[#E0E0E0]">Services</span></h2>
                         </div>
 
                         <div className="grid md:grid-cols-3 gap-8">
@@ -272,17 +272,19 @@ export default function Portfolio() {
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true }}
                                     transition={{ delay: i * 0.1 }}
-                                    className="group p-10 rounded-[40px] border border-black/5 bg-[#F5F5F5] hover:bg-black hover:text-white transition-all duration-700"
+                                    className="group p-10 rounded-[40px] border border-black/5 bg-white hover:bg-black hover:text-white transition-all duration-700 hover:shadow-[0_30px_60px_rgba(0,0,0,0.1)] relative overflow-hidden"
                                 >
-                                    <div className="w-16 h-16 flex items-center justify-center bg-black text-white rounded-2xl mb-8 group-hover:bg-white group-hover:text-black transition-colors">
+                                    <div className="absolute top-0 right-0 w-32 h-32 bg-black/[0.02] group-hover:bg-white/5 rounded-bl-full transition-colors" />
+                                    
+                                    <div className="w-16 h-16 flex items-center justify-center bg-black text-white rounded-2xl mb-8 group-hover:bg-white group-hover:text-black transition-all duration-500 group-hover:scale-110 shadow-lg">
                                         <service.icon size={32} />
                                     </div>
-                                    <h3 className="text-3xl font-black uppercase tracking-tight mb-4">{service.title}</h3>
-                                    <p className="text-lg opacity-60 leading-relaxed mb-10">{service.description}</p>
-                                    <ul className="space-y-4">
+                                    <h3 className="text-3xl font-black uppercase tracking-tight mb-4 relative z-10">{service.title}</h3>
+                                    <p className="text-lg opacity-60 leading-relaxed mb-10 relative z-10 group-hover:opacity-80 transition-opacity">{service.description}</p>
+                                    <ul className="space-y-4 relative z-10">
                                         {service.features.map((feature, fi) => (
-                                            <li key={fi} className="flex items-center gap-3 text-sm font-bold uppercase tracking-wide opacity-80">
-                                                <div className="w-1.5 h-1.5 rounded-full bg-current" />
+                                            <li key={fi} className="flex items-center gap-3 text-[10px] font-black uppercase tracking-widest opacity-80 group-hover:opacity-100 transition-opacity">
+                                                <div className="w-1.5 h-1.5 rounded-full bg-current group-hover:scale-125 transition-transform" />
                                                 {feature}
                                             </li>
                                         ))}
