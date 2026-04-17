@@ -42,7 +42,7 @@ export const CustomCursor = () => {
         document.addEventListener('mouseenter', onMouseEnterWindow);
 
         // Add hover detection for interactive elements (with deduplication)
-        const interactiveSelectors = 'a, button, input, textarea, [role="button"], .magnetic-btn';
+        const interactiveSelectors = 'a, button, input, textarea, [role="button"], .magnetic-btn, .cursor-pointer';
         const trackedElements = new WeakSet<Element>();
         const elementCleanups: (() => void)[] = [];
 

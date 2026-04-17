@@ -77,8 +77,12 @@ export default function Portfolio() {
             <nav className={`fixed top-0 left-0 w-full z-[100] transition-all duration-300 ${scrolled ? 'bg-black/95 backdrop-blur-md py-4 border-b border-white/5' : 'py-6'}`}>
                 <div className="max-w-[1440px] mx-auto px-6 md:px-12 flex items-center justify-between">
                     <div 
-                        className="text-lg sm:text-2xl font-black tracking-tighter cursor-pointer hover:opacity-70 transition-opacity flex items-center gap-2 whitespace-nowrap"
+                        className="text-lg sm:text-2xl font-black tracking-tighter cursor-pointer hover:opacity-70 transition-opacity flex items-center gap-2 whitespace-nowrap outline-none focus-visible:ring-2 focus-visible:ring-white/20 rounded-lg p-1"
                         onClick={() => scrollTo('home')}
+                        role="button"
+                        tabIndex={0}
+                        onKeyDown={(e) => e.key === 'Enter' && scrollTo('home')}
+                        aria-label="Back to home"
                     >
                         KRISH <span className="text-[#A1A1A1]">UJENIYA</span>
                     </div>
@@ -182,7 +186,7 @@ export default function Portfolio() {
                         <div className="flex flex-col items-start gap-8 mb-20">
                             <div className="flex flex-col gap-4">
                                 <span className="text-[11px] font-black uppercase tracking-[0.4em] text-[#A1A1A1]">/ Info</span>
-                                <h2 className="text-5xl sm:text-7xl md:text-9xl font-black tracking-tighter uppercase leading-none">About <br /><span className="text-[#A1A1A1]">Krish</span></h2>
+                                <h2 className="text-[clamp(3rem,8vw,8rem)] font-black tracking-tighter uppercase leading-none">About <br /><span className="text-[#A1A1A1]">Krish</span></h2>
                             </div>
                             
                             <motion.div 
@@ -222,7 +226,7 @@ export default function Portfolio() {
                     <div className="max-w-[1440px] mx-auto">
                         <div className="flex flex-col items-center text-center gap-6 mb-32">
                             <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#A1A1A1]">/ Path</span>
-                            <h2 className="text-5xl sm:text-7xl md:text-8xl font-black tracking-tighter uppercase leading-none">Professional <br />Experience</h2>
+                            <h2 className="text-[clamp(2.5rem,7vw,7rem)] font-black tracking-tighter uppercase leading-none">Professional <br />Experience</h2>
                         </div>
 
                         <div className="space-y-12">
@@ -261,7 +265,7 @@ export default function Portfolio() {
                     <div className="max-w-[1440px] mx-auto">
                         <div className="flex flex-col items-start gap-4 mb-24">
                             <span className="text-[11px] font-black uppercase tracking-[0.4em] text-[#A1A1A1]">/ Expertise</span>
-                            <h2 className="text-5xl sm:text-7xl md:text-9xl font-black tracking-tighter uppercase leading-none">Core <br /><span className="text-[#A1A1A1]">Services</span></h2>
+                            <h2 className="text-[clamp(3rem,8vw,8rem)] font-black tracking-tighter uppercase leading-none">Core <br /><span className="text-[#A1A1A1]">Services</span></h2>
                         </div>
 
                         <div className="grid md:grid-cols-3 gap-8">
@@ -300,7 +304,7 @@ export default function Portfolio() {
                     <div className="max-w-[1440px] mx-auto">
                         <div className="flex flex-col items-start gap-4 mb-24">
                             <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40">/ Catalog</span>
-                            <h2 className="text-5xl sm:text-7xl md:text-9xl font-black tracking-tighter uppercase leading-none">Selected <br />Case Studies</h2>
+                            <h2 className="text-[clamp(3rem,8vw,8rem)] font-black tracking-tighter uppercase leading-none">Selected <br />Case Studies</h2>
                         </div>
 
                         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
@@ -310,8 +314,12 @@ export default function Portfolio() {
                                     initial={{ opacity: 0, scale: 0.95 }}
                                     whileInView={{ opacity: 1, scale: 1 }}
                                     viewport={{ once: true }}
-                                    className="group flex flex-col gap-6 cursor-pointer"
+                                    className="group flex flex-col gap-6 cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-white/10 rounded-[40px] p-2"
                                     onClick={() => setSelectedProject(project)}
+                                    role="button"
+                                    tabIndex={0}
+                                    onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && setSelectedProject(project)}
+                                    aria-label={`View details for ${project.title}`}
                                 >
                                     <div className="aspect-[4/5] relative overflow-hidden rounded-[32px] bg-[#111]">
                                         <Image
@@ -347,7 +355,7 @@ export default function Portfolio() {
                     <div className="max-w-[1440px] mx-auto">
                         <div className="flex flex-col items-center text-center gap-6 mb-32">
                             <span className="text-[11px] font-black uppercase tracking-[0.4em] text-[#A1A1A1]">/ Archive</span>
-                            <h2 className="text-5xl sm:text-7xl md:text-8xl font-black tracking-tighter uppercase leading-none">Technical <br />Knowledge Base</h2>
+                            <h2 className="text-[clamp(2.5rem,7vw,7rem)] font-black tracking-tighter uppercase leading-none">Technical <br />Knowledge Base</h2>
                         </div>
 
                         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -411,7 +419,7 @@ export default function Portfolio() {
                     <div className="max-w-[1440px] mx-auto">
                         <div className="flex flex-col items-center text-center gap-6 mb-32">
                             <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#A1A1A1]">/ Feedback</span>
-                            <h2 className="text-5xl sm:text-7xl md:text-8xl font-black tracking-tighter uppercase leading-none text-white whitespace-pre-wrap">Trusted by <br />Industry Leads</h2>
+                            <h2 className="text-[clamp(2.5rem,7vw,7rem)] font-black tracking-tighter uppercase leading-none text-white whitespace-pre-wrap">Trusted by <br />Industry Leads</h2>
                         </div>
 
                         <div className="grid md:grid-cols-2 gap-8">
@@ -456,7 +464,7 @@ export default function Portfolio() {
                             <div className="lg:col-span-6 flex flex-col gap-10">
                                 <div className="flex flex-col gap-4">
                                     <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#999999]">/ Inquiry</span>
-                                    <h2 className="text-5xl sm:text-7xl md:text-9xl font-black tracking-tighter uppercase leading-[0.85]">Let&apos;s <br />Build <br /><span className="text-[#A1A1A1]">Future</span></h2>
+                                    <h2 className="text-[clamp(3rem,8vw,8rem)] font-black tracking-tighter uppercase leading-[0.85]">Let&apos;s <br />Build <br /><span className="text-[#A1A1A1]">Future</span></h2>
                                 </div>
                                 <p className="text-xl text-black/60 leading-relaxed max-w-sm">
                                     Ready to empower your business with high-performance AI systems? Let&apos;s start a conversation.
@@ -475,8 +483,8 @@ export default function Portfolio() {
                                             const message = (document.getElementById('form-message') as HTMLTextAreaElement)?.value;
                                             if (name && email && message) {
                                                 setIsSent(true);
-                                                // Log info instead of window.open for better UX
-                                                console.log('Submission prepared for', email);
+                                                const mailtoUrl = `mailto:ukideashare0021@gmail.com?subject=Project Inquiry from ${name}&body=${encodeURIComponent(message)}%0D%0A%0D%0AFrom: ${email}`;
+                                                window.location.href = mailtoUrl;
                                             }
                                         }}>
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -626,10 +634,10 @@ export default function Portfolio() {
                                         <a 
                                             href={selectedProject.link} 
                                             target="_blank" 
-                                            aria-label={`View ${selectedProject.title} repository on GitHub`}
+                                            aria-label={`View ${selectedProject.title} ${selectedProject.linkType === 'repo' ? 'repository' : 'space'}`}
                                             className="flex-grow flex items-center justify-between bg-white text-black px-8 py-5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] hover:bg-[#474747] hover:text-white transition-all duration-500"
                                         >
-                                            View Repository <span className="material-symbols-outlined" aria-hidden="true">arrow_outward</span>
+                                            {selectedProject.linkType === 'repo' ? 'View Repository' : 'View Space'} <span className="material-symbols-outlined" aria-hidden="true">arrow_outward</span>
                                         </a>
                                     </div>
                                 </div>
