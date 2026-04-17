@@ -85,13 +85,17 @@ export default function Portfolio() {
                     
                     <div className="hidden lg:flex items-center gap-8">
                         {['home', 'about', 'experience', 'projects', 'documents', 'contact'].map((item) => (
-                            <button
+                            <a
                                 key={item}
-                                onClick={() => scrollTo(item)}
-                                className={`text-[11px] font-black uppercase tracking-[0.3em] transition-all hover:text-white py-2 px-1 ${activeSection === item ? 'text-white' : 'text-[#474747]'}`}
+                                href={`#${item}`}
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    scrollTo(item);
+                                }}
+                                className={`text-[11px] font-black uppercase tracking-[0.3em] transition-all hover:text-white py-2 px-1 ${activeSection === item ? 'text-white' : 'text-nav-inactive'}`}
                             >
                                 {item}
-                            </button>
+                            </a>
                         ))}
                     </div>
 
@@ -150,6 +154,20 @@ export default function Portfolio() {
                             >
                                 {portfolioData.profile.tagline}
                             </motion.p>
+
+                            <motion.div 
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={{ delay: 0.25 }}
+                                className="flex flex-wrap gap-4 sm:gap-10 pt-4 border-t border-white/5 w-full"
+                            >
+                                {portfolioData.profile.metrics.map((metric, idx) => (
+                                    <div key={idx} className="flex flex-col gap-1">
+                                        <span className="text-xl font-black text-white">{metric.label.split(' ')[0]}</span>
+                                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#474747]">{metric.label.split(' ').slice(1).join(' ')}</span>
+                                    </div>
+                                ))}
+                            </motion.div>
 
                             <motion.div 
                                 initial={{ opacity: 0, y: 20 }}
@@ -319,6 +337,7 @@ export default function Portfolio() {
                                             alt={project.title}
                                             fill
                                             className="object-cover transition-transform duration-700 group-hover:scale-110 grayscale hover:grayscale-0 opacity-60 group-hover:opacity-100"
+                                            priority={i < 3}
                                         />
                                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-8">
                                             <div className="flex flex-col gap-2">
@@ -467,50 +486,48 @@ export default function Portfolio() {
                             </div>
 
                             <div className="lg:col-span-6">
-                                    <div className="flex flex-col gap-8">
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                                            <div className="flex flex-col gap-3">
-                                                <label htmlFor="form-name" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Name</label>
-                                                <input id="form-name" type="text" placeholder="YOUR NAME" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all placeholder:text-[#999999]/30" />
+                                        <form className="flex flex-col gap-8" onSubmit={(e) => {
+                                            e.preventDefault();
+                                            const name = (document.getElementById('form-name') as HTMLInputElement)?.value;
+                                            const email = (document.getElementById('form-email') as HTMLInputElement)?.value;
+                                            const message = (document.getElementById('form-message') as HTMLTextAreaElement)?.value;
+                                            if (name && email && message) {
+                                                setIsSent(true);
+                                                window.open(`mailto:ukideashare0021@gmail.com?subject=Project Inquiry &body=Name: ${name}%0D%0AEmail: ${email}%0D%0A%0D%0AMessage: ${message}`, '_blank');
+                                            }
+                                        }}>
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                                                <div className="flex flex-col gap-3">
+                                                    <label htmlFor="form-name" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Name</label>
+                                                    <input id="form-name" type="text" placeholder="YOUR NAME" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all placeholder:text-[#999999]/30" />
+                                                </div>
+                                                <div className="flex flex-col gap-3">
+                                                    <label htmlFor="form-email" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Email</label>
+                                                    <input id="form-email" type="email" placeholder="YOUR EMAIL" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all placeholder:text-[#999999]/30" />
+                                                </div>
                                             </div>
                                             <div className="flex flex-col gap-3">
-                                                <label htmlFor="form-email" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Email</label>
-                                                <input id="form-email" type="email" placeholder="YOUR EMAIL" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all placeholder:text-[#999999]/30" />
+                                                <label htmlFor="form-message" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Project Details</label>
+                                                <textarea id="form-message" rows={4} placeholder="TELL ME ABOUT YOUR PROJECT" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all placeholder:text-[#999999]/30 resize-none" />
                                             </div>
-                                        </div>
-                                        <div className="flex flex-col gap-3">
-                                            <label htmlFor="form-message" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Project Details</label>
-                                            <textarea id="form-message" rows={4} placeholder="TELL ME ABOUT YOUR PROJECT" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all placeholder:text-[#999999]/30 resize-none" />
-                                        </div>
-                                        {isSent ? (
-                                            <motion.div 
-                                                initial={{ opacity: 0, scale: 0.9 }}
-                                                animate={{ opacity: 1, scale: 1 }}
-                                                className="w-full flex items-center justify-center gap-4 bg-green-500/10 text-green-500 py-8 rounded-full text-sm font-black uppercase tracking-[0.3em] border border-green-500/20 mt-8"
-                                            >
-                                                Message Prepared! <Mail size={18} />
-                                            </motion.div>
-                                        ) : (
-                                            <button 
-                                                type="submit"
-                                                onClick={() => {
-                                                    const name = (document.getElementById('form-name') as HTMLInputElement)?.value;
-                                                    const email = (document.getElementById('form-email') as HTMLInputElement)?.value;
-                                                    const message = (document.getElementById('form-message') as HTMLTextAreaElement)?.value;
-                                                    if (name && email && message) {
-                                                        setIsSent(true);
-                                                        setTimeout(() => {
-                                                            window.location.href = `mailto:ukideashare0021@gmail.com?subject=Project Inquiry &body=Name: ${name}%0D%0AEmail: ${email}%0D%0A%0D%0AMessage: ${message}`;
-                                                        }, 500);
-                                                    }
-                                                }}
-                                                aria-label="Send message via email"
-                                                className="w-full flex items-center justify-center gap-4 bg-black text-white py-8 rounded-full text-sm font-black uppercase tracking-[0.3em] hover:bg-black/80 hover:scale-[0.98] transition-all duration-500 mt-8"
-                                            >
-                                                Send Message <ChevronRight size={18} />
-                                            </button>
-                                        )}
-                                    </div>
+                                            {isSent ? (
+                                                <motion.div 
+                                                    initial={{ opacity: 0, scale: 0.9 }}
+                                                    animate={{ opacity: 1, scale: 1 }}
+                                                    className="w-full flex items-center justify-center gap-4 bg-green-500/10 text-green-500 py-8 rounded-full text-sm font-black uppercase tracking-[0.3em] border border-green-500/20 mt-8"
+                                                >
+                                                    Message Prepared! <Mail size={18} />
+                                                </motion.div>
+                                            ) : (
+                                                <button 
+                                                    type="submit"
+                                                    aria-label="Prepare message via email"
+                                                    className="w-full flex items-center justify-center gap-4 bg-black text-white py-8 rounded-full text-sm font-black uppercase tracking-[0.3em] hover:bg-black/80 hover:scale-[0.98] transition-all duration-500 mt-8"
+                                                >
+                                                    Send Message <ChevronRight size={18} />
+                                                </button>
+                                            )}
+                                        </form>
 
                             </div>
                         </div>
@@ -589,7 +606,7 @@ export default function Portfolio() {
                                     </button>
                                 </div>
                             </div>
-                            <div className="lg:col-span-7 p-8 md:p-16 overflow-y-auto max-h-[92vh]">
+                            <div className="lg:col-span-7 p-8 md:p-16 overflow-y-visible">
                                 <span className="text-[11px] font-black uppercase tracking-[0.2em] text-[#A1A1A1] mb-4 block">{selectedProject.category}</span>
                                 <h3 className="text-4xl md:text-5xl font-black uppercase tracking-tighter mb-8">{selectedProject.title}</h3>
                                 
