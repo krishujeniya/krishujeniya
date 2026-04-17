@@ -30,8 +30,10 @@ export const portfolioData = {
       { label: "Available Now", icon: "Calendar" }
     ],
     socials: {
+      linkedin: "https://linkedin.com/in/krishujeniya",
       huggingface: "https://huggingface.co/krishujeniya",
       github: "https://github.com/krishujeniya",
+      medium: "https://medium.com/@krishujeniya",
       calendly: "https://calendly.com/krishujeniya"
     }
   },
@@ -50,6 +52,26 @@ export const portfolioData = {
       title: "Why Hire Me",
       content: "I focus on building resilient, observable, and scalable systems. My expertise in MLOps ensures that models don't just perform well in notebooks but deliver consistent business value in production.",
       icon: Award
+    }
+  ],
+  services: [
+    {
+      title: "RAG Systems",
+      description: "High-performance retrieval systems using Vector Databases, Hybrid Search, and Re-ranking techniques.",
+      features: ["Vector DBs (Pinecone/Milvus)", "Hybrid Search & Reranking", "Document Processing Pipelines"],
+      icon: BrainCircuit
+    },
+    {
+      title: "AI Agents",
+      description: "Autonomous multi-agent systems built for complex task execution and reasoning.",
+      features: ["LangGraph Orchestration", "Multi-agent Systems", "Tool & API Integration"],
+      icon: Smartphone
+    },
+    {
+      title: "MLOps",
+      description: "Productionizing ML models with observable, scalable, and reproducible pipelines.",
+      features: ["ZenML & MLflow", "CI/CD for ML", "Cloud & K8s Deployment"],
+      icon: Database
     }
   ],
   experience: [
@@ -306,4 +328,30 @@ export const portfolioData = {
       ],
     },
   ],
+  testimonials: [
+    {
+      name: "Dr. Arpit Jain",
+      role: "AI Lead at Futura",
+      content: "The RAG pipeline Krish built decreased our document retrieval time by 70% while improving precision significantly.",
+      photo: "/krishujeniya/images/testimonials/t1.png"
+    },
+    {
+      name: "Rohan Mehta",
+      role: "CEO at SwiftAI",
+      content: "Professionalism and speed are Krish's superpowers. He shipped our custom AI agent in under 3 weeks.",
+      photo: "/krishujeniya/images/testimonials/t2.png"
+    },
+    {
+      name: "Priya Sharma",
+      role: "CTO at DataCloud",
+      content: "Technical depth in MLOps is rare in freelancers, but Krish managed our entire ZenML stack flawlessly.",
+      photo: "/krishujeniya/images/testimonials/t3.png"
+    },
+    {
+      name: "Kevin Brooks",
+      role: "VP Engineering at LangChain",
+      content: "His ability to bridge the gap between research papers and production code is truly impressive.",
+      photo: "/krishujeniya/images/testimonials/t4.png"
+    }
+  ]
 };

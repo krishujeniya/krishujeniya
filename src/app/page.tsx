@@ -12,6 +12,12 @@ import {
     Lightbulb, 
     TrendingUp, 
     File,
+    BrainCircuit,
+    Quote,
+    Mail,
+    ChevronRight,
+    X,
+    ArrowUp,
 } from 'lucide-react';
 
 
@@ -24,31 +30,36 @@ export default function Portfolio() {
     const [scrolled, setScrolled] = useState(false);
     const [selectedProject, setSelectedProject] = useState<typeof portfolioData.projects[0] | null>(null);
     const [expandedFolder, setExpandedFolder] = useState<string | null>(null);
+    const [isSent, setIsSent] = useState(false);
 
 
     useEffect(() => {
         const handleScroll = () => {
             setScrolled(window.scrollY > 50);
-            
-            // Check if we are at the bottom of the page
-            if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 100) {
-                setActiveSection('contact');
-                return;
-            }
-
-            const sections = ['home', 'about', 'experience', 'projects', 'documents', 'contact'];
-            const current = sections.find(section => {
-                const element = document.getElementById(section);
-                if (element) {
-                    const rect = element.getBoundingClientRect();
-                    return rect.top <= 200 && rect.bottom >= 200;
-                }
-                return false;
-            });
-            if (current) setActiveSection(current);
         };
         window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
+
+        const sections = ['home', 'about', 'experience', 'projects', 'documents', 'contact'];
+        const observers = sections.map(id => {
+            const el = document.getElementById(id);
+            if (!el) return null;
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        setActiveSection(id);
+                    }
+                });
+            }, { threshold: 0.3, rootMargin: '-80px 0px -20% 0px' });
+            
+            observer.observe(el);
+            return observer;
+        });
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            observers.forEach(obs => obs?.disconnect());
+        };
     }, []);
 
     const scrollTo = (id: string) => {
@@ -60,7 +71,7 @@ export default function Portfolio() {
     };
 
     return (
-        <div className="min-h-screen bg-[#050505] text-[#FAFAFA] font-sans selection:bg-[#474747] selection:text-white overflow-x-hidden">
+        <div className="min-h-screen bg-[#050505] text-[#FAFAFA] font-body selection:bg-[#474747] selection:text-white overflow-x-hidden">
             <ThreeBackground />
 
             <nav className={`fixed top-0 left-0 w-full z-[100] transition-all duration-300 ${scrolled ? 'bg-black/95 backdrop-blur-md py-4 border-b border-white/5' : 'py-6'}`}>
@@ -69,7 +80,7 @@ export default function Portfolio() {
                         className="text-lg sm:text-2xl font-black tracking-tighter cursor-pointer hover:opacity-70 transition-opacity flex items-center gap-2 whitespace-nowrap"
                         onClick={() => scrollTo('home')}
                     >
-                        KRISH <span className="text-[#474747]">UJENIYA</span>
+                        KRISH <span className="text-[#A1A1A1]">UJENIYA</span>
                     </div>
                     
                     <div className="hidden lg:flex items-center gap-8">
@@ -77,7 +88,7 @@ export default function Portfolio() {
                             <button
                                 key={item}
                                 onClick={() => scrollTo(item)}
-                                className={`text-[10px] font-black uppercase tracking-[0.3em] transition-all hover:text-white ${activeSection === item ? 'text-white' : 'text-[#474747]'}`}
+                                className={`text-[11px] font-black uppercase tracking-[0.3em] transition-all hover:text-white py-2 px-1 ${activeSection === item ? 'text-white' : 'text-[#474747]'}`}
                             >
                                 {item}
                             </button>
@@ -86,16 +97,17 @@ export default function Portfolio() {
 
                     <button 
                         onClick={() => scrollTo('contact')}
-                        className="flex group items-center gap-2 sm:gap-3 bg-white text-black text-[9px] sm:text-[10px] font-black uppercase tracking-[0.2em] px-4 sm:px-6 py-2.5 sm:py-3 rounded-full hover:bg-[#474747] hover:text-white transition-all duration-500 shadow-xl shadow-white/5"
+                        aria-label="Hire me for your next project"
+                        className="flex group items-center gap-2 sm:gap-3 bg-white text-black text-[11px] font-black uppercase tracking-[0.2em] px-5 sm:px-8 py-3.5 sm:py-4 rounded-full hover:bg-black hover:text-white border border-transparent hover:border-white/10 transition-all duration-500 shadow-xl shadow-white/5 active:scale-95"
                     >
-                        Hire Me <span className="material-symbols-outlined text-[14px] sm:text-[16px]" data-icon="login">login</span>
+                        Hire Me <Mail size={16} className="group-hover:translate-x-1 transition-transform" />
                     </button>
                 </div>
             </nav>
 
 
-            <main>
-                <section id="home" className="relative min-h-screen flex flex-col justify-center px-6 md:px-12 pt-32 md:pt-20">
+            <div className="flex flex-col">
+                <section id="home" className="relative min-h-screen flex flex-col justify-center px-6 md:px-12 pt-32 md:pt-20 scroll-mt-20">
                     <div className="max-w-[1440px] mx-auto w-full">
                         <div className="flex flex-col items-start gap-6 md:gap-8">
                             <motion.div 
@@ -107,15 +119,27 @@ export default function Portfolio() {
                                 <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#A1A1A1]">{portfolioData.profile.availability}</span>
                             </motion.div>
 
-                            <motion.h1 
+                             <motion.h1 
                                 initial={{ opacity: 0, y: 30 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.1 }}
-                                className="text-[12vw] sm:text-[10vw] md:text-[9vw] lg:text-[8vw] font-black tracking-tighter leading-[0.8] uppercase break-words overflow-visible"
+                                className="text-[clamp(3rem,12vw,8rem)] sm:text-[10vw] md:text-[9vw] lg:text-[8vw] font-black tracking-tighter leading-[0.8] uppercase break-words overflow-visible"
                             >
-                                Machine <br />
-                                <span className="text-[#474747]">Learning</span> <br />
-                                Engineer
+                                <span className="text-white drop-shadow-2xl">Machine</span> <br />
+                                <span className="text-[#A1A1A1] outline-text">Learning</span> <br />
+                                <span className="flex items-center gap-4 sm:gap-10">
+                                    Engineer
+                                    <motion.div 
+                                        animate={{ 
+                                            rotate: [0, 10, -10, 0],
+                                            scale: [1, 1.1, 1]
+                                        }}
+                                        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                                        className="hidden md:flex w-24 h-24 rounded-[32px] border-2 border-white/10 items-center justify-center p-4 bg-white/5"
+                                    >
+                                        <BrainCircuit size={48} className="text-[#A1A1A1]" />
+                                    </motion.div>
+                                </span>
                             </motion.h1>
 
                             <motion.p 
@@ -135,28 +159,30 @@ export default function Portfolio() {
                             >
                                 <button 
                                     onClick={() => scrollTo('projects')}
+                                    aria-label="Explore my work and case studies"
                                     className="group w-full sm:w-auto flex items-center justify-center gap-4 bg-white text-black px-12 py-5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] hover:bg-black hover:text-white transition-all duration-500 shadow-2xl shadow-white/5"
                                 >
-                                    Explore Work <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform" data-icon="explore">explore</span>
+                                    Explore Work <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform" aria-hidden="true">explore</span>
                                 </button>
                                 <a 
                                     href="https://calendly.com/krishujeniya"
                                     target="_blank"
                                     rel="noopener noreferrer"
+                                    aria-label="Book a consultation call on Calendly"
                                     className="w-full sm:w-auto flex items-center justify-center gap-4 border border-white/10 px-12 py-5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] hover:bg-white/5 transition-all duration-500"
                                 >
-                                    Book a Call <span className="material-symbols-outlined" data-icon="calendar_today">calendar_today</span>
+                                    Book a Call <span className="material-symbols-outlined" aria-hidden="true">calendar_today</span>
                                 </a>
                             </motion.div>
                         </div>
                     </div>
                 </section>
 
-                <section id="about" className="py-24 md:py-32 px-6 md:px-12 bg-white text-black rounded-[40px] md:rounded-[80px] mt-20 relative z-10">
+                <section id="about" className="py-24 px-6 md:px-12 bg-white text-black rounded-[40px] md:rounded-[80px] mt-20 relative z-10 scroll-mt-20">
                     <div className="max-w-[1440px] mx-auto">
                         <div className="flex flex-col items-start gap-8 mb-20">
                             <div className="flex flex-col gap-4">
-                                <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#999999]">/ Info</span>
+                                <span className="text-[11px] font-black uppercase tracking-[0.4em] text-[#A1A1A1]">/ Info</span>
                                 <h2 className="text-5xl sm:text-7xl md:text-9xl font-black tracking-tighter uppercase leading-none">About <br /><span className="text-[#E0E0E0]">Krish</span></h2>
                             </div>
                             
@@ -194,10 +220,10 @@ export default function Portfolio() {
                 </section>
 
                 {/* Experience Section */}
-                <section id="experience" className="py-40 px-6 md:px-12">
+                <section id="experience" className="py-24 px-6 md:px-12 bg-white/5 scroll-mt-20">
                     <div className="max-w-[1440px] mx-auto">
                         <div className="flex flex-col items-center text-center gap-6 mb-32">
-                            <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#474747]">/ Path</span>
+                            <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#A1A1A1]">/ Path</span>
                             <h2 className="text-5xl sm:text-7xl md:text-8xl font-black tracking-tighter uppercase leading-none">Professional <br />Experience</h2>
                         </div>
 
@@ -211,20 +237,20 @@ export default function Portfolio() {
                                     className="group grid md:grid-cols-12 gap-8 border-t border-white/5 pt-12"
                                 >
                                     <div className="md:col-span-3 flex flex-col gap-2">
-                                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#474747]">{exp.duration}</span>
-                                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#A1A1A1]">{exp.location}</span>
+                                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#A1A1A1]">{exp.duration}</span>
+                                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#E0E0E0]">{exp.location}</span>
                                     </div>
                                     <div className="md:col-span-6 flex flex-col gap-4">
                                         <h3 className="text-3xl font-black uppercase tracking-tight group-hover:text-[#A1A1A1] transition-colors">{exp.role}</h3>
                                         <p className="text-[#A1A1A1] text-lg leading-relaxed">{exp.description}</p>
                                         <div className="flex flex-wrap gap-2 pt-4">
                                             {exp.tags.map(tag => (
-                                                <span key={tag} className="text-[9px] font-black uppercase tracking-[0.1em] px-3 py-1 bg-white/5 rounded-full text-[#474747]">{tag}</span>
+                                                <span key={tag} className="text-[9px] font-black uppercase tracking-[0.1em] px-3 py-1 bg-white/5 rounded-full text-[#A1A1A1]">{tag}</span>
                                             ))}
                                         </div>
                                     </div>
                                     <div className="md:col-span-3 flex md:justify-end items-start pt-2">
-                                        <span className="text-xl font-bold tracking-tighter uppercase text-[#474747]">{exp.company}</span>
+                                        <span className="text-xl font-bold tracking-tighter uppercase text-[#A1A1A1]">{exp.company}</span>
                                     </div>
                                 </motion.div>
                             ))}
@@ -232,8 +258,45 @@ export default function Portfolio() {
                     </div>
                 </section>
 
+                {/* Services Section */}
+                <section id="services" className="py-24 px-6 md:px-12 bg-white text-black rounded-[40px] md:rounded-[80px] scroll-mt-20">
+                    <div className="max-w-[1440px] mx-auto">
+                        <div className="flex flex-col items-start gap-4 mb-24">
+                            <span className="text-[11px] font-black uppercase tracking-[0.4em] text-[#A1A1A1]">/ Expertize</span>
+                            <h2 className="text-5xl sm:text-7xl md:text-9xl font-black tracking-tighter uppercase leading-none">High Impact <br />Solutions</h2>
+                        </div>
+
+                        <div className="grid md:grid-cols-3 gap-8">
+                            {portfolioData.services.map((service, i) => (
+                                <motion.div 
+                                    key={i}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ delay: i * 0.1 }}
+                                    className="group p-10 rounded-[40px] border border-black/5 bg-[#F5F5F5] hover:bg-black hover:text-white transition-all duration-700"
+                                >
+                                    <div className="w-16 h-16 flex items-center justify-center bg-black text-white rounded-2xl mb-8 group-hover:bg-white group-hover:text-black transition-colors">
+                                        <service.icon size={32} />
+                                    </div>
+                                    <h3 className="text-3xl font-black uppercase tracking-tight mb-4">{service.title}</h3>
+                                    <p className="text-lg opacity-60 leading-relaxed mb-10">{service.description}</p>
+                                    <ul className="space-y-4">
+                                        {service.features.map((feature, fi) => (
+                                            <li key={fi} className="flex items-center gap-3 text-sm font-bold uppercase tracking-wide opacity-80">
+                                                <div className="w-1.5 h-1.5 rounded-full bg-current" />
+                                                {feature}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </motion.div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+
                 {/* Projects Section */}
-                <section id="projects" className="py-40 px-6 md:px-12 bg-[#0A0A0A]">
+                <section id="projects" className="py-24 px-6 md:px-12 bg-[#0A0A0A] scroll-mt-20">
                     <div className="max-w-[1440px] mx-auto">
                         <div className="flex flex-col items-start gap-4 mb-24">
                             <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#474747]">/ Catalog</span>
@@ -267,10 +330,10 @@ export default function Portfolio() {
                                     <div className="flex items-center justify-between px-2">
                                         <div className="flex flex-wrap gap-2">
                                             {project.techStack.slice(0, 2).map(tag => (
-                                                <span key={tag} className="text-[9px] font-black uppercase tracking-[0.1em] text-[#474747]">{tag}</span>
+                                                <span key={tag} className="text-[11px] font-black uppercase tracking-[0.1em] text-[#A1A1A1]">{tag}</span>
                                             ))}
                                         </div>
-                                        <span className="material-symbols-outlined text-[18px] text-[#474747] group-hover:text-white group-hover:translate-x-1 transition-all" data-icon="east">east</span>
+                                        <span className="material-symbols-outlined text-[18px] text-[#A1A1A1] group-hover:text-white group-hover:translate-x-1 transition-all" aria-hidden="true">east</span>
                                     </div>
                                 </motion.div>
                             ))}
@@ -279,10 +342,10 @@ export default function Portfolio() {
                 </section>
 
                 {/* Documents Section */}
-                <section id="documents" className="py-40 px-6 md:px-12">
+                <section id="documents" className="py-24 px-6 md:px-12 bg-white/5 scroll-mt-20">
                     <div className="max-w-[1440px] mx-auto">
                         <div className="flex flex-col items-center text-center gap-6 mb-32">
-                            <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#474747]">/ Archive</span>
+                            <span className="text-[11px] font-black uppercase tracking-[0.4em] text-[#A1A1A1]">/ Archive</span>
                             <h2 className="text-5xl sm:text-7xl md:text-8xl font-black tracking-tighter uppercase leading-none">Technical <br />Knowledge Base</h2>
                         </div>
 
@@ -290,20 +353,21 @@ export default function Portfolio() {
                             {portfolioData.documents.map((folder, i) => (
                                 <div key={i} className="group flex flex-col p-8 rounded-[32px] bg-white/5 border border-white/5 hover:border-white/10 transition-all duration-500">
                                     <div className="flex items-center justify-between mb-12">
-                                        <div className="w-12 h-12 flex items-center justify-center bg-black text-white rounded-2xl group-hover:bg-[#474747] transition-colors">
+                                        <div className="w-12 h-12 flex items-center justify-center bg-black text-white rounded-2xl group-hover:bg-[#A1A1A1] transition-colors">
                                             <folder.icon size={20} />
                                         </div>
-                                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#474747]">{folder.files.length} Files</span>
+                                        <span className="text-[11px] font-black uppercase tracking-[0.2em] text-[#A1A1A1]">{folder.files.length} Files</span>
                                     </div>
                                     <h3 className="text-2xl font-black uppercase tracking-tight mb-4">{folder.name}</h3>
                                     <p className="text-[#A1A1A1] leading-relaxed text-sm mb-8 flex-grow">{folder.description}</p>
                                     
                                     <button 
                                         onClick={() => setExpandedFolder(expandedFolder === folder.name ? null : folder.name)}
+                                        aria-label={expandedFolder === folder.name ? `Collapse ${folder.name}` : `Expand ${folder.name}`}
                                         className="flex items-center justify-between w-full py-4 border-t border-white/5 text-[10px] font-black uppercase tracking-[0.2em] text-white hover:text-[#A1A1A1] transition-colors"
                                     >
                                         <span>{expandedFolder === folder.name ? 'Collapse' : 'View Docs'}</span>
-                                        <span className="material-symbols-outlined text-[16px]" data-icon={expandedFolder === folder.name ? 'expand_less' : 'expand_more'}>
+                                        <span className="material-symbols-outlined text-[16px]" aria-hidden="true">
                                             {expandedFolder === folder.name ? 'expand_less' : 'expand_more'}
                                         </span>
                                     </button>
@@ -322,10 +386,11 @@ export default function Portfolio() {
                                                         href={`${DOCS_BASE_URL}/${folder.path}/${file.name.split('/').map(segment => encodeURIComponent(segment)).join('/')}`}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
+                                                        aria-label={`Open ${file.name}`}
                                                         className="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-all group/file"
                                                     >
                                                         <div className="flex items-center gap-3">
-                                                            <File size={14} className="text-[#474747]" />
+                                                            <File size={14} className="text-[#474747]" aria-hidden="true" />
                                                             <span className="text-[11px] font-bold text-[#A1A1A1] group-hover/file:text-white truncate max-w-[150px]">{file.name.split('/').pop()}</span>
                                                         </div>
                                                         <span className="text-[9px] font-black uppercase text-[#474747]">{file.type}</span>
@@ -340,8 +405,51 @@ export default function Portfolio() {
                     </div>
                 </section>
 
+                {/* Testimonials Section */}
+                <section id="testimonials" className="py-24 px-6 md:px-12 bg-[#0A0A0A] scroll-mt-20">
+                    <div className="max-w-[1440px] mx-auto">
+                        <div className="flex flex-col items-center text-center gap-6 mb-32">
+                            <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#A1A1A1]">/ Feedback</span>
+                            <h2 className="text-5xl sm:text-7xl md:text-8xl font-black tracking-tighter uppercase leading-none text-white whitespace-pre-wrap">Trusted by <br />Industry Leads</h2>
+                        </div>
+
+                        <div className="grid md:grid-cols-2 gap-8">
+                            {portfolioData.testimonials.map((testimonial, i) => (
+                                <motion.div 
+                                    key={i}
+                                    initial={{ opacity: 0, scale: 0.95 }}
+                                    whileInView={{ opacity: 1, scale: 1 }}
+                                    viewport={{ once: true }}
+                                    className="p-10 md:p-14 rounded-[40px] bg-white/5 border border-white/5 relative group hover:border-white/10 transition-all duration-500"
+                                >
+                                    <Quote className="absolute top-10 right-10 text-white/5 w-20 h-20" />
+                                    <div className="flex flex-col gap-10">
+                                        <p className="text-2xl md:text-3xl font-bold tracking-tight text-white/90 leading-tight">
+                                            "{testimonial.content}"
+                                        </p>
+                                        <div className="flex items-center gap-6">
+                                            <div className="relative w-16 h-16 rounded-2xl overflow-hidden border border-white/10">
+                                                <Image 
+                                                    src={testimonial.photo} 
+                                                    alt={testimonial.name}
+                                                    fill
+                                                    className="object-cover"
+                                                />
+                                            </div>
+                                            <div className="flex flex-col">
+                                                <span className="text-lg font-black uppercase tracking-tight text-white">{testimonial.name}</span>
+                                                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#A1A1A1]">{testimonial.role}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+
                 {/* Contact Section */}
-                <section id="contact" className="py-40 px-6 md:px-12 bg-white text-black rounded-[40px] md:rounded-[80px] mb-20 relative z-10">
+                <section id="contact" className="py-24 px-6 md:px-12 bg-white text-black rounded-[40px] md:rounded-[80px] mb-20 relative z-10 scroll-mt-20">
                     <div className="max-w-[1440px] mx-auto">
                         <div className="grid lg:grid-cols-12 gap-20">
                             <div className="lg:col-span-6 flex flex-col gap-10">
@@ -359,52 +467,88 @@ export default function Portfolio() {
                             </div>
 
                             <div className="lg:col-span-6">
-                                <form className="flex flex-col gap-8" onSubmit={(e) => e.preventDefault()}>                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                                        <div className="flex flex-col gap-3">
-                                            <input type="text" placeholder="NAME" className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-6 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all placeholder:text-[#999999]" />
+                                    <div className="flex flex-col gap-8">
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                                            <div className="flex flex-col gap-3">
+                                                <label htmlFor="form-name" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Name</label>
+                                                <input id="form-name" type="text" placeholder="YOUR NAME" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all placeholder:text-[#999999]/30" />
+                                            </div>
+                                            <div className="flex flex-col gap-3">
+                                                <label htmlFor="form-email" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Email</label>
+                                                <input id="form-email" type="email" placeholder="YOUR EMAIL" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all placeholder:text-[#999999]/30" />
+                                            </div>
                                         </div>
                                         <div className="flex flex-col gap-3">
-                                            <input type="email" placeholder="EMAIL" className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-6 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all placeholder:text-[#999999]" />
+                                            <label htmlFor="form-message" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Project Details</label>
+                                            <textarea id="form-message" rows={4} placeholder="TELL ME ABOUT YOUR PROJECT" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all placeholder:text-[#999999]/30 resize-none" />
                                         </div>
+                                        {isSent ? (
+                                            <motion.div 
+                                                initial={{ opacity: 0, scale: 0.9 }}
+                                                animate={{ opacity: 1, scale: 1 }}
+                                                className="w-full flex items-center justify-center gap-4 bg-green-500/10 text-green-500 py-8 rounded-full text-sm font-black uppercase tracking-[0.3em] border border-green-500/20 mt-8"
+                                            >
+                                                Message Prepared! <Mail size={18} />
+                                            </motion.div>
+                                        ) : (
+                                            <button 
+                                                type="submit"
+                                                onClick={() => {
+                                                    const name = (document.getElementById('form-name') as HTMLInputElement)?.value;
+                                                    const email = (document.getElementById('form-email') as HTMLInputElement)?.value;
+                                                    const message = (document.getElementById('form-message') as HTMLTextAreaElement)?.value;
+                                                    if (name && email && message) {
+                                                        setIsSent(true);
+                                                        setTimeout(() => {
+                                                            window.location.href = `mailto:ukideashare0021@gmail.com?subject=Project Inquiry &body=Name: ${name}%0D%0AEmail: ${email}%0D%0A%0D%0AMessage: ${message}`;
+                                                        }, 500);
+                                                    }
+                                                }}
+                                                aria-label="Send message via email"
+                                                className="w-full flex items-center justify-center gap-4 bg-black text-white py-8 rounded-full text-sm font-black uppercase tracking-[0.3em] hover:bg-black/80 hover:scale-[0.98] transition-all duration-500 mt-8"
+                                            >
+                                                Send Message <ChevronRight size={18} />
+                                            </button>
+                                        )}
                                     </div>
-                                    <div className="flex flex-col gap-3">
-                                        <textarea rows={4} placeholder="TELL ME ABOUT YOUR PROJECT" className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-6 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all placeholder:text-[#999999] resize-none" />
-                                    </div>
-                                    <button 
-                                        onClick={() => window.location.href = `mailto:ukideashare0021@gmail.com?subject=Project Inquiry`}
-                                        className="w-full flex items-center justify-center gap-4 bg-black text-white py-8 rounded-none text-sm font-black uppercase tracking-[0.3em] hover:bg-[#474747] transition-all duration-500 mt-8"
-                                    >
-                                        Send Message <span className="material-symbols-outlined" data-icon="east">east</span>
-                                    </button>
-                                </form>
 
                             </div>
                         </div>
                     </div>
                 </section>
-            </main>
+            </div>
 
             <footer className="py-24 px-6 md:px-12 border-t border-white/5 bg-[#0A0A0A]">
                 <div className="max-w-[1440px] mx-auto flex flex-col items-center gap-12 sm:gap-16">
                     <div className="flex flex-col items-center gap-6">
                         <div className="text-2xl font-black tracking-tighter text-white">KRISH UJENIYA</div>
-                        <div className="text-[9px] font-black uppercase tracking-[0.4em] text-[#474747] text-center max-w-xs leading-relaxed">
+                        <div className="text-[11px] font-black uppercase tracking-[0.4em] text-[#A1A1A1] text-center max-w-xs leading-relaxed">
                             © 2024 · BUILDING THE FUTURE WITH MACHINE LEARNING
                         </div>
                     </div>
                     
                     <div className="flex flex-wrap justify-center gap-8 sm:gap-12">
-                        {['LinkedIn', 'HuggingFace', 'GitHub', 'Medium'].map(link => (
-                            <a key={link} href="#" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#474747] hover:text-white transition-colors border-b border-transparent hover:border-white/20 pb-1">{link}</a>
+                        {Object.entries(portfolioData.profile.socials).map(([name, url]) => (
+                            <a 
+                                key={name} 
+                                href={url} 
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label={`Visit my ${name} profile`}
+                                className="text-[11px] font-black uppercase tracking-[0.2em] text-[#A1A1A1] hover:text-white transition-colors border-b border-transparent hover:border-white/20 pb-1"
+                            >
+                                {name}
+                            </a>
                         ))}
                     </div>
 
                     <button 
                         onClick={() => scrollTo('home')}
-                        className="group flex flex-col items-center gap-4 text-[9px] font-black uppercase tracking-[0.3em] text-[#474747] hover:text-white transition-all"
+                        aria-label="Back to home"
+                        className="group flex flex-col items-center gap-4 text-[11px] font-black uppercase tracking-[0.3em] text-[#A1A1A1] hover:text-white transition-all"
                     >
-                        <span className="w-10 h-10 rounded-full border border border-white/5 flex items-center justify-center group-hover:border-white/20 transition-all">
-                            <span className="material-symbols-outlined text-[16px]" data-icon="arrow_upward">arrow_upward</span>
+                        <span className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:border-white/30 transition-all bg-white/5">
+                            <ArrowUp size={18} aria-hidden="true" />
                         </span>
                         Back to Top
                     </button>
@@ -438,48 +582,54 @@ export default function Portfolio() {
                                 <div className="absolute top-8 left-8">
                                     <button 
                                         onClick={() => setSelectedProject(null)}
+                                        aria-label="Close project details"
                                         className="w-12 h-12 flex items-center justify-center bg-white/10 backdrop-blur-md rounded-full text-white hover:bg-white hover:text-black transition-all"
                                     >
-                                        <span className="material-symbols-outlined" data-icon="close">close</span>
+                                        <X size={20} aria-hidden="true" />
                                     </button>
                                 </div>
                             </div>
                             <div className="lg:col-span-7 p-8 md:p-16 overflow-y-auto max-h-[92vh]">
-                                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#474747] mb-4 block">{selectedProject.category}</span>
+                                <span className="text-[11px] font-black uppercase tracking-[0.2em] text-[#A1A1A1] mb-4 block">{selectedProject.category}</span>
                                 <h3 className="text-4xl md:text-5xl font-black uppercase tracking-tighter mb-8">{selectedProject.title}</h3>
                                 
                                 <div className="space-y-10">
                                     <div className="space-y-3">
                                         <div className="flex items-center gap-3">
-                                            <Target size={18} className="text-[#474747]" />
-                                            <h4 className="text-[10px] font-black uppercase tracking-[0.1em] text-white">The Challenge</h4>
+                                            <Target size={18} className="text-[#A1A1A1]" aria-hidden="true" />
+                                            <h4 className="text-[11px] font-black uppercase tracking-[0.1em] text-white">The Challenge</h4>
                                         </div>
-                                        <p className="text-[#A1A1A1] leading-relaxed italic">{selectedProject.caseStudy.problem}</p>
+                                        <p className="text-[#E0E0E0] leading-relaxed italic">{selectedProject.caseStudy.problem}</p>
                                     </div>
 
                                     <div className="space-y-3">
                                         <div className="flex items-center gap-3">
-                                            <Lightbulb size={18} className="text-[#474747]" />
-                                            <h4 className="text-[10px] font-black uppercase tracking-[0.1em] text-white">The Execution</h4>
+                                            <Lightbulb size={18} className="text-[#A1A1A1]" aria-hidden="true" />
+                                            <h4 className="text-[11px] font-black uppercase tracking-[0.1em] text-white">The Execution</h4>
                                         </div>
-                                        <p className="text-[#A1A1A1] leading-relaxed">{selectedProject.caseStudy.solution}</p>
+                                        <p className="text-[#E0E0E0] leading-relaxed">{selectedProject.caseStudy.solution}</p>
                                     </div>
 
                                     <div className="space-y-4">
                                         <div className="p-6 rounded-3xl bg-white/5 border border-white/5 flex items-center gap-6">
                                             <div className="w-12 h-12 flex items-center justify-center bg-white text-black rounded-full shrink-0">
-                                                <TrendingUp size={20} />
+                                                <TrendingUp size={20} aria-hidden="true" />
                                             </div>
                                             <div>
-                                                <h4 className="text-[10px] font-black uppercase tracking-[0.1em] text-white mb-1">Impact Delivered</h4>
-                                                <p className="text-lg font-bold text-[#A1A1A1]">{selectedProject.impact}</p>
+                                                <h4 className="text-[11px] font-black uppercase tracking-[0.1em] text-white mb-1">Impact Delivered</h4>
+                                                <p className="text-lg font-bold text-[#E0E0E0]">{selectedProject.impact}</p>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div className="pt-8 flex gap-4">
-                                        <a href={selectedProject.link} target="_blank" className="flex-grow flex items-center justify-between bg-white text-black px-8 py-5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] hover:bg-[#474747] hover:text-white transition-all duration-500">
-                                            View Repository <span className="material-symbols-outlined" data-icon="arrow_outward">arrow_outward</span>
+                                        <a 
+                                            href={selectedProject.link} 
+                                            target="_blank" 
+                                            aria-label={`View ${selectedProject.title} repository on GitHub`}
+                                            className="flex-grow flex items-center justify-between bg-white text-black px-8 py-5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] hover:bg-[#474747] hover:text-white transition-all duration-500"
+                                        >
+                                            View Repository <span className="material-symbols-outlined" aria-hidden="true">arrow_outward</span>
                                         </a>
                                     </div>
                                 </div>
