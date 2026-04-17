@@ -111,7 +111,7 @@ export default function RootLayout({
       </head>
       <body
         className={cn(
-          'min-h-screen bg-background text-on-background font-body selection:bg-primary selection:text-on-primary-container antialiased pt-0 overflow-x-hidden'
+          'min-h-screen font-body antialiased'
         )}
       >
         <a href="#main-content"

@@ -4,9 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { portfolioData } from '@/data/portfolio';
-import { 
-    DynamicThreeBackground as ThreeBackground,
-} from '@/components/client-dynamic';
+
 import { 
     Target, 
     Lightbulb, 
@@ -71,8 +69,7 @@ export default function Portfolio() {
     };
 
     return (
-        <div className="min-h-screen bg-[#050505] text-[#FAFAFA] font-body selection:bg-[#474747] selection:text-white overflow-x-hidden">
-            <ThreeBackground />
+        <div className="min-h-screen bg-[#050505] text-[#FAFAFA] font-body selection:bg-[#474747] selection:text-white">
 
             <nav className={`fixed top-0 left-0 w-full z-[100] transition-all duration-300 ${scrolled ? 'bg-black/95 backdrop-blur-md py-4 border-b border-white/5' : 'py-6'}`}>
                 <div className="max-w-[1440px] mx-auto px-6 md:px-12 flex items-center justify-between">

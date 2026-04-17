@@ -7,6 +7,7 @@
    ============================================ */
 
 @layer base {
+
   :root,
   .dark {
     --background: 0 0% 0%;
@@ -57,11 +58,8 @@
   }
 
   html {
-    width: 100%;
-    max-width: 100%;
-    text-rendering: optimizeLegibility;
     scroll-behavior: smooth;
-    scroll-padding-top: 0px;
+    height: 100%;
   }
 
   /* Respect reduced motion preferences */
@@ -78,14 +76,14 @@
   }
 
   body {
-    cursor: default;
-    @apply bg-background text-foreground antialiased selection:bg-white selection:text-black min-h-screen overflow-x-hidden;
+    @apply bg-background text-foreground antialiased selection:bg-white selection:text-black;
     font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    width: 100%;
-    max-width: 100%;
+    min-height: 100%;
+    overflow-x: hidden;
   }
 
-  pre, code {
+  pre,
+  code {
     @apply font-mono;
   }
 
@@ -127,7 +125,8 @@
 
 @layer utilities {
   .text-nav-inactive {
-    color: #A1A1A1; /* High contrast gray for readability */
+    color: #A1A1A1;
+    /* High contrast gray for readability */
   }
 }
 
@@ -148,7 +147,8 @@
 
 @media (hover: hover) and (pointer: fine) {
   html {
-    /* cursor: none; */ /* Disabled for accessibility safety. Cursor set to none only when component mounts. */
+    /* cursor: none; */
+    /* Disabled for accessibility safety. Cursor set to none only when component mounts. */
   }
 
   .custom-cursor-ring {
@@ -186,32 +186,7 @@
   }
 }
 
-/* ============================================
-   CANVAS / THREE.JS BACKGROUND
-   ============================================ */
 
-canvas {
-  display: block;
-  position: fixed !important;
-  top: 0;
-  left: 0;
-  width: 100% !important;
-  height: 100% !important;
-  z-index: -1 !important;
-  background-color: transparent !important;
-  pointer-events: none !important;
-  will-change: transform;
-}
-
-div[style*="position: fixed"][style*="z-index: -1"] {
-  pointer-events: none !important;
-}
-
-.relative.z-10 {
-  position: relative;
-  z-index: 10;
-  overflow-x: hidden;
-}
 
 /* ============================================
    SCROLLBAR
@@ -1689,6 +1664,33 @@ div[style*="position: fixed"][style*="z-index: -1"] {
 
   .portfolio-card-title {
     font-size: 0.95rem;
+  }
+}
+
+/* Tablet adjustments */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .hero-title {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+  }
+
+  .section-title {
+    font-size: clamp(1.75rem, 4.5vw, 2.5rem);
+  }
+}
+
+/* Large desktop */
+@media (min-width: 1440px) {
+  .hero-title {
+    font-size: 6.5rem;
+  }
+
+  .section-title {
+    font-size: 3.5rem;
+  }
+
+  .expertise-grid,
+  .portfolio-grid {
+    gap: 2rem;
   }
 }
 
