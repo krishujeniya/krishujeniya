@@ -148,7 +148,7 @@
 
 @media (hover: hover) and (pointer: fine) {
   html {
-    cursor: none;
+    /* cursor: none; */ /* Disabled for accessibility safety. Cursor set to none only when component mounts. */
   }
 
   .custom-cursor-ring {

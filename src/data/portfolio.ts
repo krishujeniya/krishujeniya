@@ -119,6 +119,7 @@ export const portfolioData = {
       imageUrl: "/krishujeniya/images/m1.webp",
       description: 'Engineered an ML pipeline using ZenML to predict data professional salaries, enabling data-driven compensation strategies.',
       link: 'https://huggingface.co/spaces/krishujeniya/Salary_Predictions_For_Data_Professions',
+      linkType: 'space',
       techStack: ['Python', 'ZenML', 'Scikit-learn', 'MLflow'],
       impact: 'Achieved 92% prediction accuracy across 5 countries.',
       caseStudy: {
@@ -133,6 +134,7 @@ export const portfolioData = {
       imageUrl: "/krishujeniya/images/projects/face-lock.webp",
       description: 'Created a desktop application using Tkinter and face recognition technology to secure access via facial identification.',
       link: 'https://github.com/krishujeniya/FACE_LOCK_TKINTER',
+      linkType: 'repo',
       techStack: ['Python', 'Tkinter', 'OpenCV', 'face_recognition'],
       impact: 'Implemented real-time biometric security at 30 FPS.',
       caseStudy: {
@@ -147,6 +149,7 @@ export const portfolioData = {
       imageUrl: "/krishujeniya/images/projects/snaptext.webp",
       description: 'Built a Flutter-based OCR app for easy text extraction from images on mobile devices.',
       link: 'https://github.com/krishujeniya/SNAPTEXT_OCR_FLUTTER',
+      linkType: 'repo',
       techStack: ['Flutter', 'Dart', 'ML Kit'],
       impact: 'Processed 10,000+ extractions with zero latency.',
       caseStudy: {
@@ -161,6 +164,7 @@ export const portfolioData = {
       imageUrl: "/krishujeniya/images/projects/fitness-tracker.webp",
       description: 'Analyzed fitness data using ML techniques in Jupyter to uncover patterns and insights.',
       link: 'https://github.com/krishujeniya/Fitness-Tracker-ML',
+      linkType: 'repo',
       techStack: ['Python', 'Jupyter', 'Pandas', 'Matplotlib'],
       impact: 'Identified 3 key lifestyle health predictors.',
       caseStudy: {
@@ -175,6 +179,7 @@ export const portfolioData = {
       imageUrl: "/krishujeniya/images/projects/echonest.webp",
       description: 'Developed a cross-platform social media app focusing on real-time features and engagement.',
       link: 'https://github.com/krishujeniya/EchoNest-The-Social-Media-App',
+      linkType: 'repo',
       techStack: ['Flutter', 'Dart', 'Firebase'],
       impact: 'Handled real-time syncing for 50+ concurrent users.',
       caseStudy: {
@@ -189,6 +194,7 @@ export const portfolioData = {
       imageUrl: "/krishujeniya/images/projects/discord-bot.webp",
       description: 'Developed a multi-functional Discord bot enhancing server interaction and management.',
       link: 'https://github.com/krishujeniya/ALL-IN-ONE-DISCORD-BOT-USING-JS',
+      linkType: 'repo',
       techStack: ['JavaScript', 'Node.js', 'Discord.js'],
       impact: 'Managed 1,000+ daily commands with 99.9% uptime.',
       caseStudy: {
