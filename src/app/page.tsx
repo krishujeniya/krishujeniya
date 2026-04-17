@@ -182,7 +182,7 @@ export default function Portfolio() {
                         <div className="flex flex-col items-start gap-8 mb-20">
                             <div className="flex flex-col gap-4">
                                 <span className="text-[11px] font-black uppercase tracking-[0.4em] text-[#A1A1A1]">/ Info</span>
-                                <h2 className="text-5xl sm:text-7xl md:text-9xl font-black tracking-tighter uppercase leading-none">About <br /><span className="text-[#E0E0E0]">Krish</span></h2>
+                                <h2 className="text-5xl sm:text-7xl md:text-9xl font-black tracking-tighter uppercase leading-none">About <br /><span className="text-[#A1A1A1]">Krish</span></h2>
                             </div>
                             
                             <motion.div 
@@ -261,7 +261,7 @@ export default function Portfolio() {
                     <div className="max-w-[1440px] mx-auto">
                         <div className="flex flex-col items-start gap-4 mb-24">
                             <span className="text-[11px] font-black uppercase tracking-[0.4em] text-[#A1A1A1]">/ Expertise</span>
-                            <h2 className="text-5xl sm:text-7xl md:text-9xl font-black tracking-tighter uppercase leading-none">Core <br /><span className="text-[#E0E0E0]">Services</span></h2>
+                            <h2 className="text-5xl sm:text-7xl md:text-9xl font-black tracking-tighter uppercase leading-none">Core <br /><span className="text-[#A1A1A1]">Services</span></h2>
                         </div>
 
                         <div className="grid md:grid-cols-3 gap-8">
@@ -280,10 +280,10 @@ export default function Portfolio() {
                                         <service.icon size={32} />
                                     </div>
                                     <h3 className="text-3xl font-black uppercase tracking-tight mb-4 relative z-10">{service.title}</h3>
-                                    <p className="text-lg opacity-60 leading-relaxed mb-10 relative z-10 group-hover:opacity-80 transition-opacity">{service.description}</p>
+                                    <p className="text-lg text-black/60 leading-relaxed mb-10 relative z-10 group-hover:text-white/80 transition-colors">{service.description}</p>
                                     <ul className="space-y-4 relative z-10">
                                         {service.features.map((feature, fi) => (
-                                            <li key={fi} className="flex items-center gap-3 text-[10px] font-black uppercase tracking-widest opacity-80 group-hover:opacity-100 transition-opacity">
+                                            <li key={fi} className="flex items-center gap-3 text-[10px] font-black uppercase tracking-widest text-black/80 group-hover:text-white/90 transition-colors">
                                                 <div className="w-1.5 h-1.5 rounded-full bg-current group-hover:scale-125 transition-transform" />
                                                 {feature}
                                             </li>
@@ -456,13 +456,13 @@ export default function Portfolio() {
                             <div className="lg:col-span-6 flex flex-col gap-10">
                                 <div className="flex flex-col gap-4">
                                     <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#999999]">/ Inquiry</span>
-                                    <h2 className="text-5xl sm:text-7xl md:text-9xl font-black tracking-tighter uppercase leading-[0.85]">Let&apos;s <br />Build <br /><span className="text-[#E0E0E0]">Future</span></h2>
+                                    <h2 className="text-5xl sm:text-7xl md:text-9xl font-black tracking-tighter uppercase leading-[0.85]">Let&apos;s <br />Build <br /><span className="text-[#A1A1A1]">Future</span></h2>
                                 </div>
                                 <p className="text-xl text-black/60 leading-relaxed max-w-sm">
                                     Ready to empower your business with high-performance AI systems? Let&apos;s start a conversation.
                                 </p>
                                  <div className="flex flex-col gap-4 mt-8">
-                                    <a href="mailto:ukideashare0021@gmail.com" className="text-lg sm:text-2xl font-black tracking-tight hover:opacity-50 transition-opacity underline decoration-4 decoration-[#E0E0E0] underline-offset-8 uppercase break-all">ukideashare0021@gmail.com</a>
+                                    <a href="mailto:ukideashare0021@gmail.com" className="text-lg sm:text-2xl font-black tracking-tight hover:opacity-50 transition-opacity underline decoration-4 decoration-[#A1A1A1] underline-offset-8 uppercase break-all">ukideashare0021@gmail.com</a>
                                     <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Based in India · Working Worldwide</span>
                                 </div>
                             </div>
