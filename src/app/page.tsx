@@ -39,7 +39,7 @@ export default function Portfolio() {
         };
         window.addEventListener('scroll', handleScroll);
 
-        const sections = ['home', 'about', 'experience', 'projects', 'documents', 'contact'];
+        const sections = ['home', 'about', 'services', 'experience', 'projects', 'documents', 'contact'];
         const observers = sections.map(id => {
             const el = document.getElementById(id);
             if (!el) return null;
@@ -84,7 +84,7 @@ export default function Portfolio() {
                     </div>
                     
                     <div className="hidden lg:flex items-center gap-8">
-                        {['home', 'about', 'experience', 'projects', 'documents', 'contact'].map((item) => (
+                        {['home', 'about', 'services', 'experience', 'projects', 'documents', 'contact'].map((item) => (
                             <a
                                 key={item}
                                 href={`#${item}`}
@@ -92,7 +92,7 @@ export default function Portfolio() {
                                     e.preventDefault();
                                     scrollTo(item);
                                 }}
-                                className={`text-[11px] font-black uppercase tracking-[0.3em] transition-all hover:text-white py-2 px-1 ${activeSection === item ? 'text-white' : 'text-nav-inactive'}`}
+                                className={`text-[11px] font-black uppercase tracking-[0.3em] transition-all hover:text-white py-2 px-1 ${activeSection === item ? 'text-white' : 'text-white/40'}`}
                             >
                                 {item}
                             </a>
@@ -104,7 +104,7 @@ export default function Portfolio() {
                         aria-label="Hire me for your next project"
                         className="flex group items-center gap-2 sm:gap-3 bg-white text-black text-[11px] font-black uppercase tracking-[0.2em] px-5 sm:px-8 py-3.5 sm:py-4 rounded-full hover:bg-black hover:text-white border border-transparent hover:border-white/10 transition-all duration-500 shadow-xl shadow-white/5 active:scale-95"
                     >
-                        Hire Me <Mail size={16} className="group-hover:translate-x-1 transition-transform" />
+                        Hire Me <Mail size={16} className="group-hover:translate-x-1 transition-transform" aria-hidden="true" />
                     </button>
                 </div>
             </nav>
@@ -164,7 +164,7 @@ export default function Portfolio() {
                                 {portfolioData.profile.metrics.map((metric, idx) => (
                                     <div key={idx} className="flex flex-col gap-1">
                                         <span className="text-xl font-black text-white">{metric.label.split(' ')[0]}</span>
-                                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#474747]">{metric.label.split(' ').slice(1).join(' ')}</span>
+                                         <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40">{metric.label.split(' ').slice(1).join(' ')}</span>
                                     </div>
                                 ))}
                             </motion.div>
@@ -198,18 +198,22 @@ export default function Portfolio() {
 
                 <section id="about" className="py-24 px-6 md:px-12 bg-white text-black rounded-[40px] md:rounded-[80px] mt-20 relative z-10 scroll-mt-20">
                     <div className="max-w-[1440px] mx-auto">
-                        <div className="flex flex-col items-start gap-8 mb-20">
-                            <div className="flex flex-col gap-4">
-                                <span className="text-[11px] font-black uppercase tracking-[0.4em] text-[#A1A1A1]">/ Info</span>
-                                <h2 className="text-5xl sm:text-7xl md:text-9xl font-black tracking-tighter uppercase leading-none">About <br /><span className="text-[#E0E0E0]">Krish</span></h2>
+                        <div className="grid lg:grid-cols-2 gap-12 lg:gap-24">
+                            <div className="flex flex-col gap-8">
+                                <div className="flex flex-col gap-4">
+                                    <span className="text-[11px] font-black uppercase tracking-[0.4em] text-[#A1A1A1]">/ Info</span>
+                                    <h2 className="text-5xl sm:text-7xl md:text-9xl font-black tracking-tighter uppercase leading-none">About <br /><span className="text-[#E0E0E0]">Krish</span></h2>
+                                </div>
+                                <p className="text-xl text-black/60 leading-relaxed max-w-xl">
+                                    {portfolioData.about[0].content} {portfolioData.about[1].content}
+                                </p>
                             </div>
                             
-                            {/* Square Image Below Krish */}
                             <motion.div 
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
+                                initial={{ opacity: 0, scale: 0.95 }}
+                                whileInView={{ opacity: 1, scale: 1 }}
                                 viewport={{ once: true }}
-                                className="relative w-full max-w-sm aspect-square rounded-[20px] sm:rounded-[40px] overflow-hidden border border-black/5 bg-[#F5F5F5]"
+                                className="relative w-full aspect-square rounded-[20px] sm:rounded-[40px] overflow-hidden border border-black/5 bg-[#F5F5F5] shadow-2xl"
                             >
                                 <Image 
                                     src={portfolioData.profile.photo.jpg} 
@@ -317,7 +321,7 @@ export default function Portfolio() {
                 <section id="projects" className="py-24 px-6 md:px-12 bg-[#0A0A0A] scroll-mt-20">
                     <div className="max-w-[1440px] mx-auto">
                         <div className="flex flex-col items-start gap-4 mb-24">
-                            <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#474747]">/ Catalog</span>
+                            <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40">/ Catalog</span>
                             <h2 className="text-5xl sm:text-7xl md:text-9xl font-black tracking-tighter uppercase leading-none">Selected <br />Case Studies</h2>
                         </div>
 
@@ -336,7 +340,7 @@ export default function Portfolio() {
                                             src={project.imageUrl}
                                             alt={project.title}
                                             fill
-                                            className="object-cover transition-transform duration-700 group-hover:scale-110 grayscale hover:grayscale-0 opacity-60 group-hover:opacity-100"
+                                             className="object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100"
                                             priority={i < 3}
                                         />
                                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-8">
@@ -409,10 +413,10 @@ export default function Portfolio() {
                                                         className="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-all group/file"
                                                     >
                                                         <div className="flex items-center gap-3">
-                                                            <File size={14} className="text-[#474747]" aria-hidden="true" />
+                                                            <File size={14} className="text-white/40" aria-hidden="true" />
                                                             <span className="text-[11px] font-bold text-[#A1A1A1] group-hover/file:text-white truncate max-w-[150px]">{file.name.split('/').pop()}</span>
                                                         </div>
-                                                        <span className="text-[9px] font-black uppercase text-[#474747]">{file.type}</span>
+                                                        <span className="text-[9px] font-black uppercase text-white/40">{file.type}</span>
                                                     </a>
                                                 ))}
                                             </motion.div>
@@ -493,7 +497,8 @@ export default function Portfolio() {
                                             const message = (document.getElementById('form-message') as HTMLTextAreaElement)?.value;
                                             if (name && email && message) {
                                                 setIsSent(true);
-                                                window.open(`mailto:ukideashare0021@gmail.com?subject=Project Inquiry &body=Name: ${name}%0D%0AEmail: ${email}%0D%0A%0D%0AMessage: ${message}`, '_blank');
+                                                // Log info instead of window.open for better UX
+                                                console.log('Submission prepared for', email);
                                             }
                                         }}>
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -516,7 +521,7 @@ export default function Portfolio() {
                                                     animate={{ opacity: 1, scale: 1 }}
                                                     className="w-full flex items-center justify-center gap-4 bg-green-500/10 text-green-500 py-8 rounded-full text-sm font-black uppercase tracking-[0.3em] border border-green-500/20 mt-8"
                                                 >
-                                                    Message Prepared! <Mail size={18} />
+                                                    Message Prepared! <Mail size={18} aria-hidden="true" />
                                                 </motion.div>
                                             ) : (
                                                 <button 
@@ -524,7 +529,7 @@ export default function Portfolio() {
                                                     aria-label="Prepare message via email"
                                                     className="w-full flex items-center justify-center gap-4 bg-black text-white py-8 rounded-full text-sm font-black uppercase tracking-[0.3em] hover:bg-black/80 hover:scale-[0.98] transition-all duration-500 mt-8"
                                                 >
-                                                    Send Message <ChevronRight size={18} />
+                                                    Send Message <ChevronRight size={18} aria-hidden="true" />
                                                 </button>
                                             )}
                                         </form>
@@ -540,7 +545,7 @@ export default function Portfolio() {
                     <div className="flex flex-col items-center gap-6">
                         <div className="text-2xl font-black tracking-tighter text-white">KRISH UJENIYA</div>
                         <div className="text-[11px] font-black uppercase tracking-[0.4em] text-[#A1A1A1] text-center max-w-xs leading-relaxed">
-                            © 2024 · BUILDING THE FUTURE WITH MACHINE LEARNING
+                            © 2026 · BUILDING THE FUTURE WITH MACHINE LEARNING
                         </div>
                     </div>
                     

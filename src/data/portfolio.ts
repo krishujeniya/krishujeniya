@@ -20,8 +20,8 @@ export const portfolioData = {
     role: "Freelance ML Engineer",
     tagline: "RAG Systems, AI Agents & MLOps | Shipped in <4 weeks",
     photo: {
-      webp: "/krishujeniya/images/1765004211200.webp",
-      jpg: "/krishujeniya/images/1765004211200.jpg"
+      webp: "/images/1765004211200.webp",
+      jpg: "/images/1765004211200.jpg"
     },
     availability: "Open for projects · Replies <24h",
     metrics: [
@@ -116,7 +116,7 @@ export const portfolioData = {
     {
       title: 'Salary Predictions For Data Professions',
       category: 'Machine Learning / MLOps',
-      imageUrl: "/krishujeniya/images/m1.webp",
+      imageUrl: "/images/m1.webp",
       description: 'Engineered an ML pipeline using ZenML to predict data professional salaries, enabling data-driven compensation strategies.',
       link: 'https://huggingface.co/spaces/krishujeniya/Salary_Predictions_For_Data_Professions',
       techStack: ['Python', 'ZenML', 'Scikit-learn', 'MLflow'],
@@ -130,7 +130,7 @@ export const portfolioData = {
     {
       title: 'Face Lock Desktop App',
       category: 'Python / Computer Vision',
-      imageUrl: "/krishujeniya/images/projects/face-lock.webp",
+      imageUrl: "/images/projects/face-lock.webp",
       description: 'Created a desktop application using Tkinter and face recognition technology to secure access via facial identification.',
       link: 'https://github.com/krishujeniya/FACE_LOCK_TKINTER',
       techStack: ['Python', 'Tkinter', 'OpenCV', 'face_recognition'],
@@ -144,7 +144,7 @@ export const portfolioData = {
     {
       title: 'SnapText — OCR App',
       category: 'Flutter / Computer Vision',
-      imageUrl: "/krishujeniya/images/projects/snaptext.webp",
+      imageUrl: "/images/projects/snaptext.webp",
       description: 'Built a Flutter-based OCR app for easy text extraction from images on mobile devices.',
       link: 'https://github.com/krishujeniya/SNAPTEXT_OCR_FLUTTER',
       techStack: ['Flutter', 'Dart', 'ML Kit'],
@@ -158,7 +158,7 @@ export const portfolioData = {
     {
       title: 'Fitness Tracker ML Analysis',
       category: 'Machine Learning / Data Analysis',
-      imageUrl: "/krishujeniya/images/projects/fitness-tracker.webp",
+      imageUrl: "/images/projects/fitness-tracker.webp",
       description: 'Analyzed fitness data using ML techniques in Jupyter to uncover patterns and insights.',
       link: 'https://github.com/krishujeniya/Fitness-Tracker-ML',
       techStack: ['Python', 'Jupyter', 'Pandas', 'Matplotlib'],
@@ -172,7 +172,7 @@ export const portfolioData = {
     {
       title: 'EchoNest — Social Media',
       category: 'Flutter Mobile App',
-      imageUrl: "/krishujeniya/images/projects/echonest.webp",
+      imageUrl: "/images/projects/echonest.webp",
       description: 'Developed a cross-platform social media app focusing on real-time features and engagement.',
       link: 'https://github.com/krishujeniya/EchoNest-The-Social-Media-App',
       techStack: ['Flutter', 'Dart', 'Firebase'],
@@ -186,7 +186,7 @@ export const portfolioData = {
     {
       title: 'All-In-One Discord Bot',
       category: 'JavaScript / Bot',
-      imageUrl: "/krishujeniya/images/projects/discord-bot.webp",
+      imageUrl: "/images/projects/discord-bot.webp",
       description: 'Developed a multi-functional Discord bot enhancing server interaction and management.',
       link: 'https://github.com/krishujeniya/ALL-IN-ONE-DISCORD-BOT-USING-JS',
       techStack: ['JavaScript', 'Node.js', 'Discord.js'],
@@ -333,25 +333,25 @@ export const portfolioData = {
       name: "Dr. Arpit Jain",
       role: "AI Lead at Futura",
       content: "The RAG pipeline Krish built decreased our document retrieval time by 70% while improving precision significantly.",
-      photo: "/krishujeniya/images/testimonials/t1.png"
+      photo: "/images/testimonials/t1.png"
     },
     {
       name: "Rohan Mehta",
       role: "CEO at SwiftAI",
       content: "Professionalism and speed are Krish's superpowers. He shipped our custom AI agent in under 3 weeks.",
-      photo: "/krishujeniya/images/testimonials/t2.png"
+      photo: "/images/testimonials/t2.png"
     },
     {
       name: "Priya Sharma",
       role: "CTO at DataCloud",
       content: "Technical depth in MLOps is rare in freelancers, but Krish managed our entire ZenML stack flawlessly.",
-      photo: "/krishujeniya/images/testimonials/t3.png"
+      photo: "/images/testimonials/t3.png"
     },
     {
       name: "Kevin Brooks",
       role: "VP Engineering at LangChain",
       content: "His ability to bridge the gap between research papers and production code is truly impressive.",
-      photo: "/krishujeniya/images/testimonials/t4.png"
+      photo: "/images/testimonials/t4.png"
     }
   ]
 };
