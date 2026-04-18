@@ -215,27 +215,29 @@ export default function Portfolio() {
 
                 <section id="about" className="py-24 px-6 md:px-12 bg-white text-black rounded-[40px] md:rounded-[80px] mt-20 relative z-10 scroll-mt-20">
                     <div className="max-w-[1440px] mx-auto">
-                        <div className="flex flex-col items-start gap-8 mb-20">
-                            <div className="flex flex-col gap-4">
+                        <div className="grid lg:grid-cols-12 gap-12 items-end mb-20">
+                            <div className="lg:col-span-7 flex flex-col gap-4">
                                 <span className="text-[11px] font-black uppercase tracking-[0.4em] text-[#A1A1A1]">/ Info</span>
                                 <h2 className="text-[clamp(3rem,8vw,8rem)] font-black tracking-tighter uppercase leading-none">About <br /><span className="text-[#A1A1A1]">Krish</span></h2>
                             </div>
                             
-                            <motion.div 
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                className="relative w-full max-w-sm aspect-square rounded-[20px] sm:rounded-[40px] overflow-hidden border border-black/5 bg-[#F5F5F5]"
-                            >
-                                <Image 
-                                    src={portfolioData.profile.photo.jpg} 
-                                    alt={portfolioData.profile.name} 
-                                    fill
-                                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 384px, 384px"
-                                    className="object-cover"
-                                    priority
-                                />
-                            </motion.div>
+                            <div className="lg:col-span-5 flex lg:justify-end">
+                                <motion.div 
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    className="relative w-full max-w-sm aspect-square rounded-[20px] sm:rounded-[40px] overflow-hidden border border-black/5 bg-[#F5F5F5]"
+                                >
+                                    <Image 
+                                        src={portfolioData.profile.photo.jpg} 
+                                        alt={portfolioData.profile.name} 
+                                        fill
+                                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 384px, 384px"
+                                        className="object-cover"
+                                        priority
+                                    />
+                                </motion.div>
+                            </div>
                         </div>
 
                         <div className="grid md:grid-cols-3 gap-12">
