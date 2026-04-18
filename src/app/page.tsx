@@ -153,7 +153,7 @@ export default function Portfolio() {
                                 className="text-[clamp(3rem,12vw,8rem)] sm:text-[10vw] md:text-[9vw] lg:text-[8vw] font-black tracking-tighter leading-[0.8] uppercase break-words overflow-visible"
                             >
                                 <span className="text-white drop-shadow-2xl">I Build AI</span> <br />
-                                <span className="text-[#A1A1A1] outline-text">Systems That</span> <br />
+                                <span className="text-[#A1A1A1]">Systems That</span> <br />
                                 <span className="flex items-center gap-4 sm:gap-10">
                                     Actually Ship.<motion.div 
                                         animate={{ 
@@ -310,7 +310,7 @@ export default function Portfolio() {
                                         <service.icon size={32} />
                                     </div>
                                     <h3 className="text-3xl font-black uppercase tracking-tight mb-4 relative z-10">{service.title}</h3>
-                                    <p className="text-lg text-black/60 leading-relaxed mb-10 relative z-10 group-hover:text-white/80 transition-colors">{service.description}</p>
+                                    <p className="text-lg text-[#525252] leading-relaxed mb-10 relative z-10 group-hover:text-white/80 transition-colors">{service.description}</p>
                                     <ul className="space-y-4 relative z-10">
                                         {service.features.map((feature, fi) => (
                                             <li key={fi} className="flex items-center gap-3 text-[10px] font-black uppercase tracking-widest text-black/80 group-hover:text-white/90 transition-colors">
