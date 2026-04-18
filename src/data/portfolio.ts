@@ -34,7 +34,7 @@ export const portfolioData = {
       huggingface: "https://huggingface.co/krishujeniya",
       github: "https://github.com/krishujeniya",
       medium: "https://medium.com/@krishujeniya",
-      calendly: "https://calendly.com/krishujeniya"
+      calendar: "https://calendar.app.google/FaaoY3w8L8TYLNr48"
     }
   },
   about: [
