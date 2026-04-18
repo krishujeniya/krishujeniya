@@ -339,13 +339,13 @@ export const portfolioData = {
       name: "NDA Client",
       role: "CTO, Series-A Startup",
       content: "Krish delivered a production RAG system in under 3 weeks. The handover documentation was thorough enough that our junior engineer could maintain it independently.",
-      photo: "/krishujeniya/images/testimonials/t1.png"
+      photo: "/krishujeniya/images/testimonials/t1.webp"
     },
     {
       name: "NDA Client",
       role: "Engineering Lead, Data Platform",
       content: "His MLOps setup saved us from what would have been weeks of manual pipeline work. Everything was tracked, versioned, and reproducible from day one.",
-      photo: "/krishujeniya/images/testimonials/t2.png"
+      photo: "/krishujeniya/images/testimonials/t2.webp"
     }
   ]
 };
