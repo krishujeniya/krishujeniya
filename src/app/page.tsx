@@ -29,7 +29,6 @@ export default function Portfolio() {
     const [selectedProject, setSelectedProject] = useState<typeof portfolioData.projects[0] | null>(null);
     const [expandedFolder, setExpandedFolder] = useState<string | null>(null);
     const [isSent, setIsSent] = useState(false);
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     // BUG-011/012: Modal accessibility and scroll lock
     useEffect(() => {
@@ -100,7 +99,7 @@ export default function Portfolio() {
                         KRISH <span className="text-[#A1A1A1]">UJENIYA</span>
                     </div>
                     
-                    <div className="hidden lg:flex items-center gap-8">
+                    <div className="flex items-center gap-4 sm:gap-8 overflow-x-auto no-scrollbar mx-4">
                         {['home', 'about', 'experience', 'services', 'projects', 'documents', 'testimonials', 'contact'].map((item) => (
                             <a
                                 key={item}
@@ -109,7 +108,7 @@ export default function Portfolio() {
                                     e.preventDefault();
                                     scrollTo(item);
                                 }}
-                                className={`text-[11px] font-black uppercase tracking-[0.3em] transition-all hover:text-white py-2 px-1 ${activeSection === item ? 'text-white' : 'text-white/40'}`}
+                                className={`text-[9px] sm:text-[11px] font-black uppercase tracking-[0.2em] sm:tracking-[0.3em] transition-all hover:text-white py-2 whitespace-nowrap ${activeSection === item ? 'text-white' : 'text-white/40'}`}
                                 aria-current={activeSection === item ? 'page' : undefined}
                             >
                                 {item}
@@ -120,73 +119,12 @@ export default function Portfolio() {
                     <button 
                         onClick={() => scrollTo('contact')}
                         aria-label="Hire me for your next project"
-                        className="hidden lg:flex group items-center gap-2 sm:gap-3 bg-white text-black text-[11px] font-black uppercase tracking-[0.2em] px-5 sm:px-8 py-3.5 sm:py-4 rounded-full hover:bg-black hover:text-white border border-transparent hover:border-white/10 transition-all duration-500 shadow-xl shadow-white/5 active:scale-95"
+                        className="hidden md:flex group items-center gap-3 bg-white text-black text-[11px] font-black uppercase tracking-[0.2em] px-8 py-4 rounded-full hover:bg-black hover:text-white transition-all duration-500 shadow-xl shadow-white/5 active:scale-95 whitespace-nowrap"
                     >
-                        Hire Me <Mail size={16} className="group-hover:translate-x-1 transition-transform" aria-hidden="true" />
+                        Hire Me <Mail size={16} className="group-hover:translate-x-1 transition-transform" />
                     </button>
-
-                    <button 
-                        className="lg:hidden w-10 h-10 flex items-center justify-center text-white"
-                        onClick={() => setIsMenuOpen(true)}
-                        aria-label="Open menu"
-                    >
-                        <span className="material-symbols-outlined">menu</span>
-                    </button>
-
                 </div>
             </nav>
-
-            {/* Mobile menu overlay */}
-            <AnimatePresence>
-                {isMenuOpen && (
-                    <motion.div 
-                        initial={{ opacity: 0, x: '100%' }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: '100%' }}
-                        className="fixed inset-0 z-[1000] bg-black p-8 flex flex-col"
-                    >
-                        <div className="flex justify-between items-center mb-16">
-                            <div className="text-xl font-black tracking-tighter text-white">MENU</div>
-                            <button 
-                                onClick={() => setIsMenuOpen(false)}
-                                className="w-10 h-10 flex items-center justify-center text-white"
-                                aria-label="Close menu"
-                            >
-                                <X size={32} />
-                            </button>
-                        </div>
-
-                        <div className="flex flex-col gap-8">
-                            {['home', 'about', 'experience', 'services', 'projects', 'documents', 'testimonials', 'contact'].map((item) => (
-                                <a
-                                    key={item}
-                                    href={`#${item}`}
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        setIsMenuOpen(false);
-                                        scrollTo(item);
-                                    }}
-                                    className={`text-4xl font-black uppercase tracking-tighter ${activeSection === item ? 'text-white' : 'text-white/20'}`}
-                                >
-                                    {item}
-                                </a>
-                            ))}
-                        </div>
-                        
-                        <div className="mt-auto">
-                            <button 
-                                onClick={() => {
-                                    setIsMenuOpen(false);
-                                    scrollTo('contact');
-                                }}
-                                className="w-full bg-white text-black text-sm font-black uppercase tracking-widest py-6 rounded-2xl"
-                            >
-                                Hire Me
-                            </button>
-                        </div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
 
 
             <div className="flex flex-col">
