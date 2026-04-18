@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     default: 'Krish Ujeniya | Freelance ML Engineer & Data Scientist',
     template: '%s | Krish Ujeniya'
   },
-  description: 'Freelance ML Engineer & Data Scientist specializing in AI Agents, LLMs, RAG systems, and MLOps. Available for hire globally. Based in India.',
+  description: 'Freelance ML Engineer specializing in production RAG systems, autonomous AI agents, and MLOps pipelines. Delivered in under 4 weeks. Based in India, working worldwide.',
   keywords: ['ML Engineer','Data Scientist','AI Agent','LLM','RAG','MLOps','ZenML','MLflow','Flutter','Freelance AI','Machine Learning Consultant','India'],
   authors: [{ name: 'Krish Ujeniya', url: 'https://krishujeniya.github.io/krishujeniya' }],
   creator: 'Krish Ujeniya',
@@ -98,7 +98,7 @@ export default function RootLayout({
                "@context": "https://schema.org",
                "@type": "Person",
                "name": "Krish Ujeniya",
-               "jobTitle": "Data Scientist & ML Engineer",
+               "jobTitle": "Freelance ML Engineer",
                "url": "https://krishujeniya.github.io/krishujeniya/",
                "email": "ukideashare0021@gmail.com",
                "description": "Freelance Data Scientist and ML Engineer",
