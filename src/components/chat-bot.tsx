@@ -275,9 +275,12 @@ export const ChatBot = () => {
                                     <div className={`chatbot-msg-avatar ${msg.from === 'bot' ? 'chatbot-msg-avatar-bot' : 'chatbot-msg-avatar-user'}`}>
                                         {msg.from === 'bot' ? <Bot className="w-3 h-3" /> : <User className="w-3 h-3" />}
                                     </div>
-                                    <div className={`chatbot-msg-bubble ${msg.from === 'bot' ? 'chatbot-msg-bubble-bot' : 'chatbot-msg-bubble-user'}`}>
-                                        {msg.text}
-                                    </div>
+                                    <div 
+                                        className={`chatbot-msg-bubble ${msg.from === 'bot' ? 'chatbot-msg-bubble-bot' : 'chatbot-msg-bubble-user'} whitespace-pre-wrap`}
+                                        dangerouslySetInnerHTML={{ 
+                                            __html: msg.text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') 
+                                        }}
+                                    />
                                 </motion.div>
                             ))}
                             {isTyping && (

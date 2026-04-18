@@ -1,18 +1,25 @@
 {
   "name": "Krish Ujeniya Portfolio",
   "short_name": "Krish",
+  "start_url": "/krishujeniya/",
   "icons": [
     {
-      "src": "/krishujeniya/images/img1120.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "src": "/krishujeniya/images/icon-32.webp",
+      "sizes": "32x32",
+      "type": "image/webp",
+      "purpose": "any"
     },
     {
-      "src": "/krishujeniya/images/img1120.png",
+      "src": "/krishujeniya/images/icon-192.webp",
+      "sizes": "192x192",
+      "type": "image/webp",
+      "purpose": "any"
+    },
+    {
+      "src": "/krishujeniya/images/img1120.webp",
       "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/webp",
+      "purpose": "maskable"
     }
   ],
   "theme_color": "#000000",
