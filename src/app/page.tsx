@@ -165,10 +165,10 @@ export default function Portfolio() {
                                     Explore Work <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform" aria-hidden="true">explore</span>
                                 </button>
                                 <a 
-                                    href="https://calendly.com/krishujeniya"
+                                    href={portfolioData.profile.socials.calendar}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    aria-label="Book a consultation call on Calendly"
+                                    aria-label="Book a consultation call on Google Calendar"
                                     className="w-full sm:w-auto flex items-center justify-center gap-4 border border-white/10 px-12 py-5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] hover:bg-white/5 transition-all duration-500"
                                 >
                                     Book a Call <span className="material-symbols-outlined" aria-hidden="true">calendar_today</span>
