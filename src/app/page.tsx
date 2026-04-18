@@ -123,10 +123,10 @@ export default function Portfolio() {
                                 transition={{ delay: 0.1 }}
                                 className="text-[clamp(3rem,12vw,8rem)] sm:text-[10vw] md:text-[9vw] lg:text-[8vw] font-black tracking-tighter leading-[0.8] uppercase break-words overflow-visible"
                             >
-                                <span className="text-white drop-shadow-2xl">Machine</span> <br />
-                                <span className="text-[#A1A1A1] outline-text">Learning</span> <br />
+                                <span className="text-white drop-shadow-2xl">I Build AI</span> <br />
+                                <span className="text-[#A1A1A1] outline-text">Systems That</span> <br />
                                 <span className="flex items-center gap-4 sm:gap-10">
-                                    Engineer
+                                    Actually Ship.
                                     <motion.div 
                                         animate={{ 
                                             rotate: [0, 10, -10, 0],
@@ -351,8 +351,8 @@ export default function Portfolio() {
                 <section id="documents" className="py-24 px-6 md:px-12 bg-white/5 scroll-mt-20">
                     <div className="max-w-[1440px] mx-auto">
                         <div className="flex flex-col items-center text-center gap-6 mb-32">
-                            <span className="text-[11px] font-black uppercase tracking-[0.4em] text-[#A1A1A1]">/ Archive</span>
-                            <h2 className="text-[clamp(2.5rem,7vw,7rem)] font-black tracking-tighter uppercase leading-none">Technical <br />Knowledge Base</h2>
+                            <span className="text-[11px] font-black uppercase tracking-[0.4em] text-[#A1A1A1]">/ Resources</span>
+                            <h2 className="text-[clamp(2.5rem,7vw,7rem)] font-black tracking-tighter uppercase leading-none">Technical <br />Resources</h2>
                         </div>
 
                         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -461,10 +461,10 @@ export default function Portfolio() {
                             <div className="lg:col-span-6 flex flex-col gap-10">
                                 <div className="flex flex-col gap-4">
                                     <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#999999]">/ Inquiry</span>
-                                    <h2 className="text-[clamp(3rem,8vw,8rem)] font-black tracking-tighter uppercase leading-[0.85]">Let&apos;s <br />Build <br /><span className="text-[#A1A1A1]">Future</span></h2>
+                                    <h2 className="text-[clamp(3rem,8vw,8rem)] font-black tracking-tighter uppercase leading-[0.85]">Let&apos;s Build <br />Something <br /><span className="text-[#A1A1A1]">That Works</span></h2>
                                 </div>
                                 <p className="text-xl text-black/60 leading-relaxed max-w-sm">
-                                    Ready to empower your business with high-performance AI systems? Let&apos;s start a conversation.
+                                    Got a project in mind? Tell me what you&apos;re working on and I&apos;ll get back within 24 hours with honest thoughts on fit, scope, and timeline.
                                 </p>
                                  <div className="flex flex-col gap-4 mt-8">
                                     <a href="mailto:ukideashare0021@gmail.com" className="text-lg sm:text-2xl font-black tracking-tight hover:opacity-50 transition-opacity underline decoration-4 decoration-[#A1A1A1] underline-offset-8 uppercase break-all">ukideashare0021@gmail.com</a>
@@ -528,7 +528,7 @@ export default function Portfolio() {
                     <div className="flex flex-col items-center gap-6">
                         <div className="text-2xl font-black tracking-tighter text-white">KRISH UJENIYA</div>
                         <div className="text-[11px] font-black uppercase tracking-[0.4em] text-[#A1A1A1] text-center max-w-xs leading-relaxed">
-                            © 2026 · BUILDING THE FUTURE WITH MACHINE LEARNING
+                            © 2026 · BUILDING RELIABLE AI SYSTEMS
                         </div>
                     </div>
                     
