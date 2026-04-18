@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useGsapAnimations } from '@/hooks/useGsapAnimations';
 import Image from 'next/image';
-import { motion, AnimatePresence } from 'framer-motion';
+
 import { portfolioData } from '@/data/portfolio';
 
 import { 
@@ -156,45 +156,23 @@ export default function Portfolio() {
                         <div className="flex flex-col items-start gap-6 md:gap-8">
                             {/* Availability Removed */}
 
-                             <motion.h1 
-                                initial={{ opacity: 0, y: 30 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.1 }}
-                                className="text-[clamp(3rem,12vw,8rem)] sm:text-[10vw] md:text-[9vw] lg:text-[8vw] font-black tracking-tighter leading-[0.8] uppercase break-words overflow-visible"
-                            >
+                             <h1 className="text-[clamp(3rem,12vw,8rem)] sm:text-[10vw] md:text-[9vw] lg:text-[8vw] font-black tracking-tighter leading-[0.8] uppercase break-words overflow-visible">
                                 <span className="text-white drop-shadow-2xl">I Build AI</span> <br />
                                 <span className="text-[#A1A1A1]">Systems That</span> <br />
                                 <span className="flex items-center gap-4 sm:gap-10">
-                                    Actually Ship.<motion.div 
-                                        animate={{ 
-                                            rotate: [0, 10, -10, 0],
-                                            scale: [1, 1.1, 1]
-                                        }}
-                                        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                                        className="hidden md:flex w-24 h-24 rounded-[32px] border-2 border-white/10 items-center justify-center p-4 bg-white/5"
-                                    >
+                                    Actually Ship.<div className="hidden md:flex w-24 h-24 rounded-[32px] border-2 border-white/10 items-center justify-center p-4 bg-white/5">
                                         <BrainCircuit size={48} className="text-[#A1A1A1]" />
-                                    </motion.div>
+                                    </div>
                                 </span>
-                            </motion.h1>
+                            </h1>
 
-                            <motion.p 
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.2 }}
-                                className="text-sm md:text-xl text-[#A1A1A1] max-w-xl leading-relaxed font-medium"
-                            >
+                            <p className="text-sm md:text-xl text-[#A1A1A1] max-w-xl leading-relaxed font-medium">
                                 {portfolioData.profile.tagline}
-                            </motion.p>
+                            </p>
 
                             {/* Metrics Removed */}
 
-                            <motion.div 
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.3 }}
-                                className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 w-full sm:w-auto pt-4"
-                            >
+                            <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 w-full sm:w-auto pt-4">
                                 <button 
                                     onClick={() => scrollTo('projects')}
                                     aria-label="Explore my work and case studies"
@@ -211,7 +189,7 @@ export default function Portfolio() {
                                 >
                                     Book a Call <span className="material-symbols-outlined" aria-hidden="true">calendar_today</span>
                                 </a>
-                            </motion.div>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -225,12 +203,7 @@ export default function Portfolio() {
                             </div>
                             
                             <div className="lg:col-span-5 flex lg:justify-end">
-                                <motion.div 
-                                    initial={{ opacity: 0, y: 20 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true }}
-                                    className="relative w-full max-w-sm aspect-square rounded-[20px] sm:rounded-[40px] overflow-hidden border border-black/5 bg-[#F5F5F5]"
-                                >
+                                <div className="relative w-full max-w-sm aspect-square rounded-[20px] sm:rounded-[40px] overflow-hidden border border-black/5 bg-[#F5F5F5]">
                                     <Image 
                                         src={portfolioData.profile.photo.jpg} 
                                         alt={portfolioData.profile.name} 
@@ -239,7 +212,7 @@ export default function Portfolio() {
                                         className="object-cover"
                                         priority
                                     />
-                                </motion.div>
+                                </div>
                             </div>
                         </div>
 
@@ -269,11 +242,8 @@ export default function Portfolio() {
 
                         <div className="space-y-12">
                             {portfolioData.experience.map((exp, i) => (
-                                <motion.div 
+                                <div 
                                     key={i}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true }}
                                     className="group grid md:grid-cols-12 gap-8 border-t border-white/5 pt-12"
                                 >
                                     <div className="md:col-span-3 flex flex-col gap-2">
@@ -292,7 +262,7 @@ export default function Portfolio() {
                                     <div className="md:col-span-3 flex md:justify-end items-start pt-2">
                                         <span className="text-xl font-bold tracking-tighter uppercase text-[#A1A1A1]">{exp.company}</span>
                                     </div>
-                                </motion.div>
+                                </div>
                             ))}
                         </div>
                     </div>
@@ -308,12 +278,8 @@ export default function Portfolio() {
 
                         <div className="grid md:grid-cols-3 gap-8">
                             {portfolioData.services.map((service, i) => (
-                                <motion.div 
+                                <div 
                                     key={i}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ delay: i * 0.1 }}
                                     className="group p-10 rounded-[40px] border border-black/5 bg-white hover:bg-black hover:text-white transition-all duration-700 hover:shadow-[0_30px_60px_rgba(0,0,0,0.1)] relative overflow-hidden"
                                 >
                                     <div className="absolute top-0 right-0 w-32 h-32 bg-black/[0.02] group-hover:bg-white/5 rounded-bl-full transition-colors" />
@@ -331,7 +297,7 @@ export default function Portfolio() {
                                             </li>
                                         ))}
                                     </ul>
-                                </motion.div>
+                                </div>
                             ))}
                         </div>
                     </div>
@@ -347,11 +313,8 @@ export default function Portfolio() {
 
                         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
                             {portfolioData.projects.map((project, i) => (
-                                <motion.div 
+                                <div 
                                     key={i} 
-                                    initial={{ opacity: 0, scale: 0.95 }}
-                                    whileInView={{ opacity: 1, scale: 1 }}
-                                    viewport={{ once: true }}
                                     className="group flex flex-col gap-6 cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-white/10 rounded-[40px] p-2"
                                     onClick={() => setSelectedProject(project)}
                                     role="button"
@@ -383,7 +346,7 @@ export default function Portfolio() {
                                         </div>
                                         <span className="material-symbols-outlined text-[18px] text-[#A1A1A1] group-hover:text-white group-hover:translate-x-1 transition-all" aria-hidden="true">east</span>
                                     </div>
-                                </motion.div>
+                                </div>
                             ))}
                         </div>
                     </div>
@@ -420,33 +383,33 @@ export default function Portfolio() {
                                         </span>
                                     </button>
 
-                                    <AnimatePresence>
-                                        {expandedFolder === folder.name && (
-                                            <motion.div 
-                                                initial={{ height: 0, opacity: 0 }}
-                                                animate={{ height: 'auto', opacity: 1 }}
-                                                exit={{ height: 0, opacity: 0 }}
-                                                className="overflow-hidden pt-4 space-y-2 w-full max-w-full"
-                                            >
-                                                {folder.files.map((file, fi) => (
-                                                    <a 
-                                                        key={fi}
-                                                        href={`${DOCS_BASE_URL}/${folder.path}/${file.name.split('/').map(segment => encodeURIComponent(segment)).join('/')}`}
-                                                        target="_blank"
-                                                        rel="noopener noreferrer"
-                                                        aria-label={`Open ${file.name}`}
-                                                        className="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-all group/file w-full min-w-0"
-                                                    >
-                                                        <div className="flex items-center gap-3 min-w-0 flex-1">
-                                                            <File size={14} className="text-white/40 shrink-0" aria-hidden="true" />
-                                                            <span className="text-[11px] font-bold text-[#A1A1A1] group-hover/file:text-white truncate">{file.name.split('/').pop()}</span>
-                                                        </div>
-                                                        <span className="text-[9px] font-black uppercase text-white/40 ml-2 shrink-0">{file.type}</span>
-                                                    </a>
-                                                ))}
-                                            </motion.div>
-                                        )}
-                                    </AnimatePresence>
+                                    <div
+                                        className="overflow-hidden transition-all duration-500"
+                                        style={{
+                                            maxHeight: expandedFolder === folder.name ? '9999px' : '0px',
+                                            opacity: expandedFolder === folder.name ? 1 : 0,
+                                        }}
+                                        aria-hidden={expandedFolder !== folder.name}
+                                    >
+                                        <div className="pt-4 space-y-2 w-full max-w-full">
+                                            {folder.files.map((file, fi) => (
+                                                <a 
+                                                    key={fi}
+                                                    href={`${DOCS_BASE_URL}/${folder.path}/${file.name.split('/').map(segment => encodeURIComponent(segment)).join('/')}`}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    aria-label={`Open ${file.name}`}
+                                                    className="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-all group/file w-full min-w-0"
+                                                >
+                                                    <div className="flex items-center gap-3 min-w-0 flex-1">
+                                                        <File size={14} className="text-white/40 shrink-0" aria-hidden="true" />
+                                                        <span className="text-[11px] font-bold text-[#A1A1A1] group-hover/file:text-white truncate">{file.name.split('/').pop()}</span>
+                                                    </div>
+                                                    <span className="text-[9px] font-black uppercase text-white/40 ml-2 shrink-0">{file.type}</span>
+                                                </a>
+                                            ))}
+                                        </div>
+                                    </div>
                                 </div>
                             ))}
                         </div>
@@ -463,11 +426,8 @@ export default function Portfolio() {
 
                         <div className="grid md:grid-cols-2 gap-8">
                             {portfolioData.testimonials.map((testimonial, i) => (
-                                <motion.div 
+                                <div 
                                     key={i}
-                                    initial={{ opacity: 0, scale: 0.95 }}
-                                    whileInView={{ opacity: 1, scale: 1 }}
-                                    viewport={{ once: true }}
                                     className="p-10 md:p-14 rounded-[40px] bg-white/5 border border-white/5 relative group hover:border-white/10 transition-all duration-500"
                                 >
                                     <Quote className="absolute top-10 right-10 text-white/5 w-20 h-20" />
@@ -491,7 +451,7 @@ export default function Portfolio() {
                                             </div>
                                         </div>
                                     </div>
-                                </motion.div>
+                                </div>
                             ))}
                         </div>
                     </div>
@@ -573,13 +533,9 @@ export default function Portfolio() {
                                                 <textarea id="form-message" name="message" rows={4} placeholder="TELL ME ABOUT YOUR PROJECT" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all placeholder:text-[#999999]/30 resize-none" />
                                             </div>
                                             {isSent ? (
-                                                <motion.div 
-                                                    initial={{ opacity: 0, scale: 0.9 }}
-                                                    animate={{ opacity: 1, scale: 1 }}
-                                                    className="w-full flex items-center justify-center gap-4 bg-green-500/10 text-green-500 py-8 rounded-full text-sm font-black uppercase tracking-[0.3em] border border-green-500/20 mt-8"
-                                                >
+                                                <div className="w-full flex items-center justify-center gap-4 bg-green-500/10 text-green-500 py-8 rounded-full text-sm font-black uppercase tracking-[0.3em] border border-green-500/20 mt-8 animate-[fadeScaleIn_0.4s_ease_forwards]">
                                                     Message Sent! <Sparkles size={18} aria-hidden="true" />
-                                                </motion.div>
+                                                </div>
                                             ) : (
                                                 <button 
                                                     type="submit"
@@ -636,90 +592,82 @@ export default function Portfolio() {
                 </div>
             </footer>
 
-            <AnimatePresence>
-                {selectedProject && (
-                    <motion.div 
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-[500] flex items-center justify-center p-4 sm:p-12 bg-black/95 backdrop-blur-2xl"
-                        onClick={() => setSelectedProject(null)}
+            {selectedProject && (
+                <div 
+                    className="fixed inset-0 z-[500] flex items-center justify-center p-4 sm:p-12 bg-black/95 backdrop-blur-2xl animate-[fadeIn_0.25s_ease_forwards]"
+                    onClick={() => setSelectedProject(null)}
+                >
+                    <div 
+                        className="w-full max-w-6xl bg-[#0A0A0A] border border-white/10 rounded-[32px] sm:rounded-[64px] overflow-hidden grid lg:grid-cols-12 max-h-full overflow-y-auto relative animate-[scaleIn_0.3s_ease_forwards]"
+                        onClick={(e) => e.stopPropagation()}
                     >
-                        <motion.div 
-                            initial={{ scale: 0.9, y: 20 }}
-                            animate={{ scale: 1, y: 0 }}
-                            exit={{ scale: 0.9, y: 20 }}
-                            className="w-full max-w-6xl bg-[#0A0A0A] border border-white/10 rounded-[32px] sm:rounded-[64px] overflow-hidden grid lg:grid-cols-12 max-h-full overflow-y-auto relative"
-                            onClick={(e) => e.stopPropagation()}
-                        >
-                            <div className="lg:col-span-5 relative h-[350px] lg:h-auto">
-                                <Image
-                                    src={selectedProject.imageUrl}
-                                    alt={selectedProject.title}
-                                    fill
-                                    sizes="(max-width: 1024px) 100vw, 500px"
-                                    className="object-cover"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-black via-transparent to-transparent"></div>
-                                <div className="absolute top-8 left-8">
-                                    <button 
-                                        onClick={() => setSelectedProject(null)}
-                                        aria-label="Close project details"
-                                        className="w-12 h-12 flex items-center justify-center bg-white/10 backdrop-blur-md rounded-full text-white hover:bg-white hover:text-black transition-all"
+                        <div className="lg:col-span-5 relative h-[350px] lg:h-auto">
+                            <Image
+                                src={selectedProject.imageUrl}
+                                alt={selectedProject.title}
+                                fill
+                                sizes="(max-width: 1024px) 100vw, 500px"
+                                className="object-cover"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-black via-transparent to-transparent"></div>
+                            <div className="absolute top-8 left-8">
+                                <button 
+                                    onClick={() => setSelectedProject(null)}
+                                    aria-label="Close project details"
+                                    className="w-12 h-12 flex items-center justify-center bg-white/10 backdrop-blur-md rounded-full text-white hover:bg-white hover:text-black transition-all"
+                                >
+                                    <X size={20} aria-hidden="true" />
+                                </button>
+                            </div>
+                        </div>
+                        <div className="lg:col-span-7 p-8 md:p-16 overflow-y-visible">
+                            <span className="text-[11px] font-black uppercase tracking-[0.2em] text-[#A1A1A1] mb-4 block">{selectedProject.category}</span>
+                            <h3 className="text-4xl md:text-5xl font-black uppercase tracking-tighter mb-8">{selectedProject.title}</h3>
+                            
+                            <div className="space-y-10">
+                                <div className="space-y-3">
+                                    <div className="flex items-center gap-3">
+                                        <Target size={18} className="text-[#A1A1A1]" aria-hidden="true" />
+                                        <h4 className="text-[11px] font-black uppercase tracking-[0.1em] text-white">The Challenge</h4>
+                                    </div>
+                                    <p className="text-[#E0E0E0] leading-relaxed italic">{selectedProject.caseStudy.problem}</p>
+                                </div>
+
+                                <div className="space-y-3">
+                                    <div className="flex items-center gap-3">
+                                        <Lightbulb size={18} className="text-[#A1A1A1]" aria-hidden="true" />
+                                        <h4 className="text-[11px] font-black uppercase tracking-[0.1em] text-white">The Execution</h4>
+                                    </div>
+                                    <p className="text-[#E0E0E0] leading-relaxed">{selectedProject.caseStudy.solution}</p>
+                                </div>
+
+                                <div className="space-y-4">
+                                    <div className="p-6 rounded-3xl bg-white/5 border border-white/5 flex items-center gap-6">
+                                        <div className="w-12 h-12 flex items-center justify-center bg-white text-black rounded-full shrink-0">
+                                            <TrendingUp size={20} aria-hidden="true" />
+                                        </div>
+                                        <div>
+                                            <h4 className="text-[11px] font-black uppercase tracking-[0.1em] text-white mb-1">Impact Delivered</h4>
+                                            <p className="text-lg font-bold text-[#E0E0E0]">{selectedProject.impact}</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="pt-8 flex gap-4">
+                                    <a 
+                                        href={selectedProject.link} 
+                                        target="_blank" 
+                                        aria-label={`View ${selectedProject.title} ${selectedProject.linkType === 'repo' ? 'repository' : 'space'}`}
+                                        className="flex-grow flex items-center justify-between bg-white text-black px-8 py-5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] hover:bg-[#474747] hover:text-white transition-all duration-500"
                                     >
-                                        <X size={20} aria-hidden="true" />
-                                    </button>
+                                        {selectedProject.linkType === 'repo' ? 'View Repository' : 'View Space'} <span className="material-symbols-outlined" aria-hidden="true">arrow_outward</span>
+                                    </a>
                                 </div>
                             </div>
-                            <div className="lg:col-span-7 p-8 md:p-16 overflow-y-visible">
-                                <span className="text-[11px] font-black uppercase tracking-[0.2em] text-[#A1A1A1] mb-4 block">{selectedProject.category}</span>
-                                <h3 className="text-4xl md:text-5xl font-black uppercase tracking-tighter mb-8">{selectedProject.title}</h3>
-                                
-                                <div className="space-y-10">
-                                    <div className="space-y-3">
-                                        <div className="flex items-center gap-3">
-                                            <Target size={18} className="text-[#A1A1A1]" aria-hidden="true" />
-                                            <h4 className="text-[11px] font-black uppercase tracking-[0.1em] text-white">The Challenge</h4>
-                                        </div>
-                                        <p className="text-[#E0E0E0] leading-relaxed italic">{selectedProject.caseStudy.problem}</p>
-                                    </div>
-
-                                    <div className="space-y-3">
-                                        <div className="flex items-center gap-3">
-                                            <Lightbulb size={18} className="text-[#A1A1A1]" aria-hidden="true" />
-                                            <h4 className="text-[11px] font-black uppercase tracking-[0.1em] text-white">The Execution</h4>
-                                        </div>
-                                        <p className="text-[#E0E0E0] leading-relaxed">{selectedProject.caseStudy.solution}</p>
-                                    </div>
-
-                                    <div className="space-y-4">
-                                        <div className="p-6 rounded-3xl bg-white/5 border border-white/5 flex items-center gap-6">
-                                            <div className="w-12 h-12 flex items-center justify-center bg-white text-black rounded-full shrink-0">
-                                                <TrendingUp size={20} aria-hidden="true" />
-                                            </div>
-                                            <div>
-                                                <h4 className="text-[11px] font-black uppercase tracking-[0.1em] text-white mb-1">Impact Delivered</h4>
-                                                <p className="text-lg font-bold text-[#E0E0E0]">{selectedProject.impact}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="pt-8 flex gap-4">
-                                        <a 
-                                            href={selectedProject.link} 
-                                            target="_blank" 
-                                            aria-label={`View ${selectedProject.title} ${selectedProject.linkType === 'repo' ? 'repository' : 'space'}`}
-                                            className="flex-grow flex items-center justify-between bg-white text-black px-8 py-5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] hover:bg-[#474747] hover:text-white transition-all duration-500"
-                                        >
-                                            {selectedProject.linkType === 'repo' ? 'View Repository' : 'View Space'} <span className="material-symbols-outlined" aria-hidden="true">arrow_outward</span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </motion.div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

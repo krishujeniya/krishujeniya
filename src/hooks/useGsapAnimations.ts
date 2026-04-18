@@ -25,6 +25,35 @@ export function useGsapAnimations() {
         const { noMotion } = (ctx as unknown as { conditions: { noMotion: boolean; motion: boolean } }).conditions;
         if (noMotion) return;
 
+        // ── 0. Hero entrance (replaces framer-motion) ──
+        const heroH1 = document.querySelector('#home h1') as HTMLElement | null;
+        const heroP = document.querySelector('#home p') as HTMLElement | null;
+        const heroButtons = document.querySelector('#home .flex.flex-col.sm\\:flex-row') as HTMLElement | null;
+        const brainBox = document.querySelector('#home .hidden.md\\:flex') as HTMLElement | null;
+
+        const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+        if (heroH1) {
+          heroTl.from(heroH1, { y: 30, autoAlpha: 0, duration: 0.9 }, 0.1);
+        }
+        if (brainBox) {
+          heroTl.from(brainBox, { scale: 0.7, autoAlpha: 0, duration: 0.8 }, 0.15);
+          // Continuous wobble
+          gsap.to(brainBox, {
+            rotate: 10,
+            scale: 1.1,
+            duration: 2.5,
+            repeat: -1,
+            yoyo: true,
+            ease: 'sine.inOut',
+          });
+        }
+        if (heroP) {
+          heroTl.from(heroP, { y: 20, autoAlpha: 0, duration: 0.8 }, 0.2);
+        }
+        if (heroButtons) {
+          heroTl.from(heroButtons, { y: 20, autoAlpha: 0, duration: 0.8 }, 0.3);
+        }
+
         // ── 1. Section heading reveals (experience, documents, testimonials) ──
         const sectionHeadings = gsap.utils.toArray<HTMLElement>(
           '#experience h2, #documents h2, #testimonials h2'
