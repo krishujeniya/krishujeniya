@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
 
 export const CustomCursor = () => {
@@ -8,77 +8,55 @@ export const CustomCursor = () => {
     const cursorY = useMotionValue(-100);
     const [isHovering, setIsHovering] = useState(false);
     const [isHidden, setIsHidden] = useState(false);
-    const hasTouchRef = useRef(false);
 
     const springConfig = { damping: 25, stiffness: 300, mass: 0.5 };
     const springX = useSpring(cursorX, springConfig);
     const springY = useSpring(cursorY, springConfig);
 
     useEffect(() => {
-        // Continuous detection for hybrid devices (touch + mouse)
+        // Continuous detection for hybrid devices
         const hoverMedia = window.matchMedia('(hover: hover) and (pointer: fine)');
-        const checkCapabilities = () => {
-            setIsHidden(!hoverMedia.matches);
-        };
+        const checkCapabilities = () => setIsHidden(!hoverMedia.matches);
         
         checkCapabilities();
         hoverMedia.addEventListener('change', checkCapabilities);
 
-        const onMouseMove = (e: MouseEvent) => {
-            if (hasTouchRef.current) return;
+        const onPointerMove = (e: PointerEvent) => {
+            if (e.pointerType === 'touch') return;
             cursorX.set(e.clientX);
             cursorY.set(e.clientY);
+            setIsHidden(false);
         };
 
-        const onMouseEnterInteractive = () => setIsHovering(true);
-        const onMouseLeaveInteractive = () => setIsHovering(false);
-        const onMouseLeaveWindow = () => setIsHidden(true);
-        const onMouseEnterWindow = () => {
-            if (!hasTouchRef.current) setIsHidden(false);
+        const onPointerOver = (e: PointerEvent) => {
+            if (e.pointerType === 'touch') return;
+            const target = e.target as HTMLElement;
+            if (target.closest('a, button, input, textarea, [role="button"], .cursor-pointer')) {
+                setIsHovering(true);
+            }
         };
 
-        window.addEventListener('mousemove', onMouseMove, { passive: true });
-        document.addEventListener('mouseleave', onMouseLeaveWindow);
-        document.addEventListener('mouseenter', onMouseEnterWindow);
-
-        // Add hover detection for interactive elements (with deduplication)
-        const interactiveSelectors = 'a, button, input, textarea, [role="button"], .magnetic-btn, .cursor-pointer';
-        const trackedElements = new WeakSet<Element>();
-        const elementCleanups: (() => void)[] = [];
-
-        const attachListeners = (el: Element) => {
-            if (trackedElements.has(el)) return;
-            trackedElements.add(el);
-            el.addEventListener('mouseenter', onMouseEnterInteractive);
-            el.addEventListener('mouseleave', onMouseLeaveInteractive);
-            elementCleanups.push(() => {
-                el.removeEventListener('mouseenter', onMouseEnterInteractive);
-                el.removeEventListener('mouseleave', onMouseLeaveInteractive);
-            });
+        const onPointerOut = (e: PointerEvent) => {
+            if (e.pointerType === 'touch') return;
+            const target = e.target as HTMLElement;
+            if (target.closest('a, button, input, textarea, [role="button"], .cursor-pointer')) {
+                setIsHovering(false);
+            }
         };
 
-        const interactiveElements = document.querySelectorAll(interactiveSelectors);
-        interactiveElements.forEach(attachListeners);
+        const onMouseLeave = () => setIsHidden(true);
 
-        // Debounced MutationObserver to handle dynamically added elements
-        let mutationTimer: ReturnType<typeof setTimeout>;
-        const observer = new MutationObserver(() => {
-            clearTimeout(mutationTimer);
-            mutationTimer = setTimeout(() => {
-                const newElements = document.querySelectorAll(interactiveSelectors);
-                newElements.forEach(attachListeners);
-            }, 300);
-        });
-        observer.observe(document.body, { childList: true, subtree: true });
+        window.addEventListener('pointermove', onPointerMove, { passive: true });
+        window.addEventListener('pointerover', onPointerOver, { passive: true });
+        window.addEventListener('pointerout', onPointerOut, { passive: true });
+        document.addEventListener('mouseleave', onMouseLeave);
 
         return () => {
-            clearTimeout(mutationTimer);
-            elementCleanups.forEach(fn => fn());
-            window.removeEventListener('mousemove', onMouseMove);
-            document.removeEventListener('mouseleave', onMouseLeaveWindow);
-            document.removeEventListener('mouseenter', onMouseEnterWindow);
+            window.removeEventListener('pointermove', onPointerMove);
+            window.removeEventListener('pointerover', onPointerOver);
+            window.removeEventListener('pointerout', onPointerOut);
+            document.removeEventListener('mouseleave', onMouseLeave);
             hoverMedia.removeEventListener('change', checkCapabilities);
-            observer.disconnect();
         };
     }, [cursorX, cursorY]);
 
