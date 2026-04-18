@@ -32,6 +32,7 @@ export default function Portfolio() {
     const [selectedProject, setSelectedProject] = useState<typeof portfolioData.projects[0] | null>(null);
     const [expandedFolder, setExpandedFolder] = useState<string | null>(null);
     const [isSent, setIsSent] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     // BUG-011/012: Modal accessibility and scroll lock
     useEffect(() => {
@@ -127,7 +128,7 @@ export default function Portfolio() {
                                         e.preventDefault();
                                         scrollTo(item);
                                     }}
-                                    className={`text-[11px] font-black uppercase tracking-[0.3em] transition-all hover:text-white py-2 whitespace-nowrap ${activeSection === item ? 'text-white' : 'text-white/40'}`}
+                                    className={`text-[11px] font-black uppercase tracking-[0.3em] transition-all hover:text-white py-2 whitespace-nowrap ${activeSection === item ? 'text-white' : 'text-white/60'}`}
                                     aria-current={activeSection === item ? 'page' : undefined}
                                 >
                                     {item}
@@ -478,18 +479,22 @@ export default function Portfolio() {
                             <div className="lg:col-span-6">
                                         <form className="flex flex-col gap-8" onSubmit={async (e) => {
                                             e.preventDefault();
-                                            if (isSent) return;
+                                            if (isSent || isSubmitting) return;
                                             
                                             const form = e.currentTarget;
                                             const formData = new FormData(form);
+
+                                            // Honeypot: bail if bot filled the hidden field
+                                            const honeypot = formData.get('website') as string;
+                                            if (honeypot) return;
+
                                             const name = formData.get('name') as string;
                                             const email = formData.get('email') as string;
                                             const message = formData.get('message') as string;
                                             
                                             if (!name || !email || !message) return;
 
-                                            const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
-                                            if (submitBtn) submitBtn.disabled = true;
+                                            setIsSubmitting(true);
 
                                             try {
                                                 const response = await fetch('https://krishujeniyan8n.centralindia.cloudapp.azure.com/webhook/webDATA', {
@@ -515,9 +520,12 @@ export default function Portfolio() {
                                                 console.error('Webhook error:', error);
                                                 alert('Message failed to send. Please try again or email directly.');
                                             } finally {
-                                                if (submitBtn) submitBtn.disabled = false;
+                                                setIsSubmitting(false);
                                             }
                                         }}>
+                                            {/* Honeypot: visually hidden, filled only by bots */}
+                                            <input type="text" name="website" autoComplete="off" tabIndex={-1} aria-hidden="true" className="hidden" />
+
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                                                 <div className="flex flex-col gap-3">
                                                     <label htmlFor="form-name" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Name</label>
@@ -539,10 +547,11 @@ export default function Portfolio() {
                                             ) : (
                                                 <button 
                                                     type="submit"
+                                                    disabled={isSubmitting}
                                                     aria-label="Send message via webhook"
                                                     className="w-full flex items-center justify-center gap-4 bg-black text-white py-8 rounded-full text-sm font-black uppercase tracking-[0.3em] hover:bg-black/80 hover:scale-[0.98] transition-all duration-500 mt-8 disabled:opacity-50 disabled:cursor-not-allowed"
                                                 >
-                                                    Send Message <ChevronRight size={18} aria-hidden="true" />
+                                                    {isSubmitting ? 'Sending…' : 'Send Message'} <ChevronRight size={18} aria-hidden="true" />
                                                 </button>
                                             )}
                                         </form>
