@@ -204,7 +204,7 @@ export default function Portfolio() {
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     aria-label="Book a consultation call on Google Calendar"
-                                    className="w-full sm:w-auto flex items-center justify-center gap-4 bg-black text-white border border-white/10 px-12 py-5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] hover:bg-white/5 transition-all duration-500"
+                                    className="w-full sm:w-auto flex items-center justify-center gap-4 bg-white/5 backdrop-blur-md border border-white/10 px-12 py-5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] hover:bg-white/10 hover:border-white/20 transition-all duration-500"
                                 >
                                     Book a Call <span className="material-symbols-outlined" aria-hidden="true">calendar_today</span>
                                 </a>
@@ -394,7 +394,7 @@ export default function Portfolio() {
 
                         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                             {portfolioData.documents.map((folder, i) => (
-                                <div key={i} className="group flex flex-col p-8 rounded-[32px] bg-white/5 border border-white/5 hover:border-white/10 transition-all duration-500">
+                                <div key={i} className="group flex flex-col p-8 rounded-[32px] bg-white/5 border border-white/5 hover:border-white/10 transition-all duration-500 w-full min-w-0 overflow-hidden">
                                     <div className="flex items-center justify-between mb-12">
                                         <div className="w-12 h-12 flex items-center justify-center bg-black text-white rounded-2xl group-hover:bg-[#A1A1A1] transition-colors">
                                             <folder.icon size={20} />
