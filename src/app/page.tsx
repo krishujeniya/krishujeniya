@@ -47,32 +47,39 @@ export default function Portfolio() {
 
 
     useEffect(() => {
+        const SECTIONS = ['home', 'about', 'experience', 'services', 'projects', 'documents', 'testimonials', 'contact'];
+
+        const getActiveSection = () => {
+            // Midpoint of the viewport — whichever section is closest to this wins
+            const viewportMid = window.scrollY + window.innerHeight / 2;
+
+            let closestId = 'home';
+            let closestDist = Infinity;
+
+            SECTIONS.forEach(id => {
+                const el = document.getElementById(id);
+                if (!el) return;
+                const elMid = el.offsetTop + el.offsetHeight / 2;
+                const dist = Math.abs(viewportMid - elMid);
+                if (dist < closestDist) {
+                    closestDist = dist;
+                    closestId = id;
+                }
+            });
+
+            setActiveSection(closestId);
+        };
+
         const handleScroll = () => {
             setScrolled(window.scrollY > 50);
+            getActiveSection();
         };
-        window.addEventListener('scroll', handleScroll);
 
-        const sections = ['home', 'about', 'experience', 'services', 'projects', 'documents', 'testimonials', 'contact'];
-        const observers = sections.map(id => {
-            const el = document.getElementById(id);
-            if (!el) return null;
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        setActiveSection(id);
-                    }
-                });
-            }, { threshold: 0.15, rootMargin: '-20% 0px -20% 0px' });
-            
-            observer.observe(el);
-            return observer;
-        });
+        // Run once on mount so the initial state is correct
+        getActiveSection();
 
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-            observers.forEach(obs => obs?.disconnect());
-        };
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
     const scrollTo = (id: string) => {
