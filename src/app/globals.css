@@ -107,7 +107,7 @@
   }
 
   /* BUG-003: Default color only for dark backgrounds to avoid white-on-white text */
-  [class*="bg-[#1"], [class*="bg-black"], [class*="bg-[#0"] {
+  [class*="bg-[#1]"], [class*="bg-black"], [class*="bg-[#0]"] {
     & p { color: rgba(255, 255, 255, 0.6); }
   }
 
