@@ -127,7 +127,7 @@ export default function Portfolio() {
                                     className={`text-[11px] font-black uppercase tracking-[0.3em] transition-all hover:text-white py-2 whitespace-nowrap ${activeSection === item ? 'text-white' : 'text-white/40'}`}
                                     aria-current={activeSection === item ? 'page' : undefined}
                                 >
-                                    {item}
+                                    {item === 'home' ? 'KRISH' : item}
                                 </a>
                             ))}
                         </div>
