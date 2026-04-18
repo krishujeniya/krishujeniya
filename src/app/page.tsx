@@ -139,7 +139,7 @@ export default function Portfolio() {
                             setActiveSection('contact'); // Force immediate update
                         }}
                         aria-label="Hire me for your next project"
-                        className="flex items-center gap-2 sm:gap-3 bg-white text-black text-[10px] sm:text-[11px] font-black uppercase tracking-[0.2em] px-5 sm:px-8 py-3 sm:py-4 rounded-full hover:bg-black hover:text-white transition-all duration-500 shadow-xl shadow-white/5 active:scale-95 whitespace-nowrap"
+                        className="flex items-center gap-2 sm:gap-3 bg-white text-black text-[10px] sm:text-[11px] font-black uppercase tracking-[0.2em] px-5 sm:px-8 py-3 sm:py-4 rounded-full transition-all duration-500 shadow-xl shadow-white/5 active:scale-95 whitespace-nowrap"
                     >
                         Hire Me <Mail size={14} className="group-hover:translate-x-1 transition-transform" />
                     </button>
@@ -195,7 +195,7 @@ export default function Portfolio() {
                                 <button 
                                     onClick={() => scrollTo('projects')}
                                     aria-label="Explore my work and case studies"
-                                    className="group w-full sm:w-auto flex items-center justify-center gap-4 bg-white text-black px-12 py-5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] hover:bg-black hover:text-white transition-all duration-500 shadow-2xl shadow-white/5"
+                                    className="group w-full sm:w-auto flex items-center justify-center gap-4 bg-white text-black px-12 py-5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] transition-all duration-500 shadow-2xl shadow-white/5"
                                 >
                                     Explore Work <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform" aria-hidden="true">explore</span>
                                 </button>
@@ -204,7 +204,7 @@ export default function Portfolio() {
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     aria-label="Book a consultation call on Google Calendar"
-                                    className="w-full sm:w-auto flex items-center justify-center gap-4 border border-white/10 px-12 py-5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] hover:bg-white/5 transition-all duration-500"
+                                    className="w-full sm:w-auto flex items-center justify-center gap-4 bg-black text-white border border-white/10 px-12 py-5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] hover:bg-white/5 transition-all duration-500"
                                 >
                                     Book a Call <span className="material-symbols-outlined" aria-hidden="true">calendar_today</span>
                                 </a>
@@ -421,7 +421,7 @@ export default function Portfolio() {
                                                 initial={{ height: 0, opacity: 0 }}
                                                 animate={{ height: 'auto', opacity: 1 }}
                                                 exit={{ height: 0, opacity: 0 }}
-                                                className="overflow-hidden pt-4 space-y-2"
+                                                className="overflow-hidden pt-4 space-y-2 w-full max-w-full"
                                             >
                                                 {folder.files.map((file, fi) => (
                                                     <a 
@@ -430,13 +430,13 @@ export default function Portfolio() {
                                                         target="_blank"
                                                         rel="noopener noreferrer"
                                                         aria-label={`Open ${file.name}`}
-                                                        className="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-all group/file"
+                                                        className="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-all group/file w-full min-w-0"
                                                     >
-                                                        <div className="flex items-center gap-3">
-                                                            <File size={14} className="text-white/40" aria-hidden="true" />
-                                                            <span className="text-[11px] font-bold text-[#A1A1A1] group-hover/file:text-white truncate max-w-[250px]">{file.name.split('/').pop()}</span>
+                                                        <div className="flex items-center gap-3 min-w-0 flex-1">
+                                                            <File size={14} className="text-white/40 shrink-0" aria-hidden="true" />
+                                                            <span className="text-[11px] font-bold text-[#A1A1A1] group-hover/file:text-white truncate">{file.name.split('/').pop()}</span>
                                                         </div>
-                                                        <span className="text-[9px] font-black uppercase text-white/40">{file.type}</span>
+                                                        <span className="text-[9px] font-black uppercase text-white/40 ml-2 shrink-0">{file.type}</span>
                                                     </a>
                                                 ))}
                                             </motion.div>
@@ -531,6 +531,7 @@ export default function Portfolio() {
                                         }}>
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                                                 <div className="flex flex-col gap-3">
+                                                    <label htmlFor="form-name" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Name</label>
                                                     <input id="form-name" name="name" type="text" placeholder="YOUR NAME" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all placeholder:text-[#999999]/30" />
                                                 </div>
                                                 <div className="flex flex-col gap-3">
