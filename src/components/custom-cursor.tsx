@@ -1,30 +1,50 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { motion, useMotionValue, useSpring } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
+import gsap from 'gsap';
 
 export const CustomCursor = () => {
-    const cursorX = useMotionValue(-100);
-    const cursorY = useMotionValue(-100);
-    const [isHovering, setIsHovering] = useState(false);
+    const ringRef = useRef<HTMLDivElement>(null);
+    const dotRef = useRef<HTMLDivElement>(null);
     const [isHidden, setIsHidden] = useState(false);
-
-    const springConfig = { damping: 25, stiffness: 300, mass: 0.5 };
-    const springX = useSpring(cursorX, springConfig);
-    const springY = useSpring(cursorY, springConfig);
 
     useEffect(() => {
         // Continuous detection for hybrid devices
         const hoverMedia = window.matchMedia('(hover: hover) and (pointer: fine)');
         const checkCapabilities = () => setIsHidden(!hoverMedia.matches);
-        
         checkCapabilities();
         hoverMedia.addEventListener('change', checkCapabilities);
 
+        if (!ringRef.current || !dotRef.current) return;
+
+        const ring = ringRef.current;
+        const dot = dotRef.current;
+
+        // quickSetter for high-freq perf
+        const setRingX = gsap.quickSetter(ring, 'x', 'px');
+        const setRingY = gsap.quickSetter(ring, 'y', 'px');
+        const setDotX = gsap.quickSetter(dot, 'x', 'px');
+        const setDotY = gsap.quickSetter(dot, 'y', 'px');
+
+        // Spring state for ring
+        let ringX = -100, ringY = -100;
+        let mouseX = -100, mouseY = -100;
+
+        // Lerp ticker for ring (spring-like follow)
+        const ticker = gsap.ticker.add(() => {
+            ringX += (mouseX - ringX) * 0.18;
+            ringY += (mouseY - ringY) * 0.18;
+            setRingX(ringX);
+            setRingY(ringY);
+        });
+
         const onPointerMove = (e: PointerEvent) => {
             if (e.pointerType === 'touch') return;
-            cursorX.set(e.clientX);
-            cursorY.set(e.clientY);
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            // Dot follows instantly
+            setDotX(e.clientX);
+            setDotY(e.clientY);
             setIsHidden(false);
         };
 
@@ -32,7 +52,8 @@ export const CustomCursor = () => {
             if (e.pointerType === 'touch') return;
             const target = e.target as HTMLElement;
             if (target.closest('a, button, input, textarea, [role="button"], .cursor-pointer')) {
-                setIsHovering(true);
+                gsap.to(ring, { width: 48, height: 48, borderColor: 'rgba(255,255,255,0.8)', duration: 0.2, ease: 'power2.out' });
+                gsap.to(dot, { width: 8, height: 8, backgroundColor: '#ffffff', duration: 0.15, ease: 'power2.out' });
             }
         };
 
@@ -40,7 +61,8 @@ export const CustomCursor = () => {
             if (e.pointerType === 'touch') return;
             const target = e.target as HTMLElement;
             if (target.closest('a, button, input, textarea, [role="button"], .cursor-pointer')) {
-                setIsHovering(false);
+                gsap.to(ring, { width: 32, height: 32, borderColor: 'rgba(255,255,255,0.4)', duration: 0.2, ease: 'power2.out' });
+                gsap.to(dot, { width: 5, height: 5, backgroundColor: 'rgba(255,255,255,0.9)', duration: 0.15, ease: 'power2.out' });
             }
         };
 
@@ -52,45 +74,30 @@ export const CustomCursor = () => {
         document.addEventListener('mouseleave', onMouseLeave);
 
         return () => {
+            gsap.ticker.remove(ticker);
             window.removeEventListener('pointermove', onPointerMove);
             window.removeEventListener('pointerover', onPointerOver);
             window.removeEventListener('pointerout', onPointerOut);
             document.removeEventListener('mouseleave', onMouseLeave);
             hoverMedia.removeEventListener('change', checkCapabilities);
         };
-    }, [cursorX, cursorY]);
+    }, []);
 
     if (isHidden) return null;
 
     return (
         <>
             {/* Outer ring */}
-            <motion.div
+            <div
+                ref={ringRef}
                 className="custom-cursor-ring"
-                style={{
-                    x: springX,
-                    y: springY,
-                }}
-                animate={{
-                    width: isHovering ? 48 : 32,
-                    height: isHovering ? 48 : 32,
-                    borderColor: isHovering ? 'rgba(255,255,255,0.8)' : 'rgba(255,255,255,0.4)',
-                }}
-                transition={{ duration: 0.2 }}
+                style={{ width: 32, height: 32, borderColor: 'rgba(255,255,255,0.4)' }}
             />
             {/* Inner dot */}
-            <motion.div
+            <div
+                ref={dotRef}
                 className="custom-cursor-dot"
-                style={{
-                    x: cursorX,
-                    y: cursorY,
-                }}
-                animate={{
-                    width: isHovering ? 8 : 5,
-                    height: isHovering ? 8 : 5,
-                    backgroundColor: isHovering ? '#ffffff' : 'rgba(255,255,255,0.9)',
-                }}
-                transition={{ duration: 0.15 }}
+                style={{ width: 5, height: 5, backgroundColor: 'rgba(255,255,255,0.9)' }}
             />
         </>
     );

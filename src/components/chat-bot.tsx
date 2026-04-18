@@ -1,8 +1,11 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useRef, useEffect, useCallback } from 'react';
+import { useGSAP } from '@gsap/react';
+import gsap from 'gsap';
 import { Send, X, Bot, User, Sparkles, MessageCircle } from 'lucide-react';
+
+gsap.registerPlugin(useGSAP);
 
 interface KnowledgeEntry {
     keywords: string[];
@@ -111,32 +114,23 @@ const knowledgeBase: KnowledgeEntry[] = [
 const getAIResponse = (userMessage: string): string => {
     const rawMsg = userMessage.toLowerCase().trim();
     const words = rawMsg.split(/\s+/);
-    
-    // Check for negation (simple implementation)
-    const negations = ['no', 'not', 'don\'t', 'dont', 'stop', 'quit', 'never'];
+
+    const negations = ['no', 'not', "don't", 'dont', 'stop', 'quit', 'never'];
     const isNegated = negations.some(n => words.includes(n));
 
-    // Score each knowledge entry
     let bestMatch: KnowledgeEntry | null = null;
     let bestScore = 0;
 
     for (const entry of knowledgeBase) {
         let score = 0;
-        let matchCount = 0;
-
         for (const keyword of entry.keywords) {
             if (rawMsg.includes(keyword)) {
-                // Multi-word matches score significantly higher
                 const keywordWeight = keyword.split(' ').length;
                 score += keywordWeight * 10;
-                matchCount++;
             }
         }
-        
-        // Contextual adjustments
         if (entry.priority) score *= entry.priority;
-        if (isNegated && words.length <= 4) score *= 0.2; // Only penalize short negation queries
-
+        if (isNegated && words.length <= 4) score *= 0.2;
         if (score > bestScore) {
             bestScore = score;
             bestMatch = entry;
@@ -147,7 +141,6 @@ const getAIResponse = (userMessage: string): string => {
         return bestMatch.response;
     }
 
-    // Fallback responses
     const fallbacks = [
         "Interesting question! While I may not have a specific answer for that, I can tell you about Krish's services, projects, skills, pricing, or availability. What would you like to know? 😊",
         "I'm not sure about that one, but I can help you with info about Krish's AI/ML services, his portfolio projects, or help you get started with a project inquiry.",
@@ -156,16 +149,9 @@ const getAIResponse = (userMessage: string): string => {
     return fallbacks[Math.floor(Math.random() * fallbacks.length)];
 };
 
-// AI Chatbot placeholder messages
 const botMessages = [
-    {
-        from: 'bot' as const,
-        text: "Hey there! 👋 I'm Krish's AI assistant. How can I help you today?",
-    },
-    {
-        from: 'bot' as const,
-        text: "Ask me about Krish's services, skills, projects, pricing, availability, or anything about his portfolio!",
-    },
+    { from: 'bot' as const, text: "Hey there! 👋 I'm Krish's AI assistant. How can I help you today?" },
+    { from: 'bot' as const, text: "Ask me about Krish's services, skills, projects, pricing, availability, or anything about his portfolio!" },
 ];
 
 export const ChatBot = () => {
@@ -178,189 +164,221 @@ export const ChatBot = () => {
     const [isTyping, setIsTyping] = useState(false);
     const chatEndRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
-
-    useEffect(() => {
-        chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }, [chatMessages, isTyping]);
-
-    // Handle focus trap and auto-focus on open
-    useEffect(() => {
-        if (chatOpen) {
-            inputRef.current?.focus();
-        }
-    }, [chatOpen]);
-
+    const windowRef = useRef<HTMLDivElement>(null);
+    const toggleRef = useRef<HTMLButtonElement>(null);
+    const closeIconRef = useRef<HTMLDivElement>(null);
+    const openIconRef = useRef<HTMLDivElement>(null);
     const isMounted = useRef(true);
+
     useEffect(() => {
         isMounted.current = true;
         return () => { isMounted.current = false; };
     }, []);
 
-    const handleChatSend = () => {
+    useEffect(() => {
+        chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, [chatMessages, isTyping]);
+
+    useEffect(() => {
+        if (chatOpen) inputRef.current?.focus();
+    }, [chatOpen]);
+
+    // Animate chat window open/close
+    useEffect(() => {
+        const win = windowRef.current;
+        if (!win) return;
+        if (chatOpen) {
+            gsap.set(win, { display: 'flex' });
+            gsap.fromTo(win,
+                { opacity: 0, scale: 0.85, y: 20 },
+                { opacity: 1, scale: 1, y: 0, duration: 0.3, ease: 'power3.out' }
+            );
+        } else {
+            gsap.to(win, {
+                opacity: 0, scale: 0.85, y: 20, duration: 0.25, ease: 'power2.in',
+                onComplete: () => gsap.set(win, { display: 'none' }),
+            });
+        }
+    }, [chatOpen]);
+
+    // Toggle button icon swap
+    useEffect(() => {
+        const close = closeIconRef.current;
+        const open = openIconRef.current;
+        if (!close || !open) return;
+        if (chatOpen) {
+            gsap.set(open, { display: 'none' });
+            gsap.set(close, { display: 'flex', rotate: -90, opacity: 0 });
+            gsap.to(close, { rotate: 0, opacity: 1, duration: 0.2, ease: 'power2.out' });
+        } else {
+            gsap.set(close, { display: 'none' });
+            gsap.set(open, { display: 'flex', rotate: 90, opacity: 0 });
+            gsap.to(open, { rotate: 0, opacity: 1, duration: 0.2, ease: 'power2.out' });
+        }
+    }, [chatOpen]);
+
+    // Toggle button hover
+    useGSAP(() => {
+        const btn = toggleRef.current;
+        if (!btn) return;
+        const onEnter = () => gsap.to(btn, { scale: 1.1, duration: 0.2, ease: 'power2.out' });
+        const onLeave = () => gsap.to(btn, { scale: 1, duration: 0.2, ease: 'power2.out' });
+        const onDown = () => gsap.to(btn, { scale: 0.95, duration: 0.1 });
+        btn.addEventListener('mouseenter', onEnter);
+        btn.addEventListener('mouseleave', onLeave);
+        btn.addEventListener('mousedown', onDown);
+        btn.addEventListener('mouseup', onLeave);
+        return () => {
+            btn.removeEventListener('mouseenter', onEnter);
+            btn.removeEventListener('mouseleave', onLeave);
+            btn.removeEventListener('mousedown', onDown);
+            btn.removeEventListener('mouseup', onLeave);
+        };
+    }, []);
+
+    const handleChatSend = useCallback(() => {
         if (!chatInput.trim() || isTyping) return;
         const userMsg = chatInput.trim();
         const userMsgId = nextIdRef.current++;
-        setChatMessages((prev) => [
-            ...prev,
-            { id: userMsgId, from: 'user' as const, text: userMsg },
-        ].slice(-50));
+        setChatMessages((prev) => [...prev, { id: userMsgId, from: 'user' as const, text: userMsg }].slice(-50));
         setChatInput('');
         setIsTyping(true);
-
-        // Simulate AI thinking delay (400-1000ms)
         const thinkTime = 400 + Math.random() * 600;
         setTimeout(() => {
             if (!isMounted.current) return;
             const aiResponse = getAIResponse(userMsg);
             const botMsgId = nextIdRef.current++;
-            setChatMessages((prev) => [
-                ...prev,
-                { id: botMsgId, from: 'bot' as const, text: aiResponse },
-            ].slice(-50));
+            setChatMessages((prev) => [...prev, { id: botMsgId, from: 'bot' as const, text: aiResponse }].slice(-50));
             setIsTyping(false);
         }, thinkTime);
-    };
+    }, [chatInput, isTyping]);
 
     return (
         <div className="chatbot-wrapper">
-            <AnimatePresence>
-                {chatOpen && (
-                    <motion.div
-                        className="chatbot-window"
-                        id="chat-window"
-                        role="dialog"
-                        aria-label="AI Assistant"
-                        initial={{ opacity: 0, scale: 0.85, y: 20 }}
-                        animate={{ opacity: 1, scale: 1, y: 0 }}
-                        exit={{ opacity: 0, scale: 0.85, y: 20 }}
-                        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            {/* Chat window — always rendered, shown/hidden by GSAP */}
+            <div
+                ref={windowRef}
+                className="chatbot-window"
+                id="chat-window"
+                role="dialog"
+                aria-label="AI Assistant"
+                style={{ display: 'none' }}
+            >
+                {/* Chat header */}
+                <div className="chatbot-header">
+                    <div className="chatbot-header-info">
+                        <div className="chatbot-avatar">
+                            <Sparkles className="w-4 h-4" />
+                        </div>
+                        <div>
+                            <p className="chatbot-name">Krish&apos;s AI Assistant</p>
+                            <p className="chatbot-status">
+                                <span className="chatbot-status-dot" />
+                                Online
+                            </p>
+                        </div>
+                    </div>
+                    <button
+                        onClick={() => setChatOpen(false)}
+                        className="chatbot-close"
+                        aria-label="Close chat"
                     >
-                        {/* Chat header */}
-                        <div className="chatbot-header">
-                            <div className="chatbot-header-info">
-                                <div className="chatbot-avatar">
-                                    <Sparkles className="w-4 h-4" />
-                                </div>
-                                <div>
-                                    <p className="chatbot-name">Krish&apos;s AI Assistant</p>
-                                    <p className="chatbot-status">
-                                        <span className="chatbot-status-dot" />
-                                        Online
-                                    </p>
-                                </div>
-                            </div>
-                            <button
-                                onClick={() => setChatOpen(false)}
-                                className="chatbot-close"
-                                aria-label="Close chat"
-                            >
-                                <X className="w-4 h-4" />
-                            </button>
-                        </div>
+                        <X className="w-4 h-4" />
+                    </button>
+                </div>
 
-                        {/* Chat messages */}
-                        <div 
-                            className="chatbot-messages" 
-                            aria-live="polite"
-                            aria-atomic="false"
-                        >
-                            {chatMessages.map((msg) => (
-                                <motion.div
-                                    key={msg.id}
-                                    className={`chatbot-msg ${msg.from === 'bot' ? 'chatbot-msg-bot' : 'chatbot-msg-user'}`}
-                                    initial={{ opacity: 0, y: 10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ duration: 0.3 }}
-                                >
-                                    <div className={`chatbot-msg-avatar ${msg.from === 'bot' ? 'chatbot-msg-avatar-bot' : 'chatbot-msg-avatar-user'}`}>
-                                        {msg.from === 'bot' ? <Bot className="w-3 h-3" /> : <User className="w-3 h-3" />}
-                                    </div>
-                                    <div 
-                                        className={`chatbot-msg-bubble ${msg.from === 'bot' ? 'chatbot-msg-bubble-bot' : 'chatbot-msg-bubble-user'} whitespace-pre-wrap`}
-                                        dangerouslySetInnerHTML={{ 
-                                            __html: msg.text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') 
-                                        }}
-                                    />
-                                </motion.div>
-                            ))}
-                            {isTyping && (
-                                <motion.div
-                                    className="chatbot-msg chatbot-msg-bot"
-                                    initial={{ opacity: 0, y: 10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ duration: 0.2 }}
-                                >
-                                    <div className="chatbot-msg-avatar chatbot-msg-avatar-bot">
-                                        <Bot className="w-3 h-3" />
-                                    </div>
-                                    <div className="chatbot-msg-bubble chatbot-msg-bubble-bot chatbot-typing">
-                                        <span className="typing-dot" />
-                                        <span className="typing-dot" />
-                                        <span className="typing-dot" />
-                                    </div>
-                                </motion.div>
-                            )}
-                            <div ref={chatEndRef} />
-                        </div>
+                {/* Chat messages */}
+                <div
+                    className="chatbot-messages"
+                    aria-live="polite"
+                    aria-atomic="false"
+                >
+                    {chatMessages.map((msg) => (
+                        <ChatMsg key={msg.id} msg={msg} />
+                    ))}
+                    {isTyping && (
+                        <ChatMsg
+                            msg={{ id: -1, from: 'bot', text: '__typing__' }}
+                            isTyping
+                        />
+                    )}
+                    <div ref={chatEndRef} />
+                </div>
 
-                        {/* Chat input */}
-                        <div className="chatbot-input-area">
-                            <input
-                                ref={inputRef}
-                                type="text"
-                                value={chatInput}
-                                onChange={(e) => setChatInput(e.target.value)}
-                                onKeyDown={(e) => e.key === 'Enter' && handleChatSend()}
-                                placeholder="Type a message..."
-                                className="chatbot-input"
-                                aria-label="Chat message"
-                            />
-                            <button
-                                onClick={handleChatSend}
-                                className="chatbot-send"
-                                aria-label="Send message"
-                            >
-                                <Send className="w-4 h-4" />
-                            </button>
-                        </div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
+                {/* Chat input */}
+                <div className="chatbot-input-area">
+                    <input
+                        ref={inputRef}
+                        type="text"
+                        value={chatInput}
+                        onChange={(e) => setChatInput(e.target.value)}
+                        onKeyDown={(e) => e.key === 'Enter' && handleChatSend()}
+                        placeholder="Type a message..."
+                        className="chatbot-input"
+                        aria-label="Chat message"
+                    />
+                    <button
+                        onClick={handleChatSend}
+                        className="chatbot-send"
+                        aria-label="Send message"
+                    >
+                        <Send className="w-4 h-4" />
+                    </button>
+                </div>
+            </div>
 
             {/* Chat toggle button */}
-            <motion.button
+            <button
+                ref={toggleRef}
                 className="chatbot-toggle magnetic-btn"
                 onClick={() => setChatOpen(!chatOpen)}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
                 aria-label="Toggle AI chat"
                 aria-expanded={chatOpen}
                 aria-controls="chat-window"
             >
-                <AnimatePresence mode="wait">
-                    {chatOpen ? (
-                        <motion.div
-                            key="close"
-                            initial={{ rotate: -90, opacity: 0 }}
-                            animate={{ rotate: 0, opacity: 1 }}
-                            exit={{ rotate: 90, opacity: 0 }}
-                            transition={{ duration: 0.2 }}
-                        >
-                            <X className="w-6 h-6" />
-                        </motion.div>
-                    ) : (
-                        <motion.div
-                            key="open"
-                            initial={{ rotate: 90, opacity: 0 }}
-                            animate={{ rotate: 0, opacity: 1 }}
-                            exit={{ rotate: -90, opacity: 0 }}
-                            transition={{ duration: 0.2 }}
-                        >
-                            <MessageCircle className="w-6 h-6" />
-                        </motion.div>
-                    )}
-                </AnimatePresence>
-            </motion.button>
+                <div ref={openIconRef} style={{ display: 'flex' }}>
+                    <MessageCircle className="w-6 h-6" />
+                </div>
+                <div ref={closeIconRef} style={{ display: 'none' }}>
+                    <X className="w-6 h-6" />
+                </div>
+            </button>
         </div>
     );
 };
+
+// Individual chat message with GSAP entrance
+function ChatMsg({ msg, isTyping = false }: { msg: { id: number; from: 'bot' | 'user'; text: string }; isTyping?: boolean }) {
+    const ref = useRef<HTMLDivElement>(null);
+
+    useGSAP(() => {
+        if (ref.current) {
+            gsap.from(ref.current, { opacity: 0, y: 10, duration: 0.3, ease: 'power2.out' });
+        }
+    }, []);
+
+    return (
+        <div
+            ref={ref}
+            className={`chatbot-msg ${msg.from === 'bot' ? 'chatbot-msg-bot' : 'chatbot-msg-user'}`}
+        >
+            <div className={`chatbot-msg-avatar ${msg.from === 'bot' ? 'chatbot-msg-avatar-bot' : 'chatbot-msg-avatar-user'}`}>
+                {msg.from === 'bot' ? <Bot className="w-3 h-3" /> : <User className="w-3 h-3" />}
+            </div>
+            {isTyping ? (
+                <div className="chatbot-msg-bubble chatbot-msg-bubble-bot chatbot-typing">
+                    <span className="typing-dot" />
+                    <span className="typing-dot" />
+                    <span className="typing-dot" />
+                </div>
+            ) : (
+                <div
+                    className={`chatbot-msg-bubble ${msg.from === 'bot' ? 'chatbot-msg-bubble-bot' : 'chatbot-msg-bubble-user'} whitespace-pre-wrap`}
+                    dangerouslySetInnerHTML={{
+                        __html: msg.text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                    }}
+                />
+            )}
+        </div>
+    );
+}
