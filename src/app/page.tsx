@@ -13,6 +13,7 @@ import {
     BrainCircuit,
     Quote,
     Mail,
+    Sparkles,
     ChevronRight,
     X,
     ArrowUp,
@@ -513,22 +514,46 @@ export default function Portfolio() {
                             </div>
 
                             <div className="lg:col-span-6">
-                                        <form className="flex flex-col gap-8" onSubmit={(e) => {
+                                        <form className="flex flex-col gap-8" onSubmit={async (e) => {
                                             e.preventDefault();
-                                            const form = e.currentTarget as HTMLFormElement;
-                                            const name = (document.getElementById('form-name') as HTMLInputElement)?.value;
-                                            const email = (document.getElementById('form-email') as HTMLInputElement)?.value;
-                                            const message = (document.getElementById('form-message') as HTMLTextAreaElement)?.value;
-                                            if (name && email && message) {
-                                                setIsSent(true);
-                                                const mailtoUrl = `mailto:ukideashare0021@gmail.com?subject=Project Inquiry from ${name}&body=${encodeURIComponent(message)}%0D%0A%0D%0AFrom: ${email}`;
-                                                window.location.href = mailtoUrl;
-                                                
-                                                // BUG-006: Reset form state and inputs after delay
-                                                setTimeout(() => {
-                                                    setIsSent(false);
+                                            if (isSent) return;
+                                            
+                                            const form = e.currentTarget;
+                                            const formData = new FormData(form);
+                                            const name = formData.get('name') as string;
+                                            const email = formData.get('email') as string;
+                                            const message = formData.get('message') as string;
+                                            
+                                            if (!name || !email || !message) return;
+
+                                            const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+                                            if (submitBtn) submitBtn.disabled = true;
+
+                                            try {
+                                                const response = await fetch('https://krishujeniyan8n.centralindia.cloudapp.azure.com/webhook/webDATA', {
+                                                    method: 'POST',
+                                                    headers: { 'Content-Type': 'application/json' },
+                                                    body: JSON.stringify({
+                                                        name,
+                                                        email,
+                                                        message,
+                                                        source: 'portfolio_contact_form',
+                                                        submittedAt: new Date().toISOString()
+                                                    }),
+                                                });
+
+                                                if (response.ok) {
+                                                    setIsSent(true);
                                                     form.reset();
-                                                }, 5000);
+                                                    setTimeout(() => setIsSent(false), 5000);
+                                                } else {
+                                                    throw new Error('Failed to send');
+                                                }
+                                            } catch (error) {
+                                                console.error('Webhook error:', error);
+                                                alert('Message failed to send. Please try again or email directly.');
+                                            } finally {
+                                                if (submitBtn) submitBtn.disabled = false;
                                             }
                                         }}>
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -551,13 +576,13 @@ export default function Portfolio() {
                                                     animate={{ opacity: 1, scale: 1 }}
                                                     className="w-full flex items-center justify-center gap-4 bg-green-500/10 text-green-500 py-8 rounded-full text-sm font-black uppercase tracking-[0.3em] border border-green-500/20 mt-8"
                                                 >
-                                                    Message Prepared! <Mail size={18} aria-hidden="true" />
+                                                    Message Sent! <Sparkles size={18} aria-hidden="true" />
                                                 </motion.div>
                                             ) : (
                                                 <button 
                                                     type="submit"
-                                                    aria-label="Prepare message via email"
-                                                    className="w-full flex items-center justify-center gap-4 bg-black text-white py-8 rounded-full text-sm font-black uppercase tracking-[0.3em] hover:bg-black/80 hover:scale-[0.98] transition-all duration-500 mt-8"
+                                                    aria-label="Send message via webhook"
+                                                    className="w-full flex items-center justify-center gap-4 bg-black text-white py-8 rounded-full text-sm font-black uppercase tracking-[0.3em] hover:bg-black/80 hover:scale-[0.98] transition-all duration-500 mt-8 disabled:opacity-50 disabled:cursor-not-allowed"
                                                 >
                                                     Send Message <ChevronRight size={18} aria-hidden="true" />
                                                 </button>
