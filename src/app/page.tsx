@@ -116,7 +116,7 @@ export default function Portfolio() {
                         
                         {/* Desktop Navigation Links */}
                         <div className="hidden md:flex items-center gap-8 overflow-x-auto no-scrollbar">
-                            {['home', 'about', 'experience', 'services', 'projects', 'documents', 'testimonials', 'contact'].map((item) => (
+                            {['about', 'experience', 'services', 'projects', 'documents', 'testimonials', 'contact'].map((item) => (
                                 <a
                                     key={item}
                                     href={`#${item}`}
@@ -127,7 +127,7 @@ export default function Portfolio() {
                                     className={`text-[11px] font-black uppercase tracking-[0.3em] transition-all hover:text-white py-2 whitespace-nowrap ${activeSection === item ? 'text-white' : 'text-white/40'}`}
                                     aria-current={activeSection === item ? 'page' : undefined}
                                 >
-                                    {item === 'home' ? 'KRISH' : item}
+                                    {item}
                                 </a>
                             ))}
                         </div>
