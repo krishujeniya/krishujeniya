@@ -63,7 +63,7 @@ export default function Portfolio() {
                         setActiveSection(id);
                     }
                 });
-            }, { threshold: 0.3, rootMargin: '-80px 0px -20% 0px' });
+            }, { threshold: 0.15, rootMargin: '-20% 0px -20% 0px' });
             
             observer.observe(el);
             return observer;
@@ -89,27 +89,22 @@ export default function Portfolio() {
             <nav className={`fixed top-0 left-0 w-full z-[100] transition-all duration-500 ${scrolled ? 'bg-black/95 backdrop-blur-xl py-4 border-b border-white/5 rounded-b-[32px] sm:rounded-b-[40px]' : 'py-6'}`}>
                 <div className="max-w-[1440px] mx-auto px-6 md:px-12 flex items-center justify-between gap-4">
                     <div className="flex items-center gap-8 overflow-hidden">
-                        {/* Mobile Title / Section Name */}
+                        {/* Brand Title / Section Name */}
                         <div 
-                            className="text-xs font-black tracking-tighter cursor-pointer hover:opacity-70 transition-opacity whitespace-nowrap outline-none flex sm:hidden"
+                            className="text-lg sm:text-2xl font-black tracking-tighter cursor-pointer hover:opacity-70 transition-opacity whitespace-nowrap outline-none flex items-center gap-2"
                             onClick={() => scrollTo('home')}
                             role="button"
                             tabIndex={0}
                             onKeyDown={(e) => e.key === 'Enter' && scrollTo('home')}
                         >
-                            {activeSection === 'home' ? 'KRISH UJENIYA' : activeSection.toUpperCase()}
-                        </div>
-
-                        {/* Desktop Brand Title */}
-                        <div 
-                            className="text-2xl font-black tracking-tighter cursor-pointer hover:opacity-70 transition-opacity whitespace-nowrap outline-none focus-visible:ring-2 focus-visible:ring-white/20 rounded-lg p-1 hidden sm:flex items-center gap-2"
-                            onClick={() => scrollTo('home')}
-                            role="button"
-                            tabIndex={0}
-                            onKeyDown={(e) => e.key === 'Enter' && scrollTo('home')}
-                            aria-label="Back to home"
-                        >
-                            KRISH <span className="text-[#A1A1A1]">UJENIYA</span>
+                            <span className="sm:hidden">
+                                {activeSection === 'home' ? (
+                                    <>KRISH <span className="text-[#A1A1A1]">UJENIYA</span></>
+                                ) : activeSection.toUpperCase()}
+                            </span>
+                            <span className="hidden sm:inline">
+                                KRISH <span className="text-[#A1A1A1]">UJENIYA</span>
+                            </span>
                         </div>
                         
                         {/* Desktop Navigation Links */}
@@ -132,9 +127,12 @@ export default function Portfolio() {
                     </div>
 
                     <button 
-                        onClick={() => scrollTo('contact')}
+                        onClick={() => {
+                            scrollTo('contact');
+                            setActiveSection('contact'); // Force immediate update
+                        }}
                         aria-label="Hire me for your next project"
-                        className="flex items-center gap-2 sm:gap-3 bg-white text-black text-[9px] sm:text-[11px] font-black uppercase tracking-[0.2em] px-4 sm:px-8 py-2.5 sm:py-4 rounded-full hover:bg-black hover:text-white transition-all duration-500 shadow-xl shadow-white/5 active:scale-95 whitespace-nowrap"
+                        className="flex items-center gap-2 sm:gap-3 bg-white text-black text-[10px] sm:text-[11px] font-black uppercase tracking-[0.2em] px-5 sm:px-8 py-3 sm:py-4 rounded-full hover:bg-black hover:text-white transition-all duration-500 shadow-xl shadow-white/5 active:scale-95 whitespace-nowrap"
                     >
                         Hire Me <Mail size={14} className="group-hover:translate-x-1 transition-transform" />
                     </button>
