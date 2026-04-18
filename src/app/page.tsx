@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { useGsapAnimations } from '@/hooks/useGsapAnimations';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { portfolioData } from '@/data/portfolio';
@@ -25,6 +26,7 @@ import {
 const DOCS_BASE_URL = 'https://github.com/krishujeniya/krishujeniya/raw/main/Docs';
 
 export default function Portfolio() {
+    useGsapAnimations();
     const [activeSection, setActiveSection] = useState('home');
     const [scrolled, setScrolled] = useState(false);
     const [selectedProject, setSelectedProject] = useState<typeof portfolioData.projects[0] | null>(null);
