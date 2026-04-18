@@ -6,6 +6,58 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
+/** Helper: animate a set of elements in from below, once they enter the viewport.
+ *  Falls back to visible immediately if no elements found (prevents permanent hide). */
+function revealOnScroll(
+  selector: string,
+  opts: {
+    y?: number;
+    x?: number;
+    scale?: number;
+    stagger?: number;
+    duration?: number;
+    start?: string;
+    delay?: number;
+  } = {}
+) {
+  const els = gsap.utils.toArray<HTMLElement>(selector);
+  if (!els.length) return;
+
+  const {
+    y = 40,
+    x = 0,
+    scale = 1,
+    stagger = 0.1,
+    duration = 0.75,
+    start = 'top 88%',
+    delay = 0,
+  } = opts;
+
+  // Set initial state in CSS — safer than autoAlpha which can leave things hidden
+  gsap.set(els, { opacity: 0, y, x, scale });
+
+  els.forEach((el, i) => {
+    ScrollTrigger.create({
+      trigger: el,
+      start,
+      once: true,
+      invalidateOnRefresh: true,
+      onEnter: () => {
+        gsap.to(el, {
+          opacity: 1,
+          y: 0,
+          x: 0,
+          scale: 1,
+          duration,
+          delay: delay + i * stagger,
+          ease: 'power3.out',
+          clearProps: 'transform', // release after done for perf
+        });
+      },
+    });
+  });
+}
+
 export function useGsapAnimations() {
   const initialized = useRef(false);
 
@@ -13,251 +65,155 @@ export function useGsapAnimations() {
     if (initialized.current) return;
     initialized.current = true;
 
-    // Respect prefers-reduced-motion
-    const mm = gsap.matchMedia();
+    // Give React one frame to finish painting before querying DOM
+    const raf = requestAnimationFrame(() => {
+      const mm = gsap.matchMedia();
 
-    mm.add(
-      {
-        noMotion: '(prefers-reduced-motion: reduce)',
-        motion: '(prefers-reduced-motion: no-preference)',
-      },
-      (ctx) => {
-        const { noMotion } = (ctx as unknown as { conditions: { noMotion: boolean; motion: boolean } }).conditions;
-        if (noMotion) return;
+      mm.add(
+        {
+          noMotion: '(prefers-reduced-motion: reduce)',
+          motion: '(prefers-reduced-motion: no-preference)',
+        },
+        (ctx) => {
+          const { noMotion } = (ctx as unknown as { conditions: { noMotion: boolean } }).conditions;
 
-        // ── 0. Hero entrance (replaces framer-motion) ──
-        const heroH1 = document.querySelector('#home h1') as HTMLElement | null;
-        const heroP = document.querySelector('#home p') as HTMLElement | null;
-        const heroButtons = document.querySelector('#home .flex.flex-col.sm\\:flex-row') as HTMLElement | null;
-        const brainBox = document.querySelector('#home .hidden.md\\:flex') as HTMLElement | null;
+          // ── Reduced motion: make everything visible immediately ──
+          if (noMotion) {
+            gsap.set('section, section *', { opacity: 1, visibility: 'visible' });
+            return;
+          }
 
-        const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-        if (heroH1) {
-          heroTl.from(heroH1, { y: 30, autoAlpha: 0, duration: 0.9 }, 0.1);
-        }
-        if (brainBox) {
-          heroTl.from(brainBox, { scale: 0.7, autoAlpha: 0, duration: 0.8 }, 0.15);
-          // Continuous wobble
-          gsap.to(brainBox, {
-            rotate: 10,
-            scale: 1.1,
-            duration: 2.5,
-            repeat: -1,
-            yoyo: true,
-            ease: 'sine.inOut',
-          });
-        }
-        if (heroP) {
-          heroTl.from(heroP, { y: 20, autoAlpha: 0, duration: 0.8 }, 0.2);
-        }
-        if (heroButtons) {
-          heroTl.from(heroButtons, { y: 20, autoAlpha: 0, duration: 0.8 }, 0.3);
-        }
+          // ── 0. Hero entrance ──
+          const heroH1 = document.querySelector('#home h1') as HTMLElement | null;
+          const heroP = document.querySelector('#home p') as HTMLElement | null;
+          const heroButtons = document.querySelector('#home .pt-4') as HTMLElement | null;
+          const brainBox = document.querySelector('#home .hidden.md\\:flex') as HTMLElement | null;
 
-        // ── 1. Section heading reveals (experience, documents, testimonials) ──
-        const sectionHeadings = gsap.utils.toArray<HTMLElement>(
-          '#experience h2, #documents h2, #testimonials h2'
-        );
-        sectionHeadings.forEach((el) => {
-          gsap.from(el, {
-            y: 60,
-            autoAlpha: 0,
-            duration: 1,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: el,
-              start: 'top 85%',
-              toggleActions: 'play none none none',
-            },
-          });
-        });
+          if (heroH1 || heroP || heroButtons) {
+            const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+            if (heroH1) {
+              gsap.set(heroH1, { opacity: 0, y: 40 });
+              tl.to(heroH1, { opacity: 1, y: 0, duration: 0.9 }, 0.1);
+            }
+            if (heroP) {
+              gsap.set(heroP, { opacity: 0, y: 25 });
+              tl.to(heroP, { opacity: 1, y: 0, duration: 0.8 }, 0.25);
+            }
+            if (heroButtons) {
+              gsap.set(heroButtons, { opacity: 0, y: 20 });
+              tl.to(heroButtons, { opacity: 1, y: 0, duration: 0.7 }, 0.4);
+            }
+          }
 
-        // ── 2. Experience rows stagger ──
-        const expRows = gsap.utils.toArray<HTMLElement>('#experience .space-y-12 > div');
-        if (expRows.length) {
-          gsap.from(expRows, {
-            x: -40,
-            autoAlpha: 0,
-            duration: 0.8,
-            stagger: 0.12,
-            ease: 'power2.out',
-            scrollTrigger: {
-              trigger: '#experience .space-y-12',
-              start: 'top 80%',
-              toggleActions: 'play none none none',
-            },
-          });
-        }
+          // BrainCircuit box — gentle continuous wobble
+          if (brainBox) {
+            gsap.set(brainBox, { opacity: 0, scale: 0.7 });
+            gsap.to(brainBox, { opacity: 1, scale: 1, duration: 0.8, ease: 'back.out(1.7)', delay: 0.15 });
+            gsap.to(brainBox, {
+              rotate: 10,
+              scale: 1.08,
+              duration: 2.5,
+              repeat: -1,
+              yoyo: true,
+              ease: 'sine.inOut',
+              delay: 1,
+            });
+          }
 
-        // ── 3. Service cards stagger from below ──
-        const serviceCards = gsap.utils.toArray<HTMLElement>('#services .grid > div');
-        if (serviceCards.length) {
-          gsap.from(serviceCards, {
-            y: 50,
-            autoAlpha: 0,
-            duration: 0.7,
-            stagger: { each: 0.1, from: 'start' },
-            ease: 'power2.out',
-            scrollTrigger: {
-              trigger: '#services .grid',
-              start: 'top 80%',
-              toggleActions: 'play none none none',
-            },
-          });
-        }
-
-        // ── 4. Project cards stagger ──
-        const projectCards = gsap.utils.toArray<HTMLElement>('#projects .grid > div');
-        if (projectCards.length) {
-          ScrollTrigger.batch(projectCards, {
-            start: 'top 88%',
-            once: true,
-            onEnter: (batch) => {
-              gsap.from(batch, {
-                y: 40,
-                autoAlpha: 0,
-                duration: 0.65,
-                stagger: 0.08,
-                ease: 'power2.out',
-                overwrite: true,
-              });
-            },
-          });
-        }
-
-        // ── 5. Document folder cards ──
-        const docCards = gsap.utils.toArray<HTMLElement>('#documents .grid > div');
-        if (docCards.length) {
-          gsap.from(docCards, {
-            scale: 0.94,
-            autoAlpha: 0,
-            duration: 0.6,
-            stagger: 0.1,
-            ease: 'back.out(1.4)',
-            scrollTrigger: {
-              trigger: '#documents .grid',
-              start: 'top 82%',
-              toggleActions: 'play none none none',
-            },
-          });
-        }
-
-        // ── 6. Testimonial cards ──
-        const testimonialCards = gsap.utils.toArray<HTMLElement>('#testimonials .grid > div');
-        if (testimonialCards.length) {
-          gsap.from(testimonialCards, {
-            y: 50,
-            autoAlpha: 0,
-            duration: 0.7,
-            stagger: 0.15,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: '#testimonials .grid',
-              start: 'top 80%',
-              toggleActions: 'play none none none',
-            },
-          });
-        }
-
-        // ── 7. Contact section left column ──
-        const contactLeft = document.querySelector('#contact .lg\\:col-span-6:first-child') as HTMLElement | null;
-        if (contactLeft) {
-          gsap.from(contactLeft, {
-            x: -50,
-            autoAlpha: 0,
-            duration: 1,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: '#contact',
-              start: 'top 75%',
-              toggleActions: 'play none none none',
-            },
-          });
-        }
-
-        // ── 8. Contact form ──
-        const contactRight = document.querySelector('#contact .lg\\:col-span-6:last-child') as HTMLElement | null;
-        if (contactRight) {
-          gsap.from(contactRight, {
-            x: 50,
-            autoAlpha: 0,
-            duration: 1,
-            delay: 0.15,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: '#contact',
-              start: 'top 75%',
-              toggleActions: 'play none none none',
-            },
-          });
-        }
-
-        // ── 9. About section image float ──
-        const aboutImg = document.querySelector('#about .aspect-square') as HTMLElement | null;
-        if (aboutImg) {
-          gsap.from(aboutImg, {
-            scale: 0.9,
-            autoAlpha: 0,
-            duration: 1.1,
-            ease: 'power3.out',
-            scrollTrigger: {
+          // ── 1. About section ──
+          const aboutImg = document.querySelector('#about .aspect-square') as HTMLElement | null;
+          if (aboutImg) {
+            gsap.set(aboutImg, { opacity: 0, scale: 0.9 });
+            ScrollTrigger.create({
               trigger: aboutImg,
+              start: 'top 85%',
+              once: true,
+              onEnter: () => {
+                gsap.to(aboutImg, { opacity: 1, scale: 1, duration: 1, ease: 'power3.out' });
+                // Float after entrance
+                gsap.to(aboutImg, {
+                  y: -12,
+                  duration: 3,
+                  repeat: -1,
+                  yoyo: true,
+                  ease: 'sine.inOut',
+                  delay: 1.1,
+                });
+              },
+            });
+          }
+
+          revealOnScroll('#about .grid.md\\:grid-cols-3 > div', { y: 35, stagger: 0.1, start: 'top 85%' });
+
+          // ── 2. Experience rows ──
+          revealOnScroll('#experience .space-y-12 > div', { x: -40, y: 0, stagger: 0.12, start: 'top 82%', duration: 0.85 });
+
+          // ── 3. Services cards ──
+          revealOnScroll('#services .grid > div', { y: 55, stagger: 0.12, start: 'top 85%', duration: 0.8 });
+          // Also reveal section heading
+          revealOnScroll('#services h2', { y: 50, stagger: 0, start: 'top 88%' });
+
+          // ── 4. Projects grid ──
+          revealOnScroll('#projects .grid > div', { y: 40, stagger: 0.08, start: 'top 88%', duration: 0.65 });
+
+          // ── 5. Documents / Resources ──
+          revealOnScroll('#documents .grid > div', { scale: 0.94, y: 20, stagger: 0.1, start: 'top 85%', duration: 0.65 });
+          revealOnScroll('#documents h2', { y: 50, stagger: 0, start: 'top 88%' });
+
+          // ── 6. Testimonials ──
+          revealOnScroll('#testimonials .grid > div', { y: 55, stagger: 0.15, start: 'top 85%', duration: 0.75 });
+          revealOnScroll('#testimonials h2', { y: 50, stagger: 0, start: 'top 88%' });
+
+          // ── 7. Contact ──
+          const contactLeft = document.querySelector('#contact .lg\\:col-span-6:first-child') as HTMLElement | null;
+          const contactRight = document.querySelector('#contact .lg\\:col-span-6:last-child') as HTMLElement | null;
+          if (contactLeft) {
+            gsap.set(contactLeft, { opacity: 0, x: -50 });
+            ScrollTrigger.create({
+              trigger: '#contact',
               start: 'top 80%',
-              toggleActions: 'play none none none',
-            },
-          });
+              once: true,
+              onEnter: () => gsap.to(contactLeft, { opacity: 1, x: 0, duration: 1, ease: 'power3.out' }),
+            });
+          }
+          if (contactRight) {
+            gsap.set(contactRight, { opacity: 0, x: 50 });
+            ScrollTrigger.create({
+              trigger: '#contact',
+              start: 'top 80%',
+              once: true,
+              onEnter: () => gsap.to(contactRight, { opacity: 1, x: 0, duration: 1, delay: 0.15, ease: 'power3.out' }),
+            });
+          }
 
-          // Subtle continuous float
-          gsap.to(aboutImg, {
-            y: -12,
-            duration: 3,
-            repeat: -1,
-            yoyo: true,
-            ease: 'sine.inOut',
-          });
-        }
+          // ── 8. Section headings (experience) ──
+          revealOnScroll('#experience h2', { y: 60, stagger: 0, start: 'top 88%', duration: 1 });
 
-        // ── 10. About cards ──
-        const aboutCards = gsap.utils.toArray<HTMLElement>('#about .grid.md\\:grid-cols-3 > div');
-        if (aboutCards.length) {
-          gsap.from(aboutCards, {
-            y: 35,
-            autoAlpha: 0,
-            duration: 0.7,
-            stagger: 0.1,
-            ease: 'power2.out',
-            scrollTrigger: {
-              trigger: '#about .grid.md\\:grid-cols-3',
-              start: 'top 82%',
-              toggleActions: 'play none none none',
-            },
-          });
-        }
-
-        // ── 11. Footer elements ──
-        const footerBrand = document.querySelector('footer .text-2xl') as HTMLElement | null;
-        if (footerBrand) {
-          gsap.from(footerBrand, {
-            y: 20,
-            autoAlpha: 0,
-            duration: 0.8,
-            ease: 'power2.out',
-            scrollTrigger: {
+          // ── 9. Footer ──
+          const footerBrand = document.querySelector('footer .text-2xl') as HTMLElement | null;
+          if (footerBrand) {
+            gsap.set(footerBrand, { opacity: 0, y: 20 });
+            ScrollTrigger.create({
               trigger: 'footer',
-              start: 'top 90%',
-              toggleActions: 'play none none none',
-            },
-          });
-        }
+              start: 'top 92%',
+              once: true,
+              onEnter: () => gsap.to(footerBrand, { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }),
+            });
+          }
 
-        return () => {
-          ScrollTrigger.getAll().forEach((t) => t.kill());
-        };
-      }
-    );
+          return () => {
+            ScrollTrigger.getAll().forEach((t) => t.kill());
+          };
+        }
+      );
+
+      // Refresh after fonts / images load
+      window.addEventListener('load', () => ScrollTrigger.refresh(), { once: true });
+    });
 
     return () => {
-      mm.revert();
+      cancelAnimationFrame(raf);
+      ScrollTrigger.getAll().forEach((t) => t.kill());
     };
   }, []);
 }
