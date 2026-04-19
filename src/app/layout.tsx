@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { Inter, Space_Grotesk } from 'next/font/google';
 import './globals.css';
 import { cn } from '@/lib/utils';
-import { ThemeProvider } from '@/components/theme-provider';
+import { ThemeProvider } from '@/components/shared/theme-provider';
 import { DynamicCustomCursor as CustomCursor, DynamicChatBot as ChatBot } from '@/components/client-dynamic';
 
 

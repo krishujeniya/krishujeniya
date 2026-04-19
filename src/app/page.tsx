@@ -1,94 +1,55 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useGsapAnimations } from '@/hooks/useGsapAnimations';
-import Image from 'next/image';
-
+import { useGsapAnimations } from '@/hooks/use-gsap-animations';
 import { portfolioData } from '@/data/portfolio';
 
-import { 
-    Target, 
-    Lightbulb, 
-    TrendingUp, 
-    File,
-    BrainCircuit,
-    Quote,
-    Mail,
-    Sparkles,
-    ChevronRight,
-    X,
-    ArrowUp,
-} from 'lucide-react';
+// Layout components
+import { Navbar } from '@/components/layout/navbar';
+import { Footer } from '@/components/layout/footer';
 
+// Section components
+import { Hero } from '@/components/sections/hero';
+import { About } from '@/components/sections/about';
+import { Experience } from '@/components/sections/experience';
+import { Services } from '@/components/sections/services';
+import { Projects } from '@/components/sections/projects';
+import { Documents } from '@/components/sections/documents';
+import { Testimonials } from '@/components/sections/testimonials';
+import { Contact } from '@/components/sections/contact';
 
-
-
-const DOCS_BASE_URL = 'https://github.com/krishujeniya/krishujeniya/raw/main/Docs';
+// Shared components
+import { ProjectModal } from '@/components/shared/project-modal';
 
 export default function Portfolio() {
     useGsapAnimations();
+    
     const [activeSection, setActiveSection] = useState('home');
     const [scrolled, setScrolled] = useState(false);
-    const [selectedProject, setSelectedProject] = useState<typeof portfolioData.projects[0] | null>(null);
-    const [expandedFolder, setExpandedFolder] = useState<number | null>(null);
-    const [isSent, setIsSent] = useState(false);
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const [isError, setIsError] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('Failed to send — email directly.');
-    const [selectedServices, setSelectedServices] = useState<string[]>([]);
-    const [selectedStages, setSelectedStages] = useState<string[]>([]);
-
-    const toggleService = (service: string) => {
-        setSelectedServices(prev => 
-            prev.includes(service) ? prev.filter(s => s !== service) : [...prev, service]
-        );
-    };
-
-    const toggleStage = (stage: string) => {
-        setSelectedStages(prev => 
-            prev.includes(stage) ? prev.filter(s => s !== stage) : [...prev, stage]
-        );
-    };
+    const [selectedProject, setSelectedProject] = useState<any>(null);
 
     // Modal: scroll lock + focus trap + keyboard handling
     useEffect(() => {
         if (!selectedProject) return;
         document.body.style.overflow = 'hidden';
 
-        // Focus trap
-        const modalEl = document.getElementById('project-modal');
-        const focusableEls = Array.from(
-            modalEl?.querySelectorAll<HTMLElement>(
-                'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-            ) ?? []
-        );
-        const firstEl = focusableEls[0];
-        const lastEl = focusableEls[focusableEls.length - 1];
-        const focusTimer = setTimeout(() => firstEl?.focus(), 50);
-
         const handleKeyDown = (e: KeyboardEvent) => {
-            if (e.key === 'Escape') { setSelectedProject(null); return; }
-            if (e.key !== 'Tab' || focusableEls.length === 0) return;
-            if (e.shiftKey) {
-                if (document.activeElement === firstEl) { e.preventDefault(); lastEl?.focus(); }
-            } else {
-                if (document.activeElement === lastEl) { e.preventDefault(); firstEl?.focus(); }
+            if (e.key === 'Escape') {
+                setSelectedProject(null);
             }
         };
+        
         window.addEventListener('keydown', handleKeyDown);
         return () => {
             document.body.style.overflow = 'unset';
-            clearTimeout(focusTimer);
             window.removeEventListener('keydown', handleKeyDown);
         };
     }, [selectedProject]);
-
 
     useEffect(() => {
         const SECTIONS = ['home', 'about', 'experience', 'services', 'projects', 'documents', 'testimonials', 'contact'];
 
         const getActiveSection = () => {
-            // Midpoint of the viewport — whichever section is closest to this wins
             const viewportMid = window.scrollY + window.innerHeight / 2;
 
             let closestId = 'home';
@@ -113,7 +74,6 @@ export default function Portfolio() {
             getActiveSection();
         };
 
-        // Run once on mount so the initial state is correct
         getActiveSection();
 
         window.addEventListener('scroll', handleScroll, { passive: true });
@@ -130,781 +90,57 @@ export default function Portfolio() {
 
     return (
         <div className="min-h-screen bg-[#050505] text-[#FAFAFA] font-body selection:bg-[#474747] selection:text-white">
+            <Navbar 
+                activeSection={activeSection} 
+                scrolled={scrolled} 
+                onScrollTo={scrollTo} 
+            />
 
-            <nav className={`fixed top-0 left-0 w-full z-[100] transition-all duration-500 ${scrolled ? 'bg-black/95 backdrop-blur-xl py-4 border-b border-white/5 rounded-b-[32px] sm:rounded-b-[40px]' : 'py-6'}`}>
-                <div className="max-w-[1440px] mx-auto px-6 md:px-12 flex items-center justify-between gap-4">
-                    <div className="flex items-center gap-8 overflow-hidden">
-                        {/* Brand Title / Section Name */}
-                        <div 
-                            className="text-lg sm:text-2xl font-black tracking-tighter cursor-pointer hover:opacity-70 transition-opacity whitespace-nowrap outline-none flex items-center gap-2"
-                            onClick={() => scrollTo('home')}
-                            role="button"
-                            tabIndex={0}
-                            onKeyDown={(e) => e.key === 'Enter' && scrollTo('home')}
-                        >
-                            <span className="sm:hidden">
-                                {activeSection === 'home' ? (
-                                    <>KRISH <span className="text-[#A1A1A1]">UJENIYA</span></>
-                                ) : activeSection.toUpperCase()}
-                            </span>
-                            <span className="hidden sm:inline">
-                                KRISH <span className="text-[#A1A1A1]">UJENIYA</span>
-                            </span>
-                        </div>
-                        
-                        {/* Desktop Navigation Links */}
-                        <div className="hidden md:flex items-center gap-8 overflow-x-auto no-scrollbar">
-                            {['about', 'experience', 'services', 'projects', 'documents', 'testimonials', 'contact'].map((item) => (
-                                <a
-                                    key={item}
-                                    href={`#${item}`}
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        scrollTo(item);
-                                    }}
-                                    className={`text-[11px] font-black uppercase tracking-[0.3em] transition-all hover:text-white py-2 whitespace-nowrap ${activeSection === item ? 'text-white' : 'text-white/60'}`}
-                                    aria-current={activeSection === item ? 'page' : undefined}
-                                >
-                                    {item}
-                                </a>
-                            ))}
-                        </div>
-                    </div>
+            <main className="flex flex-col">
+                <Hero 
+                    tagline={portfolioData.profile.tagline}
+                    socials={portfolioData.profile.socials}
+                    onScrollTo={scrollTo}
+                />
+                
+                <About 
+                    profile={portfolioData.profile} 
+                    about={portfolioData.about}
+                />
+                
+                <Experience 
+                    experience={portfolioData.experience} 
+                />
+                
+                <Services 
+                    services={portfolioData.services} 
+                />
+                
+                <Projects 
+                    projects={portfolioData.projects} 
+                    onProjectSelect={setSelectedProject}
+                />
+                
+                <Documents 
+                    documents={portfolioData.documents} 
+                />
+                
+                <Testimonials 
+                    testimonials={portfolioData.testimonials} 
+                />
+                
+                <Contact />
+            </main>
 
-                    <button 
-                        onClick={() => {
-                            scrollTo('contact');
-                            setActiveSection('contact'); // Force immediate update
-                        }}
-                        aria-label="Hire me for your next project"
-                        className="flex items-center gap-2 sm:gap-3 bg-white text-black text-[10px] sm:text-[11px] font-black uppercase tracking-[0.2em] px-5 sm:px-8 py-3 sm:py-4 rounded-full transition-all duration-500 shadow-xl shadow-white/5 active:scale-95 whitespace-nowrap"
-                    >
-                        Hire Me <Mail size={14} className="group-hover:translate-x-1 transition-transform" />
-                    </button>
-                </div>
-            </nav>
+            <Footer 
+                scrolled={scrolled} 
+                onScrollTo={scrollTo} 
+            />
 
-
-            <div className="flex flex-col">
-                <section id="home" className="relative min-h-screen flex flex-col justify-center px-6 md:px-12 pt-32 md:pt-20 scroll-mt-20">
-                    <div className="max-w-[1440px] mx-auto w-full">
-                        <div className="flex flex-col items-start gap-6 md:gap-8">
-                            {/* Availability Removed */}
-
-                             <h1 className="text-[clamp(3rem,12vw,8rem)] sm:text-[10vw] md:text-[9vw] lg:text-[8vw] font-black tracking-tighter leading-[0.8] uppercase break-words overflow-visible">
-                                <span className="text-white drop-shadow-2xl">I Build AI</span> <br />
-                                <span className="text-[#A1A1A1]">Systems That</span> <br />
-                                <span className="flex items-center gap-4 sm:gap-10">
-                                    Actually Ship.<div className="hidden md:flex w-24 h-24 rounded-[32px] border-2 border-white/10 items-center justify-center p-4 bg-white/5">
-                                        <BrainCircuit size={48} className="text-[#A1A1A1]" />
-                                    </div>
-                                </span>
-                            </h1>
-
-                            <p className="text-sm md:text-xl text-[#A1A1A1] max-w-xl leading-relaxed font-medium">
-                                {portfolioData.profile.tagline}
-                            </p>
-
-                            {/* Metrics Removed */}
-
-                            <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 w-full sm:w-auto pt-4">
-                                <button 
-                                    onClick={() => scrollTo('projects')}
-                                    aria-label="Explore my work and case studies"
-                                    className="group w-full sm:w-auto flex items-center justify-center gap-4 bg-white text-black px-12 py-5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] transition-all duration-500 shadow-2xl shadow-white/5"
-                                >
-                                    Explore Work <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform" aria-hidden="true">explore</span>
-                                </button>
-                                <a 
-                                    href={portfolioData.profile.socials.calendar}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    aria-label="Book a consultation call on Google Calendar"
-                                    className="w-full sm:w-auto flex items-center justify-center gap-4 bg-white/5 backdrop-blur-md border border-white/10 px-12 py-5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] hover:bg-white/10 hover:border-white/20 transition-all duration-500"
-                                >
-                                    Book a Call <span className="material-symbols-outlined" aria-hidden="true">calendar_today</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <section id="about" className="py-24 px-6 md:px-12 bg-white text-black rounded-[40px] md:rounded-[80px] mt-20 relative z-10 scroll-mt-20">
-                    <div className="max-w-[1440px] mx-auto">
-                        <div className="grid lg:grid-cols-12 gap-12 items-end mb-20">
-                            <div className="lg:col-span-7 flex flex-col gap-4">
-                                <span className="text-[11px] font-black uppercase tracking-[0.4em] text-[#A1A1A1]">/ Info</span>
-                                <h2 className="text-[clamp(3rem,8vw,8rem)] font-black tracking-tighter uppercase leading-none">About <br /><span className="text-[#A1A1A1]">Krish</span></h2>
-                            </div>
-                            
-                            <div className="lg:col-span-5 flex lg:justify-end">
-                                <div className="relative w-full max-w-sm aspect-square rounded-[20px] sm:rounded-[40px] overflow-hidden border border-black/5 bg-[#F5F5F5]">
-                                    <Image 
-                                        src={portfolioData.profile.photo.webp} 
-                                        alt={portfolioData.profile.name} 
-                                        fill
-                                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 384px, 384px"
-                                        className="object-cover"
-                                        priority
-                                    />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="grid md:grid-cols-3 gap-12">
-                            {portfolioData.about.map((item, i) => (
-                                <div key={i} className="flex flex-col gap-6">
-                                    <div className="w-12 h-12 flex items-center justify-center bg-black text-white rounded-2xl">
-                                        <item.icon size={20} />
-                                    </div>
-                                    <h3 className="text-2xl font-black uppercase tracking-tight">{item.title}</h3>
-                                    <p className="text-lg text-black/60 leading-relaxed">
-                                        {item.content}
-                                    </p>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </section>
-
-                {/* Experience Section */}
-                <section id="experience" className="py-24 px-6 md:px-12 bg-white/5 scroll-mt-20">
-                    <div className="max-w-[1440px] mx-auto">
-                        <div className="flex flex-col items-center text-center gap-6 mb-32">
-                            <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#A1A1A1]">/ Path</span>
-                            <h2 className="text-[clamp(2.5rem,7vw,7rem)] font-black tracking-tighter uppercase leading-none">Professional <br />Experience</h2>
-                        </div>
-
-                        <div className="space-y-12">
-                            {portfolioData.experience.map((exp, i) => (
-                                <div 
-                                    key={i}
-                                    className="group grid md:grid-cols-12 gap-8 border-t border-white/5 pt-12"
-                                >
-                                    <div className="md:col-span-3 flex flex-col gap-2">
-                                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#A1A1A1]">{exp.duration}</span>
-                                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#E0E0E0]">{exp.location}</span>
-                                    </div>
-                                    <div className="md:col-span-6 flex flex-col gap-4">
-                                        <h3 className="text-3xl font-black uppercase tracking-tight group-hover:text-[#A1A1A1] transition-colors">{exp.role}</h3>
-                                        <p className="text-[#A1A1A1] text-lg leading-relaxed">{exp.description}</p>
-                                        <div className="flex flex-wrap gap-2 pt-4">
-                                            {exp.tags.map(tag => (
-                                                <span key={tag} className="text-[9px] font-black uppercase tracking-[0.1em] px-3 py-1 bg-white/5 rounded-full text-[#A1A1A1]">{tag}</span>
-                                            ))}
-                                        </div>
-                                    </div>
-                                    <div className="md:col-span-3 flex md:justify-end items-start pt-2">
-                                        <span className="text-xl font-bold tracking-tighter uppercase text-[#A1A1A1]">{exp.company}</span>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </section>
-
-                {/* Services Section */}
-                <section id="services" className="py-32 px-6 md:px-12 bg-[#FAFAFA] text-black rounded-[40px] md:rounded-[80px] scroll-mt-20 relative z-20 shadow-[0_-20px_50px_rgba(0,0,0,0.05)]">
-                    <div className="max-w-[1440px] mx-auto">
-                        <div className="flex flex-col items-start gap-4 mb-24">
-                            <span className="text-[11px] font-black uppercase tracking-[0.4em] text-[#A1A1A1]">/ Expertise</span>
-                            <h2 className="text-[clamp(3rem,8vw,8rem)] font-black tracking-tighter uppercase leading-none">Core <br /><span className="text-[#A1A1A1]">Services</span></h2>
-                        </div>
-
-                        <div className="grid md:grid-cols-3 gap-8">
-                            {portfolioData.services.map((service, i) => (
-                                <div 
-                                    key={i}
-                                    className="group p-10 rounded-[40px] border border-black/5 bg-white hover:bg-black hover:text-white transition-all duration-700 hover:shadow-[0_30px_60px_rgba(0,0,0,0.1)] relative overflow-hidden"
-                                >
-                                    <div className="absolute top-0 right-0 w-32 h-32 bg-black/[0.02] group-hover:bg-white/5 rounded-bl-full transition-colors" />
-                                    
-                                    <div className="w-16 h-16 flex items-center justify-center bg-black text-white rounded-2xl mb-8 group-hover:bg-white group-hover:text-black transition-all duration-500 group-hover:scale-110 shadow-lg">
-                                        <service.icon size={32} />
-                                    </div>
-                                    <h3 className="text-3xl font-black uppercase tracking-tight mb-4 relative z-10">{service.title}</h3>
-                                    <p className="text-lg text-[#525252] leading-relaxed mb-10 relative z-10 group-hover:text-white/80 transition-colors">{service.description}</p>
-                                    <ul className="space-y-4 relative z-10">
-                                        {service.features.map((feature, fi) => (
-                                            <li key={fi} className="flex items-center gap-3 text-[10px] font-black uppercase tracking-widest text-black/80 group-hover:text-white/90 transition-colors">
-                                                <div className="w-1.5 h-1.5 rounded-full bg-current group-hover:scale-125 transition-transform" />
-                                                {feature}
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </section>
-
-                {/* Projects Section */}
-                <section id="projects" className="py-24 px-6 md:px-12 bg-[#0A0A0A] scroll-mt-20">
-                    <div className="max-w-[1440px] mx-auto">
-                        <div className="flex flex-col items-start gap-4 mb-24">
-                            <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40">/ Catalog</span>
-                            <h2 className="text-[clamp(3rem,8vw,8rem)] font-black tracking-tighter uppercase leading-none">Selected <br />Case Studies</h2>
-                        </div>
-
-                        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
-                            {portfolioData.projects.map((project, i) => (
-                                <div 
-                                    key={i} 
-                                    className="group flex flex-col gap-6 cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-white/10 rounded-[40px] p-2"
-                                    onClick={() => setSelectedProject(project)}
-                                    role="button"
-                                    tabIndex={0}
-                                    onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && setSelectedProject(project)}
-                                    aria-label={`View details for ${project.title}`}
-                                >
-                                    <div className="aspect-[4/5] relative overflow-hidden rounded-[32px] bg-[#111]">
-                                        <Image
-                                            src={project.imageUrl}
-                                            alt={project.title}
-                                            fill
-                                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                                             className="object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100"
-                                            priority={i < 3}
-                                        />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-8">
-                                            <div className="flex flex-col gap-2">
-                                                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/50">{project.category}</span>
-                                                <h3 className="text-2xl font-black uppercase leading-[1.1] text-white">{project.title}</h3>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="flex items-center justify-between px-2">
-                                        <div className="flex flex-wrap gap-2">
-                                            {project.techStack.slice(0, 2).map(tag => (
-                                                <span key={tag} className="text-[11px] font-black uppercase tracking-[0.1em] text-[#A1A1A1]">{tag}</span>
-                                            ))}
-                                        </div>
-                                        <span className="material-symbols-outlined text-[18px] text-[#A1A1A1] group-hover:text-white group-hover:translate-x-1 transition-all" aria-hidden="true">east</span>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </section>
-
-                {/* Documents Section */}
-                <section id="documents" className="py-24 px-6 md:px-12 bg-white/5 scroll-mt-20">
-                    <div className="max-w-[1440px] mx-auto">
-                        <div className="flex flex-col items-center text-center gap-6 mb-32">
-                            <span className="text-[11px] font-black uppercase tracking-[0.4em] text-[#A1A1A1]">/ Resources</span>
-                            <h2 className="text-[clamp(2.5rem,7vw,7rem)] font-black tracking-tighter uppercase leading-none">Technical <br />Resources</h2>
-                        </div>
-
-                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                            {portfolioData.documents.map((folder, i) => (
-                                <div key={i} className="group flex flex-col p-8 rounded-[32px] bg-white/5 border border-white/5 hover:border-white/10 transition-all duration-500 w-full min-w-0 overflow-hidden">
-                                    <div className="flex items-center justify-between mb-12">
-                                        <div className="w-12 h-12 flex items-center justify-center bg-black text-white rounded-2xl group-hover:bg-[#A1A1A1] transition-colors">
-                                            <folder.icon size={20} />
-                                        </div>
-                                        <span className="text-[11px] font-black uppercase tracking-[0.2em] text-[#A1A1A1]">{folder.files.length} Files</span>
-                                    </div>
-                                    <h3 className="text-2xl font-black uppercase tracking-tight mb-4">{folder.name}</h3>
-                                    <p className="text-[#A1A1A1] leading-relaxed text-sm mb-8 flex-grow">{folder.description}</p>
-                                    
-                                    <button 
-                                        onClick={() => setExpandedFolder(expandedFolder === i ? null : i)}
-                                        aria-label={expandedFolder === i ? `Collapse ${folder.name}` : `Expand ${folder.name}`}
-                                        className="flex items-center justify-between w-full py-4 border-t border-white/5 text-[10px] font-black uppercase tracking-[0.2em] text-white hover:text-[#A1A1A1] transition-colors"
-                                    >
-                                        <span>{expandedFolder === i ? 'Collapse' : 'View Docs'}</span>
-                                        <span className="material-symbols-outlined text-[16px]" aria-hidden="true">
-                                            {expandedFolder === i ? 'expand_less' : 'expand_more'}
-                                        </span>
-                                    </button>
-
-                                    <div
-                                        className="overflow-hidden transition-all duration-500"
-                                        style={{
-                                            maxHeight: expandedFolder === i ? '800px' : '0px',
-                                            opacity: expandedFolder === i ? 1 : 0,
-                                        }}
-                                        aria-hidden={expandedFolder !== i}
-                                    >
-                                        <div className="pt-4 space-y-2 w-full max-w-full">
-                                            {folder.files.map((file, fi) => (
-                                                <a 
-                                                    key={fi}
-                                                    href={`${DOCS_BASE_URL}/${folder.path}/${file.name.split('/').map(segment => encodeURIComponent(segment)).join('/')}`}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    aria-label={`Open ${file.name}`}
-                                                    tabIndex={expandedFolder === i ? 0 : -1}
-                                                    className="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-all group/file w-full min-w-0"
-                                                >
-                                                    <div className="flex items-center gap-3 min-w-0 flex-1">
-                                                        <File size={14} className="text-white/40 shrink-0" aria-hidden="true" />
-                                                        <span className="text-[11px] font-bold text-[#A1A1A1] group-hover/file:text-white truncate">{file.name.split('/').pop()}</span>
-                                                    </div>
-                                                    <span className="text-[9px] font-black uppercase text-white/40 ml-2 shrink-0">{file.type}</span>
-                                                </a>
-                                            ))}
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </section>
-
-                {/* Testimonials Section */}
-                <section id="testimonials" className="py-24 px-6 md:px-12 bg-[#0A0A0A] scroll-mt-20">
-                    <div className="max-w-[1440px] mx-auto">
-                        <div className="flex flex-col items-center text-center gap-6 mb-32">
-                            <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#A1A1A1]">/ Feedback</span>
-                            <h2 className="text-[clamp(2.5rem,7vw,7rem)] font-black tracking-tighter uppercase leading-none text-white whitespace-pre-wrap">Trusted by <br />Industry Leads</h2>
-                        </div>
-
-                        <div className="grid md:grid-cols-2 gap-8">
-                            {portfolioData.testimonials.map((testimonial, i) => (
-                                <div 
-                                    key={i}
-                                    className="p-10 md:p-14 rounded-[40px] bg-white/5 border border-white/5 relative group hover:border-white/10 transition-all duration-500"
-                                >
-                                    <Quote className="absolute top-10 right-10 text-white/5 w-20 h-20" />
-                                    <div className="flex flex-col gap-10">
-                                        <p className="text-2xl md:text-3xl font-bold tracking-tight text-white/90 leading-tight">
-                                            "{testimonial.content}"
-                                        </p>
-                                        <div className="flex items-center gap-6">
-                                            <div className="relative w-16 h-16 rounded-2xl overflow-hidden border border-white/10">
-                                                <Image 
-                                                    src={testimonial.photo} 
-                                                    alt={testimonial.name}
-                                                    fill
-                                                    sizes="64px"
-                                                    className="object-cover"
-                                                />
-                                            </div>
-                                            <div className="flex flex-col">
-                                                <span className="text-lg font-black uppercase tracking-tight text-white">{testimonial.name}</span>
-                                                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#A1A1A1]">{testimonial.role}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </section>
-
-                {/* Contact Section */}
-                <section id="contact" className="py-24 px-6 md:px-12 bg-white text-black rounded-[40px] md:rounded-[80px] mb-20 relative z-10 scroll-mt-20">
-                    <div className="max-w-[1440px] mx-auto">
-                        <div className="grid lg:grid-cols-12 gap-20">
-                            <div className="lg:col-span-6 flex flex-col gap-10">
-                                <div className="flex flex-col gap-4">
-                                    <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#999999]">/ Inquiry</span>
-                                    <h2 className="text-[clamp(3rem,8vw,8rem)] font-black tracking-tighter uppercase leading-[0.85]">Let&apos;s Build <br />Something <br /><span className="text-[#A1A1A1]">That Works</span></h2>
-                                </div>
-                                <p className="text-xl text-black/60 leading-relaxed max-w-sm">
-                                    Got a project in mind? Tell me what you&apos;re working on and I&apos;ll get back within 24 hours with honest thoughts on fit, scope, and timeline.
-                                </p>
-                                 <div className="flex flex-col gap-4 mt-8">
-                                    <a href="mailto:ukideashare0021@gmail.com" className="text-lg sm:text-2xl font-black tracking-tight hover:opacity-50 transition-opacity underline decoration-4 decoration-[#A1A1A1] underline-offset-8 uppercase break-all">ukideashare0021@gmail.com</a>
-                                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Based in India · Working Worldwide</span>
-                                </div>
-                            </div>
-
-                            <div className="lg:col-span-6">
-                                        <form className="flex flex-col gap-8" onSubmit={async (e) => {
-                                            e.preventDefault();
-                                            if (isSent || isSubmitting) return;
-                                            
-                                            const form = e.currentTarget;
-                                            const formData = new FormData(form);
-
-                                            // HONEYPOT: If bot fills this, we silent-success or simply ignore.
-                                            // Backend checks for data.honeypot
-                                            const honeypot = formData.get('honeypot') as string;
-                                            
-                                            const name = (formData.get('name') as string || '').trim();
-                                            const email = (formData.get('email') as string || '').trim();
-                                            const company = (formData.get('company') as string || 'Not provided').trim();
-                                            const role = formData.get('role') as string || 'Not provided';
-                                            const techStack = (formData.get('techStack') as string || 'Not provided').trim();
-                                            const budget = formData.get('budget') as string || 'Not selected';
-                                            const timeline = formData.get('timeline') as string || 'Not selected';
-                                            const discoverySource = formData.get('discoverySource') as string || 'Not provided';
-                                            const preferredContactMethod = formData.get('contactMethod') as string || 'Not provided';
-                                            const message = (formData.get('message') as string || '').trim();
-
-                                            // Robust Client-side Validation
-                                            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                                            if (!name || !email || !message || !role || !budget || !timeline || !discoverySource || !preferredContactMethod) {
-                                                setErrorMessage('Please fill in all required fields.');
-                                                setIsError(true);
-                                                setTimeout(() => setIsError(false), 5000);
-                                                return;
-                                            }
-
-                                            if (!emailRegex.test(email)) {
-                                                setErrorMessage('Please enter a valid email address.');
-                                                setIsError(true);
-                                                setTimeout(() => setIsError(false), 5000);
-                                                return;
-                                            }
-
-                                            setIsSubmitting(true);
-                                            setIsError(false);
-
-                                            const API_URL = process.env.NEXT_PUBLIC_VERCEL_API_URL || 'https://krishujeniya-backend.vercel.app/api/webDATA';
-
-                                            try {
-                                                const response = await fetch(API_URL, {
-                                                    method: 'POST',
-                                                    headers: { 'Content-Type': 'application/json' },
-                                                    body: JSON.stringify({
-                                                        name,
-                                                        email,
-                                                        company,
-                                                        role,
-                                                        services: selectedServices,
-                                                        stage: selectedStages,
-                                                        techStack,
-                                                        budget,
-                                                        timeline,
-                                                        discoverySource,
-                                                        preferredContactMethod,
-                                                        message,
-                                                        honeypot: honeypot || ""
-                                                    }),
-                                                });
-
-                                                if (response.ok) {
-                                                    setIsSent(true);
-                                                    form.reset();
-                                                    setSelectedServices([]);
-                                                    setSelectedStages([]);
-                                                    setTimeout(() => setIsSent(false), 5000);
-                                                } else {
-                                                    if (response.status === 403) {
-                                                        throw new Error('Unauthorized source. Please submit from the official site.');
-                                                    } else if (response.status === 500) {
-                                                        throw new Error('Internal Server Error. Please try again later.');
-                                                    } else {
-                                                        throw new Error('Failed to send inquiry.');
-                                                    }
-                                                }
-                                            } catch (error: any) {
-                                                console.error('Submission error:', error);
-                                                setErrorMessage(error.message || 'Failed to send — email directly.');
-                                                setIsError(true);
-                                                setTimeout(() => setIsError(false), 5000);
-                                            } finally {
-                                                setIsSubmitting(false);
-                                            }
-                                        }}>
-                                            {/* Honeypot: visually hidden, filled only by bots */}
-                                            <input 
-                                                type="text" 
-                                                name="honeypot" 
-                                                style={{ display: 'none' }} 
-                                                tabIndex={-1} 
-                                                autoComplete="off" 
-                                                aria-hidden="true" 
-                                            />
-
-                                            {/* Group 1: About You */}
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                                                <div className="flex flex-col gap-3">
-                                                    <label htmlFor="form-name" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Name</label>
-                                                    <input id="form-name" name="name" type="text" placeholder="YOUR NAME" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all placeholder:text-[#999999]/30" />
-                                                </div>
-                                                <div className="flex flex-col gap-3">
-                                                    <label htmlFor="form-email" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Email</label>
-                                                    <input id="form-email" name="email" type="email" placeholder="YOUR EMAIL" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all placeholder:text-[#999999]/30" />
-                                                </div>
-                                            </div>
-
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                                                <div className="flex flex-col gap-3">
-                                                    <label htmlFor="form-company" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Company / Organization</label>
-                                                    <input id="form-company" name="company" type="text" placeholder="COMPANY NAME" className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all placeholder:text-[#999999]/30" />
-                                                </div>
-                                                <div className="flex flex-col gap-3">
-                                                    <label htmlFor="form-role" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Your Role</label>
-                                                    <div className="relative">
-                                                        <select id="form-role" name="role" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all appearance-none cursor-pointer">
-                                                            <option value="" disabled selected>SELECT YOUR ROLE</option>
-                                                            {["Founder / Co-founder", "CTO / VP Engineering", "Engineering Lead / Manager", "Product Manager", "Data / ML Team Lead", "Individual / Freelancer", "Other"].map(role => (
-                                                                <option key={role} value={role}>{role.toUpperCase()}</option>
-                                                            ))}
-                                                        </select>
-                                                        <div className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none">
-                                                            <ChevronRight size={14} className="rotate-90 text-[#999999]/50" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            {/* Group 2: Project Info */}
-                                            <div className="flex flex-col gap-4">
-                                                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Service Interested In</label>
-                                                <div className="flex flex-wrap gap-2">
-                                                    {["Enterprise RAG", "Agentic AI", "MLOps Architecture", "ML Consulting", "Not Sure Yet"].map(service => (
-                                                        <button
-                                                            key={service}
-                                                            type="button"
-                                                            onClick={() => toggleService(service)}
-                                                            className={`text-[9px] font-black uppercase tracking-[0.1em] px-4 py-2 rounded-full border transition-all ${
-                                                                selectedServices.includes(service)
-                                                                ? 'bg-black text-white border-black'
-                                                                : 'bg-black/5 text-[#A1A1A1] border-transparent hover:border-black/20'
-                                                            }`}
-                                                        >
-                                                            {service}
-                                                        </button>
-                                                    ))}
-                                                </div>
-                                            </div>
-
-                                            <div className="flex flex-col gap-4">
-                                                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Project Stage</label>
-                                                <div className="flex flex-wrap gap-2">
-                                                    {["Greenfield Build", "Improve Existing System", "Proof of Concept", "Just Exploring"].map(stage => (
-                                                        <button
-                                                            key={stage}
-                                                            type="button"
-                                                            onClick={() => toggleStage(stage)}
-                                                            className={`text-[9px] font-black uppercase tracking-[0.1em] px-4 py-2 rounded-full border transition-all ${
-                                                                selectedStages.includes(stage)
-                                                                ? 'bg-black text-white border-black'
-                                                                : 'bg-black/5 text-[#A1A1A1] border-transparent hover:border-black/20'
-                                                            }`}
-                                                        >
-                                                            {stage}
-                                                        </button>
-                                                    ))}
-                                                </div>
-                                            </div>
-
-                                            <div className="flex flex-col gap-3">
-                                                <label htmlFor="form-tech-stack" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Current Tech Stack</label>
-                                                <input id="form-tech-stack" name="techStack" type="text" placeholder="e.g. Python, AWS, Pinecone, LangChain..." className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all placeholder:text-[#999999]/30" />
-                                                <span className="text-[9px] font-medium text-[#A1A1A1] mt-1">Helps estimate integration complexity before we talk.</span>
-                                            </div>
-
-                                            {/* Group 3: Scope & Logistics */}
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                                                <div className="flex flex-col gap-3">
-                                                    <label htmlFor="form-budget" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Budget Range</label>
-                                                    <div className="relative">
-                                                        <select id="form-budget" name="budget" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all appearance-none cursor-pointer">
-                                                            <option value="" disabled selected>SELECT BUDGET</option>
-                                                            {["Under $5,000", "$5,000–$15,000", "$15,000–$30,000", "$30,000+", "Let's Discuss"].map(budget => (
-                                                                <option key={budget} value={budget}>{budget.toUpperCase()}</option>
-                                                            ))}
-                                                        </select>
-                                                        <div className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none">
-                                                            <ChevronRight size={14} className="rotate-90 text-[#999999]/50" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="flex flex-col gap-3">
-                                                    <label htmlFor="form-timeline" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Desired Timeline</label>
-                                                    <div className="relative">
-                                                        <select id="form-timeline" name="timeline" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all appearance-none cursor-pointer">
-                                                            <option value="" disabled selected>SELECT TIMELINE</option>
-                                                            {["ASAP (within 2 weeks)", "1–3 months", "3–6 months", "Flexible", "No hard deadline"].map(timeline => (
-                                                                <option key={timeline} value={timeline}>{timeline.toUpperCase()}</option>
-                                                            ))}
-                                                        </select>
-                                                        <div className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none">
-                                                            <ChevronRight size={14} className="rotate-90 text-[#999999]/50" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                                                <div className="flex flex-col gap-3">
-                                                    <label htmlFor="form-source" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">How Did You Find Me</label>
-                                                    <div className="relative">
-                                                        <select id="form-source" name="discoverySource" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all appearance-none cursor-pointer">
-                                                            <option value="" disabled selected>SELECT SOURCE</option>
-                                                            {["LinkedIn", "GitHub", "Google Search", "Hugging Face", "Personal Referral", "Medium", "Other"].map(source => (
-                                                                <option key={source} value={source}>{source.toUpperCase()}</option>
-                                                            ))}
-                                                        </select>
-                                                        <div className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none">
-                                                            <ChevronRight size={14} className="rotate-90 text-[#999999]/50" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="flex flex-col gap-3">
-                                                    <label htmlFor="form-contact-method" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Preferred Contact Method</label>
-                                                    <div className="relative">
-                                                        <select id="form-contact-method" name="contactMethod" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all appearance-none cursor-pointer">
-                                                            <option value="" disabled selected>SELECT METHOD</option>
-                                                            {["Email", "Schedule a Call", "WhatsApp", "No Preference"].map(method => (
-                                                                <option key={method} value={method}>{method.toUpperCase()}</option>
-                                                            ))}
-                                                        </select>
-                                                        <div className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none">
-                                                            <ChevronRight size={14} className="rotate-90 text-[#999999]/50" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div className="flex flex-col gap-3">
-                                                <label htmlFor="form-message" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Project Details</label>
-                                                <textarea id="form-message" name="message" rows={4} placeholder="TELL ME ABOUT YOUR PROJECT" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all placeholder:text-[#999999]/30 resize-none" />
-                                            </div>
-                                            {isSent ? (
-                                                <div className="w-full flex items-center justify-center gap-4 bg-green-500/10 text-green-500 py-8 rounded-full text-sm font-black uppercase tracking-[0.3em] border border-green-500/20 mt-8 animate-[fadeScaleIn_0.4s_ease_forwards]">
-                                                    Inquiry Sent! <Sparkles size={18} aria-hidden="true" />
-                                                </div>
-                                            ) : (
-                                                <>
-                                                    <button 
-                                                        type="submit"
-                                                        disabled={isSubmitting}
-                                                        aria-label="Send inquiry via webhook"
-                                                        className="w-full flex items-center justify-center gap-4 bg-black text-white py-8 rounded-full text-sm font-black uppercase tracking-[0.3em] hover:bg-black/80 hover:scale-[0.98] transition-all duration-500 mt-8 disabled:opacity-50 disabled:cursor-not-allowed"
-                                                    >
-                                                        {isSubmitting ? 'Sending…' : 'SEND INQUIRY'} <ChevronRight size={18} aria-hidden="true" />
-                                                    </button>
-                                                    {isError && (
-                                                        <div role="alert" className="w-full flex items-center justify-center gap-3 bg-red-500/10 text-red-400 py-4 rounded-full text-[11px] font-black uppercase tracking-[0.2em] border border-red-500/20 mt-4 animate-[fadeScaleIn_0.4s_ease_forwards]">
-                                                            {errorMessage}
-                                                        </div>
-                                                    )}
-                                                </>
-                                            )}
-                                        </form>
-
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </div>
-
-            <footer className="py-24 px-6 md:px-12 border-t border-white/5 bg-[#0A0A0A]">
-                <div className="max-w-[1440px] mx-auto flex flex-col items-center gap-12 sm:gap-16">
-                    <div className="flex flex-col items-center gap-6">
-                        <div className="text-2xl font-black tracking-tighter text-white">KRISH UJENIYA</div>
-                        <div className="text-[11px] font-black uppercase tracking-[0.4em] text-[#A1A1A1] text-center max-w-xs leading-relaxed">
-                            © 2026 · BUILDING RELIABLE AI SYSTEMS
-                        </div>
-                    </div>
-                    
-                        <div className="flex flex-wrap justify-center gap-8 sm:gap-12">
-                            {Object.entries(portfolioData.profile.socials)
-                                .filter(([name]) => name !== 'calendar')
-                                .map(([name, url]) => (
-                                <a 
-                                    key={name} 
-                                    href={url} 
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    aria-label={`Visit my ${name} profile`}
-                                    className="text-[11px] font-black uppercase tracking-[0.2em] text-[#A1A1A1] hover:text-white transition-colors border-b border-transparent hover:border-white/20 pb-1"
-                                >
-                                    {name === 'huggingface' ? 'HuggingFace' : name}
-                                </a>
-                            ))}
-                        </div>
-
-                    <button 
-                        onClick={() => scrollTo('home')}
-                        aria-label="Back to home"
-                        className={`group flex flex-col items-center gap-4 text-[11px] font-black uppercase tracking-[0.3em] text-[#A1A1A1] hover:text-white transition-all duration-300 ${scrolled ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
-                    >
-                        <span className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:border-white/30 transition-all bg-white/5">
-                            <ArrowUp size={18} aria-hidden="true" />
-                        </span>
-                        Back to Top
-                    </button>
-                </div>
-            </footer>
-
-            {selectedProject && (
-                <div 
-                    id="project-modal"
-                    role="dialog"
-                    aria-modal="true"
-                    aria-labelledby="modal-title"
-                    className="fixed inset-0 z-[500] flex items-center justify-center p-4 sm:p-12 bg-black/95 backdrop-blur-2xl animate-[fadeIn_0.25s_ease_forwards]"
-                    onClick={() => setSelectedProject(null)}
-                >
-                    <div 
-                        className="w-full max-w-6xl bg-[#0A0A0A] border border-white/10 rounded-[32px] sm:rounded-[64px] overflow-hidden grid lg:grid-cols-12 max-h-full overflow-y-auto relative animate-[scaleIn_0.3s_ease_forwards]"
-                        onClick={(e) => e.stopPropagation()}
-                    >
-                        <div className="lg:col-span-5 relative h-[350px] lg:h-auto">
-                            <Image
-                                src={selectedProject.imageUrl}
-                                alt={selectedProject.title}
-                                fill
-                                sizes="(max-width: 1024px) 100vw, 500px"
-                                className="object-cover"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-black via-transparent to-transparent"></div>
-                            <div className="absolute top-8 left-8">
-                                <button 
-                                    onClick={() => setSelectedProject(null)}
-                                    aria-label="Close project details"
-                                    className="w-12 h-12 flex items-center justify-center bg-white/10 backdrop-blur-md rounded-full text-white hover:bg-white hover:text-black transition-all"
-                                >
-                                    <X size={20} aria-hidden="true" />
-                                </button>
-                            </div>
-                        </div>
-                        <div className="lg:col-span-7 p-8 md:p-16 overflow-y-visible">
-                            <span className="text-[11px] font-black uppercase tracking-[0.2em] text-[#A1A1A1] mb-4 block">{selectedProject.category}</span>
-                            <h3 id="modal-title" className="text-4xl md:text-5xl font-black uppercase tracking-tighter mb-8">{selectedProject.title}</h3>
-                            
-                            <div className="space-y-10">
-                                <div className="space-y-3">
-                                    <div className="flex items-center gap-3">
-                                        <Target size={18} className="text-[#A1A1A1]" aria-hidden="true" />
-                                        <h4 className="text-[11px] font-black uppercase tracking-[0.1em] text-white">The Challenge</h4>
-                                    </div>
-                                    <p className="text-[#E0E0E0] leading-relaxed italic">{selectedProject.caseStudy.problem}</p>
-                                </div>
-
-                                <div className="space-y-3">
-                                    <div className="flex items-center gap-3">
-                                        <Lightbulb size={18} className="text-[#A1A1A1]" aria-hidden="true" />
-                                        <h4 className="text-[11px] font-black uppercase tracking-[0.1em] text-white">The Execution</h4>
-                                    </div>
-                                    <p className="text-[#E0E0E0] leading-relaxed">{selectedProject.caseStudy.solution}</p>
-                                </div>
-
-                                <div className="space-y-4">
-                                    <div className="p-6 rounded-3xl bg-white/5 border border-white/5 flex items-center gap-6">
-                                        <div className="w-12 h-12 flex items-center justify-center bg-white text-black rounded-full shrink-0">
-                                            <TrendingUp size={20} aria-hidden="true" />
-                                        </div>
-                                        <div>
-                                            <h4 className="text-[11px] font-black uppercase tracking-[0.1em] text-white mb-1">Impact Delivered</h4>
-                                            <p className="text-lg font-bold text-[#E0E0E0]">{selectedProject.impact}</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="pt-8 flex gap-4">
-                                    <a 
-                                        href={selectedProject.link} 
-                                        target="_blank" 
-                                        aria-label={`View ${selectedProject.title} ${selectedProject.linkType === 'repo' ? 'repository' : 'space'}`}
-                                        className="flex-grow flex items-center justify-between bg-white text-black px-8 py-5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] hover:bg-[#474747] hover:text-white transition-all duration-500"
-                                    >
-                                        {selectedProject.linkType === 'repo' ? 'View Repository' : 'View Space'} <span className="material-symbols-outlined" aria-hidden="true">arrow_outward</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
+            <ProjectModal 
+                project={selectedProject} 
+                onClose={() => setSelectedProject(null)} 
+            />
         </div>
     );
 }
