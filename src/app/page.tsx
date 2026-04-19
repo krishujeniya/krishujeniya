@@ -34,6 +34,7 @@ export default function Portfolio() {
     const [isSent, setIsSent] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isError, setIsError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('Failed to send — email directly.');
     const [selectedServices, setSelectedServices] = useState<string[]>([]);
     const [selectedStages, setSelectedStages] = useState<string[]>([]);
 
@@ -518,27 +519,44 @@ export default function Portfolio() {
                                             const form = e.currentTarget;
                                             const formData = new FormData(form);
 
-                                            // Honeypot: bail if bot filled the hidden field
-                                            const honeypot = formData.get('website') as string;
-                                            if (honeypot) return;
-
-                                            const name = formData.get('name') as string;
-                                            const email = formData.get('email') as string;
-                                            const company = formData.get('company') as string;
-                                            const role = formData.get('role') as string;
-                                            const techStack = formData.get('techStack') as string;
-                                            const budget = formData.get('budget') as string;
-                                            const timeline = formData.get('timeline') as string;
-                                            const source_discovery = formData.get('source_discovery') as string;
-                                            const contactMethod = formData.get('contactMethod') as string;
-                                            const message = formData.get('message') as string;
+                                            // HONEYPOT: If bot fills this, we silent-success or simply ignore.
+                                            // Backend checks for data.honeypot
+                                            const honeypot = formData.get('honeypot') as string;
                                             
-                                            if (!name || !email || !message) return;
+                                            const name = (formData.get('name') as string || '').trim();
+                                            const email = (formData.get('email') as string || '').trim();
+                                            const company = (formData.get('company') as string || 'Not provided').trim();
+                                            const role = formData.get('role') as string || 'Not provided';
+                                            const techStack = (formData.get('techStack') as string || 'Not provided').trim();
+                                            const budget = formData.get('budget') as string || 'Not selected';
+                                            const timeline = formData.get('timeline') as string || 'Not selected';
+                                            const discoverySource = formData.get('discoverySource') as string || 'Not provided';
+                                            const preferredContactMethod = formData.get('contactMethod') as string || 'Not provided';
+                                            const message = (formData.get('message') as string || '').trim();
+
+                                            // Robust Client-side Validation
+                                            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                                            if (!name || !email || !message || !role || !budget || !timeline || !discoverySource || !preferredContactMethod) {
+                                                setErrorMessage('Please fill in all required fields.');
+                                                setIsError(true);
+                                                setTimeout(() => setIsError(false), 5000);
+                                                return;
+                                            }
+
+                                            if (!emailRegex.test(email)) {
+                                                setErrorMessage('Please enter a valid email address.');
+                                                setIsError(true);
+                                                setTimeout(() => setIsError(false), 5000);
+                                                return;
+                                            }
 
                                             setIsSubmitting(true);
+                                            setIsError(false);
+
+                                            const API_URL = process.env.NEXT_PUBLIC_VERCEL_API_URL || 'https://krishujeniya-backend.vercel.app/api/webDATA';
 
                                             try {
-                                                const response = await fetch('https://krishujeniyan8n.centralindia.cloudapp.azure.com/webhook/webDATA', {
+                                                const response = await fetch(API_URL, {
                                                     method: 'POST',
                                                     headers: { 'Content-Type': 'application/json' },
                                                     body: JSON.stringify({
@@ -551,11 +569,10 @@ export default function Portfolio() {
                                                         techStack,
                                                         budget,
                                                         timeline,
-                                                        discoverySource: source_discovery,
-                                                        preferredContactMethod: contactMethod,
+                                                        discoverySource,
+                                                        preferredContactMethod,
                                                         message,
-                                                        source: 'portfolio_contact_form',
-                                                        submittedAt: new Date().toISOString()
+                                                        honeypot: honeypot || ""
                                                     }),
                                                 });
 
@@ -566,10 +583,17 @@ export default function Portfolio() {
                                                     setSelectedStages([]);
                                                     setTimeout(() => setIsSent(false), 5000);
                                                 } else {
-                                                    throw new Error('Failed to send');
+                                                    if (response.status === 403) {
+                                                        throw new Error('Unauthorized source. Please submit from the official site.');
+                                                    } else if (response.status === 500) {
+                                                        throw new Error('Internal Server Error. Please try again later.');
+                                                    } else {
+                                                        throw new Error('Failed to send inquiry.');
+                                                    }
                                                 }
-                                            } catch (error) {
-                                                console.error('Webhook error:', error);
+                                            } catch (error: any) {
+                                                console.error('Submission error:', error);
+                                                setErrorMessage(error.message || 'Failed to send — email directly.');
                                                 setIsError(true);
                                                 setTimeout(() => setIsError(false), 5000);
                                             } finally {
@@ -577,7 +601,14 @@ export default function Portfolio() {
                                             }
                                         }}>
                                             {/* Honeypot: visually hidden, filled only by bots */}
-                                            <input type="text" name="website" autoComplete="new-password" tabIndex={-1} aria-hidden="true" className="hidden" />
+                                            <input 
+                                                type="text" 
+                                                name="honeypot" 
+                                                style={{ display: 'none' }} 
+                                                tabIndex={-1} 
+                                                autoComplete="off" 
+                                                aria-hidden="true" 
+                                            />
 
                                             {/* Group 1: About You */}
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -695,7 +726,7 @@ export default function Portfolio() {
                                                 <div className="flex flex-col gap-3">
                                                     <label htmlFor="form-source" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">How Did You Find Me</label>
                                                     <div className="relative">
-                                                        <select id="form-source" name="source_discovery" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all appearance-none cursor-pointer">
+                                                        <select id="form-source" name="discoverySource" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all appearance-none cursor-pointer">
                                                             <option value="" disabled selected>SELECT SOURCE</option>
                                                             {["LinkedIn", "GitHub", "Google Search", "Hugging Face", "Personal Referral", "Medium", "Other"].map(source => (
                                                                 <option key={source} value={source}>{source.toUpperCase()}</option>
@@ -742,7 +773,7 @@ export default function Portfolio() {
                                                     </button>
                                                     {isError && (
                                                         <div role="alert" className="w-full flex items-center justify-center gap-3 bg-red-500/10 text-red-400 py-4 rounded-full text-[11px] font-black uppercase tracking-[0.2em] border border-red-500/20 mt-4 animate-[fadeScaleIn_0.4s_ease_forwards]">
-                                                            Failed to send — email directly.
+                                                            {errorMessage}
                                                         </div>
                                                     )}
                                                 </>
