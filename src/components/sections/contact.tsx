@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Check } from 'lucide-react';
+import { Sparkles, ChevronRight } from 'lucide-react';
 
 interface ContactProps {
     // any props needed
@@ -14,23 +14,6 @@ export const Contact: React.FC<ContactProps> = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const [selectedServices, setSelectedServices] = useState<string[]>([]);
     const [selectedStages, setSelectedStages] = useState<string[]>([]);
-
-    const services = [
-        'Full Product Design',
-        'MVP Development',
-        'UI/UX Audit',
-        'Visual Identity',
-        'Web Development',
-        'Mobile App Design'
-    ];
-
-    const stages = [
-        'Idea Stage',
-        'Pre-seed / Seed',
-        'Series A+',
-        'Existing Product',
-        'Refactoring'
-    ];
 
     const toggleService = (service: string) => {
         setSelectedServices(prev => 
@@ -51,7 +34,9 @@ export const Contact: React.FC<ContactProps> = () => {
         const form = e.currentTarget;
         const formData = new FormData(form);
 
+        // HONEYPOT: If bot fills this, we silent-success or simply ignore.
         const honeypot = formData.get('honeypot') as string;
+        
         const name = (formData.get('name') as string || '').trim();
         const email = (formData.get('email') as string || '').trim();
         const company = (formData.get('company') as string || 'Not provided').trim();
@@ -63,6 +48,7 @@ export const Contact: React.FC<ContactProps> = () => {
         const preferredContactMethod = formData.get('contactMethod') as string || 'Not provided';
         const message = (formData.get('message') as string || '').trim();
 
+        // Robust Client-side Validation
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!name || !email || !message || !role || !budget || !timeline || !discoverySource || !preferredContactMethod) {
             setErrorMessage('Please fill in all required fields.');
@@ -149,75 +135,62 @@ export const Contact: React.FC<ContactProps> = () => {
 
                     <div className="lg:col-span-6">
                         <form className="flex flex-col gap-8" onSubmit={handleSubmit}>
-                            {/* Honeypot field - hidden from users */}
-                            <div className="hidden" aria-hidden="true">
-                                <input type="text" name="honeypot" tabIndex={-1} autoComplete="off" />
-                            </div>
+                            {/* Honeypot: visually hidden, filled only by bots */}
+                            <input 
+                                type="text" 
+                                name="honeypot" 
+                                style={{ display: 'none' }} 
+                                tabIndex={-1} 
+                                autoComplete="off" 
+                                aria-hidden="true" 
+                            />
 
-                            <div className="grid md:grid-cols-2 gap-6">
-                                <div className="flex flex-col gap-2">
-                                    <label htmlFor="name" className="text-[10px] font-black uppercase tracking-widest text-black/40 ml-4">Full Name*</label>
-                                    <input 
-                                        type="text" 
-                                        id="name"
-                                        name="name" 
-                                        placeholder="ALEX JOHNSON" 
-                                        required 
-                                        className="bg-[#F5F5F5] border-none rounded-2xl px-6 py-4 text-sm font-bold placeholder:text-black/20 focus:ring-2 focus:ring-black/5 transition-all outline-none"
-                                    />
+                            {/* Group 1: About You */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                                <div className="flex flex-col gap-3">
+                                    <label htmlFor="form-name" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Name</label>
+                                    <input id="form-name" name="name" type="text" placeholder="YOUR NAME" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all placeholder:text-[#999999]/30 outline-none" />
                                 </div>
-                                <div className="flex flex-col gap-2">
-                                    <label htmlFor="email" className="text-[10px] font-black uppercase tracking-widest text-black/40 ml-4">Email Address*</label>
-                                    <input 
-                                        type="email" 
-                                        id="email"
-                                        name="email" 
-                                        placeholder="ALEX@COMPANY.COM" 
-                                        required 
-                                        className="bg-[#F5F5F5] border-none rounded-2xl px-6 py-4 text-sm font-bold placeholder:text-black/20 focus:ring-2 focus:ring-black/5 transition-all outline-none"
-                                    />
-                                </div>
-                                <div className="flex flex-col gap-2">
-                                    <label htmlFor="company" className="text-[10px] font-black uppercase tracking-widest text-black/40 ml-4">Company Name</label>
-                                    <input 
-                                        type="text" 
-                                        id="company"
-                                        name="company" 
-                                        placeholder="YOUR ORGANIZATION" 
-                                        className="bg-[#F5F5F5] border-none rounded-2xl px-6 py-4 text-sm font-bold placeholder:text-black/20 focus:ring-2 focus:ring-black/5 transition-all outline-none"
-                                    />
-                                </div>
-                                <div className="flex flex-col gap-2">
-                                    <label htmlFor="role" className="text-[10px] font-black uppercase tracking-widest text-black/40 ml-4">Your Role*</label>
-                                    <select 
-                                        id="role"
-                                        name="role" 
-                                        required
-                                        defaultValue=""
-                                        className="bg-[#F5F5F5] border-none rounded-2xl px-6 py-4 text-sm font-bold focus:ring-2 focus:ring-black/5 transition-all outline-none appearance-none cursor-pointer"
-                                    >
-                                        <option value="" disabled>SELECT YOUR ROLE</option>
-                                        <option value="Founder/CEO">FOUNDER / CEO</option>
-                                        <option value="Product Manager">PRODUCT MANAGER</option>
-                                        <option value="CTO/Engineering Lead">CTO / ENG LEAD</option>
-                                        <option value="Marketing/Growth">MARKETING / GROWTH</option>
-                                        <option value="Other">OTHER</option>
-                                    </select>
+                                <div className="flex flex-col gap-3">
+                                    <label htmlFor="form-email" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Email</label>
+                                    <input id="form-email" name="email" type="email" placeholder="YOUR EMAIL" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all placeholder:text-[#999999]/30 outline-none" />
                                 </div>
                             </div>
 
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                                <div className="flex flex-col gap-3">
+                                    <label htmlFor="form-company" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Company / Organization</label>
+                                    <input id="form-company" name="company" type="text" placeholder="COMPANY NAME" className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all placeholder:text-[#999999]/30 outline-none" />
+                                </div>
+                                <div className="flex flex-col gap-3">
+                                    <label htmlFor="form-role" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Your Role</label>
+                                    <div className="relative">
+                                        <select id="form-role" name="role" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all appearance-none cursor-pointer outline-none">
+                                            <option value="" disabled selected>SELECT YOUR ROLE</option>
+                                            {["Founder / Co-founder", "CTO / VP Engineering", "Engineering Lead / Manager", "Product Manager", "Data / ML Team Lead", "Individual / Freelancer", "Other"].map(role => (
+                                                <option key={role} value={role}>{role.toUpperCase()}</option>
+                                            ))}
+                                        </select>
+                                        <div className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none">
+                                            <ChevronRight size={14} className="rotate-90 text-[#999999]/50" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Group 2: Project Info */}
                             <div className="flex flex-col gap-4">
-                                <span className="text-[10px] font-black uppercase tracking-widest text-black/40 ml-4">Services Needed*</span>
+                                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Service Interested In</label>
                                 <div className="flex flex-wrap gap-2">
-                                    {services.map((service) => (
+                                    {["Enterprise RAG", "Agentic AI", "MLOps Architecture", "ML Consulting", "Not Sure Yet"].map(service => (
                                         <button
                                             key={service}
                                             type="button"
                                             onClick={() => toggleService(service)}
-                                            className={`px-6 py-3 rounded-full text-[10px] font-black uppercase tracking-widest transition-all duration-300 border ${
+                                            className={`text-[9px] font-black uppercase tracking-[0.1em] px-4 py-2 rounded-full border transition-all ${
                                                 selectedServices.includes(service)
                                                 ? 'bg-black text-white border-black'
-                                                : 'bg-transparent text-black/40 border-black/10 hover:border-black/30'
+                                                : 'bg-black/5 text-[#A1A1A1] border-transparent hover:border-black/20'
                                             }`}
                                         >
                                             {service}
@@ -227,17 +200,17 @@ export const Contact: React.FC<ContactProps> = () => {
                             </div>
 
                             <div className="flex flex-col gap-4">
-                                <span className="text-[10px] font-black uppercase tracking-widest text-black/40 ml-4">Project Stage*</span>
+                                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Project Stage</label>
                                 <div className="flex flex-wrap gap-2">
-                                    {stages.map((stage) => (
+                                    {["Greenfield Build", "Improve Existing System", "Proof of Concept", "Just Exploring"].map(stage => (
                                         <button
                                             key={stage}
                                             type="button"
                                             onClick={() => toggleStage(stage)}
-                                            className={`px-6 py-3 rounded-full text-[10px] font-black uppercase tracking-widest transition-all duration-300 border ${
+                                            className={`text-[9px] font-black uppercase tracking-[0.1em] px-4 py-2 rounded-full border transition-all ${
                                                 selectedStages.includes(stage)
                                                 ? 'bg-black text-white border-black'
-                                                : 'bg-transparent text-black/40 border-black/10 hover:border-black/30'
+                                                : 'bg-black/5 text-[#A1A1A1] border-transparent hover:border-black/20'
                                             }`}
                                         >
                                             {stage}
@@ -246,132 +219,100 @@ export const Contact: React.FC<ContactProps> = () => {
                                 </div>
                             </div>
 
-                            <div className="grid md:grid-cols-2 gap-6">
-                                <div className="flex flex-col gap-2">
-                                    <label htmlFor="budget" className="text-[10px] font-black uppercase tracking-widest text-black/40 ml-4">Budget Range*</label>
-                                    <select 
-                                        id="budget"
-                                        name="budget" 
-                                        required 
-                                        defaultValue=""
-                                        className="bg-[#F5F5F5] border-none rounded-2xl px-6 py-4 text-sm font-bold focus:ring-2 focus:ring-black/5 transition-all outline-none appearance-none cursor-pointer"
-                                    >
-                                        <option value="" disabled>SELECT BUDGET</option>
-                                        <option value="< $5k">UNDER $5,000</option>
-                                        <option value="$5k - $15k">$5,000 — $15,000</option>
-                                        <option value="$15k - $30k">$15,000 — $30,000</option>
-                                        <option value="$30k+">$30,000+</option>
-                                    </select>
-                                </div>
-                                <div className="flex flex-col gap-2">
-                                    <label htmlFor="timeline" className="text-[10px] font-black uppercase tracking-widest text-black/40 ml-4">Target Timeline*</label>
-                                    <select 
-                                        id="timeline"
-                                        name="timeline" 
-                                        required 
-                                        defaultValue=""
-                                        className="bg-[#F5F5F5] border-none rounded-2xl px-6 py-4 text-sm font-bold focus:ring-2 focus:ring-black/5 transition-all outline-none appearance-none cursor-pointer"
-                                    >
-                                        <option value="" disabled>WHEN DO WE START?</option>
-                                        <option value="ASAP">ASAP / URGENT</option>
-                                        <option value="1-2 Months">IN 1-2 MONTHS</option>
-                                        <option value="3+ Months">IN 3+ MONTHS</option>
-                                        <option value="Just Exploring">JUST BROWSING</option>
-                                    </select>
-                                </div>
+                            <div className="flex flex-col gap-3">
+                                <label htmlFor="form-tech-stack" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Current Tech Stack</label>
+                                <input id="form-tech-stack" name="techStack" type="text" placeholder="e.g. Python, AWS, Pinecone, LangChain..." className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all placeholder:text-[#999999]/30 outline-none" />
+                                <span className="text-[9px] font-medium text-[#A1A1A1] mt-1">Helps estimate integration complexity before we talk.</span>
                             </div>
 
-                            <div className="flex flex-col gap-2">
-                                <label htmlFor="techStack" className="text-[10px] font-black uppercase tracking-widest text-black/40 ml-4">Current/Preferred Tech Stack</label>
-                                <input 
-                                    type="text" 
-                                    id="techStack"
-                                    name="techStack" 
-                                    placeholder="E.G. NEXT.JS, REACT NATIVE, SUPABASE" 
-                                    className="bg-[#F5F5F5] border-none rounded-2xl px-6 py-4 text-sm font-bold placeholder:text-black/20 focus:ring-2 focus:ring-black/5 transition-all outline-none"
-                                />
-                            </div>
-
-                            <div className="flex flex-col gap-2">
-                                <label htmlFor="message" className="text-[10px] font-black uppercase tracking-widest text-black/40 ml-4">Project Brief*</label>
-                                <textarea 
-                                    id="message"
-                                    name="message" 
-                                    rows={6} 
-                                    placeholder="DESCRIBE YOUR PROJECT GOALS AND CHALLENGES..." 
-                                    required 
-                                    className="bg-[#F5F5F5] border-none rounded-2xl px-8 py-6 text-sm font-bold placeholder:text-black/20 focus:ring-2 focus:ring-black/5 transition-all outline-none resize-none"
-                                ></textarea>
-                            </div>
-
-                            <div className="grid md:grid-cols-2 gap-6">
-                                <div className="flex flex-col gap-2">
-                                    <label htmlFor="discoverySource" className="text-[10px] font-black uppercase tracking-widest text-black/40 ml-4">How did you find me?*</label>
-                                    <select 
-                                        id="discoverySource"
-                                        name="discoverySource" 
-                                        required 
-                                        defaultValue=""
-                                        className="bg-[#F5F5F5] border-none rounded-2xl px-6 py-4 text-sm font-bold focus:ring-2 focus:ring-black/5 transition-all outline-none appearance-none cursor-pointer"
-                                    >
-                                        <option value="" disabled>SELECT SOURCE</option>
-                                        <option value="LinkedIn">LINKEDIN</option>
-                                        <option value="Twitter/X">TWITTER / X</option>
-                                        <option value="GitHub">GITHUB</option>
-                                        <option value="Referral">REFERRAL</option>
-                                        <option value="Google Search">GOOGLE SEARCH</option>
-                                        <option value="Other">OTHER</option>
-                                    </select>
+                            {/* Group 3: Scope & Logistics */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                                <div className="flex flex-col gap-3">
+                                    <label htmlFor="form-budget" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Budget Range</label>
+                                    <div className="relative">
+                                        <select id="form-budget" name="budget" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all appearance-none cursor-pointer outline-none">
+                                            <option value="" disabled selected>SELECT BUDGET</option>
+                                            {["Under $5,000", "$5,000–$15,000", "$15,000–$30,000", "$30,000+", "Let's Discuss"].map(budget => (
+                                                <option key={budget} value={budget}>{budget.toUpperCase()}</option>
+                                            ))}
+                                        </select>
+                                        <div className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none">
+                                            <ChevronRight size={14} className="rotate-90 text-[#999999]/50" />
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="flex flex-col gap-2">
-                                    <label htmlFor="contactMethod" className="text-[10px] font-black uppercase tracking-widest text-black/40 ml-4">Best way to reach you?*</label>
-                                    <select 
-                                        id="contactMethod"
-                                        name="contactMethod" 
-                                        required 
-                                        defaultValue=""
-                                        className="bg-[#F5F5F5] border-none rounded-2xl px-6 py-4 text-sm font-bold focus:ring-2 focus:ring-black/5 transition-all outline-none appearance-none cursor-pointer"
-                                    >
-                                        <option value="" disabled>PREFERED METHOD</option>
-                                        <option value="Email">EMAIL</option>
-                                        <option value="LinkedIn DM">LINKEDIN DM</option>
-                                        <option value="Twitter DM">TWITTER DM</option>
-                                        <option value="WhatsApp">WHATSAPP / CALL</option>
-                                    </select>
+                                <div className="flex flex-col gap-3">
+                                    <label htmlFor="form-timeline" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Desired Timeline</label>
+                                    <div className="relative">
+                                        <select id="form-timeline" name="timeline" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all appearance-none cursor-pointer outline-none">
+                                            <option value="" disabled selected>SELECT TIMELINE</option>
+                                            {["ASAP (within 2 weeks)", "1–3 months", "3–6 months", "Flexible", "No hard deadline"].map(timeline => (
+                                                <option key={timeline} value={timeline}>{timeline.toUpperCase()}</option>
+                                            ))}
+                                        </select>
+                                        <div className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none">
+                                            <ChevronRight size={14} className="rotate-90 text-[#999999]/50" />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
-                            <button 
-                                type="submit" 
-                                disabled={isSubmitting || isSent}
-                                className={`group flex items-center justify-center gap-4 px-12 py-6 rounded-full text-[11px] font-black uppercase tracking-[0.2em] transition-all duration-500 ${
-                                    isSent 
-                                    ? 'bg-green-500 text-white' 
-                                    : 'bg-black text-white hover:bg-black/80'
-                                } disabled:opacity-50 h-20 w-full md:w-auto md:self-start`}
-                            >
-                                {isSubmitting ? (
-                                    <span className="flex items-center gap-3">
-                                        <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                                        PROCESSING...
-                                    </span>
-                                ) : isSent ? (
-                                    <span className="flex items-center gap-3">
-                                        <Check size={18} />
-                                        INQUIRY SENT
-                                    </span>
-                                ) : (
-                                    <span className="flex items-center gap-3">
-                                        SEND INQUIRY
-                                        <span className="material-symbols-outlined text-[18px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
-                                    </span>
-                                )}
-                            </button>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                                <div className="flex flex-col gap-3">
+                                    <label htmlFor="form-source" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">How Did You Find Me</label>
+                                    <div className="relative">
+                                        <select id="form-source" name="discoverySource" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all appearance-none cursor-pointer outline-none">
+                                            <option value="" disabled selected>SELECT SOURCE</option>
+                                            {["LinkedIn", "GitHub", "Google Search", "Hugging Face", "Personal Referral", "Medium", "Other"].map(source => (
+                                                <option key={source} value={source}>{source.toUpperCase()}</option>
+                                            ))}
+                                        </select>
+                                        <div className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none">
+                                            <ChevronRight size={14} className="rotate-90 text-[#999999]/50" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="flex flex-col gap-3">
+                                    <label htmlFor="form-contact-method" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Preferred Contact Method</label>
+                                    <div className="relative">
+                                        <select id="form-contact-method" name="contactMethod" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all appearance-none cursor-pointer outline-none">
+                                            <option value="" disabled selected>SELECT METHOD</option>
+                                            {["Email", "Schedule a Call", "WhatsApp", "No Preference"].map(method => (
+                                                <option key={method} value={method}>{method.toUpperCase()}</option>
+                                            ))}
+                                        </select>
+                                        <div className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none">
+                                            <ChevronRight size={14} className="rotate-90 text-[#999999]/50" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-                            {isError && (
-                                <p className="text-red-500 text-[10px] font-black uppercase tracking-widest mt-2 animate-bounce">
-                                    {errorMessage}
-                                </p>
+                            <div className="flex flex-col gap-3">
+                                <label htmlFor="form-message" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Project Details</label>
+                                <textarea id="form-message" name="message" rows={4} placeholder="TELL ME ABOUT YOUR PROJECT" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all placeholder:text-[#999999]/30 resize-none outline-none" />
+                            </div>
+
+                            {isSent ? (
+                                <div className="w-full flex items-center justify-center gap-4 bg-green-500/10 text-green-500 py-8 rounded-full text-sm font-black uppercase tracking-[0.3em] border border-green-500/20 mt-8 animate-[fadeScaleIn_0.4s_ease_forwards]">
+                                    Inquiry Sent! <Sparkles size={18} aria-hidden="true" />
+                                </div>
+                            ) : (
+                                <>
+                                    <button 
+                                        type="submit"
+                                        disabled={isSubmitting}
+                                        aria-label="Send inquiry via webhook"
+                                        className="w-full flex items-center justify-center gap-4 bg-black text-white py-8 rounded-full text-sm font-black uppercase tracking-[0.3em] hover:bg-black/80 hover:scale-[0.98] transition-all duration-500 mt-8 disabled:opacity-50 disabled:cursor-not-allowed"
+                                    >
+                                        {isSubmitting ? 'Sending…' : 'SEND INQUIRY'} <ChevronRight size={18} aria-hidden="true" />
+                                    </button>
+                                    {isError && (
+                                        <div role="alert" className="w-full flex items-center justify-center gap-3 bg-red-500/10 text-red-400 py-4 rounded-full text-[11px] font-black uppercase tracking-[0.2em] border border-red-500/20 mt-4 animate-[fadeScaleIn_0.4s_ease_forwards]">
+                                            {errorMessage}
+                                        </div>
+                                    )}
+                                </>
                             )}
                         </form>
                     </div>
