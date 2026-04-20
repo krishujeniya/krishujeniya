@@ -59,6 +59,7 @@
 
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 110px;
     height: 100%;
   }
 

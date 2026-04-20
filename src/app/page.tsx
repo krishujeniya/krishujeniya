@@ -123,7 +123,7 @@ export default function Portfolio() {
     const scrollTo = (id: string) => {
         const el = document.getElementById(id);
         if (el) {
-            el.scrollIntoView({ behavior: 'smooth' });
+            el.scrollIntoView();
             setActiveSection(id);
         }
     };
@@ -186,7 +186,7 @@ export default function Portfolio() {
 
 
             <div className="flex flex-col">
-                <section id="home" className="relative min-h-screen flex flex-col justify-center px-6 md:px-12 pt-32 md:pt-20 scroll-mt-20">
+                <section id="home" className="relative min-h-screen flex flex-col justify-center px-6 md:px-12 pt-32 md:pt-20">
                     <div className="max-w-[1440px] mx-auto w-full">
                         <div className="flex flex-col items-start gap-6 md:gap-8">
                             {/* Availability Removed */}
@@ -229,7 +229,7 @@ export default function Portfolio() {
                     </div>
                 </section>
 
-                <section id="about" className="py-24 px-6 md:px-12 bg-white text-black rounded-[40px] md:rounded-[80px] mt-20 relative z-10 scroll-mt-20">
+                <section id="about" className="py-24 px-6 md:px-12 bg-white text-black rounded-[40px] md:rounded-[80px] mt-20 relative z-10">
                     <div className="max-w-[1440px] mx-auto">
                         <div className="grid lg:grid-cols-12 gap-12 items-end mb-20">
                             <div className="lg:col-span-7 flex flex-col gap-4">
@@ -268,7 +268,7 @@ export default function Portfolio() {
                 </section>
 
                 {/* Experience Section */}
-                <section id="experience" className="py-24 px-6 md:px-12 bg-white/5 scroll-mt-20">
+                <section id="experience" className="py-24 px-6 md:px-12 bg-white/5">
                     <div className="max-w-[1440px] mx-auto">
                         <div className="flex flex-col items-center text-center gap-6 mb-32">
                             <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#A1A1A1]">/ Path</span>
@@ -304,7 +304,7 @@ export default function Portfolio() {
                 </section>
 
                 {/* Services Section */}
-                <section id="services" className="py-32 px-6 md:px-12 bg-[#FAFAFA] text-black rounded-[40px] md:rounded-[80px] scroll-mt-20 relative z-20 shadow-[0_-20px_50px_rgba(0,0,0,0.05)]">
+                <section id="services" className="py-32 px-6 md:px-12 bg-[#FAFAFA] text-black rounded-[40px] md:rounded-[80px] relative z-20 shadow-[0_-20px_50px_rgba(0,0,0,0.05)]">
                     <div className="max-w-[1440px] mx-auto">
                         <div className="flex flex-col items-start gap-4 mb-24">
                             <span className="text-[11px] font-black uppercase tracking-[0.4em] text-[#A1A1A1]">/ Expertise</span>
@@ -339,7 +339,7 @@ export default function Portfolio() {
                 </section>
 
                 {/* Projects Section */}
-                <section id="projects" className="py-24 px-6 md:px-12 bg-[#0A0A0A] scroll-mt-20">
+                <section id="projects" className="py-24 px-6 md:px-12 bg-[#0A0A0A]">
                     <div className="max-w-[1440px] mx-auto">
                         <div className="flex flex-col items-start gap-4 mb-24">
                             <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40">/ Catalog</span>
@@ -388,7 +388,7 @@ export default function Portfolio() {
                 </section>
 
                 {/* Documents Section */}
-                <section id="documents" className="py-24 px-6 md:px-12 bg-white/5 scroll-mt-20">
+                <section id="documents" className="py-24 px-6 md:px-12 bg-white/5">
                     <div className="max-w-[1440px] mx-auto">
                         <div className="flex flex-col items-center text-center gap-6 mb-32">
                             <span className="text-[11px] font-black uppercase tracking-[0.4em] text-[#A1A1A1]">/ Resources</span>
@@ -453,7 +453,7 @@ export default function Portfolio() {
                 </section>
 
                 {/* Testimonials Section */}
-                <section id="testimonials" className="py-24 px-6 md:px-12 bg-[#0A0A0A] scroll-mt-20">
+                <section id="testimonials" className="py-24 px-6 md:px-12 bg-[#0A0A0A]">
                     <div className="max-w-[1440px] mx-auto">
                         <div className="flex flex-col items-center text-center gap-6 mb-32">
                             <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#A1A1A1]">/ Feedback</span>
@@ -494,7 +494,7 @@ export default function Portfolio() {
                 </section>
 
                 {/* Contact Section */}
-                <section id="contact" className="py-24 px-6 md:px-12 bg-white text-black rounded-[40px] md:rounded-[80px] mb-20 relative z-10 scroll-mt-20">
+                <section id="contact" className="py-24 px-6 md:px-12 bg-white text-black rounded-[40px] md:rounded-[80px] mb-20 relative z-10">
                     <div className="max-w-[1440px] mx-auto">
                         <div className="grid lg:grid-cols-12 gap-20">
                             <div className="lg:col-span-6 flex flex-col gap-10">
