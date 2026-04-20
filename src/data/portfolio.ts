@@ -21,7 +21,7 @@ export const portfolioData = {
     tagline: "I build RAG systems, AI agents, and MLOps pipelines that actually make it to production — typically in under 4 weeks.",
     photo: {
       webp: "/krishujeniya/images/1765004211200.webp",
-      jpg: "/krishujeniya/images/1765004211200.jpg"
+      jpg: "/krishujeniya/images/1765004211200.webp"
     },
     availability: "Open for projects · Replies <24h",
     metrics: [

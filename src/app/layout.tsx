@@ -61,7 +61,7 @@ export const metadata: Metadata = {
     title: 'Krish Ujeniya | Freelance ML Engineer & Data Scientist',
     description: 'Specializing in AI Agents, LLMs, and MLOps. Building production-ready intelligent systems for global clients.',
     images: [{
-      url: '/krishujeniya/images/1765004211200.jpg',
+      url: '/krishujeniya/images/1765004211200.webp',
       width: 1200, height: 630,
       alt: 'Krish Ujeniya - ML Engineer & Data Scientist'
     }],
@@ -70,7 +70,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Krish Ujeniya | Freelance ML Engineer & Data Scientist',
     description: 'Building production-ready AI Agents, LLMs, and MLOps pipelines. Available for freelance projects.',
-    images: ['/krishujeniya/images/1765004211200.jpg'],
+    images: ['/krishujeniya/images/1765004211200.webp'],
   },
 };
 
