@@ -158,12 +158,12 @@ export function useGsapAnimations() {
             revealOnScroll('#projects .grid > div', { y: 40, stagger: 0.08, start: 'top 88%', duration: 0.65 });
 
             // ── 5. Documents / Resources ──
-            revealOnScroll('#documents .grid > div', { scale: 0.94, y: 20, stagger: 0.1, start: 'top 85%', duration: 0.65 });
-            revealOnScroll('#documents h2', { y: 50, stagger: 0, start: 'top 88%' });
+            revealOnScroll('#documents .grid > div', { scale: 0.96, y: 15, stagger: 0.05, start: 'top 95%', duration: 0.35 });
+            revealOnScroll('#documents h2', { y: 30, stagger: 0, start: 'top 95%', duration: 0.4 });
 
             // ── 6. Testimonials ──
-            revealOnScroll('#testimonials .grid > div', { y: 55, stagger: 0.15, start: 'top 85%', duration: 0.75 });
-            revealOnScroll('#testimonials h2', { y: 50, stagger: 0, start: 'top 88%' });
+            revealOnScroll('#testimonials .grid > div', { y: 30, stagger: 0.07, start: 'top 95%', duration: 0.4 });
+            revealOnScroll('#testimonials h2', { y: 30, stagger: 0, start: 'top 95%', duration: 0.4 });
 
             // ── 7. Contact ──
             const contactLeft = document.querySelector('#contact .lg\\:col-span-6:first-child') as HTMLElement | null;

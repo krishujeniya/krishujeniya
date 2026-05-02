@@ -114,6 +114,21 @@ export const portfolioData = {
   ],
   projects: [
     {
+      title: 'AmberClaw — AI Memory Assistant',
+      category: 'Python / Agentic AI',
+      imageUrl: "/krishujeniya/images/projects/amberclaw.webp",
+      description: 'Production-ready AI assistant with persistent memory, hybrid RAG pipeline, and multi-source document ingestion — built for cross-session intelligence at scale.',
+      link: 'https://github.com/krishujeniya/AmberClaw',
+      linkType: 'repo',
+      techStack: ['Python', 'Mem0', 'ChromaDB', 'LangChain'],
+      impact: 'Full cross-session memory persistence. Semantic retrieval with reranking. Production-grade RAG.',
+      caseStudy: {
+        problem: 'Most AI assistants forget everything between sessions — leading to repetitive context-setting and inability to build on prior knowledge over time.',
+        solution: 'Architected a hybrid RAG pipeline with Mem0 v1.0+ and ChromaDB for persistent vector storage. Automated fact extraction and reranking ensure the most relevant context always surfaces first.',
+        outcome: 'Fully persistent cross-session memory. Multi-source document ingestion with semantic retrieval. Production-deployed with observable, auditable knowledge base.',
+      },
+    },
+    {
       title: 'Salary Predictions For Data Professions',
       category: 'Machine Learning / MLOps',
       imageUrl: "/krishujeniya/images/m1.webp",
@@ -126,21 +141,6 @@ export const portfolioData = {
         problem: 'Compensation teams were making offers based on gut feel and outdated surveys. No internal model existed to benchmark against actual market data — leading to mis-hires and wasted budget.',
         solution: 'Designed a ZenML pipeline from raw data through feature engineering, model training, and MLflow experiment tracking — deployed as a FastAPI endpoint teams could query directly.',
         outcome: '92% prediction accuracy. HR analysis went from days of spreadsheet work to a single API call.',
-      },
-    },
-    {
-      title: 'Face Lock Desktop App',
-      category: 'Python / Computer Vision',
-      imageUrl: "/krishujeniya/images/projects/face-lock.webp",
-      description: 'Lightweight desktop security app — offline face recognition with zero cloud dependency. Sub-second unlock, handles lighting variance gracefully.',
-      link: 'https://github.com/krishujeniya/FACE_LOCK_TKINTER',
-      linkType: 'repo',
-      techStack: ['Python', 'Tkinter', 'OpenCV', 'face_recognition'],
-      impact: 'Sub-200ms recognition. 98%+ accuracy under varied lighting. Fully air-gapped.',
-      caseStudy: {
-        problem: 'Shared desktops needed physical presence verification. Existing solutions were either cloud-dependent (latency + privacy risk) or required expensive hardware.',
-        solution: 'Built a locally-running face recognition system using dlib and OpenCV with a clean Tkinter interface. No internet required, no external API costs.',
-        outcome: 'Sub-200ms recognition time on standard hardware. 98%+ accuracy under varied lighting. Zero external dependencies.',
       },
     },
     {
