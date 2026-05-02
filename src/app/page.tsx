@@ -88,24 +88,21 @@ export default function Portfolio() {
         const SECTIONS = ['home', 'about', 'experience', 'services', 'projects', 'documents', 'testimonials', 'contact'];
 
         const getActiveSection = () => {
-            // Midpoint of the viewport — whichever section is closest to this wins
-            const viewportMid = window.scrollY + window.innerHeight / 2;
+            // Use top-biased detection: whichever section's top is closest to 30% from the top of viewport
+            const viewportThreshold = window.scrollY + window.innerHeight * 0.3;
 
-            let closestId = 'home';
-            let closestDist = Infinity;
+            let activeId = 'home';
 
-            SECTIONS.forEach(id => {
+            // Walk sections in order; the last one whose top is <= threshold wins
+            for (const id of SECTIONS) {
                 const el = document.getElementById(id);
-                if (!el) return;
-                const elMid = el.offsetTop + el.offsetHeight / 2;
-                const dist = Math.abs(viewportMid - elMid);
-                if (dist < closestDist) {
-                    closestDist = dist;
-                    closestId = id;
+                if (!el) continue;
+                if (el.offsetTop <= viewportThreshold + 80) {
+                    activeId = id;
                 }
-            });
+            }
 
-            setActiveSection(closestId);
+            setActiveSection(activeId);
         };
 
         const handleScroll = () => {
@@ -209,7 +206,7 @@ export default function Portfolio() {
 
                             <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 w-full sm:w-auto pt-4">
                                 <button 
-                                    onClick={() => scrollTo('projects')}
+                                    onClick={() => { scrollTo('projects'); setActiveSection('projects'); }}
                                     aria-label="Explore my work and case studies"
                                     className="group w-full sm:w-auto flex items-center justify-center gap-4 bg-white text-black px-12 py-5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] transition-all duration-500 shadow-2xl shadow-white/5"
                                 >
