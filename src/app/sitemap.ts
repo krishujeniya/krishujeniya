@@ -7,7 +7,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     {
       // Krish Ujeniya – AI Researcher, Data Scientist & AI Freelancer
       url: 'https://krishujeniya.github.io/krishujeniya/',
-      lastModified: new Date('2026-05-03'),
+      lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 1,
     },
