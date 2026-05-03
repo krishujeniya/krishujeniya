@@ -103,14 +103,6 @@ I am **Krish Ujeniya**, an **AI Researcher**, **Data Scientist**, and **AI Freel
   <img src="https://raw.githubusercontent.com/krishujeniya/krishujeniya/output/github-contribution-grid-snake.svg" alt="Activity Animation" width="100%"/>
 </p>
 
----
-
-## ✍️ Latest AI Insights (Medium)
-
-<!-- BLOG-POST-LIST:START -->
-<!-- BLOG-POST-LIST:END -->
-
----
 
 ## 🤝 Let's Collaborate
 
