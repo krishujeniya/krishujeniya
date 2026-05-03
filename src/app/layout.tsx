@@ -29,14 +29,33 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL('https://krishujeniya.github.io'),
   title: {
-    default: 'Krish Ujeniya | Freelance ML Engineer & Data Scientist',
-    template: '%s | Krish Ujeniya'
+    default: 'Krish Ujeniya | AI Researcher, Data Scientist & AI Freelancer',
+    template: '%s | Krish Ujeniya – AI Researcher & Data Scientist'
   },
-  description: 'Freelance ML Engineer specializing in production RAG systems, autonomous AI agents, and MLOps pipelines. Delivered in under 4 weeks. Based in India, working worldwide.',
-  keywords: ['ML Engineer','Data Scientist','AI Agent','LLM','RAG','MLOps','ZenML','MLflow','Flutter','Freelance AI','Machine Learning Consultant','India'],
+  description: 'Krish Ujeniya is an AI Researcher, Data Scientist, and AI Freelancer specializing in LLMs, RAG systems, autonomous AI agents, and deep learning. Available for AI freelance projects worldwide.',
+  keywords: [
+    'Krish Ujeniya',
+    'AI Researcher',
+    'Data Scientist',
+    'AI Freelancer',
+    'Krish Ujeniya AI Researcher',
+    'Krish Ujeniya Data Scientist',
+    'Krish Ujeniya Freelancer',
+    'AI Research India',
+    'Machine Learning Researcher',
+    'Deep Learning Expert',
+    'LLM Engineer',
+    'RAG Systems',
+    'Autonomous AI Agents',
+    'MLOps',
+    'Freelance AI Engineer',
+    'Freelance Data Scientist',
+    'Artificial Intelligence Research',
+    'Data Science Freelancer India',
+  ],
   authors: [{ name: 'Krish Ujeniya', url: 'https://krishujeniya.github.io/krishujeniya' }],
   creator: 'Krish Ujeniya',
-  applicationName: 'Krish Portfolio',
+  applicationName: 'Krish Ujeniya – AI Researcher & Data Scientist Portfolio',
   category: 'technology',
   alternates: {
     canonical: '/krishujeniya/',
@@ -57,20 +76,20 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: 'https://krishujeniya.github.io/krishujeniya/',
-    siteName: 'Krish Ujeniya Portfolio',
-    title: 'Krish Ujeniya | Freelance ML Engineer & Data Scientist',
-    description: 'Specializing in AI Agents, LLMs, and MLOps. Building production-ready intelligent systems for global clients.',
+    siteName: 'Krish Ujeniya | AI Researcher & Data Scientist',
+    title: 'Krish Ujeniya | AI Researcher, Data Scientist & AI Freelancer',
+    description: 'Krish Ujeniya – AI Researcher, Data Scientist, and Freelance AI Engineer. Specializing in LLMs, deep learning, RAG pipelines, and autonomous AI agents for global clients.',
     images: [{
-      url: '/krishujeniya/images/1765004211200.webp',
+      url: '/krishujeniya/images/krish-ujeniya-ai-researcher-data-scientist.webp',
       width: 1200, height: 630,
-      alt: 'Krish Ujeniya - ML Engineer & Data Scientist'
+      alt: 'Krish Ujeniya – AI Researcher, Data Scientist & AI Freelancer'
     }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Krish Ujeniya | Freelance ML Engineer & Data Scientist',
-    description: 'Building production-ready AI Agents, LLMs, and MLOps pipelines. Available for freelance projects.',
-    images: ['/krishujeniya/images/1765004211200.webp'],
+    title: 'Krish Ujeniya | AI Researcher, Data Scientist & AI Freelancer',
+    description: 'Krish Ujeniya – AI Researcher & Data Scientist. Building production-ready AI systems, LLM apps, and autonomous agents. Available for AI freelance projects.',
+    images: ['/krishujeniya/images/krish-ujeniya-ai-researcher-data-scientist.webp'],
   },
 };
 
@@ -97,15 +116,53 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
              __html: JSON.stringify({
                "@context": "https://schema.org",
-               "@type": "Person",
-               "name": "Krish Ujeniya",
-               "jobTitle": "Freelance ML Engineer",
-               "url": "https://krishujeniya.github.io/krishujeniya/",
-               "email": "ukideashare0021@gmail.com",
-               "description": "Freelance Data Scientist and ML Engineer",
-               "knowsAbout": ["Machine Learning","AI Agents","LLMs","MLOps","ZenML","MLflow","Python","Flutter"],
-               "availableFor": "Freelance work globally",
-               "sameAs": ["https://github.com/krishujeniya","https://linkedin.com/in/krishujeniya"]
+               "@graph": [
+                 {
+                   "@type": "Person",
+                   "@id": "https://krishujeniya.github.io/krishujeniya/#person",
+                   "name": "Krish Ujeniya",
+                   "alternateName": "krishujeniya",
+                   "jobTitle": ["AI Researcher", "Data Scientist", "AI Freelancer"],
+                   "url": "https://krishujeniya.github.io/krishujeniya/",
+                   "email": "ukideashare0021@gmail.com",
+                   "description": "Krish Ujeniya is an AI Researcher, Data Scientist, and AI Freelancer specializing in LLMs, RAG systems, autonomous AI agents, deep learning, and MLOps pipelines.",
+                   "image": "https://krishujeniya.github.io/krishujeniya/images/krish-ujeniya-ai-researcher-data-scientist.webp",
+                   "knowsAbout": [
+                     "Artificial Intelligence Research",
+                     "Data Science",
+                     "Machine Learning",
+                     "Large Language Models (LLMs)",
+                     "Retrieval-Augmented Generation (RAG)",
+                     "Autonomous AI Agents",
+                     "Deep Learning",
+                     "MLOps",
+                     "Python",
+                     "Natural Language Processing",
+                     "Computer Vision"
+                   ],
+                   "hasOccupation": {
+                     "@type": "Occupation",
+                     "name": "AI Researcher and Data Scientist",
+                     "occupationLocation": {
+                       "@type": "Country",
+                       "name": "India"
+                     },
+                     "description": "Freelance AI Research and Data Science services for global clients"
+                   },
+                   "sameAs": [
+                     "https://github.com/krishujeniya",
+                     "https://linkedin.com/in/krishujeniya"
+                   ]
+                 },
+                 {
+                   "@type": "WebSite",
+                   "@id": "https://krishujeniya.github.io/krishujeniya/#website",
+                   "url": "https://krishujeniya.github.io/krishujeniya/",
+                   "name": "Krish Ujeniya | AI Researcher, Data Scientist & AI Freelancer",
+                   "description": "Portfolio of Krish Ujeniya – AI Researcher, Data Scientist, and Freelance AI Engineer.",
+                   "author": { "@id": "https://krishujeniya.github.io/krishujeniya/#person" }
+                 }
+               ]
              })
           }}
         />
