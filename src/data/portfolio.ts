@@ -20,8 +20,8 @@ export const portfolioData = {
     role: "Freelance ML Engineer",
     tagline: "I build RAG systems, AI agents, and MLOps pipelines that actually make it to production — typically in under 4 weeks.",
     photo: {
-      webp: "/krishujeniya/images/1765004211200.webp",
-      jpg: "/krishujeniya/images/1765004211200.webp"
+      webp: "/krishujeniya/images/krish-ujeniya-ai-researcher-data-scientist.webp",
+      jpg: "/krishujeniya/images/krish-ujeniya-ai-researcher-data-scientist.webp"
     },
     availability: "Open for projects · Replies <24h",
     metrics: [
