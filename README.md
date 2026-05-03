@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:1a1a2e,50:FCC419,100:1a1a2e&height=220&section=header&text=Krish%20Ujeniya&fontSize=65&fontColor=FCC419&animation=fadeIn&fontAlignY=35&desc=AI%20Researcher%20%7C%20Data%20Scientist%20%7C%20AI%20Freelancer&descAlignY=60&descSize=22&descColor=ffffff" width="100%" alt="Krish Ujeniya — AI Researcher, Data Scientist & AI Freelancer"/>
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:1a1a2e,50:FCC419,100:1a1a2e&height=220&section=header&text=Krish%20Ujeniya&fontSize=65&fontColor=FFFFFF&animation=fadeIn&fontAlignY=35&desc=AI%20Researcher%20%7C%20Data%20Scientist%20%7C%20AI%20Freelancer&descAlignY=60&descSize=22&descColor=ffffff" width="100%" alt="Krish Ujeniya — AI Researcher, Data Scientist & AI Freelancer"/>
 </p>
 
 <p align="center">
