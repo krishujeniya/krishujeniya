@@ -91,11 +91,6 @@ I am **Krish Ujeniya**, an **AI Researcher**, **Data Scientist**, and **AI Freel
 ## 📈 Activity & Insights
 
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=krishujeniya&show_icons=true&rank_icon=github&theme=algolia&bg_color=0d1117&title_color=FCC419&icon_color=FCC419&text_color=ffffff&border_radius=10" height="195" alt="GitHub Stats"/>
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=krishujeniya&layout=compact&theme=algolia&bg_color=0d1117&title_color=FCC419&text_color=ffffff&border_radius=10" height="195" alt="Top Languages"/>
-</p>
-
-<p align="center">
   <img src="https://github-readme-streak-stats.herokuapp.com/?user=krishujeniya&theme=algolia&background=0d1117&ring=FCC419&fire=FCC419&border_radius=10" width="100%" alt="GitHub Streak"/>
 </p>
 
