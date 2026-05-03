@@ -22,10 +22,10 @@
 </p>
 
 <p align="center">
-  <img src="https://komarev.com/ghpvc/?username=krishujeniya&abbreviated=true&label=Profile+Views&style=for-the-badge&color=ffffff&labelColor=131313" alt="Profile Views"/>
+  <img src="https://komarev.com/ghpvc/?username=krishujeniya&abbreviated=true&label=Profile+Views&style=for-the-badge&color=131313&labelColor=ffffff" alt="Profile Views"/>
   &nbsp;
   <a href="https://github.com/krishujeniya?tab=followers">
-    <img src="https://img.shields.io/github/followers/krishujeniya?label=Followers&style=for-the-badge&color=ffffff&labelColor=131313&logo=github&logoColor=ffffff" alt="GitHub Followers"/>
+    <img src="https://img.shields.io/github/followers/krishujeniya?label=Followers&style=for-the-badge&color=131313&labelColor=ffffff&logo=github&logoColor=131313" alt="GitHub Followers"/>
   </a>
 </p>
 
