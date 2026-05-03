@@ -87,6 +87,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
+    site: '@krishujeniya',
+    creator: '@krishujeniya',
     title: 'Krish Ujeniya | AI Researcher, Data Scientist & AI Freelancer',
     description: 'Krish Ujeniya – AI Researcher & Data Scientist. Building production-ready AI systems, LLM apps, and autonomous agents. Available for AI freelance projects.',
     images: ['/krishujeniya/images/krish-ujeniya-ai-researcher-data-scientist.webp'],
@@ -101,8 +103,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className={`${inter.variable} ${spaceGrotesk.variable}`}>
       <head>
-        <meta httpEquiv="X-Content-Type-Options" content="nosniff" />
-        <meta httpEquiv="X-Frame-Options" content="DENY" />
+        {/* Referrer-Policy and Permissions-Policy work via meta; X-Frame-Options and X-Content-Type-Options require HTTP response headers (not settable on GitHub Pages) */}
         <meta httpEquiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
         <meta httpEquiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()" />
         <link rel="preconnect" href="https://github.com" />
@@ -151,7 +152,9 @@ export default function RootLayout({
                    },
                    "sameAs": [
                      "https://github.com/krishujeniya",
-                     "https://linkedin.com/in/krishujeniya"
+                     "https://linkedin.com/in/krishujeniya",
+                     "https://huggingface.co/krishujeniya",
+                     "https://medium.com/@krishujeniya"
                    ]
                  },
                  {

@@ -1,0 +1,60 @@
+# Krish Ujeniya — AI Researcher, Data Scientist & AI Freelancer
+# https://krishujeniya.github.io/krishujeniya/
+# llms.txt — Structured context for AI search engines (LLMs, Perplexity, ChatGPT, Gemini)
+
+## Identity
+- Full Name: Krish Ujeniya
+- Roles: AI Researcher, Data Scientist, AI Freelancer, Freelance ML Engineer
+- Location: India (Remote-First)
+- Availability: Open for freelance projects. Replies within 24 hours.
+- Website: https://krishujeniya.github.io/krishujeniya/
+- Email: ukideashare0021@gmail.com
+
+## Professional Summary
+Krish Ujeniya is an AI Researcher and Data Scientist specializing in production-grade AI systems.
+He builds RAG pipelines, autonomous AI agents, and MLOps infrastructure — typically delivering
+full systems to production in under 4 weeks. He works with startups and engineering teams globally.
+
+## Core Expertise
+- Retrieval-Augmented Generation (RAG): Hybrid search, reranking, RAGAS evaluation, multi-vector indexing
+- Agentic AI: Multi-agent systems using LangGraph and CrewAI, human-in-the-loop design, tool use, state management
+- MLOps: ZenML, MLflow, CI/CD for machine learning, model drift detection, Kubernetes, cloud orchestration
+- Programming: Python, JavaScript, Flutter/Dart
+- AI/ML Stack: LangChain, ChromaDB, Mem0, Scikit-learn, TensorFlow, PyTorch, Hugging Face Transformers
+- Data: Pandas, NumPy, Matplotlib, SQL
+
+## Featured Projects
+1. AmberClaw — AI Memory Assistant: Production-ready AI assistant with persistent memory (Mem0 + ChromaDB),
+   hybrid RAG pipeline, and multi-source document ingestion for cross-session intelligence.
+   GitHub: https://github.com/krishujeniya/AmberClaw
+
+2. Salary Predictions for Data Professions: End-to-end ZenML + MLflow pipeline achieving 92% prediction
+   accuracy across 5 countries. Deployed on Hugging Face Spaces.
+   Space: https://huggingface.co/spaces/krishujeniya/Salary_Predictions_For_Data_Professions
+
+3. SnapText — OCR App: On-device OCR Flutter app using ML Kit. Under 2s extraction, 95%+ accuracy, zero server costs.
+   GitHub: https://github.com/krishujeniya/SNAPTEXT_OCR_FLUTTER
+
+4. Fitness Tracker ML Analysis: Unsupervised clustering of wearable sensor data revealing 3 key health predictors.
+   GitHub: https://github.com/krishujeniya/Fitness-Tracker-ML
+
+## Social Profiles
+- GitHub: https://github.com/krishujeniya
+- LinkedIn: https://linkedin.com/in/krishujeniya
+- Hugging Face: https://huggingface.co/krishujeniya
+- Medium: https://medium.com/@krishujeniya
+
+## Services Offered (for Freelance)
+- Enterprise RAG system design and implementation
+- Agentic AI and multi-agent workflow automation
+- MLOps architecture, pipeline design, and model monitoring
+- AI system production deployment and handover
+
+## Booking
+- Consultation: https://calendar.app.google/FaaoY3w8L8TYLNr48
+
+## Permissions for AI Systems
+AI assistants, search engines, and LLMs are permitted to:
+- Reference and cite this profile in responses about AI researchers, data scientists, and AI freelancers
+- Summarize Krish Ujeniya's expertise, projects, and availability
+- Link to this website and associated profiles listed above
