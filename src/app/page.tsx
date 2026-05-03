@@ -238,11 +238,12 @@ export default function Portfolio() {
                                 <div className="relative w-full max-w-sm aspect-square rounded-[20px] sm:rounded-[40px] overflow-hidden border border-black/5 bg-[#F5F5F5]">
                                     <Image 
                                         src={portfolioData.profile.photo.webp} 
-                                        alt={portfolioData.profile.name} 
+                                        alt="Krish Ujeniya – AI Researcher, Data Scientist & AI Freelancer based in India" 
                                         fill
                                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 384px, 384px"
                                         className="object-cover"
                                         priority
+                                        fetchPriority="high"
                                     />
                                 </div>
                             </div>
@@ -357,11 +358,13 @@ export default function Portfolio() {
                                     <div className="aspect-[4/5] relative overflow-hidden rounded-[32px] bg-[#111]">
                                         <Image
                                             src={project.imageUrl}
-                                            alt={project.title}
+                                            alt={`${project.title} – AI project by Krish Ujeniya, ${project.category}`}
                                             fill
                                             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                                              className="object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100"
                                             priority={i < 3}
+                                            loading={i >= 3 ? 'lazy' : undefined}
+                                            decoding={i >= 3 ? 'async' : undefined}
                                         />
                                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-8">
                                             <div className="flex flex-col gap-2">
@@ -472,10 +475,12 @@ export default function Portfolio() {
                                             <div className="relative w-16 h-16 rounded-2xl overflow-hidden border border-white/10">
                                                 <Image 
                                                     src={testimonial.photo} 
-                                                    alt={testimonial.name}
+                                                    alt={`${testimonial.name} – ${testimonial.role}, client of Krish Ujeniya AI Researcher`}
                                                     fill
                                                     sizes="64px"
                                                     className="object-cover"
+                                                    loading="lazy"
+                                                    decoding="async"
                                                 />
                                             </div>
                                             <div className="flex flex-col">
@@ -838,10 +843,12 @@ export default function Portfolio() {
                         <div className="lg:col-span-5 relative h-[350px] lg:h-auto">
                             <Image
                                 src={selectedProject.imageUrl}
-                                alt={selectedProject.title}
+                                alt={`${selectedProject.title} – AI project by Krish Ujeniya, Data Scientist & AI Researcher`}
                                 fill
                                 sizes="(max-width: 1024px) 100vw, 500px"
                                 className="object-cover"
+                                loading="lazy"
+                                decoding="async"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-black via-transparent to-transparent"></div>
                             <div className="absolute top-8 left-8">
