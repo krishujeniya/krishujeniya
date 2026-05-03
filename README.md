@@ -7,21 +7,31 @@
 </p>
 
 <p align="center">
-  <a href="https://krishujeniya.github.io/krishujeniya/" target="_blank">![Portfolio](https://img.shields.io/badge/🌐_Portfolio-krishujeniya.com-FCC419?style=for-the-badge&labelColor=1a1a2e)</a>
-  <a href="https://linkedin.com/in/krishujeniya" target="_blank">![LinkedIn](https://img.shields.io/badge/LinkedIn-krishujeniya-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white&labelColor=1a1a2e)</a>
-  <a href="https://huggingface.co/krishujeniya" target="_blank">![HuggingFace](https://img.shields.io/badge/🤗_HuggingFace-krishujeniya-FFD21E?style=for-the-badge&labelColor=1a1a2e)</a>
-  <a href="https://calendar.app.google/FaaoY3w8L8TYLNr48" target="_blank">![Book a Call](https://img.shields.io/badge/📅_Book_a_Call-Open_for_Projects-22c55e?style=for-the-badge&labelColor=1a1a2e)</a>
+  <a href="https://krishujeniya.github.io/krishujeniya/" target="_blank">
+    <img src="https://img.shields.io/badge/🌐_Portfolio-krishujeniya.com-FCC419?style=for-the-badge&labelColor=1a1a2e" alt="Portfolio"/>
+  </a>
+  <a href="https://linkedin.com/in/krishujeniya" target="_blank">
+    <img src="https://img.shields.io/badge/LinkedIn-krishujeniya-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white&labelColor=1a1a2e" alt="LinkedIn"/>
+  </a>
+  <a href="https://huggingface.co/krishujeniya" target="_blank">
+    <img src="https://img.shields.io/badge/🤗_HuggingFace-krishujeniya-FFD21E?style=for-the-badge&labelColor=1a1a2e" alt="HuggingFace"/>
+  </a>
+  <a href="https://calendar.app.google/FaaoY3w8L8TYLNr48" target="_blank">
+    <img src="https://img.shields.io/badge/📅_Book_a_Call-Open_for_Projects-22c55e?style=for-the-badge&labelColor=1a1a2e" alt="Book a Call"/>
+  </a>
 </p>
 
 <p align="center">
-  ![Profile Views](https://komarev.com/ghpvc/?username=krishujeniya&abbreviated=true&label=Profile+Views&style=for-the-badge&color=FCC419&labelColor=1a1a2e)
+  <img src="https://komarev.com/ghpvc/?username=krishujeniya&abbreviated=true&label=Profile+Views&style=for-the-badge&color=FCC419&labelColor=1a1a2e" alt="Profile Views"/>
   &nbsp;
-  [![GitHub Followers](https://img.shields.io/github/followers/krishujeniya?label=Followers&style=for-the-badge&color=FCC419&labelColor=1a1a2e&logo=github)](https://github.com/krishujeniya?tab=followers)
+  <a href="https://github.com/krishujeniya?tab=followers">
+    <img src="https://img.shields.io/github/followers/krishujeniya?label=Followers&style=for-the-badge&color=FCC419&labelColor=1a1a2e&logo=github" alt="GitHub Followers"/>
+  </a>
 </p>
 
 ---
 
-## 🧠 Professional Profile — Krish Ujeniya | AI Researcher
+## 🧠 About Me — Krish Ujeniya | AI Researcher
 
 > **Architecting production-grade AI systems, RAG pipelines, and autonomous agents for global startups.**
 
@@ -107,15 +117,15 @@ I am **Krish Ujeniya**, an **AI Researcher**, **Data Scientist**, and **AI Freel
 I'm currently accepting **AI Freelance projects** and **Research collaborations**. 
 
 <p align="center">
-  <a href="https://linkedin.com/in/krishujeniya" target="_blank"><img src="https://img.icons8.com/?size=512&id=8808&format=png&color=FCC419" height="45"/></a>&nbsp;
-  <a href="https://twitter.com/krishujeniya" target="_blank"><img src="https://img.icons8.com/?size=512&id=phOKFKYpe00C&format=png&color=FCC419" height="45"/></a>&nbsp;
-  <a href="https://huggingface.co/krishujeniya" target="_blank"><img src="https://img.icons8.com/?size=512&id=2daS1gO4xkKS&format=png&color=FCC419" height="45"/></a>&nbsp;
-  <a href="https://github.com/krishujeniya" target="_blank"><img src="https://img.icons8.com/?size=512&id=12599&format=png&color=FCC419" height="45"/></a>
+  <a href="https://linkedin.com/in/krishujeniya" target="_blank"><img src="https://img.icons8.com/?size=512&id=8808&format=png&color=FCC419" height="45" alt="LinkedIn"/></a>&nbsp;
+  <a href="https://twitter.com/krishujeniya" target="_blank"><img src="https://img.icons8.com/?size=512&id=phOKFKYpe00C&format=png&color=FCC419" height="45" alt="Twitter"/></a>&nbsp;
+  <a href="https://huggingface.co/krishujeniya" target="_blank"><img src="https://img.icons8.com/?size=512&id=2daS1gO4xkKS&format=png&color=FCC419" height="45" alt="HuggingFace"/></a>&nbsp;
+  <a href="https://github.com/krishujeniya" target="_blank"><img src="https://img.icons8.com/?size=512&id=12599&format=png&color=FCC419" height="45" alt="GitHub"/></a>
 </p>
 
 <p align="center">
   <a href="https://calendar.app.google/FaaoY3w8L8TYLNr48" target="_blank">
-    ![Book a Free Consultation](https://img.shields.io/badge/📅_Book_a_Free_Consultation-FCC419?style=for-the-badge&labelColor=1a1a2e)
+    <img src="https://img.shields.io/badge/📅_Book_a_Free_Consultation-FCC419?style=for-the-badge&labelColor=1a1a2e" alt="Book a Free Consultation"/>
   </a>
 </p>
 
