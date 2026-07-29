@@ -38,5 +38,4 @@ next-env.d.ts
 
 # local logs & docs
 typecheck.log
-Docs/
 verify_bug.ts
