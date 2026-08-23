@@ -11,7 +11,8 @@ import {
   Smartphone, 
   Code2,
   User,
-  GraduationCap
+  GraduationCap,
+  Cpu
 } from 'lucide-react';
 
 export const portfolioData = {
@@ -75,6 +76,24 @@ export const portfolioData = {
     }
   ],
   experience: [
+    {
+      role: 'AI & Data Engineer Intern',
+      company: 'Microsoft',
+      duration: 'Jul 2026 · 1 mo',
+      location: 'Remote',
+      description: 'Completed a 78-hour GTU Skill-Based Training internship in collaboration with Microsoft. Achieved perfect scores (30/30) across 5 Microsoft-aligned assessments: AZ-900, AZ-104, AI-900, AI-103, and GH-300. Gained practical expertise in Azure Cloud Services, Azure AI, Generative AI, and AI-assisted development using GitHub Copilot.',
+      icon: Cloud,
+      tags: ['Azure', 'AI-900', 'AZ-900', 'GitHub Copilot', 'Generative AI'],
+    },
+    {
+      role: 'AI & Quantum Engineer Intern',
+      company: 'IBM',
+      duration: 'Jun 2026 · 1 mo',
+      location: 'Remote',
+      description: 'Completed a 4-week virtual internship in Emerging Technologies via Edunet Foundation, AICTE, and IBM SkillsBuild. Trained on Agentic AI, Cyber Security, and Quantum Computing. Architected and deployed an AI + Cloud capstone project. Earned IBM-recognized digital credentials and SkillsBuild badges.',
+      icon: Cpu,
+      tags: ['IBM Cloud', 'Agentic AI', 'Quantum Computing', 'Cybersecurity', 'IBM SkillsBuild'],
+    },
     {
       role: 'Freelance ML & Software Engineer',
       company: 'Self-Employed',
