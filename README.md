@@ -95,7 +95,7 @@ I am **Krish Ujeniya**, an **AI Researcher**, **Data Scientist**, and **AI Freel
 </p>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/krishujeniya/krishujeniya/output/github-contribution-grid-snake.svg" alt="Activity Animation" width="100%"/>
+  <img src="https://raw.githubusercontent.com/krishujeniya/krishujeniya/main/public/images/github-contribution-grid-snake.svg" alt="Activity Animation" width="100%"/>
 </p>
 
 ---
