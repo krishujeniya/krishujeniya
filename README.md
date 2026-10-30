@@ -1,137 +1,111 @@
+<div align="center">
+
+<table width="100%" bgcolor="#0e1117" cellpadding="0" cellspacing="0" border="0" style="width: 100%; max-width: 100%; border-collapse: separate; border-spacing: 0; background-color: #0e1117; border: 1px solid #30363d; border-radius: 24px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6); overflow: hidden;">
+<tr>
+<td align="center" style="padding: 16px 20px 32px; background-color: #0e1117;">
+
+<!-- 1. 3D HERO CARD (AUTO-ADAPTS DESKTOP & MOBILE WITH ZERO CLUTTER) -->
+<picture>
+  <source media="(max-width: 600px)" srcset="./assets/mobile/hero.svg?v=5" />
+  <img src="./assets/hero.svg?v=5" alt="Krish Ujeniya — 3D Profile Card" width="100%" />
+</picture>
+
+<!-- 2. PRIMARY ACTION BUTTONS (FLUID WRAP ON NARROW PHONES) -->
 <p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:131313,50:474747,100:131313&height=220&section=header&text=Krish%20Ujeniya&fontSize=65&fontColor=ffffff&animation=fadeIn&fontAlignY=35&desc=AI%20Researcher%20%7C%20Data%20Scientist%20%7C%20AI%20Freelancer&descAlignY=60&descSize=22&descColor=e2e2e2" width="100%" alt="Krish Ujeniya — AI Researcher, Data Scientist & AI Freelancer"/>
+  <a href="https://krishujeniya.github.io/krishujeniya/"><img src="./assets/buttons/view-portfolio.svg?v=5" alt="View Portfolio" height="46" /></a>
+  <a href="https://calendar.app.google/FaaoY3w8L8TYLNr48"><img src="./assets/buttons/schedule-call.svg?v=5" alt="Schedule a Call" height="46" /></a>
 </p>
 
+<!-- 3. CONNECT & SOCIAL BADGES -->
 <p align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Space+Grotesk&weight=700&size=28&pause=1000&color=ffffff&center=true&vCenter=true&width=800&lines=👋+Hi%2C+I'm+Krish+Ujeniya;🤖+AI+Researcher+%26+Data+Scientist;🧠+Building+RAG+Systems+%26+AI+Agents;🚀+Freelance+ML+Engineer+%7C+Open+to+Projects;💡+LLMs+•+MLOps+•+Computer+Vision+•+GenAI" alt="Typing SVG" />
+  <a href="https://linkedin.com/in/krishujeniya"><img src="./assets/buttons/linkedin.svg?v=5" alt="Connect on LinkedIn" height="38" /></a>
+  <a href="https://github.com/krishujeniya"><img src="./assets/buttons/github.svg?v=5" alt="GitHub Profile" height="38" /></a>
+  <a href="https://huggingface.co/krishujeniya"><img src="./assets/buttons/huggingface.svg?v=5" alt="Hugging Face Profile" height="38" /></a>
+  <a href="https://www.kaggle.com/krishujeniya"><img src="./assets/buttons/kaggle.svg?v=5" alt="Kaggle Datasets &amp; Notebooks" height="38" /></a>
+  <a href="https://twitter.com/krishujeniya"><img src="./assets/buttons/x.svg?v=5" alt="X / Twitter" height="38" /></a>
 </p>
 
+<!-- 4. LIVE PROFILE VIEWS & COMMUNITY METRICS -->
 <p align="center">
-  <a href="https://krishujeniya.github.io/krishujeniya/" target="_blank">
-    <img src="https://img.shields.io/badge/🌐_Portfolio-krishujeniya.com-ffffff?style=for-the-badge&labelColor=131313&logoColor=131313" alt="Portfolio"/>
-  </a>
-  <a href="https://linkedin.com/in/krishujeniya" target="_blank">
-    <img src="https://img.shields.io/badge/LinkedIn-krishujeniya-ffffff?style=for-the-badge&logo=linkedin&logoColor=131313&labelColor=131313" alt="LinkedIn"/>
-  </a>
-  <a href="https://huggingface.co/krishujeniya" target="_blank">
-    <img src="https://img.shields.io/badge/🤗_HuggingFace-krishujeniya-ffffff?style=for-the-badge&labelColor=131313&logoColor=131313" alt="HuggingFace"/>
-  </a>
-  <a href="https://calendar.app.google/FaaoY3w8L8TYLNr48" target="_blank">
-    <img src="https://img.shields.io/badge/📅_Book_a_Call-Open_for_Projects-ffffff?style=for-the-badge&labelColor=131313&logoColor=131313" alt="Book a Call"/>
-  </a>
-</p>
-
-<p align="center">
-  <img src="https://komarev.com/ghpvc/?username=krishujeniya&abbreviated=true&label=Profile+Views&style=for-the-badge&color=131313&labelColor=ffffff" alt="Profile Views"/>
+  <img src="https://komarev.com/ghpvc/?username=krishujeniya&abbreviated=true&label=Profile+Views&style=for-the-badge&color=121212&labelColor=ffffff" alt="Profile Views" height="28" />
   &nbsp;
-  <a href="https://github.com/krishujeniya?tab=followers">
-    <img src="https://img.shields.io/github/followers/krishujeniya?label=Followers&style=for-the-badge&color=131313&labelColor=ffffff&logo=github&logoColor=131313" alt="GitHub Followers"/>
-  </a>
+  <a href="https://github.com/krishujeniya?tab=followers"><img src="https://img.shields.io/github/followers/krishujeniya?label=Followers&style=for-the-badge&color=121212&labelColor=ffffff&logo=github&logoColor=ffffff" alt="GitHub Followers" height="28" /></a>
 </p>
+
+<hr />
+
+<!-- 5. SELECTED PROJECTS (RESPONSIVE VERTICAL FLOW - ZERO HORIZONTAL SCROLL) -->
+<div align="left">
+
+### ⚡ Selected Projects
+Real software built for code review workflows, conversational memory, and offline vision.
+
+#### 🚀 [Hadron ↗](https://github.com/krishujeniya/Hadron)
+A code review tool for GitHub pull requests. It reads incoming diffs, flags security and logic issues, and suggests test cases before code merges into main.  
+**Built with:** Python · FastAPI · LangGraph · Next.js
 
 ---
 
-## 🧠 About Me — Krish Ujeniya | AI Researcher
-
-> **Architecting production-grade AI systems, RAG pipelines, and autonomous agents for global startups.**
-
-I am **Krish Ujeniya**, an **AI Researcher**, **Data Scientist**, and **AI Freelancer** specializing in the bridge between academic research and production deployment.
-
-### 🎯 Core Specializations:
-*   🔍 **Advanced RAG** — Implementing hybrid search, reranking, and semantic caching for enterprise data.
-*   🤖 **Agentic Frameworks** — Building multi-agent systems with **LangGraph**, **CrewAI**, and persistent state.
-*   ⚙️ **MLOps Excellence** — Designing reproducible pipelines with **ZenML** and **MLflow** for scale.
+#### 🧠 [AmberClaw ↗](https://github.com/krishujeniya/AmberClaw)
+An AI assistant framework with persistent memory across chats. It saves conversation context in SQLite and connects to external APIs and local tools.  
+**Built with:** Python · FastAPI · LiteLLM · SQLite
 
 ---
 
-## 🏆 Achievements & Trophies
+#### 📱 [SnapText ↗](https://github.com/krishujeniya/SNAPTEXT_OCR_FLUTTER)
+A mobile app that reads and extracts printed text directly from camera snapshots. It runs completely on the device with no cloud server needed.  
+**Built with:** Flutter · Dart · Google ML Kit
+
+</div>
+
+<hr />
+
+<!-- 6. WHAT I WORK WITH -->
+<div align="left">
+
+### 🛠️ What I Work With
+
+- **Language &amp; Search:** Python, LangChain, LangGraph, vector search, embeddings, API integrations
+- **Backend &amp; Storage:** FastAPI, PostgreSQL, SQLite, Redis, Docker
+- **Frontend &amp; Apps:** Flutter, Dart, Next.js, React, TypeScript
+
+</div>
+
+<hr />
+
+<!-- 7. DATASETS & PRACTICAL WORK -->
+<div align="left">
+
+### 📊 Datasets &amp; Research
+
+- 📈 **[Salary of Data Professions Dataset ↗](https://huggingface.co/datasets/krishujeniya/Salary_of_Data_Professions)**: A public dataset comparing salaries, experience levels, and job titles across data roles.
+- 🧪 **[Interactive Spaces on Hugging Face ↗](https://huggingface.co/krishujeniya/spaces)**: Live demos and browser experiments.
+- 🏆 **[Kaggle Notebooks &amp; Datasets ↗](https://www.kaggle.com/krishujeniya/datasets)**: Exploratory data analysis and machine learning notebooks.
+
+</div>
+
+<hr />
+
+<!-- 8. CONTACT & INVITATION -->
+<div align="center">
+
+### Let's Build Something Practical
+
+For freelance machine learning work, search pipelines, or research collaboration:
 
 <p align="center">
-  <img src="https://github-profile-trophy.vercel.app/?username=krishujeniya&theme=algolia&no-frame=true&no-bg=false&margin-w=8&row=1&column=7&rank=-C" alt="GitHub Trophies — Krish Ujeniya" width="100%"/>
-</p>
-
----
-
-## 🛠️ Expert Tech Stack
-
-### 🤖 Core AI/ML & NLP
-![Python](https://img.shields.io/badge/Python-ffffff?style=for-the-badge&logo=python&logoColor=131313)
-![TensorFlow](https://img.shields.io/badge/TensorFlow-ffffff?style=for-the-badge&logo=tensorflow&logoColor=131313)
-![PyTorch](https://img.shields.io/badge/PyTorch-ffffff?style=for-the-badge&logo=pytorch&logoColor=131313)
-![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-ffffff?style=for-the-badge&logo=scikit-learn&logoColor=131313)
-![OpenCV](https://img.shields.io/badge/OpenCV-ffffff?style=for-the-badge&logo=opencv&logoColor=131313)
-
-### 🧠 LLM Orchestration & Vector DBs
-![LangChain](https://img.shields.io/badge/LangChain-ffffff?style=for-the-badge&logo=langchain&logoColor=131313)
-![HuggingFace](https://img.shields.io/badge/HuggingFace-ffffff?style=for-the-badge&logo=huggingface&logoColor=131313)
-![OpenAI](https://img.shields.io/badge/OpenAI-ffffff?style=for-the-badge&logo=openai&logoColor=131313)
-![Chroma](https://img.shields.io/badge/ChromaDB-ffffff?style=for-the-badge&logoColor=131313)
-![Pinecone](https://img.shields.io/badge/Pinecone-ffffff?style=for-the-badge&logoColor=131313)
-
-### ⚙️ MLOps & Production
-![Docker](https://img.shields.io/badge/Docker-ffffff?style=for-the-badge&logo=docker&logoColor=131313)
-![Kubernetes](https://img.shields.io/badge/Kubernetes-ffffff?style=for-the-badge&logo=kubernetes&logoColor=131313)
-![FastAPI](https://img.shields.io/badge/FastAPI-ffffff?style=for-the-badge&logo=fastapi&logoColor=131313)
-![ZenML](https://img.shields.io/badge/ZenML-ffffff?style=for-the-badge&logoColor=131313)
-![MLflow](https://img.shields.io/badge/MLflow-ffffff?style=for-the-badge&logo=mlflow&logoColor=131313)
-
----
-
-## 🚀 Featured Production Systems
-
-| Project | Tech Stack | Impact |
-| :--- | :--- | :--- |
-| **AmberClaw** | `Python`, `Mem0`, `ChromaDB` | Persistent cross-session AI memory for enterprise RAG. |
-| **Salary AI** | `ZenML`, `MLflow`, `Sklearn` | 92% prediction accuracy across global data markets. |
-| **SnapText** | `Flutter`, `ML Kit`, `Dart` | On-device OCR extracting text in <2s with 0 server cost. |
-| **FitML** | `Python`, `Pandas`, `Clustering` | Surfaced 3 lifestyle predictors improving health by 20%. |
-
----
-
-## 📈 Activity & Insights
-
-<p align="center">
-  <img src="https://github-readme-streak-stats.herokuapp.com/?user=krishujeniya&theme=dark&background=131313&ring=ffffff&fire=ffffff&border_radius=10&currStreakNum=ffffff&sideLabels=e2e2e2&dates=e2e2e2" width="100%" alt="GitHub Streak"/>
+  <a href="https://calendar.app.google/FaaoY3w8L8TYLNr48"><img src="./assets/buttons/schedule-call.svg?v=5" alt="Schedule a Call" height="46" /></a>
+  <a href="https://krishujeniya.github.io/krishujeniya/"><img src="./assets/buttons/view-portfolio.svg?v=5" alt="View Portfolio" height="46" /></a>
 </p>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/krishujeniya/krishujeniya/main/public/images/github-contribution-grid-snake.svg" alt="Activity Animation" width="100%"/>
+  <sub><a href="https://krishujeniya.github.io/krishujeniya/">Portfolio</a> · <a href="mailto:social.krishujeniya@gmail.com">social.krishujeniya@gmail.com</a> · <a href="https://github.com/krishujeniya">GitHub</a></sub>
 </p>
 
----
+</div>
 
-## 🤝 Let's Collaborate
+</td>
+</tr>
+</table>
 
-I'm currently accepting **AI Freelance projects** and **Research collaborations**. 
-
-<p align="center">
-  <a href="https://linkedin.com/in/krishujeniya" target="_blank"><img src="https://img.icons8.com/?size=512&id=8808&format=png&color=ffffff" height="45" alt="LinkedIn"/></a>&nbsp;
-  <a href="https://twitter.com/krishujeniya" target="_blank"><img src="https://img.icons8.com/?size=512&id=phOKFKYpe00C&format=png&color=ffffff" height="45" alt="Twitter"/></a>&nbsp;
-  <a href="https://huggingface.co/krishujeniya" target="_blank"><img src="https://img.icons8.com/?size=512&id=2daS1gO4xkKS&format=png&color=ffffff" height="45" alt="HuggingFace"/></a>&nbsp;
-  <a href="https://github.com/krishujeniya" target="_blank"><img src="https://img.icons8.com/?size=512&id=12599&format=png&color=ffffff" height="45" alt="GitHub"/></a>
-</p>
-
-<p align="center">
-  <a href="https://calendar.app.google/FaaoY3w8L8TYLNr48" target="_blank">
-    <img src="https://img.shields.io/badge/📅_Book_a_Free_Consultation-ffffff?style=for-the-badge&labelColor=131313&logoColor=131313" alt="Book a Free Consultation"/>
-  </a>
-</p>
-
----
-
-<p align="center">
-  <img src="https://quotes-github-readme.vercel.app/api?type=horizontal&theme=dark&bg_color=131313&text_color=ffffff" alt="Developer Quote" width="100%"/>
-</p>
-
-<p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:131313,50:474747,100:131313&height=120&section=footer" width="100%" alt="Footer"/>
-</p>
-
-<p align="center">
-  Designed by <b>Krish Ujeniya</b> — AI Researcher & Data Scientist
-</p>
-
-<!-- 
-  SEO Keywords: Krish Ujeniya, AI Researcher, Data Scientist, AI Freelancer, 
-  Machine Learning Engineer, LLM Engineer, RAG Systems, AI Agents, MLOps, India.
--->
+</div>

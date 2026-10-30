@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="216" height="46" viewBox="0 0 216 46" role="img" aria-label="Schedule a Call">
+<title>Schedule a Call</title>
+<defs>
+  <filter id="sc-shadow" x="-10%" y="-20%" width="120%" height="150%">
+    <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#000000" flood-opacity="0.6"/>
+  </filter>
+  <linearGradient id="sc-border" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stop-color="#ffffff" stop-opacity="0.35"/>
+    <stop offset="100%" stop-color="#ffffff" stop-opacity="0.12"/>
+  </linearGradient>
+</defs>
+<style>
+  .btn-sc-text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; font-size: 11px; font-weight: 800; letter-spacing: 0.18em; fill: #ffffff; text-anchor: middle; }
+  .cal-stroke { stroke: #ffffff; stroke-width: 1.8; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+  .cal-fill { fill: #ffffff; }
+  rect { transition: all 0.2s ease; }
+  svg:hover rect { fill: #1f1f1f; stroke: #ffffff; stroke-opacity: 0.5; }
+</style>
+<rect x="1" y="1" width="214" height="44" rx="22" fill="#141414" stroke="url(#sc-border)" stroke-width="1.2" filter="url(#sc-shadow)"/>
+<g transform="translate(24, 14)">
+  <rect x="0" y="2" width="16" height="15" rx="3" class="cal-stroke"/>
+  <line x1="4" y1="0" x2="4" y2="4" class="cal-stroke"/>
+  <line x1="12" y1="0" x2="12" y2="4" class="cal-stroke"/>
+  <line x1="0" y1="6.5" x2="16" y2="6.5" class="cal-stroke" stroke-width="1.2"/>
+  <circle cx="5" cy="10.5" r="1.1" class="cal-fill"/>
+  <circle cx="8" cy="10.5" r="1.1" class="cal-fill"/>
+  <circle cx="11" cy="10.5" r="1.1" class="cal-fill"/>
+  <circle cx="5" cy="13.5" r="1.1" class="cal-fill"/>
+  <circle cx="8" cy="13.5" r="1.1" class="cal-fill"/>
+</g>
+<text x="120" y="27" class="btn-sc-text">SCHEDULE A CALL</text>
+</svg>

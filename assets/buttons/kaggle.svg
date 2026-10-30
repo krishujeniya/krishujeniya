@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="122" height="40" viewBox="0 0 122 40" role="img" aria-label="Kaggle">
+<title>Kaggle</title>
+<style>
+  .label { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 12.5px; font-weight: 700; fill: #ffffff; }
+  rect { transition: all 0.2s ease; }
+  svg:hover rect { fill: #1f1f1f; stroke: #20beff; }
+</style>
+<rect x="1" y="1" width="120" height="38" rx="19" fill="#121212" stroke="#2a2a2a" stroke-width="1"/>
+<g transform="translate(18, 11)">
+  <path fill="#20BEFF" d="M12.8 17.5h-3.4l-4.7-6.2-1.7 1.6v4.6H0V.5h3v10.5l6.1-6.1h3.7L6.7 11.1l6.1 6.4z"/>
+</g>
+<text x="44" y="25" class="label">Kaggle</text>
+</svg>
