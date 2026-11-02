@@ -38,22 +38,34 @@
 <div align="left">
 
 ### ⚡ Selected Projects
-Real software built for code review workflows, conversational memory, and offline vision.
+Production multi-agent review engines, autonomous agent skill runtimes, persistent assistants, and healthcare speech AI.
 
 #### 🚀 [Hadron ↗](https://github.com/krishujeniya/Hadron)
-A code review tool for GitHub pull requests. It reads incoming diffs, flags security and logic issues, and suggests test cases before code merges into main.  
-**Built with:** Python · FastAPI · LangGraph · Next.js
+Autonomous multi-agent PR review engine. Reads incoming pull request diffs, executes DiskANN reciprocal rank fusion vector search, and identifies security vulnerabilities and logic defects before merge.  
+**Built with:** Python · FastAPI · LangGraph · DiskANN · Next.js 15
+
+---
+
+#### 🛠️ [agent-skills ↗](https://github.com/krishujeniya/agent-skills)
+Unified monorepo of autonomous AI agent skills, Anchor 5-gate workflow orchestrator, Aegis verification framework, and multi-agent deliberation council CLI.  
+**Built with:** Python · LangGraph · MCP · Streamlit · GitHub Pages
 
 ---
 
 #### 🧠 [AmberClaw ↗](https://github.com/krishujeniya/AmberClaw)
-An AI assistant framework with persistent memory across chats. It saves conversation context in SQLite and connects to external APIs and local tools.  
-**Built with:** Python · FastAPI · LiteLLM · SQLite
+Lightweight personal AI assistant framework with persistent conversational memory across Telegram, Discord, and Slack. Connects any LLM to local MCP tools in under 4k lines of clean Python.  
+**Built with:** Python · FastAPI · LiteLLM · SQLite · MCP
 
 ---
 
-#### 📱 [SnapText ↗](https://github.com/krishujeniya/SNAPTEXT_OCR_FLUTTER)
-A mobile app that reads and extracts printed text directly from camera snapshots. It runs completely on the device with no cloud server needed.  
+#### 🩺 [Sureword ↗](https://github.com/krishujeniya/Sureword)
+Frontline healthcare voice-to-form visit entry engine featuring selective clarification on ambiguous clinical terminology using Gnani Prisma and Timbre speech models.  
+**Built with:** Python · ASR · Gnani Prisma · FastAPI · Docker
+
+---
+
+#### 📱 [SnapText ↗](https://github.com/krishujeniya/snaptext-ocr)
+Cross-platform mobile optical character recognition (OCR) application extracting text directly from camera snapshots with 100% on-device local execution.  
 **Built with:** Flutter · Dart · Google ML Kit
 
 </div>
