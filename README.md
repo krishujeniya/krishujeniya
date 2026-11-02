@@ -345,11 +345,4 @@ Available for freelance engagements, technical consulting, and collaborative res
   <a href="https://krishujeniya.github.io/krishujeniya/"><img src="./assets/buttons/view-portfolio.svg?v=10" alt="View Krish Ujeniya's Portfolio" height="40" /></a>
 </p>
 
-<p align="center">
-  <a href="https://krishujeniya.github.io/krishujeniya/"><b>Live Portfolio</b></a> • 
-  <a href="mailto:social.krishujeniya@gmail.com"><b>social.krishujeniya@gmail.com</b></a> • 
-  <a href="https://github.com/krishujeniya"><b>GitHub (@krishujeniya)</b></a> • 
-  <a href="https://linkedin.com/in/krishujeniya"><b>LinkedIn</b></a>
-</p>
-
 </div>
