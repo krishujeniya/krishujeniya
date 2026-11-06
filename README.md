@@ -119,7 +119,7 @@ Working production implementations across multi-agent workflows, healthcare spee
 <tr>
 <td>
 
-###  [AmberClaw ↗](https://krishujeniya.github.io/snaptext-ocr)
+###  [AmberClaw ↗](https://krishujeniya.github.io/AmberClaw)
 
 [![AI Assistant Multi-Channel](https://img.shields.io/badge/AI_Assistant-Multi--Channel-orange?style=flat-square)](https://github.com/krishujeniya/AmberClaw) [![Tests 315+ Passing](https://img.shields.io/badge/Tests-315+_Passing-brightgreen?style=flat-square)](https://github.com/krishujeniya/AmberClaw) [![License MIT](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](https://github.com/krishujeniya/AmberClaw/blob/main/LICENSE)
 
@@ -129,7 +129,7 @@ Working production implementations across multi-agent workflows, healthcare spee
 
 ![Python](https://img.shields.io/badge/Python-3.11+-3776AB?style=flat-square&logo=python&logoColor=white) ![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white) ![LiteLLM](https://img.shields.io/badge/LiteLLM-4285F4?style=flat-square) ![SQLite](https://img.shields.io/badge/SQLite-003B57?style=flat-square&logo=sqlite&logoColor=white) ![Telegram Bot](https://img.shields.io/badge/Telegram_Bot-26A5E4?style=flat-square&logo=telegram&logoColor=white)
 
-**[📁 GitHub Repository ↗](https://github.com/krishujeniya/AmberClaw)** • **[📊 Benchmark Suite ↗](https://github.com/krishujeniya/AmberClaw#benchmarks)** • **[🏛️ Architecture ↗](https://github.com/krishujeniya/AmberClaw#architecture)**
+**[📚 Documentation Site ↗](https://krishujeniya.github.io/AmberClaw/)** • **[📁 GitHub Repository ↗](https://github.com/krishujeniya/AmberClaw)** • **[📊 Benchmark Suite ↗](https://github.com/krishujeniya/AmberClaw#benchmarks)** • **[🏛️ Architecture ↗](https://github.com/krishujeniya/AmberClaw#architecture)**
 
 </td>
 </tr>
@@ -150,7 +150,7 @@ Working production implementations across multi-agent workflows, healthcare spee
 
 ![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=flat-square&logo=python&logoColor=white) ![ASR Gnani Prisma](https://img.shields.io/badge/ASR-Gnani_Prisma-4338CA?style=flat-square) ![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white) ![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white)
 
-**[📁 GitHub Repository ↗](https://github.com/krishujeniya/Sureword)** • **[🔬 Speech Pipeline ↗](https://github.com/krishujeniya/Sureword#pipeline-architecture)**
+**[⚡ Live Demo ↗](https://sureword.vercel.app)** • **[📁 GitHub Repository ↗](https://github.com/krishujeniya/Sureword)** • **[🔬 Speech Pipeline ↗](https://github.com/krishujeniya/Sureword#pipeline-architecture)**
 
 </td>
 </tr>
@@ -172,7 +172,7 @@ Working production implementations across multi-agent workflows, healthcare spee
 
 ![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=flat-square&logo=python&logoColor=white) ![OpenCV](https://img.shields.io/badge/OpenCV-5C3EE8?style=flat-square&logo=opencv&logoColor=white) ![Deep Learning](https://img.shields.io/badge/Deep_Learning-PyTorch-EE4C2C?style=flat-square&logo=pytorch&logoColor=white) ![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white)
 
-**[📁 GitHub Repository ↗](https://github.com/krishujeniya/Hajri.ai)** • **[🏛️ Architecture Flow ↗](https://github.com/krishujeniya/Hajri.ai#architecture)**
+**[⚡ Live Demo ↗](https://hajree.vercel.app)** • **[📁 GitHub Repository ↗](https://github.com/krishujeniya/Hajree)** • **[🏛️ Architecture Flow ↗](https://github.com/krishujeniya/Hajri.ai#architecture)**
 
 </td>
 </tr>
@@ -193,7 +193,7 @@ Working production implementations across multi-agent workflows, healthcare spee
 
 ![Flutter](https://img.shields.io/badge/Flutter-3.x-02569B?style=flat-square&logo=flutter&logoColor=white) ![Dart](https://img.shields.io/badge/Dart-0175C2?style=flat-square&logo=dart&logoColor=white) ![Google ML Kit](https://img.shields.io/badge/Google_ML_Kit-4285F4?style=flat-square&logo=google&logoColor=white)
 
-**[📁 GitHub Repository ↗](https://github.com/krishujeniya/snaptext-ocr)** • **[✨ Feature Matrix ↗](https://github.com/krishujeniya/snaptext-ocr#features)**
+**[📚 Documentation Site ↗](https://krishujeniya.github.io/snaptext-ocr/)** • **[📁 GitHub Repository ↗](https://github.com/krishujeniya/snaptext-ocr)** • **[✨ Feature Matrix ↗](https://github.com/krishujeniya/snaptext-ocr#features)**
 
 </td>
 </tr>
