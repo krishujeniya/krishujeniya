@@ -77,7 +77,7 @@ Working production implementations across multi-agent workflows, healthcare spee
 <tr>
 <td>
 
-### 🚀 [Hadron ↗](https://hadron.vercel.app)
+###  [Hadron ↗](https://hadron.vercel.app)
 
 [![Production Multi-Agent](https://img.shields.io/badge/Production-Multi--Agent-blue?style=flat-square)](https://github.com/krishujeniya/Hadron) [![CI Passing](https://img.shields.io/badge/CI-Passing-brightgreen?style=flat-square&logo=githubactions)](https://github.com/krishujeniya/Hadron/actions) [![License Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-22c55e?style=flat-square)](https://github.com/krishujeniya/Hadron/blob/main/LICENSE)
 
@@ -98,7 +98,7 @@ Working production implementations across multi-agent workflows, healthcare spee
 <tr>
 <td>
 
-### 🛠️ [AGYOS ↗](https://krishujeniya.github.io/AGYOS)
+###  [AGYOS ↗](https://krishujeniya.github.io/AGYOS)
 
 [![Framework Autonomous Agents](https://img.shields.io/badge/Framework-Autonomous_Agents-8A2BE2?style=flat-square)](https://github.com/krishujeniya/agent-skills) [![CI Passing](https://img.shields.io/badge/CI-Passing-brightgreen?style=flat-square&logo=githubactions)](https://github.com/krishujeniya/agent-skills/actions) [![License Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-22c55e?style=flat-square)](https://github.com/krishujeniya/agent-skills/blob/main/LICENSE)
 
@@ -108,7 +108,7 @@ Working production implementations across multi-agent workflows, healthcare spee
 
 ![Python](https://img.shields.io/badge/Python-3.12-3776AB?style=flat-square&logo=python&logoColor=white) ![LangGraph](https://img.shields.io/badge/LangGraph-FF6F00?style=flat-square) ![MCP Protocol](https://img.shields.io/badge/MCP-Protocol-blueviolet?style=flat-square) ![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=flat-square&logo=streamlit&logoColor=white)
 
-**[📚 Documentation Site ↗](https://krishujeniya.github.io/agent-skills/)** • **[📁 GitHub Repository ↗](https://github.com/krishujeniya/agent-skills)** • **[🎓 Citation CFF ↗](https://github.com/krishujeniya/agent-skills/blob/main/CITATION.cff)**
+**[📚 Documentation Site ↗](https://krishujeniya.github.io/AGYOS/)** • **[📁 GitHub Repository ↗](https://github.com/krishujeniya/agent-skills)** • **[🎓 Citation CFF ↗](https://github.com/krishujeniya/agent-skills/blob/main/CITATION.cff)**
 
 </td>
 </tr>
@@ -119,7 +119,7 @@ Working production implementations across multi-agent workflows, healthcare spee
 <tr>
 <td>
 
-### 🧠 [AmberClaw ↗](https://krishujeniya.github.io/snaptext-ocr)
+###  [AmberClaw ↗](https://krishujeniya.github.io/snaptext-ocr)
 
 [![AI Assistant Multi-Channel](https://img.shields.io/badge/AI_Assistant-Multi--Channel-orange?style=flat-square)](https://github.com/krishujeniya/AmberClaw) [![Tests 315+ Passing](https://img.shields.io/badge/Tests-315+_Passing-brightgreen?style=flat-square)](https://github.com/krishujeniya/AmberClaw) [![License MIT](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](https://github.com/krishujeniya/AmberClaw/blob/main/LICENSE)
 
@@ -140,7 +140,7 @@ Working production implementations across multi-agent workflows, healthcare spee
 <tr>
 <td>
 
-### 🩺 [Sureword ↗](https://sureword.vercel.app/)
+###  [Sureword ↗](https://sureword.vercel.app/)
 
 [![Healthcare AI Voice ASR](https://img.shields.io/badge/Healthcare_AI-Voice_ASR-red?style=flat-square)](https://github.com/krishujeniya/Sureword) [![CI Passing](https://img.shields.io/badge/CI-Passing-brightgreen?style=flat-square&logo=githubactions)](https://github.com/krishujeniya/Sureword/actions) [![License MIT](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](https://github.com/krishujeniya/Sureword/blob/main/LICENSE)
 
@@ -162,7 +162,7 @@ Working production implementations across multi-agent workflows, healthcare spee
 <tr>
 <td>
 
-### 👁️ [Hajree ↗](https://github.com/krishujeniya/Hajree)
+###  [Hajree ↗](https://github.com/krishujeniya/Hajree)
 
 [![Computer Vision Liveness Detection](https://img.shields.io/badge/Computer_Vision-Liveness_Detection-critical?style=flat-square)](https://github.com/krishujeniya/Hajri.ai) [![CI Passing](https://img.shields.io/badge/CI-Passing-brightgreen?style=flat-square&logo=githubactions)](https://github.com/krishujeniya/Hajri.ai/actions) [![License MIT](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](https://github.com/krishujeniya/Hajri.ai/blob/main/LICENSE)
 
@@ -183,7 +183,7 @@ Working production implementations across multi-agent workflows, healthcare spee
 <tr>
 <td>
 
-### 📱 [SnapText ↗](https://krishujeniya.github.io/snaptext-ocr)
+###  [SnapText ↗](https://krishujeniya.github.io/snaptext-ocr)
 
 [![Mobile App On-Device OCR](https://img.shields.io/badge/Mobile_App-On--Device_OCR-blue?style=flat-square)](https://github.com/krishujeniya/snaptext-ocr) [![Flutter](https://img.shields.io/badge/Flutter-Cross--Platform-02569B?style=flat-square&logo=flutter&logoColor=white)](https://github.com/krishujeniya/snaptext-ocr) [![License MIT](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](https://github.com/krishujeniya/snaptext-ocr/blob/main/LICENSE)
 
