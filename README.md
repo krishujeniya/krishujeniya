@@ -77,7 +77,7 @@ Working production implementations across multi-agent workflows, healthcare spee
 <tr>
 <td>
 
-### 🚀 [Hadron ↗](https://github.com/krishujeniya/Hadron)
+### 🚀 [Hadron ↗](https://hadron.vercel.app)
 
 [![Production Multi-Agent](https://img.shields.io/badge/Production-Multi--Agent-blue?style=flat-square)](https://github.com/krishujeniya/Hadron) [![CI Passing](https://img.shields.io/badge/CI-Passing-brightgreen?style=flat-square&logo=githubactions)](https://github.com/krishujeniya/Hadron/actions) [![License Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-22c55e?style=flat-square)](https://github.com/krishujeniya/Hadron/blob/main/LICENSE)
 
@@ -98,7 +98,7 @@ Working production implementations across multi-agent workflows, healthcare spee
 <tr>
 <td>
 
-### 🛠️ [agent-skills ↗](https://github.com/krishujeniya/agent-skills)
+### 🛠️ [AGYOS ↗](https://krishujeniya.github.io/AGYOS)
 
 [![Framework Autonomous Agents](https://img.shields.io/badge/Framework-Autonomous_Agents-8A2BE2?style=flat-square)](https://github.com/krishujeniya/agent-skills) [![CI Passing](https://img.shields.io/badge/CI-Passing-brightgreen?style=flat-square&logo=githubactions)](https://github.com/krishujeniya/agent-skills/actions) [![License Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-22c55e?style=flat-square)](https://github.com/krishujeniya/agent-skills/blob/main/LICENSE)
 
@@ -119,7 +119,7 @@ Working production implementations across multi-agent workflows, healthcare spee
 <tr>
 <td>
 
-### 🧠 [AmberClaw ↗](https://github.com/krishujeniya/AmberClaw)
+### 🧠 [AmberClaw ↗](https://krishujeniya.github.io/snaptext-ocr)
 
 [![AI Assistant Multi-Channel](https://img.shields.io/badge/AI_Assistant-Multi--Channel-orange?style=flat-square)](https://github.com/krishujeniya/AmberClaw) [![Tests 315+ Passing](https://img.shields.io/badge/Tests-315+_Passing-brightgreen?style=flat-square)](https://github.com/krishujeniya/AmberClaw) [![License MIT](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](https://github.com/krishujeniya/AmberClaw/blob/main/LICENSE)
 
@@ -140,7 +140,7 @@ Working production implementations across multi-agent workflows, healthcare spee
 <tr>
 <td>
 
-### 🩺 [Sureword ↗](https://github.com/krishujeniya/Sureword)
+### 🩺 [Sureword ↗](https://sureword.vercel.app/)
 
 [![Healthcare AI Voice ASR](https://img.shields.io/badge/Healthcare_AI-Voice_ASR-red?style=flat-square)](https://github.com/krishujeniya/Sureword) [![CI Passing](https://img.shields.io/badge/CI-Passing-brightgreen?style=flat-square&logo=githubactions)](https://github.com/krishujeniya/Sureword/actions) [![License MIT](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](https://github.com/krishujeniya/Sureword/blob/main/LICENSE)
 
@@ -156,33 +156,13 @@ Working production implementations across multi-agent workflows, healthcare spee
 </tr>
 </table>
 
-<!-- CARD 5: WAFERGUARD -->
-<table width="100%">
-<tr>
-<td>
-
-### 🛡️ [WaferGuard ↗](https://github.com/krishujeniya/WaferGuard)
-
-[![Industrial MLOps DVC Pipeline](https://img.shields.io/badge/Industrial_MLOps-DVC_Pipeline-success?style=flat-square)](https://github.com/krishujeniya/WaferGuard) [![CI Passing](https://img.shields.io/badge/CI-Passing-brightgreen?style=flat-square&logo=githubactions)](https://github.com/krishujeniya/WaferGuard/actions) [![License MIT](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](https://github.com/krishujeniya/WaferGuard/blob/main/LICENSE)
-
-**Semiconductor Wafer Anomaly Detection &amp; MLOps Pipeline.** End-to-end machine learning system for semiconductor defect classification. Implements automated validation gates, reproducible pipeline stages with DVC, and metric tracking across model iterations to catch wafer defects early.
-
-`🏭 Semiconductor Yield Protection` · `🔄 DVC Version Control` · `📈 Automated Metric Tracking` · `⚙️ Production Makefile Target Matrix`
-
-![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=flat-square&logo=python&logoColor=white) ![DVC](https://img.shields.io/badge/DVC-Data_Version_Control-945DD6?style=flat-square&logo=dvc&logoColor=white) ![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-F7931E?style=flat-square&logo=scikitlearn&logoColor=white) ![MLOps](https://img.shields.io/badge/MLOps-Industrial_Standard-007ACC?style=flat-square)
-
-**[📁 GitHub Repository ↗](https://github.com/krishujeniya/WaferGuard)** • **[🔄 DVC Lifecycle ↗](https://github.com/krishujeniya/WaferGuard#dvc-pipeline-lifecycle)** • **[🎓 Citation CFF ↗](https://github.com/krishujeniya/WaferGuard/blob/main/CITATION.cff)**
-
-</td>
-</tr>
-</table>
 
 <!-- CARD 6: HAJRI.AI -->
 <table width="100%">
 <tr>
 <td>
 
-### 👁️ [Hajri.ai ↗](https://github.com/krishujeniya/Hajri.ai)
+### 👁️ [Hajree ↗](https://github.com/krishujeniya/Hajree)
 
 [![Computer Vision Liveness Detection](https://img.shields.io/badge/Computer_Vision-Liveness_Detection-critical?style=flat-square)](https://github.com/krishujeniya/Hajri.ai) [![CI Passing](https://img.shields.io/badge/CI-Passing-brightgreen?style=flat-square&logo=githubactions)](https://github.com/krishujeniya/Hajri.ai/actions) [![License MIT](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](https://github.com/krishujeniya/Hajri.ai/blob/main/LICENSE)
 
@@ -203,7 +183,7 @@ Working production implementations across multi-agent workflows, healthcare spee
 <tr>
 <td>
 
-### 📱 [SnapText ↗](https://github.com/krishujeniya/snaptext-ocr)
+### 📱 [SnapText ↗](https://krishujeniya.github.io/snaptext-ocr)
 
 [![Mobile App On-Device OCR](https://img.shields.io/badge/Mobile_App-On--Device_OCR-blue?style=flat-square)](https://github.com/krishujeniya/snaptext-ocr) [![Flutter](https://img.shields.io/badge/Flutter-Cross--Platform-02569B?style=flat-square&logo=flutter&logoColor=white)](https://github.com/krishujeniya/snaptext-ocr) [![License MIT](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](https://github.com/krishujeniya/snaptext-ocr/blob/main/LICENSE)
 
@@ -219,26 +199,6 @@ Working production implementations across multi-agent workflows, healthcare spee
 </tr>
 </table>
 
-<!-- CARD 8: NETSWEEP -->
-<table width="100%">
-<tr>
-<td>
-
-### 🌐 [NetSweep ↗](https://github.com/krishujeniya/NetSweep)
-
-[![SecOps Network Recon](https://img.shields.io/badge/SecOps-Network_Recon-black?style=flat-square)](https://github.com/krishujeniya/NetSweep) [![CI Passing](https://img.shields.io/badge/CI-Passing-brightgreen?style=flat-square&logo=githubactions)](https://github.com/krishujeniya/NetSweep/actions) [![License MIT](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](https://github.com/krishujeniya/NetSweep/blob/main/LICENSE)
-
-**Automated Network Reconnaissance Tool.** High-speed Bash orchestration script wrapping Nmap for network host discovery, port audits, service versioning, and operating system detection. Exports cleanly formatted, timestamped logs for penetration testing audits.
-
-`🔍 Automated Port Auditing` · `🛡️ Service &amp; OS Fingerprinting` · `📜 Structured Audit Artifacts`
-
-![Bash](https://img.shields.io/badge/Bash-4EAA25?style=flat-square&logo=gnubash&logoColor=white) ![Nmap](https://img.shields.io/badge/Nmap-Network_Scanner-blue?style=flat-square) ![Linux](https://img.shields.io/badge/Linux-FCC624?style=flat-square&logo=linux&logoColor=black)
-
-**[📁 GitHub Repository ↗](https://github.com/krishujeniya/NetSweep)** • **[🛠️ Quickstart ↗](https://github.com/krishujeniya/NetSweep#usage)**
-
-</td>
-</tr>
-</table>
 
 ---
 
