@@ -77,7 +77,7 @@ Working production implementations across multi-agent workflows, healthcare spee
 <tr>
 <td>
 
-###  [Hadron ↗](https://hadron.vercel.app)
+###  [Hadron ↗](https://krishujeniya.github.io/Hadron)
 
 [![Production Multi-Agent](https://img.shields.io/badge/Production-Multi--Agent-blue?style=flat-square)](https://github.com/krishujeniya/Hadron) [![CI Passing](https://img.shields.io/badge/CI-Passing-brightgreen?style=flat-square&logo=githubactions)](https://github.com/krishujeniya/Hadron/actions) [![License Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-22c55e?style=flat-square)](https://github.com/krishujeniya/Hadron/blob/main/LICENSE)
 
@@ -87,7 +87,7 @@ Working production implementations across multi-agent workflows, healthcare spee
 
 ![Python](https://img.shields.io/badge/Python-3.11+-3776AB?style=flat-square&logo=python&logoColor=white) ![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white) ![LangGraph](https://img.shields.io/badge/LangGraph-FF6F00?style=flat-square) ![DiskANN](https://img.shields.io/badge/DiskANN-8A2BE2?style=flat-square) ![Next.js 15](https://img.shields.io/badge/Next.js_15-000000?style=flat-square&logo=nextdotjs&logoColor=white)
 
-**[⚡ Live Demo ↗](https://hadron.vercel.app)** • **[📁 GitHub Repository ↗](https://github.com/krishujeniya/Hadron)** • **[📄 Technical Report ↗](https://github.com/krishujeniya/Hadron#readme)**
+**[⚡ Live Demo ↗](https://krishujeniya.github.io/Hadron)** • **[📁 GitHub Repository ↗](https://github.com/krishujeniya/Hadron)** • **[📄 Technical Report ↗](https://github.com/krishujeniya/Hadron#readme)**
 
 </td>
 </tr>
@@ -140,7 +140,7 @@ Working production implementations across multi-agent workflows, healthcare spee
 <tr>
 <td>
 
-###  [Sureword ↗](https://sureword.vercel.app/)
+###  [Sureword ↗](https://krishujeniya.github.io/Sureword)
 
 [![Healthcare AI Voice ASR](https://img.shields.io/badge/Healthcare_AI-Voice_ASR-red?style=flat-square)](https://github.com/krishujeniya/Sureword) [![CI Passing](https://img.shields.io/badge/CI-Passing-brightgreen?style=flat-square&logo=githubactions)](https://github.com/krishujeniya/Sureword/actions) [![License MIT](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](https://github.com/krishujeniya/Sureword/blob/main/LICENSE)
 
@@ -150,7 +150,7 @@ Working production implementations across multi-agent workflows, healthcare spee
 
 ![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=flat-square&logo=python&logoColor=white) ![ASR Gnani Prisma](https://img.shields.io/badge/ASR-Gnani_Prisma-4338CA?style=flat-square) ![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white) ![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white)
 
-**[⚡ Live Demo ↗](https://sureword.vercel.app)** • **[📁 GitHub Repository ↗](https://github.com/krishujeniya/Sureword)** • **[🔬 Speech Pipeline ↗](https://github.com/krishujeniya/Sureword#pipeline-architecture)**
+**[⚡ Live Demo ↗](https://krishujeniya.github.io/Sureword)** • **[📁 GitHub Repository ↗](https://github.com/krishujeniya/Sureword)** • **[🔬 Speech Pipeline ↗](https://github.com/krishujeniya/Sureword#pipeline-architecture)**
 
 </td>
 </tr>
@@ -162,7 +162,7 @@ Working production implementations across multi-agent workflows, healthcare spee
 <tr>
 <td>
 
-###  [Hajree ↗](https://github.com/krishujeniya/Hajree)
+###  [Hajree ↗](https://krishujeniya.github.io/Hajree)
 
 [![Computer Vision Liveness Detection](https://img.shields.io/badge/Computer_Vision-Liveness_Detection-critical?style=flat-square)](https://github.com/krishujeniya/Hajri.ai) [![CI Passing](https://img.shields.io/badge/CI-Passing-brightgreen?style=flat-square&logo=githubactions)](https://github.com/krishujeniya/Hajri.ai/actions) [![License MIT](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](https://github.com/krishujeniya/Hajri.ai/blob/main/LICENSE)
 
@@ -172,7 +172,7 @@ Working production implementations across multi-agent workflows, healthcare spee
 
 ![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=flat-square&logo=python&logoColor=white) ![OpenCV](https://img.shields.io/badge/OpenCV-5C3EE8?style=flat-square&logo=opencv&logoColor=white) ![Deep Learning](https://img.shields.io/badge/Deep_Learning-PyTorch-EE4C2C?style=flat-square&logo=pytorch&logoColor=white) ![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white)
 
-**[⚡ Live Demo ↗](https://hajree.vercel.app)** • **[📁 GitHub Repository ↗](https://github.com/krishujeniya/Hajree)** • **[🏛️ Architecture Flow ↗](https://github.com/krishujeniya/Hajri.ai#architecture)**
+**[⚡ Live Demo ↗](https://krishujeniya.github.io/Hajree)** • **[📁 GitHub Repository ↗](https://github.com/krishujeniya/Hajree)** • **[🏛️ Architecture Flow ↗](https://github.com/krishujeniya/Hajri.ai#architecture)**
 
 </td>
 </tr>
