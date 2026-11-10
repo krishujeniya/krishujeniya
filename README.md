@@ -77,7 +77,7 @@ Working production implementations across multi-agent workflows, healthcare spee
 <tr>
 <td>
 
-###  [Hadron ↗](https://krishujeniya.github.io/Hadron)
+### 🚀 [Hadron ↗](https://github.com/krishujeniya/Hadron)
 
 [![Production Multi-Agent](https://img.shields.io/badge/Production-Multi--Agent-blue?style=flat-square)](https://github.com/krishujeniya/Hadron) [![CI Passing](https://img.shields.io/badge/CI-Passing-brightgreen?style=flat-square&logo=githubactions)](https://github.com/krishujeniya/Hadron/actions) [![License Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-22c55e?style=flat-square)](https://github.com/krishujeniya/Hadron/blob/main/LICENSE)
 
@@ -87,60 +87,123 @@ Working production implementations across multi-agent workflows, healthcare spee
 
 ![Python](https://img.shields.io/badge/Python-3.11+-3776AB?style=flat-square&logo=python&logoColor=white) ![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white) ![LangGraph](https://img.shields.io/badge/LangGraph-FF6F00?style=flat-square) ![DiskANN](https://img.shields.io/badge/DiskANN-8A2BE2?style=flat-square) ![Next.js 15](https://img.shields.io/badge/Next.js_15-000000?style=flat-square&logo=nextdotjs&logoColor=white)
 
-**[⚡ Live Demo ↗](https://krishujeniya.github.io/Hadron)** • **[📁 GitHub Repository ↗](https://github.com/krishujeniya/Hadron)** • **[📄 Technical Report ↗](https://github.com/krishujeniya/Hadron#readme)**
+**[📁 GitHub Repository ↗](https://github.com/krishujeniya/Hadron)** • **[📄 Technical Report ↗](https://github.com/krishujeniya/Hadron#readme)** • **[🏛️ Architecture Flow ↗](https://github.com/krishujeniya/Hadron#architecture)**
 
 </td>
 </tr>
 </table>
 
-<!-- CARD 2: AGENT-SKILLS -->
+<!-- CARD 2: AGYOS -->
 <table width="100%">
 <tr>
 <td>
 
-###  [AGYOS ↗](https://krishujeniya.github.io/AGYOS)
+### 🛠️ [AGYOS ↗](https://github.com/krishujeniya/AGYOS)
 
-[![Framework Autonomous Agents](https://img.shields.io/badge/Framework-Autonomous_Agents-8A2BE2?style=flat-square)](https://github.com/krishujeniya/agent-skills) [![CI Passing](https://img.shields.io/badge/CI-Passing-brightgreen?style=flat-square&logo=githubactions)](https://github.com/krishujeniya/agent-skills/actions) [![License Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-22c55e?style=flat-square)](https://github.com/krishujeniya/agent-skills/blob/main/LICENSE)
+[![Autonomous Cognitive Agent OS](https://img.shields.io/badge/Framework-Autonomous_Agent_OS-8A2BE2?style=flat-square)](https://github.com/krishujeniya/AGYOS) [![1,862+ Skills Cataloged](https://img.shields.io/badge/Skills-1%2C862+_Cataloged-blue?style=flat-square)](https://github.com/krishujeniya/AGYOS) [![License Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-22c55e?style=flat-square)](https://github.com/krishujeniya/AGYOS/blob/main/LICENSE)
 
-**Developer Monorepo for Autonomous AI Agents.** Collection of developer tools and deterministic frameworks for autonomous agents. Includes the Anchor 5-gate verification pipeline, a multi-agent deliberation CLI, and standard Model Context Protocol (MCP) server integrations for local tool execution.
+**Autonomous Cognitive Agent Operating System &amp; Skills Monorepo.** Production runtime and catalog of 1,862+ modular engineering skills providing deterministic reliability, zero-speculation execution, and fail-closed safety for AI coding agents. Includes the Anchor 5-gate pipeline, Council multi-model deliberation CLI, and FastMCP 2.0 tool servers.
 
-`🛡️ Anchor 5-Gate Orchestration` · `🔌 MCP Tool Server Suite` · `⚖️ Deliberation Council CLI` · `📚 GitHub Pages Documentation`
+`🛡️ Anchor 5-Gate Orchestration` · `🔌 FastMCP 2.0 Protocol` · `⚖️ Multi-Model Council CLI` · `📚 1,862+ Engineering Skills`
 
-![Python](https://img.shields.io/badge/Python-3.12-3776AB?style=flat-square&logo=python&logoColor=white) ![LangGraph](https://img.shields.io/badge/LangGraph-FF6F00?style=flat-square) ![MCP Protocol](https://img.shields.io/badge/MCP-Protocol-blueviolet?style=flat-square) ![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=flat-square&logo=streamlit&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.12-3776AB?style=flat-square&logo=python&logoColor=white) ![FastMCP](https://img.shields.io/badge/FastMCP-2.0-blueviolet?style=flat-square) ![LangGraph](https://img.shields.io/badge/LangGraph-FF6F00?style=flat-square) ![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white)
 
-**[📚 Documentation Site ↗](https://krishujeniya.github.io/AGYOS/)** • **[📁 GitHub Repository ↗](https://github.com/krishujeniya/agent-skills)** • **[🎓 Citation CFF ↗](https://github.com/krishujeniya/agent-skills/blob/main/CITATION.cff)**
+**[📚 Documentation Site ↗](https://krishujeniya.github.io/AGYOS/)** • **[📁 GitHub Repository ↗](https://github.com/krishujeniya/AGYOS)** • **[🎓 Citation CFF ↗](https://github.com/krishujeniya/AGYOS/blob/main/CITATION.cff)**
 
 </td>
 </tr>
 </table>
 
-<!-- CARD 3: AMBERCLAW -->
+<!-- CARD 3: SOMNOSTASIS -->
 <table width="100%">
 <tr>
 <td>
 
-###  [AmberClaw ↗](https://krishujeniya.github.io/AmberClaw)
+### 🧬 [Somnostasis ↗](https://github.com/krishujeniya/somnostasis)
+
+[![Production MLOps Platform](https://img.shields.io/badge/Production-MLOps_Platform-teal?style=flat-square)](https://github.com/krishujeniya/somnostasis) [![CI Passing](https://img.shields.io/badge/CI-Passing-brightgreen?style=flat-square&logo=githubactions)](https://github.com/krishujeniya/somnostasis/actions) [![License MIT](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](https://github.com/krishujeniya/somnostasis/blob/main/LICENSE)
+
+**Autonomic Biosignal Intelligence &amp; Production MLOps Platform.** End-to-end machine learning system for physiological stress prediction from nocturnal polysomnography biosignals. Features real-time inference, TreeSHAP feature attribution, Kolmogorov-Smirnov and PSI drift detection, and automated retraining pipelines.
+
+`🧠 Biosignal Stress Prediction` · `🔬 TreeSHAP Interpretability` · `📊 KS &amp; PSI Drift Detection` · `🚀 Real-Time Vercel API`
+
+![Python](https://img.shields.io/badge/Python-3.11-3776AB?style=flat-square&logo=python&logoColor=white) ![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white) ![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-F7931E?style=flat-square&logo=scikitlearn&logoColor=white) ![React](https://img.shields.io/badge/React_18-61DAFB?style=flat-square&logo=react&logoColor=black) ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)
+
+**[⚡ Live Dashboard ↗](https://krishujeniya.github.io/somnostasis/)** • **[📁 GitHub Repository ↗](https://github.com/krishujeniya/somnostasis)** • **[📄 Interactive API Docs ↗](https://somnostasis.vercel.app/docs)**
+
+</td>
+</tr>
+</table>
+
+<!-- CARD 4: CURAVEX -->
+<table width="100%">
+<tr>
+<td>
+
+### 💊 [Curavex ↗](https://github.com/krishujeniya/curavex)
+
+[![Clinical AI MLOps SaaS](https://img.shields.io/badge/Clinical_AI-MLOps_SaaS-red?style=flat-square)](https://github.com/krishujeniya/curavex) [![CI Passing](https://img.shields.io/badge/CI-Passing-brightgreen?style=flat-square&logo=githubactions)](https://github.com/krishujeniya/curavex/actions) [![Coverage 86%](https://img.shields.io/badge/Coverage-86%25-brightgreen?style=flat-square)](https://github.com/krishujeniya/curavex)
+
+**Clinical Treatment Response &amp; Precision Pharmacology Platform.** Supervised clinical machine learning system predicting patient drug efficacy, therapeutic response metrics, and adverse reaction profiles. Features reproducible ColumnTransformer pipelines, multi-target inference, and continuous drift monitoring.
+
+`🩺 Precision Pharmacology` · `📊 Multi-Target Inference` · `🔄 Automated ETL Pipeline` · `📋 OpenAPI Specification`
+
+![Python](https://img.shields.io/badge/Python-3.12-3776AB?style=flat-square&logo=python&logoColor=white) ![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white) ![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-F7931E?style=flat-square&logo=scikitlearn&logoColor=white) ![Vercel](https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=vercel&logoColor=white) ![GitHub Pages](https://img.shields.io/badge/GitHub_Pages-222222?style=flat-square&logo=github&logoColor=white)
+
+**[⚡ Live Dashboard ↗](https://krishujeniya.github.io/curavex/)** • **[📁 GitHub Repository ↗](https://github.com/krishujeniya/curavex)** • **[🔬 Architecture ↗](https://github.com/krishujeniya/curavex#system-architecture)**
+
+</td>
+</tr>
+</table>
+
+<!-- CARD 5: WAFERPULSE -->
+<table width="100%">
+<tr>
+<td>
+
+### 🛡️ [WaferPulse ↗](https://github.com/krishujeniya/WaferPulse)
+
+[![Industrial MLOps SaaS](https://img.shields.io/badge/Industrial_MLOps-SaaS_Platform-success?style=flat-square)](https://github.com/krishujeniya/WaferPulse) [![CI Passing](https://img.shields.io/badge/CI-Passing-brightgreen?style=flat-square&logo=githubactions)](https://github.com/krishujeniya/WaferPulse/actions) [![License MIT](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](https://github.com/krishujeniya/WaferPulse/blob/main/LICENSE)
+
+**Semiconductor Wafer Anomaly Detection &amp; Industrial MLOps SaaS.** Production machine learning platform for semiconductor fabrication defect classification. Implements multi-channel sensor ingestion, K-Means chamber regime clustering, Kolmogorov-Smirnov distribution drift tracking, and Z-score defect root cause attribution.
+
+`🏭 Semiconductor Yield Protection` · `🔬 Chamber Regime Clustering` · `📈 Automated Drift Detection` · `⚙️ Z-Score Anomaly Attribution`
+
+![Python](https://img.shields.io/badge/Python-3.12-3776AB?style=flat-square&logo=python&logoColor=white) ![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white) ![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-F7931E?style=flat-square&logo=scikitlearn&logoColor=white) ![React](https://img.shields.io/badge/React_18-61DAFB?style=flat-square&logo=react&logoColor=black) ![Tailwind](https://img.shields.io/badge/Tailwind_3.4-38B2AC?style=flat-square&logo=tailwindcss&logoColor=white)
+
+**[⚡ Live Dashboard ↗](https://krishujeniya.github.io/WaferPulse/)** • **[📁 GitHub Repository ↗](https://github.com/krishujeniya/WaferPulse)** • **[🏛️ Architecture ↗](https://github.com/krishujeniya/WaferPulse#system-architecture)**
+
+</td>
+</tr>
+</table>
+
+<!-- CARD 6: AMBERCLAW -->
+<table width="100%">
+<tr>
+<td>
+
+### 🧠 [AmberClaw ↗](https://github.com/krishujeniya/AmberClaw)
 
 [![AI Assistant Multi-Channel](https://img.shields.io/badge/AI_Assistant-Multi--Channel-orange?style=flat-square)](https://github.com/krishujeniya/AmberClaw) [![Tests 315+ Passing](https://img.shields.io/badge/Tests-315+_Passing-brightgreen?style=flat-square)](https://github.com/krishujeniya/AmberClaw) [![License MIT](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](https://github.com/krishujeniya/AmberClaw/blob/main/LICENSE)
 
-**Lightweight Personal AI Assistant Framework.** Connects LLMs to local MCP tools with persistent conversational memory across Telegram, Discord, and Slack in under 4,000 lines of readable Python. Features SQLite session storage and asynchronous tool execution.
+**Open Zero-Trust Autonomous AI Runtime.** Connects LLMs to local MCP tools with persistent conversational memory across Telegram, Discord, and Slack in under 4,000 lines of readable Python. Features SQLite session storage, asynchronous tool execution, and fine-grained access control.
 
 `💬 Multi-Channel Dispatch` · `🧠 Persistent SQLite Context` · `⚡ 4k LOC Auditable Architecture` · `🔌 Pluggable MCP Client`
 
 ![Python](https://img.shields.io/badge/Python-3.11+-3776AB?style=flat-square&logo=python&logoColor=white) ![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white) ![LiteLLM](https://img.shields.io/badge/LiteLLM-4285F4?style=flat-square) ![SQLite](https://img.shields.io/badge/SQLite-003B57?style=flat-square&logo=sqlite&logoColor=white) ![Telegram Bot](https://img.shields.io/badge/Telegram_Bot-26A5E4?style=flat-square&logo=telegram&logoColor=white)
 
-**[📚 Documentation Site ↗](https://krishujeniya.github.io/AmberClaw/)** • **[📁 GitHub Repository ↗](https://github.com/krishujeniya/AmberClaw)** • **[📊 Benchmark Suite ↗](https://github.com/krishujeniya/AmberClaw#benchmarks)** • **[🏛️ Architecture ↗](https://github.com/krishujeniya/AmberClaw#architecture)**
+**[📁 GitHub Repository ↗](https://github.com/krishujeniya/AmberClaw)** • **[📊 Benchmark Suite ↗](https://github.com/krishujeniya/AmberClaw#benchmarks)** • **[🏛️ Architecture ↗](https://github.com/krishujeniya/AmberClaw#architecture)**
 
 </td>
 </tr>
 </table>
 
-<!-- CARD 4: SUREWORD -->
+<!-- CARD 7: SUREWORD -->
 <table width="100%">
 <tr>
 <td>
 
-###  [Sureword ↗](https://krishujeniya.github.io/Sureword)
+### 🩺 [Sureword ↗](https://github.com/krishujeniya/Sureword)
 
 [![Healthcare AI Voice ASR](https://img.shields.io/badge/Healthcare_AI-Voice_ASR-red?style=flat-square)](https://github.com/krishujeniya/Sureword) [![CI Passing](https://img.shields.io/badge/CI-Passing-brightgreen?style=flat-square&logo=githubactions)](https://github.com/krishujeniya/Sureword/actions) [![License MIT](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](https://github.com/krishujeniya/Sureword/blob/main/LICENSE)
 
@@ -150,40 +213,81 @@ Working production implementations across multi-agent workflows, healthcare spee
 
 ![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=flat-square&logo=python&logoColor=white) ![ASR Gnani Prisma](https://img.shields.io/badge/ASR-Gnani_Prisma-4338CA?style=flat-square) ![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white) ![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white)
 
-**[⚡ Live Demo ↗](https://krishujeniya.github.io/Sureword)** • **[📁 GitHub Repository ↗](https://github.com/krishujeniya/Sureword)** • **[🔬 Speech Pipeline ↗](https://github.com/krishujeniya/Sureword#pipeline-architecture)**
+**[📁 GitHub Repository ↗](https://github.com/krishujeniya/Sureword)** • **[🔬 Speech Pipeline ↗](https://github.com/krishujeniya/Sureword#pipeline-architecture)**
 
 </td>
 </tr>
 </table>
 
-
-<!-- CARD 6: HAJRI.AI -->
+<!-- CARD 8: HAJREE -->
 <table width="100%">
 <tr>
 <td>
 
-###  [Hajree ↗](https://krishujeniya.github.io/Hajree)
+### 👁️ [Hajree ↗](https://github.com/krishujeniya/Hajree)
 
-[![Computer Vision Liveness Detection](https://img.shields.io/badge/Computer_Vision-Liveness_Detection-critical?style=flat-square)](https://github.com/krishujeniya/Hajri.ai) [![CI Passing](https://img.shields.io/badge/CI-Passing-brightgreen?style=flat-square&logo=githubactions)](https://github.com/krishujeniya/Hajri.ai/actions) [![License MIT](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](https://github.com/krishujeniya/Hajri.ai/blob/main/LICENSE)
+[![Computer Vision Biometric Attendance](https://img.shields.io/badge/Computer_Vision-Biometric_Attendance-indigo?style=flat-square)](https://github.com/krishujeniya/Hajree) [![FastAPI](https://img.shields.io/badge/FastAPI-0.115+-009688?style=flat-square&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com) [![License MIT](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](https://github.com/krishujeniya/Hajree/blob/main/LICENSE)
 
-**Computer Vision Attendance System with Anti-Spoofing.** Real-time facial recognition service with active liveness verification. Analyzes facial micro-movements to reject printed photo attacks and screen replays in institutional attendance workflows.
+**Next-Generation Biometric Neural Attendance Platform.** Real-time facial recognition and attendance management service featuring SFace deep embeddings, active anti-spoofing liveness verification, and three role-based portals (Admin, Faculty, Student) for attendance tracking and defaulter alerting.
 
-`🛡️ Anti-Spoofing Liveness Verification` · `👁️ Deep Metric Facial Embedding` · `🐳 Containerized Microservice`
+`🛡️ SFace Biometric Matching` · `👁️ Active Liveness Detection` · `👥 Three Role-Based Portals` · `📊 Automated Attendance Auditing`
 
-![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=flat-square&logo=python&logoColor=white) ![OpenCV](https://img.shields.io/badge/OpenCV-5C3EE8?style=flat-square&logo=opencv&logoColor=white) ![Deep Learning](https://img.shields.io/badge/Deep_Learning-PyTorch-EE4C2C?style=flat-square&logo=pytorch&logoColor=white) ![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=flat-square&logo=python&logoColor=white) ![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white) ![React](https://img.shields.io/badge/React_18-61DAFB?style=flat-square&logo=react&logoColor=black) ![Tailwind](https://img.shields.io/badge/Tailwind_3.4-38B2AC?style=flat-square&logo=tailwindcss&logoColor=white) ![DeepFace](https://img.shields.io/badge/DeepFace-SFace-blueviolet?style=flat-square)
 
-**[⚡ Live Demo ↗](https://krishujeniya.github.io/Hajree)** • **[📁 GitHub Repository ↗](https://github.com/krishujeniya/Hajree)** • **[🏛️ Architecture Flow ↗](https://github.com/krishujeniya/Hajri.ai#architecture)**
+**[⚡ Live Frontend ↗](https://krishujeniya.github.io/Hajree/)** • **[📁 GitHub Repository ↗](https://github.com/krishujeniya/Hajree)** • **[🏛️ Architecture Flow ↗](https://github.com/krishujeniya/Hajree#architecture)**
 
 </td>
 </tr>
 </table>
 
-<!-- CARD 7: SNAPTEXT-OCR -->
+<!-- CARD 9: RESOLVEHELM -->
 <table width="100%">
 <tr>
 <td>
 
-###  [SnapText ↗](https://krishujeniya.github.io/snaptext-ocr)
+### ⚖️ [ResolveHelm ↗](https://github.com/krishujeniya/resolvehelm)
+
+[![AI Support Automation](https://img.shields.io/badge/AI_Agent-Support_Automation-blueviolet?style=flat-square)](https://github.com/krishujeniya/resolvehelm) [![CI Passing](https://img.shields.io/badge/CI-Passing-brightgreen?style=flat-square&logo=githubactions)](https://github.com/krishujeniya/resolvehelm/actions) [![License MIT](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)](https://opensource.org/licenses/MIT)
+
+**Policy-Aware AI Customer Support Automation.** Autonomous support triage and resolution platform built with FastAPI, Supabase, and Pydantic AI. Enforces deterministic business rules, defends against adversarial prompt injection, parses raw RFC-2822 emails, and provides an administrative React console.
+
+`🤖 Pydantic AI Tool Calling` · `🔒 Adversarial Injection Defense` · `📧 RFC-2822 Mail Parser` · `📊 React Admin Console`
+
+![Python](https://img.shields.io/badge/Python-3.13-3776AB?style=flat-square&logo=python&logoColor=white) ![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white) ![Pydantic AI](https://img.shields.io/badge/Pydantic_AI-Agent_Framework-E92063?style=flat-square) ![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL-3ECF8E?style=flat-square&logo=supabase&logoColor=white) ![React](https://img.shields.io/badge/React_18-61DAFB?style=flat-square&logo=react&logoColor=black)
+
+**[📁 GitHub Repository ↗](https://github.com/krishujeniya/resolvehelm)** • **[🛡️ Safety Architecture ↗](https://github.com/krishujeniya/resolvehelm#key-features)** • **[🧪 Golden Benchmark ↗](https://github.com/krishujeniya/resolvehelm#golden-evaluation-benchmark)**
+
+</td>
+</tr>
+</table>
+
+<!-- CARD 10: SPARKWA -->
+<table width="100%">
+<tr>
+<td>
+
+### ⚡ [SparkWA ↗](https://github.com/krishujeniya/sparkwa)
+
+[![Go Systems Programming](https://img.shields.io/badge/Go-1.23+-00ADD8?style=flat-square&logo=go&logoColor=white)](https://golang.org) [![Docs GitHub Pages](https://img.shields.io/badge/Docs-GitHub_Pages-222222?style=flat-square&logo=github&logoColor=white)](https://krishujeniya.github.io/sparkwa/) [![License MIT](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](https://github.com/krishujeniya/sparkwa/blob/main/LICENSE)
+
+**Headless WhatsApp to Google Gemini Spark Bridge.** Lightweight daemon connecting a WhatsApp phone number to Google Gemini Spark via Gmail in pure Go. Operates as a single native binary using ~30 MB RAM without external runtime dependencies, featuring an interactive terminal user interface (TUI).
+
+`⚡ Single Native Binary` · `📱 Headless WhatsApp Bridge` · `🧠 Google Gemini Integration` · `🖥️ Black &amp; White TUI`
+
+![Go](https://img.shields.io/badge/Go-1.23+-00ADD8?style=flat-square&logo=go&logoColor=white) ![Gemini](https://img.shields.io/badge/Google_Gemini-Spark-4285F4?style=flat-square&logo=google&logoColor=white) ![Gmail API](https://img.shields.io/badge/Gmail-Bridge-EA4335?style=flat-square&logo=gmail&logoColor=white) ![Linux](https://img.shields.io/badge/Linux-Systemd_Daemon-FCC624?style=flat-square&logo=linux&logoColor=black)
+
+**[📚 Documentation Site ↗](https://krishujeniya.github.io/sparkwa/)** • **[📁 GitHub Repository ↗](https://github.com/krishujeniya/sparkwa)** • **[💻 Architecture Guide ↗](https://github.com/krishujeniya/sparkwa#architecture)**
+
+</td>
+</tr>
+</table>
+
+<!-- CARD 11: SNAPTEXT-OCR -->
+<table width="100%">
+<tr>
+<td>
+
+### 📱 [SnapText ↗](https://github.com/krishujeniya/snaptext-ocr)
 
 [![Mobile App On-Device OCR](https://img.shields.io/badge/Mobile_App-On--Device_OCR-blue?style=flat-square)](https://github.com/krishujeniya/snaptext-ocr) [![Flutter](https://img.shields.io/badge/Flutter-Cross--Platform-02569B?style=flat-square&logo=flutter&logoColor=white)](https://github.com/krishujeniya/snaptext-ocr) [![License MIT](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](https://github.com/krishujeniya/snaptext-ocr/blob/main/LICENSE)
 
@@ -193,12 +297,32 @@ Working production implementations across multi-agent workflows, healthcare spee
 
 ![Flutter](https://img.shields.io/badge/Flutter-3.x-02569B?style=flat-square&logo=flutter&logoColor=white) ![Dart](https://img.shields.io/badge/Dart-0175C2?style=flat-square&logo=dart&logoColor=white) ![Google ML Kit](https://img.shields.io/badge/Google_ML_Kit-4285F4?style=flat-square&logo=google&logoColor=white)
 
-**[📚 Documentation Site ↗](https://krishujeniya.github.io/snaptext-ocr/)** • **[📁 GitHub Repository ↗](https://github.com/krishujeniya/snaptext-ocr)** • **[✨ Feature Matrix ↗](https://github.com/krishujeniya/snaptext-ocr#features)**
+**[📁 GitHub Repository ↗](https://github.com/krishujeniya/snaptext-ocr)** • **[✨ Feature Matrix ↗](https://github.com/krishujeniya/snaptext-ocr#features)**
 
 </td>
 </tr>
 </table>
 
+<!-- CARD 12: NETSWEEP -->
+<table width="100%">
+<tr>
+<td>
+
+### 🌐 [NetSweep ↗](https://github.com/krishujeniya/NetSweep)
+
+[![SecOps Network Recon](https://img.shields.io/badge/SecOps-Network_Recon-black?style=flat-square)](https://github.com/krishujeniya/NetSweep) [![CI Passing](https://img.shields.io/badge/CI-Passing-brightgreen?style=flat-square&logo=githubactions)](https://github.com/krishujeniya/NetSweep/actions) [![License MIT](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](https://github.com/krishujeniya/NetSweep/blob/main/LICENSE)
+
+**Automated Network Reconnaissance Tool.** High-speed Bash orchestration script wrapping Nmap for network host discovery, port audits, service versioning, and operating system detection. Exports cleanly formatted, timestamped logs for penetration testing audits.
+
+`🔍 Automated Port Auditing` · `🛡️ Service &amp; OS Fingerprinting` · `📜 Structured Audit Artifacts`
+
+![Bash](https://img.shields.io/badge/Bash-4EAA25?style=flat-square&logo=gnubash&logoColor=white) ![Nmap](https://img.shields.io/badge/Nmap-Network_Scanner-blue?style=flat-square) ![Linux](https://img.shields.io/badge/Linux-FCC624?style=flat-square&logo=linux&logoColor=black)
+
+**[📁 GitHub Repository ↗](https://github.com/krishujeniya/NetSweep)** • **[🛠️ Quickstart ↗](https://github.com/krishujeniya/NetSweep#usage)**
+
+</td>
+</tr>
+</table>
 
 ---
 
@@ -279,8 +403,8 @@ Flutter Cross-Platform Development · Dart · Next.js 15 App Router · React 19 
 <td>
 
 - 📈 **[Salary of Data Professions Dataset ↗](https://huggingface.co/datasets/krishujeniya/Salary_of_Data_Professions)**: Global compensation benchmark on Hugging Face tracking salary distributions, experience levels, and skills across data science, machine learning, and analytics roles.
-- 🧬 **[SaYoPillow Physiological Sleep Stress Classification ↗](https://github.com/krishujeniya/stress-level-prediction)**: 5-class sleep biosignal classifier analyzing physiological indicators (respiration rate, body temperature, limb movement) with SHAP feature attribution.
-- 💊 **[Clinical Drug Efficacy Prediction ↗](https://github.com/krishujeniya/drug-effectiveness-prediction)**: Supervised machine learning model estimating therapeutic response and patient drug efficacy from clinical test indicators.
+- 🧬 **[Somnostasis Autonomic Biosignal Intelligence ↗](https://github.com/krishujeniya/somnostasis)**: Nocturnal polysomnography biosignal stress prediction and MLOps platform analyzing physiological indicators (respiration rate, body temperature, limb movement) with TreeSHAP feature attribution and real-time drift monitoring.
+- 💊 **[Curavex Clinical Treatment Response Platform ↗](https://github.com/krishujeniya/curavex)**: Supervised clinical pharmacology model predicting patient drug efficacy, therapeutic response, and safety profiles from clinical test indicators.
 - 🏃 **[Sensor-Based Human Activity Recognition (HAR) ↗](https://github.com/krishujeniya/fitness-activity-recognition)**: Multi-class classification pipeline identifying physical movement patterns using accelerometer and gyroscope sensor telemetry.
 - 🧪 **[Interactive Spaces on Hugging Face ↗](https://huggingface.co/krishujeniya/spaces)**: Live web demos and interactive machine learning models hosted on Hugging Face Spaces.
 - 🏆 **[Kaggle Notebooks &amp; Datasets ↗](https://www.kaggle.com/krishujeniya/datasets)**: Reproducible data science notebooks, exploratory data analysis, and feature engineering benchmarks.
