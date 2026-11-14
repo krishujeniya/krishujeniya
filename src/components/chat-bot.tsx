@@ -399,7 +399,7 @@ function ChatMsg({ msg, isTyping = false }: { msg: { id: number; from: 'bot' | '
                 <div
                     className={`chatbot-msg-bubble ${msg.from === 'bot' ? 'chatbot-msg-bubble-bot' : 'chatbot-msg-bubble-user'} whitespace-pre-wrap`}
                 >
-                    {msg.text.split(/(\*\*.*?\*\*)/s).map((part, index) =>
+                    {msg.text.split(/(\*\*[\s\S]*?\*\*)/).map((part, index) =>
                         part.startsWith('**') && part.endsWith('**')
                             ? <strong key={index}>{part.slice(2, -2)}</strong>
                             : part
