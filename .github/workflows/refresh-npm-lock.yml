@@ -18,7 +18,9 @@ jobs:
           node-version: '22'
           cache: 'npm'
       - name: Pin patched PostCSS release within the current framework range
-        run: npm pkg set 'overrides.postcss=^8.5.23'
+        run: |
+          npm pkg set 'devDependencies.postcss=^8.5.23'
+          npm pkg set 'overrides.postcss=^8.5.23'
       - name: Refresh lockfile within declared version ranges
         run: npm audit fix --package-lock-only --ignore-scripts
       - name: Verify lockfile installation
