@@ -228,7 +228,7 @@ export default function Portfolio() {
                             <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 w-full sm:w-auto pt-4">
                                 <button 
                                     onClick={() => { scrollTo('projects'); setActiveSection('projects'); }}
-                                    aria-label="Explore my work and case studies"
+                                    aria-label="Explore Work and view my case studies"
                                     className="group w-full sm:w-auto flex items-center justify-center gap-4 bg-white text-black px-12 py-5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] transition-all duration-500 shadow-2xl shadow-white/5"
                                 >
                                     Explore Work <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform" aria-hidden="true">explore</span>
@@ -237,7 +237,7 @@ export default function Portfolio() {
                                     href={portfolioData.profile.socials.calendar}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    aria-label="Book a consultation call on Google Calendar"
+                                    aria-label="Book a Call on Google Calendar"
                                     className="w-full sm:w-auto flex items-center justify-center gap-4 bg-white/5 backdrop-blur-md border border-white/10 px-12 py-5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] hover:bg-white/10 hover:border-white/20 transition-all duration-500"
                                 >
                                     Book a Call <span className="material-symbols-outlined" aria-hidden="true">calendar_today</span>
@@ -377,7 +377,6 @@ export default function Portfolio() {
                                             setSelectedProject(project);
                                         }
                                     }}
-                                    aria-label={`View details for ${project.title}`}
                                 >
                                     <div className="aspect-[4/5] relative overflow-hidden rounded-[32px] bg-[#111]">
                                         <Image
@@ -432,7 +431,7 @@ export default function Portfolio() {
                                     
                                     <button 
                                         onClick={() => setExpandedFolder(expandedFolder === i ? null : i)}
-                                        aria-label={expandedFolder === i ? `Collapse ${folder.name}` : `View documents in ${folder.name}`}
+                                        aria-label={expandedFolder === i ? `Collapse ${folder.name}` : `View Docs in ${folder.name}`}
                                         aria-expanded={expandedFolder === i}
                                         aria-controls={`documents-folder-${i}`}
                                         className="flex items-center justify-between w-full py-4 border-t border-white/5 text-[10px] font-black uppercase tracking-[0.2em] text-white hover:text-[#A1A1A1] transition-colors"
@@ -459,7 +458,6 @@ export default function Portfolio() {
                                                     href={`${DOCS_BASE_URL}/${folder.path}/${file.name.split('/').map(segment => encodeURIComponent(segment)).join('/')}`}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
-                                                    aria-label={`Open ${file.name}`}
                                                     tabIndex={expandedFolder === i ? 0 : -1}
                                                     className="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-all group/file w-full min-w-0"
                                                 >
@@ -923,7 +921,7 @@ export default function Portfolio() {
                                     <a 
                                         href={selectedProject.link} 
                                         target="_blank" 
-                                        aria-label={`View ${selectedProject.title} ${selectedProject.linkType === 'repo' ? 'repository' : 'space'}`}
+                                        aria-label={`${selectedProject.linkType === 'repo' ? 'View Repository' : 'View Space'} for ${selectedProject.title}`}
                                         className="flex-grow flex items-center justify-between bg-white text-black px-8 py-5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] hover:bg-[#474747] hover:text-white transition-all duration-500"
                                     >
                                         {selectedProject.linkType === 'repo' ? 'View Repository' : 'View Space'} <span className="material-symbols-outlined" aria-hidden="true">arrow_outward</span>

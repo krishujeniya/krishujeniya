@@ -248,6 +248,10 @@
   color: #707070 !important;
 }
 
+#contact [role="group"] button[aria-pressed="false"] {
+  color: #6b6b6b !important;
+}
+
 #contact input::placeholder,
 #contact textarea::placeholder {
   color: #707070 !important;

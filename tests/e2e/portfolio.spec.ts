@@ -27,8 +27,8 @@ test('chat treats visitor input as text and supports Escape', async ({ page }) =
 
 test('document expander exposes the last MLOps link', async ({ page }) => {
   await page.goto('./');
-  await page.getByRole('button', { name: 'View documents in MLOps' }).click();
-  await expect(page.getByRole('link', { name: 'Open DSA/Searching_Sorting_002.pdf' })).toBeVisible();
+  await page.getByRole('button', { name: 'View Docs in MLOps' }).click();
+  await expect(page.getByRole('link', { name: /Searching_Sorting_002\.pdf/ })).toBeVisible();
 });
 
 test('project dialog restores focus to its opener', async ({ page }) => {
@@ -115,7 +115,7 @@ test('portfolio page has no WCAG 2.2 A or AA violations', async ({ page }) => {
   };
 
   await scan();
-  await page.getByRole('button', { name: 'View documents in Certificates' }).click();
+  await page.getByRole('button', { name: 'View Docs in Certificates' }).click();
   await expect(page.locator('#documents-folder-0')).toBeVisible();
   await scan();
   await page.getByRole('button', { name: 'Toggle AI chat' }).click();
