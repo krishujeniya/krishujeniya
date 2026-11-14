@@ -21,13 +21,27 @@ jobs:
         run: |
           npm pkg set 'devDependencies.postcss=^8.5.23'
           npm pkg set 'overrides.postcss=^8.5.23'
+          node - <<'NODE'
+          const fs = require('node:fs');
+          const path = 'package.json';
+          const pkg = JSON.parse(fs.readFileSync(path, 'utf8'));
+          pkg.devDependencies = {
+            ...pkg.devDependencies,
+            '@axe-core/playwright': '4.14.0',
+            '@playwright/test': '1.65.0',
+            eslint: '8.57.1',
+            'eslint-config-next': '15.5.29',
+          };
+          fs.writeFileSync(path, `${JSON.stringify(pkg, null, 2)}\n`);
+          NODE
       - name: Refresh lockfile within declared version ranges
         run: npm audit fix --package-lock-only --ignore-scripts
       - name: Verify lockfile installation
         run: npm ci --ignore-scripts
       - name: Capture dependency audit
-        run: npm audit --json > npm-audit.json || true
+        run: npm audit --audit-level=low --json > npm-audit.json
       - name: Upload lockfile and audit report
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: npm-lock-refresh
