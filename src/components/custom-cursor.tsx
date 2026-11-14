@@ -11,9 +11,8 @@ export const CustomCursor = () => {
     useEffect(() => {
         // Continuous detection for hybrid devices
         const hoverMedia = window.matchMedia('(hover: hover) and (pointer: fine)');
-        const checkCapabilities = () => setIsHidden(!hoverMedia.matches);
-        checkCapabilities();
-        hoverMedia.addEventListener('change', checkCapabilities);
+        const motionMedia = window.matchMedia('(prefers-reduced-motion: reduce)');
+        setIsHidden(!hoverMedia.matches);
 
         if (!ringRef.current || !dotRef.current) return;
 
@@ -31,59 +30,89 @@ export const CustomCursor = () => {
         let mouseX = -100, mouseY = -100;
 
         // Lerp ticker for ring (spring-like follow)
-        const ticker = gsap.ticker.add(() => {
+        const updateRing = () => {
             ringX += (mouseX - ringX) * 0.18;
             ringY += (mouseY - ringY) * 0.18;
             setRingX(ringX);
             setRingY(ringY);
-        });
+        };
+
+        let tickerActive = false;
+        const syncTicker = () => {
+            setIsHidden(!hoverMedia.matches);
+            if (hoverMedia.matches && !motionMedia.matches && !tickerActive) {
+                gsap.ticker.add(updateRing);
+                tickerActive = true;
+            } else if ((!hoverMedia.matches || motionMedia.matches) && tickerActive) {
+                gsap.ticker.remove(updateRing);
+                tickerActive = false;
+            }
+        };
 
         const onPointerMove = (e: PointerEvent) => {
-            if (e.pointerType === 'touch') return;
+            if (!hoverMedia.matches || e.pointerType === 'touch') return;
             mouseX = e.clientX;
             mouseY = e.clientY;
             // Dot follows instantly
             setDotX(e.clientX);
             setDotY(e.clientY);
+            if (motionMedia.matches) {
+                setRingX(e.clientX);
+                setRingY(e.clientY);
+                ringX = e.clientX;
+                ringY = e.clientY;
+            }
             setIsHidden(false);
         };
 
         const onPointerOver = (e: PointerEvent) => {
-            if (e.pointerType === 'touch') return;
+            if (!hoverMedia.matches || e.pointerType === 'touch') return;
             const target = e.target as HTMLElement;
             if (target.closest('a, button, input, textarea, [role="button"], .cursor-pointer')) {
-                gsap.to(ring, { width: 48, height: 48, borderColor: 'rgba(255,255,255,0.8)', duration: 0.2, ease: 'power2.out' });
-                gsap.to(dot, { width: 8, height: 8, backgroundColor: '#ffffff', duration: 0.15, ease: 'power2.out' });
+                if (motionMedia.matches) {
+                    gsap.set(ring, { width: 48, height: 48, borderColor: 'rgba(255,255,255,0.8)' });
+                    gsap.set(dot, { width: 8, height: 8, backgroundColor: '#ffffff' });
+                } else {
+                    gsap.to(ring, { width: 48, height: 48, borderColor: 'rgba(255,255,255,0.8)', duration: 0.2, ease: 'power2.out' });
+                    gsap.to(dot, { width: 8, height: 8, backgroundColor: '#ffffff', duration: 0.15, ease: 'power2.out' });
+                }
             }
         };
 
         const onPointerOut = (e: PointerEvent) => {
-            if (e.pointerType === 'touch') return;
+            if (!hoverMedia.matches || e.pointerType === 'touch') return;
             const target = e.target as HTMLElement;
             if (target.closest('a, button, input, textarea, [role="button"], .cursor-pointer')) {
-                gsap.to(ring, { width: 32, height: 32, borderColor: 'rgba(255,255,255,0.4)', duration: 0.2, ease: 'power2.out' });
-                gsap.to(dot, { width: 5, height: 5, backgroundColor: 'rgba(255,255,255,0.9)', duration: 0.15, ease: 'power2.out' });
+                if (motionMedia.matches) {
+                    gsap.set(ring, { width: 32, height: 32, borderColor: 'rgba(255,255,255,0.4)' });
+                    gsap.set(dot, { width: 5, height: 5, backgroundColor: 'rgba(255,255,255,0.9)' });
+                } else {
+                    gsap.to(ring, { width: 32, height: 32, borderColor: 'rgba(255,255,255,0.4)', duration: 0.2, ease: 'power2.out' });
+                    gsap.to(dot, { width: 5, height: 5, backgroundColor: 'rgba(255,255,255,0.9)', duration: 0.15, ease: 'power2.out' });
+                }
             }
         };
 
         const onMouseLeave = () => setIsHidden(true);
 
+        syncTicker();
+        hoverMedia.addEventListener('change', syncTicker);
+        motionMedia.addEventListener('change', syncTicker);
         window.addEventListener('pointermove', onPointerMove, { passive: true });
         window.addEventListener('pointerover', onPointerOver, { passive: true });
         window.addEventListener('pointerout', onPointerOut, { passive: true });
         document.addEventListener('mouseleave', onMouseLeave);
 
         return () => {
-            gsap.ticker.remove(ticker);
+            if (tickerActive) gsap.ticker.remove(updateRing);
             window.removeEventListener('pointermove', onPointerMove);
             window.removeEventListener('pointerover', onPointerOver);
             window.removeEventListener('pointerout', onPointerOut);
             document.removeEventListener('mouseleave', onMouseLeave);
-            hoverMedia.removeEventListener('change', checkCapabilities);
+            hoverMedia.removeEventListener('change', syncTicker);
+            motionMedia.removeEventListener('change', syncTicker);
         };
     }, []);
-
-    if (isHidden) return null;
 
     return (
         <>
@@ -91,13 +120,15 @@ export const CustomCursor = () => {
             <div
                 ref={ringRef}
                 className="custom-cursor-ring"
-                style={{ width: 32, height: 32, borderColor: 'rgba(255,255,255,0.4)' }}
+                aria-hidden="true"
+                style={{ width: 32, height: 32, borderColor: 'rgba(255,255,255,0.4)', visibility: isHidden ? 'hidden' : 'visible' }}
             />
             {/* Inner dot */}
             <div
                 ref={dotRef}
                 className="custom-cursor-dot"
-                style={{ width: 5, height: 5, backgroundColor: 'rgba(255,255,255,0.9)' }}
+                aria-hidden="true"
+                style={{ width: 5, height: 5, backgroundColor: 'rgba(255,255,255,0.9)', visibility: isHidden ? 'hidden' : 'visible' }}
             />
         </>
     );

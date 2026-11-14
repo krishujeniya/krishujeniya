@@ -274,7 +274,7 @@ export const portfolioData = {
       files: [
         { name: 'Overview_Cloud.pdf', type: 'PDF' },
         { name: 'Intro_Cloud_Computing.pdf', type: 'PDF' },
-        { name: 'Cloud_Security_and_Compliance.pdf', type: 'PDF' },
+        { name: 'Cloud_Security_and_Compilance.pdf', type: 'PDF' },
         { name: 'Cloud_Storage_and_Database_Services.pdf', type: 'PDF' },
         { name: 'Data_Center_Architecture.pdf', type: 'PDF' },
         { name: 'Emerging_Technologies_with_Cloud_Computing.pdf', type: 'PDF' },

@@ -64,6 +64,7 @@ export default function Portfolio() {
         );
         const firstEl = focusableEls[0];
         const lastEl = focusableEls[focusableEls.length - 1];
+        const previouslyFocused = document.activeElement instanceof HTMLElement ? document.activeElement : null;
         const focusTimer = setTimeout(() => firstEl?.focus(), 50);
 
         const handleKeyDown = (e: KeyboardEvent) => {
@@ -80,6 +81,7 @@ export default function Portfolio() {
             document.body.style.overflow = 'unset';
             clearTimeout(focusTimer);
             window.removeEventListener('keydown', handleKeyDown);
+            previouslyFocused?.focus();
         };
     }, [selectedProject]);
 
@@ -114,13 +116,26 @@ export default function Portfolio() {
         getActiveSection();
 
         window.addEventListener('scroll', handleScroll, { passive: true });
-        return () => window.removeEventListener('scroll', handleScroll);
+        const handlePopState = () => {
+            const requestedSection = window.location.hash.slice(1) || 'home';
+            const sectionId = SECTIONS.includes(requestedSection) ? requestedSection : 'home';
+            document.getElementById(sectionId)?.scrollIntoView();
+            setActiveSection(sectionId);
+        };
+        window.addEventListener('popstate', handlePopState);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            window.removeEventListener('popstate', handlePopState);
+        };
     }, []);
 
     const scrollTo = (id: string) => {
         const el = document.getElementById(id);
         if (el) {
+            if (window.location.hash !== `#${id}`) window.history.pushState({ section: id }, '', `#${id}`);
             el.scrollIntoView();
+            el.setAttribute('tabindex', '-1');
+            el.focus({ preventScroll: true });
             setActiveSection(id);
         }
     };
@@ -128,6 +143,7 @@ export default function Portfolio() {
     return (
         <div className="min-h-screen bg-[#050505] text-[#FAFAFA] font-body selection:bg-[#474747] selection:text-white">
 
+            <a className="skip-link" href="#main-content">Skip to main content</a>
             <nav className={`fixed top-0 left-0 w-full z-[100] transition-all duration-500 ${scrolled ? 'bg-black/95 backdrop-blur-xl py-4 border-b border-white/5 rounded-b-[32px] sm:rounded-b-[40px]' : 'py-6'}`}>
                 <div className="max-w-[1440px] mx-auto px-6 md:px-12 flex items-center justify-between gap-4">
                     <div className="flex items-center gap-8 overflow-hidden">
@@ -137,7 +153,12 @@ export default function Portfolio() {
                             onClick={() => scrollTo('home')}
                             role="button"
                             tabIndex={0}
-                            onKeyDown={(e) => e.key === 'Enter' && scrollTo('home')}
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter' || e.key === ' ') {
+                                    e.preventDefault();
+                                    scrollTo('home');
+                                }
+                            }}
                         >
                             <span className="sm:hidden">
                                 {activeSection === 'home' ? (
@@ -182,7 +203,7 @@ export default function Portfolio() {
             </nav>
 
 
-            <div className="flex flex-col">
+            <main id="main-content" tabIndex={-1} className="flex flex-col">
                 <section id="home" className="relative min-h-screen flex flex-col justify-center px-6 md:px-12 pt-32 md:pt-20">
                     <div className="max-w-[1440px] mx-auto w-full">
                         <div className="flex flex-col items-start gap-6 md:gap-8">
@@ -242,8 +263,6 @@ export default function Portfolio() {
                                         fill
                                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 384px, 384px"
                                         className="object-cover"
-                                        priority
-                                        fetchPriority="high"
                                     />
                                 </div>
                             </div>
@@ -352,7 +371,12 @@ export default function Portfolio() {
                                     onClick={() => setSelectedProject(project)}
                                     role="button"
                                     tabIndex={0}
-                                    onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && setSelectedProject(project)}
+                                    onKeyDown={(e) => {
+                                        if (e.key === 'Enter' || e.key === ' ') {
+                                            e.preventDefault();
+                                            setSelectedProject(project);
+                                        }
+                                    }}
                                     aria-label={`View details for ${project.title}`}
                                 >
                                     <div className="aspect-[4/5] relative overflow-hidden rounded-[32px] bg-[#111]">
@@ -362,9 +386,8 @@ export default function Portfolio() {
                                             fill
                                             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                                              className="object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100"
-                                            priority={i < 3}
-                                            loading={i >= 3 ? 'lazy' : undefined}
-                                            decoding={i >= 3 ? 'async' : undefined}
+                                            loading="lazy"
+                                            decoding="async"
                                         />
                                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-8">
                                             <div className="flex flex-col gap-2">
@@ -409,7 +432,9 @@ export default function Portfolio() {
                                     
                                     <button 
                                         onClick={() => setExpandedFolder(expandedFolder === i ? null : i)}
-                                        aria-label={expandedFolder === i ? `Collapse ${folder.name}` : `Expand ${folder.name}`}
+                                        aria-label={expandedFolder === i ? `Collapse ${folder.name}` : `View documents in ${folder.name}`}
+                                        aria-expanded={expandedFolder === i}
+                                        aria-controls={`documents-folder-${i}`}
                                         className="flex items-center justify-between w-full py-4 border-t border-white/5 text-[10px] font-black uppercase tracking-[0.2em] text-white hover:text-[#A1A1A1] transition-colors"
                                     >
                                         <span>{expandedFolder === i ? 'Collapse' : 'View Docs'}</span>
@@ -419,9 +444,10 @@ export default function Portfolio() {
                                     </button>
 
                                     <div
+                                        id={`documents-folder-${i}`}
                                         className="overflow-hidden transition-all duration-500"
                                         style={{
-                                            maxHeight: expandedFolder === i ? '800px' : '0px',
+                                            maxHeight: expandedFolder === i ? '2000px' : '0px',
                                             opacity: expandedFolder === i ? 1 : 0,
                                         }}
                                         aria-hidden={expandedFolder !== i}
@@ -514,7 +540,7 @@ export default function Portfolio() {
                             </div>
 
                             <div className="lg:col-span-6">
-                                        <form className="flex flex-col gap-8" onSubmit={async (e) => {
+                                        <form action="https://krishujeniya-backend.vercel.app/api/webDATA" method="post" className="flex flex-col gap-8" onSubmit={async (e) => {
                                             e.preventDefault();
                                             if (isSent || isSubmitting) return;
                                             
@@ -541,14 +567,12 @@ export default function Portfolio() {
                                             if (!name || !email || !message || !role || !budget || !timeline || !discoverySource || !preferredContactMethod) {
                                                 setErrorMessage('Please fill in all required fields.');
                                                 setIsError(true);
-                                                setTimeout(() => setIsError(false), 5000);
                                                 return;
                                             }
 
                                             if (!emailRegex.test(email)) {
                                                 setErrorMessage('Please enter a valid email address.');
                                                 setIsError(true);
-                                                setTimeout(() => setIsError(false), 5000);
                                                 return;
                                             }
 
@@ -597,7 +621,6 @@ export default function Portfolio() {
                                                 console.error('Submission error:', error);
                                                 setErrorMessage(error.message || 'Failed to send — email directly.');
                                                 setIsError(true);
-                                                setTimeout(() => setIsError(false), 5000);
                                             } finally {
                                                 setIsSubmitting(false);
                                             }
@@ -616,24 +639,24 @@ export default function Portfolio() {
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                                                 <div className="flex flex-col gap-3">
                                                     <label htmlFor="form-name" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Name</label>
-                                                    <input id="form-name" name="name" type="text" placeholder="YOUR NAME" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all placeholder:text-[#999999]/30" />
+                                                    <input id="form-name" name="name" type="text" autoComplete="name" placeholder="YOUR NAME" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all placeholder:text-[#999999]/30" />
                                                 </div>
                                                 <div className="flex flex-col gap-3">
                                                     <label htmlFor="form-email" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Email</label>
-                                                    <input id="form-email" name="email" type="email" placeholder="YOUR EMAIL" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all placeholder:text-[#999999]/30" />
+                                                    <input id="form-email" name="email" type="email" autoComplete="email" placeholder="YOUR EMAIL" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all placeholder:text-[#999999]/30" />
                                                 </div>
                                             </div>
 
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                                                 <div className="flex flex-col gap-3">
                                                     <label htmlFor="form-company" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Company / Organization</label>
-                                                    <input id="form-company" name="company" type="text" placeholder="COMPANY NAME" className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all placeholder:text-[#999999]/30" />
+                                                    <input id="form-company" name="company" type="text" autoComplete="organization" placeholder="COMPANY NAME" className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all placeholder:text-[#999999]/30" />
                                                 </div>
                                                 <div className="flex flex-col gap-3">
                                                     <label htmlFor="form-role" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Your Role</label>
                                                     <div className="relative">
-                                                        <select id="form-role" name="role" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all appearance-none cursor-pointer">
-                                                            <option value="" disabled selected>SELECT YOUR ROLE</option>
+                                                        <select id="form-role" name="role" defaultValue="" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all appearance-none cursor-pointer">
+                                                            <option value="" disabled>SELECT YOUR ROLE</option>
                                                             {["Founder / Co-founder", "CTO / VP Engineering", "Engineering Lead / Manager", "Product Manager", "Data / ML Team Lead", "Individual / Freelancer", "Other"].map(role => (
                                                                 <option key={role} value={role}>{role.toUpperCase()}</option>
                                                             ))}
@@ -647,13 +670,14 @@ export default function Portfolio() {
 
                                             {/* Group 2: Project Info */}
                                             <div className="flex flex-col gap-4">
-                                                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Service Interested In</label>
-                                                <div className="flex flex-wrap gap-2">
+                                                <label id="form-services-label" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Service Interested In</label>
+                                                <div className="flex flex-wrap gap-2" role="group" aria-labelledby="form-services-label">
                                                     {["Enterprise RAG", "Agentic AI", "MLOps Architecture", "ML Consulting", "Not Sure Yet"].map(service => (
                                                         <button
                                                             key={service}
                                                             type="button"
                                                             onClick={() => toggleService(service)}
+                                                            aria-pressed={selectedServices.includes(service)}
                                                             className={`text-[9px] font-black uppercase tracking-[0.1em] px-4 py-2 rounded-full border transition-all ${
                                                                 selectedServices.includes(service)
                                                                 ? 'bg-black text-white border-black'
@@ -667,13 +691,14 @@ export default function Portfolio() {
                                             </div>
 
                                             <div className="flex flex-col gap-4">
-                                                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Project Stage</label>
-                                                <div className="flex flex-wrap gap-2">
+                                                <label id="form-stages-label" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Project Stage</label>
+                                                <div className="flex flex-wrap gap-2" role="group" aria-labelledby="form-stages-label">
                                                     {["Greenfield Build", "Improve Existing System", "Proof of Concept", "Just Exploring"].map(stage => (
                                                         <button
                                                             key={stage}
                                                             type="button"
                                                             onClick={() => toggleStage(stage)}
+                                                            aria-pressed={selectedStages.includes(stage)}
                                                             className={`text-[9px] font-black uppercase tracking-[0.1em] px-4 py-2 rounded-full border transition-all ${
                                                                 selectedStages.includes(stage)
                                                                 ? 'bg-black text-white border-black'
@@ -697,8 +722,8 @@ export default function Portfolio() {
                                                 <div className="flex flex-col gap-3">
                                                     <label htmlFor="form-budget" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Budget Range</label>
                                                     <div className="relative">
-                                                        <select id="form-budget" name="budget" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all appearance-none cursor-pointer">
-                                                            <option value="" disabled selected>SELECT BUDGET</option>
+                                                        <select id="form-budget" name="budget" defaultValue="" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all appearance-none cursor-pointer">
+                                                            <option value="" disabled>SELECT BUDGET</option>
                                                             {["Under $5,000", "$5,000–$15,000", "$15,000–$30,000", "$30,000+", "Let's Discuss"].map(budget => (
                                                                 <option key={budget} value={budget}>{budget.toUpperCase()}</option>
                                                             ))}
@@ -711,8 +736,8 @@ export default function Portfolio() {
                                                 <div className="flex flex-col gap-3">
                                                     <label htmlFor="form-timeline" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Desired Timeline</label>
                                                     <div className="relative">
-                                                        <select id="form-timeline" name="timeline" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all appearance-none cursor-pointer">
-                                                            <option value="" disabled selected>SELECT TIMELINE</option>
+                                                        <select id="form-timeline" name="timeline" defaultValue="" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all appearance-none cursor-pointer">
+                                                            <option value="" disabled>SELECT TIMELINE</option>
                                                             {["ASAP (within 2 weeks)", "1–3 months", "3–6 months", "Flexible", "No hard deadline"].map(timeline => (
                                                                 <option key={timeline} value={timeline}>{timeline.toUpperCase()}</option>
                                                             ))}
@@ -728,8 +753,8 @@ export default function Portfolio() {
                                                 <div className="flex flex-col gap-3">
                                                     <label htmlFor="form-source" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">How Did You Find Me</label>
                                                     <div className="relative">
-                                                        <select id="form-source" name="discoverySource" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all appearance-none cursor-pointer">
-                                                            <option value="" disabled selected>SELECT SOURCE</option>
+                                                        <select id="form-source" name="discoverySource" defaultValue="" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all appearance-none cursor-pointer">
+                                                            <option value="" disabled>SELECT SOURCE</option>
                                                             {["LinkedIn", "GitHub", "Google Search", "Hugging Face", "Personal Referral", "Medium", "Other"].map(source => (
                                                                 <option key={source} value={source}>{source.toUpperCase()}</option>
                                                             ))}
@@ -742,8 +767,8 @@ export default function Portfolio() {
                                                 <div className="flex flex-col gap-3">
                                                     <label htmlFor="form-contact-method" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Preferred Contact Method</label>
                                                     <div className="relative">
-                                                        <select id="form-contact-method" name="contactMethod" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all appearance-none cursor-pointer">
-                                                            <option value="" disabled selected>SELECT METHOD</option>
+                                                        <select id="form-contact-method" name="contactMethod" defaultValue="" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all appearance-none cursor-pointer">
+                                                            <option value="" disabled>SELECT METHOD</option>
                                                             {["Email", "Schedule a Call", "WhatsApp", "No Preference"].map(method => (
                                                                 <option key={method} value={method}>{method.toUpperCase()}</option>
                                                             ))}
@@ -760,7 +785,7 @@ export default function Portfolio() {
                                                 <textarea id="form-message" name="message" rows={4} placeholder="TELL ME ABOUT YOUR PROJECT" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all placeholder:text-[#999999]/30 resize-none" />
                                             </div>
                                             {isSent ? (
-                                                <div className="w-full flex items-center justify-center gap-4 bg-green-500/10 text-green-500 py-8 rounded-full text-sm font-black uppercase tracking-[0.3em] border border-green-500/20 mt-8 animate-[fadeScaleIn_0.4s_ease_forwards]">
+                                                <div role="status" aria-live="polite" className="w-full flex items-center justify-center gap-4 bg-green-500/10 text-green-500 py-8 rounded-full text-sm font-black uppercase tracking-[0.3em] border border-green-500/20 mt-8 animate-[fadeScaleIn_0.4s_ease_forwards]">
                                                     Inquiry Sent! <Sparkles size={18} aria-hidden="true" />
                                                 </div>
                                             ) : (
@@ -768,7 +793,7 @@ export default function Portfolio() {
                                                     <button 
                                                         type="submit"
                                                         disabled={isSubmitting}
-                                                        aria-label="Send inquiry via webhook"
+                                                        aria-label="Send inquiry"
                                                         className="w-full flex items-center justify-center gap-4 bg-black text-white py-8 rounded-full text-sm font-black uppercase tracking-[0.3em] hover:bg-black/80 hover:scale-[0.98] transition-all duration-500 mt-8 disabled:opacity-50 disabled:cursor-not-allowed"
                                                     >
                                                         {isSubmitting ? 'Sending…' : 'SEND INQUIRY'} <ChevronRight size={18} aria-hidden="true" />
@@ -786,7 +811,7 @@ export default function Portfolio() {
                         </div>
                     </div>
                 </section>
-            </div>
+            </main>
 
             <footer className="py-24 px-6 md:px-12 border-t border-white/5 bg-[#0A0A0A]">
                 <div className="max-w-[1440px] mx-auto flex flex-col items-center gap-12 sm:gap-16">
@@ -816,7 +841,7 @@ export default function Portfolio() {
 
                     <button 
                         onClick={() => scrollTo('home')}
-                        aria-label="Back to home"
+                        aria-label="Back to top"
                         className={`group flex flex-col items-center gap-4 text-[11px] font-black uppercase tracking-[0.3em] text-[#A1A1A1] hover:text-white transition-all duration-300 ${scrolled ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
                     >
                         <span className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:border-white/30 transition-all bg-white/5">

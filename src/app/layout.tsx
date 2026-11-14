@@ -65,7 +65,7 @@ export const metadata: Metadata = {
     description: 'Krish Ujeniya – AI Researcher, Data Scientist, and Freelance AI Engineer. Specializing in LLMs, deep learning, RAG pipelines, and autonomous AI agents for global clients.',
     images: [{
       url: '/krishujeniya/images/krish-ujeniya-ai-researcher-data-scientist.webp',
-      width: 1200, height: 630,
+      width: 1440, height: 1440,
       alt: 'Krish Ujeniya – AI Researcher, Data Scientist & AI Freelancer'
     }],
   },
@@ -87,15 +87,14 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className="dark">
       <head>
-        {/* Referrer-Policy and Permissions-Policy work via meta; X-Frame-Options and X-Content-Type-Options require HTTP response headers (not settable on GitHub Pages) */}
-        <meta httpEquiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
-        <meta httpEquiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()" />
+        {/* Additional security policies require response headers unavailable on this GitHub Pages site. */}
+        <meta name="referrer" content="strict-origin-when-cross-origin" />
         <link rel="preconnect" href="https://github.com" />
         <link rel="preconnect" href="https://raw.githubusercontent.com" />
         <link rel="preconnect" href="https://storage.googleapis.com" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
         <script
           type="application/ld+json"

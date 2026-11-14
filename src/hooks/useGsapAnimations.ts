@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -59,15 +59,13 @@ function revealOnScroll(
 }
 
 export function useGsapAnimations() {
-  const initialized = useRef(false);
-
   useEffect(() => {
-    if (initialized.current) return;
-    initialized.current = true;
+    let context: gsap.Context | undefined;
+    const refreshOnLoad = () => ScrollTrigger.refresh();
 
     // Give React one frame to finish painting before querying DOM
     const raf = requestAnimationFrame(() => {
-      const ctx = gsap.context(() => {
+      context = gsap.context(() => {
         const mm = gsap.matchMedia();
 
         mm.add(
@@ -205,16 +203,14 @@ export function useGsapAnimations() {
         );
 
         // Refresh after fonts / images load
-        window.addEventListener('load', () => ScrollTrigger.refresh(), { once: true });
+        window.addEventListener('load', refreshOnLoad, { once: true });
       });
-
-      return () => {
-        ctx.revert();
-      };
     });
 
     return () => {
       cancelAnimationFrame(raf);
+      window.removeEventListener('load', refreshOnLoad);
+      context?.revert();
     };
   }, []);
 }

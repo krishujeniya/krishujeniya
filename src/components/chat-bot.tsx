@@ -113,9 +113,10 @@ const knowledgeBase: KnowledgeEntry[] = [
 
 const getAIResponse = (userMessage: string): string => {
     const rawMsg = userMessage.toLowerCase().trim();
-    const words = rawMsg.split(/\s+/);
+    const normalizedMsg = rawMsg.replace(/[^a-z0-9]+/g, ' ').trim();
+    const words = normalizedMsg.split(/\s+/);
 
-    const negations = ['no', 'not', "don't", 'dont', 'stop', 'quit', 'never'];
+    const negations = ['no', 'not', 'don t', 'dont', 'stop', 'quit', 'never'];
     const isNegated = negations.some(n => words.includes(n));
 
     let bestMatch: KnowledgeEntry | null = null;
@@ -124,7 +125,9 @@ const getAIResponse = (userMessage: string): string => {
     for (const entry of knowledgeBase) {
         let score = 0;
         for (const keyword of entry.keywords) {
-            if (rawMsg.includes(keyword)) {
+            const normalizedKeyword = keyword.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+            const matchesKeyword = ` ${normalizedMsg} `.includes(` ${normalizedKeyword} `);
+            if (matchesKeyword) {
                 const keywordWeight = keyword.split(' ').length;
                 score += keywordWeight * 10;
             }
@@ -183,10 +186,29 @@ export const ChatBot = () => {
         if (chatOpen) inputRef.current?.focus();
     }, [chatOpen]);
 
+    useEffect(() => {
+        if (!chatOpen) return;
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === 'Escape') {
+                setChatOpen(false);
+            }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+            toggleRef.current?.focus();
+        };
+    }, [chatOpen]);
+
     // Animate chat window open/close
     useEffect(() => {
         const win = windowRef.current;
         if (!win) return;
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (reduceMotion) {
+            gsap.set(win, { display: chatOpen ? 'flex' : 'none', opacity: 1, scale: 1, y: 0 });
+            return;
+        }
         if (chatOpen) {
             gsap.set(win, { display: 'flex' });
             gsap.fromTo(win,
@@ -206,14 +228,15 @@ export const ChatBot = () => {
         const close = closeIconRef.current;
         const open = openIconRef.current;
         if (!close || !open) return;
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         if (chatOpen) {
             gsap.set(open, { display: 'none' });
-            gsap.set(close, { display: 'flex', rotate: -90, opacity: 0 });
-            gsap.to(close, { rotate: 0, opacity: 1, duration: 0.2, ease: 'power2.out' });
+            gsap.set(close, { display: 'flex', rotate: reduceMotion ? 0 : -90, opacity: reduceMotion ? 1 : 0 });
+            if (!reduceMotion) gsap.to(close, { rotate: 0, opacity: 1, duration: 0.2, ease: 'power2.out' });
         } else {
             gsap.set(close, { display: 'none' });
-            gsap.set(open, { display: 'flex', rotate: 90, opacity: 0 });
-            gsap.to(open, { rotate: 0, opacity: 1, duration: 0.2, ease: 'power2.out' });
+            gsap.set(open, { display: 'flex', rotate: reduceMotion ? 0 : 90, opacity: reduceMotion ? 1 : 0 });
+            if (!reduceMotion) gsap.to(open, { rotate: 0, opacity: 1, duration: 0.2, ease: 'power2.out' });
         }
     }, [chatOpen]);
 
@@ -352,7 +375,7 @@ function ChatMsg({ msg, isTyping = false }: { msg: { id: number; from: 'bot' | '
     const ref = useRef<HTMLDivElement>(null);
 
     useGSAP(() => {
-        if (ref.current) {
+        if (ref.current && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
             gsap.from(ref.current, { opacity: 0, y: 10, duration: 0.3, ease: 'power2.out' });
         }
     }, []);
@@ -374,10 +397,13 @@ function ChatMsg({ msg, isTyping = false }: { msg: { id: number; from: 'bot' | '
             ) : (
                 <div
                     className={`chatbot-msg-bubble ${msg.from === 'bot' ? 'chatbot-msg-bubble-bot' : 'chatbot-msg-bubble-user'} whitespace-pre-wrap`}
-                    dangerouslySetInnerHTML={{
-                        __html: msg.text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                    }}
-                />
+                >
+                    {msg.text.split(/(\*\*.*?\*\*)/s).map((part, index) =>
+                        part.startsWith('**') && part.endsWith('**')
+                            ? <strong key={index}>{part.slice(2, -2)}</strong>
+                            : part
+                    )}
+                </div>
             )}
         </div>
     );

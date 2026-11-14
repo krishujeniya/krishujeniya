@@ -18,9 +18,9 @@
     },
     {
       "src": "/krishujeniya/images/img1120.webp",
-      "sizes": "512x512",
+      "sizes": "1000x918",
       "type": "image/webp",
-      "purpose": "maskable"
+      "purpose": "any"
     }
   ],
   "theme_color": "#000000",
