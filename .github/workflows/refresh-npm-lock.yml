@@ -32,6 +32,10 @@ jobs:
             eslint: '8.57.1',
             'eslint-config-next': '15.5.29',
           };
+          pkg.overrides = {
+            ...pkg.overrides,
+            '@typescript-eslint/typescript-estree': { minimatch: '11.0.8' },
+          };
           fs.writeFileSync(path, `${JSON.stringify(pkg, null, 2)}\n`);
           NODE
       - name: Refresh lockfile within declared version ranges
