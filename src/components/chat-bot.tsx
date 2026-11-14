@@ -172,6 +172,7 @@ export const ChatBot = () => {
     const closeIconRef = useRef<HTMLDivElement>(null);
     const openIconRef = useRef<HTMLDivElement>(null);
     const isMounted = useRef(true);
+    const previousChatOpenRef = useRef(false);
 
     useEffect(() => {
         isMounted.current = true;
@@ -181,10 +182,6 @@ export const ChatBot = () => {
     useEffect(() => {
         chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, [chatMessages, isTyping]);
-
-    useEffect(() => {
-        if (chatOpen) inputRef.current?.focus();
-    }, [chatOpen]);
 
     useEffect(() => {
         if (!chatOpen) return;
@@ -205,22 +202,30 @@ export const ChatBot = () => {
     useEffect(() => {
         const win = windowRef.current;
         if (!win) return;
+        const wasOpen = previousChatOpenRef.current;
+        previousChatOpenRef.current = chatOpen;
+        gsap.killTweensOf(win);
+
         const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         if (reduceMotion) {
             gsap.set(win, { display: chatOpen ? 'flex' : 'none', opacity: 1, scale: 1, y: 0 });
+            if (chatOpen) inputRef.current?.focus();
             return;
         }
         if (chatOpen) {
             gsap.set(win, { display: 'flex' });
+            inputRef.current?.focus();
             gsap.fromTo(win,
                 { opacity: 0, scale: 0.85, y: 20 },
                 { opacity: 1, scale: 1, y: 0, duration: 0.3, ease: 'power3.out' }
             );
-        } else {
+        } else if (wasOpen) {
             gsap.to(win, {
                 opacity: 0, scale: 0.85, y: 20, duration: 0.25, ease: 'power2.in',
                 onComplete: () => gsap.set(win, { display: 'none' }),
             });
+        } else {
+            gsap.set(win, { display: 'none', opacity: 0, scale: 0.85, y: 20 });
         }
     }, [chatOpen]);
 
