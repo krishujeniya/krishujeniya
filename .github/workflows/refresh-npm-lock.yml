@@ -17,16 +17,19 @@ jobs:
         with:
           node-version: '22'
           cache: 'npm'
+      - name: Pin patched PostCSS release within the current framework range
+        run: npm pkg set 'overrides.postcss=^8.5.23'
       - name: Refresh lockfile within declared version ranges
         run: npm audit fix --package-lock-only --ignore-scripts
       - name: Verify lockfile installation
         run: npm ci --ignore-scripts
       - name: Capture dependency audit
-        run: npm audit --omit=dev --json > npm-audit.json || true
+        run: npm audit --json > npm-audit.json || true
       - name: Upload lockfile and audit report
         uses: actions/upload-artifact@v4
         with:
           name: npm-lock-refresh
           path: |
+            package.json
             package-lock.json
             npm-audit.json
