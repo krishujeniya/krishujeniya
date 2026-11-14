@@ -193,10 +193,11 @@ export const ChatBot = () => {
                 setChatOpen(false);
             }
         };
+        const toggleButton = toggleRef.current;
         window.addEventListener('keydown', handleKeyDown);
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
-            toggleRef.current?.focus();
+            toggleButton?.focus();
         };
     }, [chatOpen]);
 

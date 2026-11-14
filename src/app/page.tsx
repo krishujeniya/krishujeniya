@@ -495,7 +495,7 @@ export default function Portfolio() {
                                     <Quote className="absolute top-10 right-10 text-white/5 w-20 h-20" />
                                     <div className="flex flex-col gap-10">
                                         <p className="text-2xl md:text-3xl font-bold tracking-tight text-white/90 leading-tight">
-                                            "{testimonial.content}"
+                                            &quot;{testimonial.content}&quot;
                                         </p>
                                         <div className="flex items-center gap-6">
                                             <div className="relative w-16 h-16 rounded-2xl overflow-hidden border border-white/10">
