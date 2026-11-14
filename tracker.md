@@ -134,19 +134,20 @@ Reviewed your [live site](https://krishujeniya.github.io/krishujeniya/), [fronte
 
 ## Upgrade execution — 2026-11-14 (in progress)
 
-These changes are present in the local `main` worktree and await GitHub Actions. No build, test suite, linter, dependency installation, or typecheck has run locally.
+Code changes and verification remain in progress. Builds, test suites, linters, typechecks, and dependency resolution run only in GitHub Actions; local verification has been limited to static inspection and `git diff --check`.
 
 ### Source changes made
 
-- **Fixed, pending Actions:** 1, 14–18, 20–34, 42, 49–51, 54, 57, 59, 61–64, 66.
-- **Partial:** 2 now submits with POST so form values are not placed in the URL when JavaScript is unavailable. The backend currently accepts JSON only, so no-JavaScript delivery is not yet verified. 55 now uses the supported referrer meta directive and removes the ineffective Permissions-Policy meta; response-header policies remain unavailable on this GitHub Pages host. 58 adds lint, production dependency audit, typecheck, build, and Playwright checks for chat safety/matching, keyboard focus, document expansion, and navigation. Actions is pending; automated accessibility scans remain outstanding.
-- The cloud document link now uses the repository's actual filename. The social image and manifest icon dimensions now match the source image files.
+- **Implemented; deployment Actions pending:** 1, 13–18, 20–34, 36, 42, 49–52, 54, 57, 59, 61–66. The 768–1023px service layout now has two columns, and service/stage choices reject contradictory combinations. CSS selectors confirmed unused by the current markup were removed. CI generates size-specific WebP assets from the portfolio's referenced images, and Playwright checks their generated URLs and files.
+- **Partial:** 2 submits with POST, avoiding query-string exposure if JavaScript fails, but the backend still needs URL-encoded form parsing. 55 now uses the supported referrer meta directive and removes the ineffective Permissions-Policy meta; response-header policies remain unavailable on GitHub Pages. 58 now runs Playwright regression cases and a WCAG 2.2 A/AA axe scan in deployment CI; the current scan result is pending.
+- The dependency refresh workflow completed on `ebccdc9` and reported zero npm advisories across production and development dependencies. It updated the lockfile, including patched Next/PostCSS releases and a scoped patched `minimatch`; the complete deployment workflow still needs to pass against the combined source revision.
+- The cloud document link now matches the repository filename. The social image and manifest icon dimensions match their source images.
 
 ### Still outstanding or requiring a scope decision
 
-- **Backend:** 3–11 and 60 are not yet changed. The source is in the separate private repository `krishujeniya/krishujeniya-backend`. Durable rate limiting, idempotency, and recovery require a persistent service that is not configured in the checked-out frontend or backend.
-- **Audit input:** 12 has no finding text in this tracker.
-- **Not confirmed in current source:** 13 and 65 describe selectors/layouts that are not present in the checked-out code; 48 cannot be enforced from a project-level GitHub Pages deployment because `/robots.txt` belongs to the domain root.
-- **Not addressed under the request to preserve existing behavior or content:** 19, 35–39, 40–41, 43–47. These require new fallback behavior, inquiry features, or visible copy/content changes.
-- **Still to inspect or verify:** 52–53, 56. Responsive image variants and replacing the Material Symbols font would change asset/rendering behavior; dependency audit results must come from Actions.
+- **Backend:** 3–11 and 60 remain open. The user identified Upstash Redis REST and reported that it is configured. The latest read-only Vercel production recheck still lists only `EMAIL_USER` and `EMAIL_PASS`, with no `UPSTASH_REDIS_REST_URL` or `UPSTASH_REDIS_REST_TOKEN`; hold backend deployment until the exact production project exposes the required names. No secret values were requested. The separate private source is `krishujeniya/krishujeniya-backend`.
+- **Audit input:** 12 is blank in the supplied tracker; there is no issue description to verify.
+- **Hosting limitation:** 48 cannot be fixed by a project-subpath GitHub Pages repo; `/robots.txt` belongs at the domain root.
+- **Preserve existing UI/content:** 19, 35, 37–41, 44–47, and 53 require new no-JavaScript flows, contact fields, visible copy, content edits, case-study pages, or icon substitutions. They remain untouched under the instruction to preserve UI/UX and content. #43 requires a durable backend path and remains open with the backend work.
+- **Pending assessment:** #52's generated variants and their transfer savings need Actions evidence; no generated image files are committed or rendered locally. #58's Axe results and browser checks remain pending.
 - No finding is marked release-verified until the corresponding GitHub Actions run passes against the final revision.

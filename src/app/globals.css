@@ -228,9 +228,16 @@
   background: rgba(255, 255, 255, 0.25);
 }
 /* Keep the existing inquiry styling while meeting text and control contrast. */
+#about .text-\[\#A1A1A1\],
+#about h2 span,
+#services .text-\[\#A1A1A1\],
+#services h2 span {
+  color: #707070 !important;
+}
+
 #contact label,
 #contact .text-\[\#999999\] {
-  color: #767676 !important;
+  color: #707070 !important;
 }
 
 #contact h2 span {
@@ -238,12 +245,12 @@
 }
 
 #contact .text-\[\#A1A1A1\] {
-  color: #767676 !important;
+  color: #707070 !important;
 }
 
 #contact input::placeholder,
 #contact textarea::placeholder {
-  color: #767676 !important;
+  color: #707070 !important;
   opacity: 1;
 }
 
@@ -367,7 +374,7 @@
   align-items: center;
   gap: 0.3rem;
   font-size: 0.65rem;
-  color: rgba(255, 255, 255, 0.35);
+  color: rgba(255, 255, 255, 0.75);
 }
 
 .chatbot-status-dot {
@@ -399,7 +406,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgba(255, 255, 255, 0.35);
+  color: rgba(255, 255, 255, 0.75);
   cursor: pointer;
   transition: all 0.2s;
   flex-shrink: 0;
@@ -489,7 +496,7 @@
 .chatbot-input {
   flex: 1;
   background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.4);
   border-radius: 8px;
   padding: 0.5rem 0.75rem;
   font-size: 0.75rem;
@@ -501,7 +508,7 @@
 }
 
 .chatbot-input::placeholder {
-  color: rgba(255, 255, 255, 0.22);
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .chatbot-input:focus {
@@ -581,74 +588,6 @@
   }
 }
 
-/* ============================================
-   RESPONSIVE FINE-TUNING
-   ============================================ */
-
-@media (max-width: 640px) {
-  .hero-title {
-    font-size: clamp(1.8rem, 9vw, 3rem);
-  }
-
-  .hero-cta-group {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .btn-primary,
-  .btn-outline {
-    width: 100%;
-    max-width: 280px;
-    justify-content: center;
-    padding: 0.7rem 1.5rem;
-    font-size: 0.82rem;
-  }
-
-  .section-title {
-    font-size: clamp(1.5rem, 6vw, 2rem);
-    padding: 0 0.5rem;
-  }
-
-  .section-subtitle {
-    font-size: 0.82rem;
-    margin-bottom: 2rem;
-  }
-
-  .portfolio-card-content {
-    padding: 1rem;
-  }
-
-  .portfolio-card-title {
-    font-size: 0.95rem;
-  }
-}
-
-/* Tablet adjustments */
-@media (min-width: 641px) and (max-width: 1024px) {
-  .hero-title {
-    font-size: clamp(2.5rem, 6vw, 4.5rem);
-  }
-
-  .section-title {
-    font-size: clamp(1.75rem, 4.5vw, 2.5rem);
-  }
-}
-
-/* Large desktop */
-@media (min-width: 1440px) {
-  .hero-title {
-    font-size: 6.5rem;
-  }
-
-  .section-title {
-    font-size: 3.5rem;
-  }
-
-  .expertise-grid,
-  .portfolio-grid {
-    gap: 2rem;
-  }
-}
 /* Hide scrollbar for Chrome, Safari and Opera */
 .no-scrollbar::-webkit-scrollbar {
   display: none;

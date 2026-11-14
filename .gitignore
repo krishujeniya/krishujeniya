@@ -11,6 +11,7 @@
 # next.js
 /.next/
 /out/
+/public/images/responsive/
 
 # production
 /build

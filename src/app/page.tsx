@@ -39,15 +39,15 @@ export default function Portfolio() {
     const [selectedStages, setSelectedStages] = useState<string[]>([]);
 
     const toggleService = (service: string) => {
-        setSelectedServices(prev => 
-            prev.includes(service) ? prev.filter(s => s !== service) : [...prev, service]
-        );
+        setSelectedServices(prev => {
+            if (prev.includes(service)) return prev.filter(selected => selected !== service);
+            if (service === 'Not Sure Yet') return [service];
+            return [...prev.filter(selected => selected !== 'Not Sure Yet'), service];
+        });
     };
 
     const toggleStage = (stage: string) => {
-        setSelectedStages(prev => 
-            prev.includes(stage) ? prev.filter(s => s !== stage) : [...prev, stage]
-        );
+        setSelectedStages(prev => prev.includes(stage) ? [] : [stage]);
     };
 
     // Modal: scroll lock + focus trap + keyboard handling
@@ -328,7 +328,7 @@ export default function Portfolio() {
                             <h2 className="text-[clamp(3rem,8vw,8rem)] font-black tracking-tighter uppercase leading-none">Core <br /><span className="text-[#A1A1A1]">Services</span></h2>
                         </div>
 
-                        <div className="grid md:grid-cols-3 gap-8">
+                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                             {portfolioData.services.map((service, i) => (
                                 <div 
                                     key={i}
@@ -359,7 +359,7 @@ export default function Portfolio() {
                 <section id="projects" className="py-24 px-6 md:px-12 bg-[#0A0A0A]">
                     <div className="max-w-[1440px] mx-auto">
                         <div className="flex flex-col items-start gap-4 mb-24">
-                            <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40">/ Catalog</span>
+                            <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white/70">/ Catalog</span>
                             <h2 className="text-[clamp(3rem,8vw,8rem)] font-black tracking-tighter uppercase leading-none">Selected <br />Case Studies</h2>
                         </div>
 
@@ -391,7 +391,7 @@ export default function Portfolio() {
                                         />
                                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-8">
                                             <div className="flex flex-col gap-2">
-                                                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/50">{project.category}</span>
+                                                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/80">{project.category}</span>
                                                 <h3 className="text-2xl font-black uppercase leading-[1.1] text-white">{project.title}</h3>
                                             </div>
                                         </div>
@@ -467,7 +467,7 @@ export default function Portfolio() {
                                                         <File size={14} className="text-white/40 shrink-0" aria-hidden="true" />
                                                         <span className="text-[11px] font-bold text-[#A1A1A1] group-hover/file:text-white truncate">{file.name.split('/').pop()}</span>
                                                     </div>
-                                                    <span className="text-[9px] font-black uppercase text-white/40 ml-2 shrink-0">{file.type}</span>
+                                                    <span className="text-[9px] font-black uppercase text-white/70 ml-2 shrink-0">{file.type}</span>
                                                 </a>
                                             ))}
                                         </div>

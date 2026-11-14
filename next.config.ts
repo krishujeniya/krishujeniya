@@ -6,7 +6,10 @@ const nextConfig: NextConfig = {
   assetPrefix: '/krishujeniya/',
   trailingSlash: true,
   images: {
-    unoptimized: true,
+    loader: 'custom',
+    loaderFile: './src/lib/responsiveImageLoader.ts',
+    deviceSizes: [320, 480, 640, 800],
+    imageSizes: [64, 128, 256],
     remotePatterns: [
       { protocol: 'https', hostname: 'raw.githubusercontent.com' },
       { protocol: 'https', hostname: 'github.com' },
