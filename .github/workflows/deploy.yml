@@ -3,6 +3,20 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: ["main"]
+    paths:
+      - "src/**"
+      - "public/**"
+      - "Docs/**"
+      - "assets/**"
+      - "package.json"
+      - "package-lock.json"
+      - "playwright.config.ts"
+      - "tests/**"
+      - "scripts/**"
+      - "next.config.ts"
+      - "postcss.config.*"
+      - "tailwind.config.*"
+      - "tsconfig.json"
   workflow_dispatch:
 
 permissions:
