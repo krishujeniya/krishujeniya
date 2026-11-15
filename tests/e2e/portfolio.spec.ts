@@ -4,6 +4,16 @@ import AxeBuilder from '@axe-core/playwright';
 const portfolioUrl = 'http://127.0.0.1:4173/krishujeniya/';
 
 test.beforeEach(({ page }) => {
+  page.on('requestfailed', request => {
+    if (request.url().includes('/_next/static/chunks/')) {
+      console.error(`[Obscura chunk request failed] ${request.url()} (${request.failure()?.errorText ?? 'unknown'})`);
+    }
+  });
+  page.on('response', response => {
+    if (response.url().includes('/_next/static/chunks/') && response.status() >= 400) {
+      console.error(`[Obscura chunk response] ${response.status()} ${response.url()}`);
+    }
+  });
   page.on('console', message => {
     if (message.type() === 'error') console.error(`[Obscura console error] ${message.text()}`);
   });
