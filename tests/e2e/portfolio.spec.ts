@@ -1,6 +1,12 @@
 import { expect, test } from './fixtures';
 import AxeBuilder from '@axe-core/playwright';
 
+test.beforeEach(({ page }) => {
+  page.on('pageerror', error => {
+    console.error(`[Obscura page error] ${error.stack ?? error.message}`);
+  });
+});
+
 test('chat treats visitor input as text and supports Escape', async ({ page }) => {
   await page.goto('./');
   const toggle = page.getByRole('button', { name: 'Toggle AI chat' });
@@ -93,14 +99,25 @@ test('service headings fit at tablet widths', async ({ page }) => {
     const grid = page.locator('#services .grid').last();
     const expectedColumns = width === 768 ? 2 : 3;
     const layout = await grid.evaluate(element => {
-      const firstRowTop = element.children[0]?.getBoundingClientRect().top;
-      const actualColumns = [...element.children].filter(child =>
-        Math.abs(child.getBoundingClientRect().top - (firstRowTop ?? 0)) < 1
-      ).length;
-      return { viewportWidth: window.innerWidth, actualColumns };
+      const leftPositions = [...new Set([...element.children].map(child =>
+        Math.round(child.getBoundingClientRect().left)
+      ))];
+      return {
+        viewportWidth: window.innerWidth,
+        tabletBreakpoint: window.matchMedia('(min-width: 768px)').matches,
+        desktopBreakpoint: window.matchMedia('(min-width: 1024px)').matches,
+        gridTemplateColumns: getComputedStyle(element).gridTemplateColumns,
+        leftPositions,
+      };
+    });
+    await test.info().attach(`service-layout-${width}.json`, {
+      body: JSON.stringify(layout, null, 2),
+      contentType: 'application/json',
     });
     expect(layout.viewportWidth).toBe(width);
-    expect(layout.actualColumns).toBe(expectedColumns);
+    expect(layout.tabletBreakpoint).toBe(true);
+    expect(layout.desktopBreakpoint).toBe(width >= 1024);
+    expect(layout.leftPositions).toHaveLength(expectedColumns);
 
     const headings = grid.locator('h3');
     await expect(headings.first()).toBeVisible();
