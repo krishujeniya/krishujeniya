@@ -135,6 +135,18 @@ test('contact retries reuse an idempotency key only while the inquiry stays unch
   await submit.click();
   await expect.poll(() => submissions.length).toBe(1);
   await expect(contact.getByRole('alert')).toBeVisible();
+  const savedRetry = await page.evaluate(() => sessionStorage.getItem('portfolio-contact-submission'));
+  expect(savedRetry).not.toContain('An inquiry that can be retried.');
+  expect(savedRetry).not.toContain('taylor@example.com');
+  await page.reload();
+  await contact.locator('#form-name').fill('Taylor Example');
+  await contact.locator('#form-email').fill('taylor@example.com');
+  await contact.locator('#form-role').selectOption('Other');
+  await contact.locator('#form-budget').selectOption("Let's Discuss");
+  await contact.locator('#form-timeline').selectOption('Flexible');
+  await contact.locator('#form-source').selectOption('GitHub');
+  await contact.locator('#form-contact-method').selectOption('Email');
+  await message.fill('An inquiry that can be retried.');
   await submit.click();
   await expect.poll(() => submissions.length).toBe(2);
   await expect(contact.getByRole('alert')).toBeVisible();
@@ -142,6 +154,7 @@ test('contact retries reuse an idempotency key only while the inquiry stays unch
   await submit.click();
   await expect.poll(() => submissions.length).toBe(3);
   await expect(contact.getByRole('status')).toContainText('Inquiry Sent!');
+  await expect.poll(() => page.evaluate(() => sessionStorage.getItem('portfolio-contact-submission'))).toBeNull();
 
   expect(submissions).toHaveLength(3);
   expect(submissions[0].submissionId).toMatch(/^[0-9a-f-]{36}$/);

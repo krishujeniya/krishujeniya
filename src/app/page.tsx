@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useGsapAnimations } from '@/hooks/useGsapAnimations';
 import Image from 'next/image';
 
@@ -24,6 +24,42 @@ import {
 
 
 const DOCS_BASE_URL = 'https://github.com/krishujeniya/krishujeniya/raw/main/Docs';
+const CONTACT_SUBMISSION_STORAGE_KEY = 'portfolio-contact-submission';
+
+const createSubmissionId = () => {
+    if (typeof crypto.randomUUID === 'function') return crypto.randomUUID();
+    const bytes = crypto.getRandomValues(new Uint8Array(16));
+    bytes[6] = (bytes[6] & 0x0f) | 0x40;
+    bytes[8] = (bytes[8] & 0x3f) | 0x80;
+    const hex = Array.from(bytes, byte => byte.toString(16).padStart(2, '0')).join('');
+    return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`;
+};
+
+const getSubmissionFingerprint = async (payload: string) => {
+    try {
+        const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(payload));
+        return Array.from(new Uint8Array(digest), byte => byte.toString(16).padStart(2, '0')).join('');
+    } catch {
+        return null;
+    }
+};
+
+const getStoredSubmissionId = (fingerprint: string) => {
+    try {
+        const stored = JSON.parse(sessionStorage.getItem(CONTACT_SUBMISSION_STORAGE_KEY) || 'null');
+        return stored?.fingerprint === fingerprint && typeof stored.id === 'string' ? stored.id : null;
+    } catch {
+        return null;
+    }
+};
+
+const storeSubmissionId = (fingerprint: string, id: string) => {
+    try {
+        sessionStorage.setItem(CONTACT_SUBMISSION_STORAGE_KEY, JSON.stringify({ fingerprint, id }));
+    } catch {
+        // The in-memory id still deduplicates retries when session storage is unavailable.
+    }
+};
 
 export default function Portfolio() {
     useGsapAnimations();
@@ -37,6 +73,7 @@ export default function Portfolio() {
     const [errorMessage, setErrorMessage] = useState('Failed to send — email directly.');
     const [selectedServices, setSelectedServices] = useState<string[]>([]);
     const [selectedStages, setSelectedStages] = useState<string[]>([]);
+    const submissionKeyRef = useRef<{ fingerprint: string; id: string } | null>(null);
 
     const toggleService = (service: string) => {
         setSelectedServices(prev => {
@@ -577,30 +614,50 @@ export default function Portfolio() {
                                             setIsSubmitting(true);
                                             setIsError(false);
 
+                                            const submission = {
+                                                name,
+                                                email,
+                                                company,
+                                                role,
+                                                services: selectedServices,
+                                                stage: selectedStages,
+                                                techStack,
+                                                budget,
+                                                timeline,
+                                                discoverySource,
+                                                preferredContactMethod,
+                                                message,
+                                                honeypot: honeypot || "",
+                                            };
+                                            const fingerprint = JSON.stringify(submission);
+
                                             const API_URL = process.env.NEXT_PUBLIC_VERCEL_API_URL || 'https://krishujeniya-backend.vercel.app/api/webDATA';
 
                                             try {
+                                                const fingerprintHash = await getSubmissionFingerprint(fingerprint);
+                                                const existingId = submissionKeyRef.current?.fingerprint === fingerprint
+                                                    ? submissionKeyRef.current.id
+                                                    : fingerprintHash ? getStoredSubmissionId(fingerprintHash) : null;
+                                                const submissionId = existingId || createSubmissionId();
+                                                submissionKeyRef.current = { fingerprint, id: submissionId };
+                                                if (fingerprintHash) storeSubmissionId(fingerprintHash, submissionId);
+
                                                 const response = await fetch(API_URL, {
                                                     method: 'POST',
                                                     headers: { 'Content-Type': 'application/json' },
                                                     body: JSON.stringify({
-                                                        name,
-                                                        email,
-                                                        company,
-                                                        role,
-                                                        services: selectedServices,
-                                                        stage: selectedStages,
-                                                        techStack,
-                                                        budget,
-                                                        timeline,
-                                                        discoverySource,
-                                                        preferredContactMethod,
-                                                        message,
-                                                        honeypot: honeypot || ""
+                                                        ...submission,
+                                                        submissionId,
                                                     }),
                                                 });
 
                                                 if (response.ok) {
+                                                    submissionKeyRef.current = null;
+                                                    try {
+                                                        sessionStorage.removeItem(CONTACT_SUBMISSION_STORAGE_KEY);
+                                                    } catch {
+                                                        // Storage cleanup is best-effort after a successful submission.
+                                                    }
                                                     setIsSent(true);
                                                     form.reset();
                                                     setSelectedServices([]);
