@@ -127,6 +127,7 @@ test('contact retries reuse an idempotency key only while the inquiry stays unch
     await route.fulfill({
       status,
       contentType: 'application/json',
+      headers: { 'access-control-allow-origin': new URL(portfolioUrl).origin },
       body: JSON.stringify(status === 200 ? { status: 'success' } : { detail: 'temporarily unavailable' }),
     });
   });
