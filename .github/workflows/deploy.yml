@@ -66,6 +66,8 @@ jobs:
           chmod +x "$install_dir/obscura" "$install_dir/obscura-worker"
           echo "$install_dir" >> "$GITHUB_PATH"
       - name: Start Obscura headless engine
+        env:
+          OBSCURA_ALLOW_PRIVATE_NETWORK: "1"
         run: |
           obscura serve --port 9222 --allow-private-network > "$RUNNER_TEMP/obscura.log" 2>&1 &
           for attempt in {1..40}; do
