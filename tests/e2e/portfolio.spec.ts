@@ -107,6 +107,48 @@ test('service and stage choices reject contradictory selections', async ({ page 
   await expect(improve).toHaveAttribute('aria-pressed', 'true');
 });
 
+test('contact retries reuse an idempotency key only while the inquiry stays unchanged', async ({ page }) => {
+  const submissions: Array<{ submissionId?: string; message?: string }> = [];
+  await page.route('**/api/webDATA', async route => {
+    submissions.push(route.request().postDataJSON());
+    const status = submissions.length < 3 ? 503 : 200;
+    await route.fulfill({
+      status,
+      contentType: 'application/json',
+      body: JSON.stringify(status === 200 ? { status: 'success' } : { detail: 'temporarily unavailable' }),
+    });
+  });
+
+  await page.goto(portfolioUrl);
+  const contact = page.locator('#contact');
+  await contact.locator('#form-name').fill('Taylor Example');
+  await contact.locator('#form-email').fill('taylor@example.com');
+  await contact.locator('#form-role').selectOption('Other');
+  await contact.locator('#form-budget').selectOption("Let's Discuss");
+  await contact.locator('#form-timeline').selectOption('Flexible');
+  await contact.locator('#form-source').selectOption('GitHub');
+  await contact.locator('#form-contact-method').selectOption('Email');
+  const message = contact.locator('#form-message');
+  await message.fill('An inquiry that can be retried.');
+  const submit = contact.getByRole('button', { name: 'Send inquiry' });
+
+  await submit.click();
+  await expect.poll(() => submissions.length).toBe(1);
+  await expect(contact.getByRole('alert')).toBeVisible();
+  await submit.click();
+  await expect.poll(() => submissions.length).toBe(2);
+  await expect(contact.getByRole('alert')).toBeVisible();
+  await message.fill('A changed inquiry gets a new key.');
+  await submit.click();
+  await expect.poll(() => submissions.length).toBe(3);
+  await expect(contact.getByRole('status')).toContainText('Inquiry Sent!');
+
+  expect(submissions).toHaveLength(3);
+  expect(submissions[0].submissionId).toMatch(/^[0-9a-f-]{36}$/);
+  expect(submissions[1].submissionId).toBe(submissions[0].submissionId);
+  expect(submissions[2].submissionId).not.toBe(submissions[1].submissionId);
+});
+
 test('service headings fit at tablet widths', async ({ page }) => {
   for (const width of [768, 1024]) {
     await page.setViewportSize({ width, height: 900 });
