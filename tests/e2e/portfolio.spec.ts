@@ -110,6 +110,18 @@ test('service and stage choices reject contradictory selections', async ({ page 
 test('contact retries reuse an idempotency key only while the inquiry stays unchanged', async ({ page }) => {
   const submissions: Array<{ submissionId?: string; message?: string }> = [];
   await page.route('**/api/webDATA', async route => {
+    if (route.request().method() === 'OPTIONS') {
+      await route.fulfill({
+        status: 204,
+        headers: {
+          'access-control-allow-origin': new URL(portfolioUrl).origin,
+          'access-control-allow-methods': 'POST',
+          'access-control-allow-headers': 'content-type',
+        },
+      });
+      return;
+    }
+
     submissions.push(route.request().postDataJSON());
     const status = submissions.length < 3 ? 503 : 200;
     await route.fulfill({
