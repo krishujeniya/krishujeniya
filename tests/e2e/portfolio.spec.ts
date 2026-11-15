@@ -2,6 +2,9 @@ import { expect, test } from './fixtures';
 import AxeBuilder from '@axe-core/playwright';
 
 test.beforeEach(({ page }) => {
+  page.on('console', message => {
+    if (message.type() === 'error') console.error(`[Obscura console error] ${message.text()}`);
+  });
   page.on('pageerror', error => {
     console.error(`[Obscura page error] ${error.stack ?? error.message}`);
   });
