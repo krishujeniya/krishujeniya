@@ -1,6 +1,8 @@
 import { expect, test } from './fixtures';
 import AxeBuilder from '@axe-core/playwright';
 
+const portfolioUrl = 'http://127.0.0.1:4173/krishujeniya/';
+
 test.beforeEach(({ page }) => {
   page.on('console', message => {
     if (message.type() === 'error') console.error(`[Obscura console error] ${message.text()}`);
@@ -11,7 +13,7 @@ test.beforeEach(({ page }) => {
 });
 
 test('chat treats visitor input as text and supports Escape', async ({ page }) => {
-  await page.goto('./');
+  await page.goto(portfolioUrl);
   const toggle = page.getByRole('button', { name: 'Toggle AI chat' });
   await toggle.click();
 
@@ -53,13 +55,13 @@ test('chat treats visitor input as text and supports Escape', async ({ page }) =
 });
 
 test('document expander exposes the last MLOps link', async ({ page }) => {
-  await page.goto('./');
+  await page.goto(portfolioUrl);
   await page.getByRole('button', { name: 'View Docs in MLOps' }).click();
   await expect(page.getByRole('link', { name: /Searching_Sorting_002\.pdf/ })).toBeVisible();
 });
 
 test('project dialog restores focus to its opener', async ({ page }) => {
-  await page.goto('./');
+  await page.goto(portfolioUrl);
   const project = page.locator('#projects').getByRole('button').first();
   await project.click();
   await expect(page.getByRole('dialog')).toBeVisible();
@@ -69,7 +71,7 @@ test('project dialog restores focus to its opener', async ({ page }) => {
 });
 
 test('section navigation updates history and moves focus to the destination', async ({ page }) => {
-  await page.goto('./');
+  await page.goto(portfolioUrl);
   await page.getByRole('link', { name: 'contact' }).click();
   await expect(page).toHaveURL(/#contact$/);
   await expect(page.locator('#contact')).toBeFocused();
@@ -78,7 +80,7 @@ test('section navigation updates history and moves focus to the destination', as
 });
 
 test('service and stage choices reject contradictory selections', async ({ page }) => {
-  await page.goto('./');
+  await page.goto(portfolioUrl);
   const contact = page.locator('#contact');
   const unsure = contact.getByRole('button', { name: 'Not Sure Yet' });
   const agentic = contact.getByRole('button', { name: 'Agentic AI' });
@@ -98,7 +100,7 @@ test('service and stage choices reject contradictory selections', async ({ page 
 test('service headings fit at tablet widths', async ({ page }) => {
   for (const width of [768, 1024]) {
     await page.setViewportSize({ width, height: 900 });
-    await page.goto('./');
+    await page.goto(portfolioUrl);
     const grid = page.locator('#services .grid').last();
     const expectedColumns = width === 768 ? 2 : 3;
     const layout = await grid.evaluate(element => {
@@ -132,7 +134,7 @@ test('service headings fit at tablet widths', async ({ page }) => {
 });
 
 test('responsive project image variants are served and smaller widths save bytes', async ({ page }) => {
-  await page.goto('./');
+  await page.goto(portfolioUrl);
   const image = page.locator('#projects img').first();
   const srcset = await image.getAttribute('srcset');
   expect(srcset).toContain('/krishujeniya/images/responsive/projects/amberclaw-320.webp 320w');
@@ -170,7 +172,7 @@ test('responsive project image variants are served and smaller widths save bytes
 
 test('portfolio page has no WCAG 2.2 A or AA violations', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
-  await page.goto('./');
+  await page.goto(portfolioUrl);
   const scan = async () => {
     const results = await new AxeBuilder({ page })
       .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
