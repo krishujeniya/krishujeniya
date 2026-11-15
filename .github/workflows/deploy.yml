@@ -50,15 +50,39 @@ jobs:
         run: npm run typecheck
       - name: Build
         run: npm run build
-      - name: Install Playwright browser
-        run: npx playwright install --with-deps chromium
-      - name: Browser checks
+      - name: Install Obscura headless engine
+        env:
+          OBSCURA_VERSION: v0.2.7
+          OBSCURA_SHA256: 11b53d27cd743e00e196e216920e7f3f794cf378e3f1792b8d25d3beabaf9cad
+        run: |
+          archive="$RUNNER_TEMP/obscura-x86_64-linux.tar.gz"
+          install_dir="$RUNNER_TEMP/obscura"
+          curl --fail --location --silent --show-error \
+            "https://github.com/h4ckf0r0day/obscura/releases/download/${OBSCURA_VERSION}/obscura-x86_64-linux.tar.gz" \
+            --output "$archive"
+          echo "$OBSCURA_SHA256  $archive" | sha256sum --check
+          mkdir -p "$install_dir"
+          tar -xzf "$archive" -C "$install_dir"
+          chmod +x "$install_dir/obscura" "$install_dir/obscura-worker"
+          echo "$install_dir" >> "$GITHUB_PATH"
+      - name: Start Obscura headless engine
+        run: |
+          obscura serve --port 9222 --allow-private-network > "$RUNNER_TEMP/obscura.log" 2>&1 &
+          for attempt in {1..40}; do
+            if curl --fail --silent http://127.0.0.1:9222/json/version > /dev/null; then
+              exit 0
+            fi
+            sleep 0.5
+          done
+          cat "$RUNNER_TEMP/obscura.log"
+          exit 1
+      - name: Browser checks through Obscura
         run: npm run test:e2e
       - name: Upload browser report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-report
+          name: obscura-browser-report
           path: playwright-report
           if-no-files-found: ignore
       - name: Upload artifact

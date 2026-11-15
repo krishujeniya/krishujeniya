@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures';
 import AxeBuilder from '@axe-core/playwright';
 
 test('chat treats visitor input as text and supports Escape', async ({ page }) => {
@@ -88,19 +88,40 @@ test('service headings fit at tablet widths', async ({ page }) => {
   }
 });
 
-test('responsive project image variants are generated and served', async ({ page }) => {
+test('responsive project image variants are served and smaller widths save bytes', async ({ page }) => {
   await page.goto('./');
   const image = page.locator('#projects img').first();
   const srcset = await image.getAttribute('srcset');
   expect(srcset).toContain('/krishujeniya/images/responsive/projects/amberclaw-320.webp 320w');
   expect(srcset).toContain('/krishujeniya/images/responsive/projects/amberclaw-800.webp 800w');
+  const source = await page.evaluate(async () => {
+    const response = await fetch('/krishujeniya/images/projects/amberclaw.webp');
+    return { status: response.status, bytes: (await response.arrayBuffer()).byteLength };
+  });
+  expect(source.status).toBe(200);
+  const measurements: Array<{ width: number; sourceBytes: number; variantBytes: number }> = [];
 
   for (const width of [320, 480, 640, 800]) {
-    const response = await page.request.get(
-      new URL(`/krishujeniya/images/responsive/projects/amberclaw-${width}.webp`, page.url()).toString(),
-    );
-    expect(response.ok()).toBe(true);
-    expect(response.headers()['content-type']).toContain('image/webp');
+    const variant = await page.evaluate(async (imageWidth) => {
+      const response = await fetch(`/krishujeniya/images/responsive/projects/amberclaw-${imageWidth}.webp`);
+      return {
+        status: response.status,
+        type: response.headers.get('content-type'),
+        bytes: (await response.arrayBuffer()).byteLength,
+      };
+    }, width);
+    expect(variant.status).toBe(200);
+    expect(variant.type).toContain('image/webp');
+    measurements.push({ width, sourceBytes: source.bytes, variantBytes: variant.bytes });
+  }
+
+  await test.info().attach('responsive-image-byte-measurements.json', {
+    body: JSON.stringify(measurements, null, 2),
+    contentType: 'application/json',
+  });
+  for (const measurement of measurements.filter(item => item.width < 800)) {
+    expect(measurement.variantBytes, `${measurement.width}w variant should be smaller than the 800w source`)
+      .toBeLessThan(measurement.sourceBytes);
   }
 });
 

@@ -1,4 +1,4 @@
-import { defineConfig, devices } from '@playwright/test';
+import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
   testDir: './tests/e2e',
@@ -7,7 +7,7 @@ export default defineConfig({
     ['html', { outputFolder: 'playwright-report', open: 'never' }],
   ],
   use: {
-    ...devices['Desktop Chrome'],
+    viewport: { width: 1280, height: 720 },
     baseURL: 'http://127.0.0.1:4173/krishujeniya/',
   },
   webServer: {
