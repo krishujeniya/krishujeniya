@@ -8,11 +8,29 @@ test('chat treats visitor input as text and supports Escape', async ({ page }) =
 
   const input = page.getByRole('textbox', { name: 'Chat message' });
   await input.fill('What is your approach?');
+  const typingIndicatorAppeared = page.evaluate(() => new Promise<boolean>(resolve => {
+    const existingIndicator = document.querySelector('.chatbot-typing');
+    if (existingIndicator) {
+      resolve(true);
+      return;
+    }
+
+    const observer = new MutationObserver(() => {
+      if (!document.querySelector('.chatbot-typing')) return;
+      observer.disconnect();
+      resolve(true);
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+    window.setTimeout(() => {
+      observer.disconnect();
+      resolve(false);
+    }, 10000);
+  }));
   await input.press('Enter');
   const botReplies = page.locator('.chatbot-msg-bot .chatbot-msg-bubble');
-  await expect(page.locator('.chatbot-typing')).toBeVisible();
-  await expect(page.locator('.chatbot-typing')).toHaveCount(0);
   await expect(botReplies).toHaveCount(3);
+  expect(await typingIndicatorAppeared).toBe(true);
+  await expect(page.locator('.chatbot-typing')).toHaveCount(0);
   await expect(botReplies.last()).not.toContainText('Flutter');
 
   await input.fill('<img src=x onerror=alert(1)>');
@@ -74,10 +92,15 @@ test('service headings fit at tablet widths', async ({ page }) => {
     await page.goto('./');
     const grid = page.locator('#services .grid').last();
     const expectedColumns = width === 768 ? 2 : 3;
-    const actualColumns = await grid.evaluate(element =>
-      getComputedStyle(element).gridTemplateColumns.split(' ').length
-    );
-    expect(actualColumns).toBe(expectedColumns);
+    const layout = await grid.evaluate(element => {
+      const firstRowTop = element.children[0]?.getBoundingClientRect().top;
+      const actualColumns = [...element.children].filter(child =>
+        Math.abs(child.getBoundingClientRect().top - (firstRowTop ?? 0)) < 1
+      ).length;
+      return { viewportWidth: window.innerWidth, actualColumns };
+    });
+    expect(layout.viewportWidth).toBe(width);
+    expect(layout.actualColumns).toBe(expectedColumns);
 
     const headings = grid.locator('h3');
     await expect(headings.first()).toBeVisible();
