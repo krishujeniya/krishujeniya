@@ -30,6 +30,15 @@ createServer((request, response) => {
     return;
   }
 
-  response.writeHead(200, { 'content-type': contentTypes[extname(file)] ?? 'application/octet-stream' });
-  createReadStream(file).pipe(response);
+  const fileSize = statSync(file).size;
+  response.writeHead(200, {
+    'content-length': fileSize,
+    'content-type': contentTypes[extname(file)] ?? 'application/octet-stream',
+  });
+  const stream = createReadStream(file);
+  stream.on('error', error => {
+    console.error(`Static file read failed for ${pathname}: ${error.message}`);
+    response.destroy(error);
+  });
+  stream.pipe(response);
 }).listen(4173, '127.0.0.1');
