@@ -31,7 +31,7 @@ const knowledgeBase: KnowledgeEntry[] = [
     },
     {
         keywords: ['project', 'portfolio', 'built', 'created', 'developed', 'work', 'example', 'case study', 'past work'],
-        response: "Here are Krish's featured projects in the portfolio:\n\n🧠 **AmberClaw** — AI Memory Assistant with persistent ChromaDB & Mem0 RAG\n📊 **Salary Predictions** — End-to-end ML pipeline with ZenML & MLflow\n📱 **SnapText** — On-device OCR mobile app using Flutter & ML Kit\n📈 **Fitness Tracker ML Analysis** — Sensor data clustering & lifestyle prediction\n🌐 **EchoNest** — Cross-platform social media app with real-time Firebase sync\n🤖 **All-In-One Discord Bot** — High-uptime community automation bot\n\nYou can explore each project with its case study and repository links in the Projects section above!",
+        response: "Here are Krish's featured projects in the portfolio:\n\n🧠 **AmberClaw** — Zero-trust AI agent runtime with persistent memory & RAG\n📊 **Salary Predictions** — Production MLOps pipeline on Hugging Face Spaces\n📱 **Scanlark** — On-device OCR mobile app using Flutter & ML Kit\n👁️ **Hajree** — Biometric attendance with anti-spoofing liveness detection\n📈 **Activity Recognition** — Sensor telemetry classification & ML analysis\n🌐 **Saygrove** — Cross-platform social media app with real-time Firebase sync\n🤖 **Discord Automation Bot** — High-uptime community automation bot\n\nYou can explore each project with its case study and repository links in the Projects section above!",
         priority: 2,
     },
     {
