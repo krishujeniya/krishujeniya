@@ -145,7 +145,7 @@ export class AntigravityEngine {
     if (!this.ctx || this.particles.length === 0) {
       this.spawnParticles();
     }
-    this.draw(0);
+    this.draw();
   }
 
   public destroy(): void {
@@ -231,7 +231,7 @@ export class AntigravityEngine {
     this.lastTime = currentTime;
 
     this.updatePhysics(dt, currentTime * 0.001);
-    this.draw(currentTime * 0.001);
+    this.draw();
 
     this.animationFrameId = requestAnimationFrame(this.tick);
   };
@@ -370,7 +370,7 @@ export class AntigravityEngine {
     }
   }
 
-  private draw(timeSec: number): void {
+  private draw(): void {
     if (!this.ctx) return;
 
     // Clean canvas clear
