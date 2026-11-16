@@ -241,8 +241,12 @@ export const ChatBot = () => {
             if (!reduceMotion) gsap.to(close, { rotate: 0, opacity: 1, duration: 0.2, ease: 'power2.out' });
         } else {
             gsap.set(close, { display: 'none' });
-            gsap.set(open, { display: 'flex', rotate: reduceMotion ? 0 : 90, opacity: reduceMotion ? 1 : 0 });
-            if (!reduceMotion) gsap.to(open, { rotate: 0, opacity: 1, duration: 0.2, ease: 'power2.out' });
+            if (previousChatOpenRef.current && !reduceMotion) {
+                gsap.set(open, { display: 'flex', rotate: 90, opacity: 0 });
+                gsap.to(open, { rotate: 0, opacity: 1, duration: 0.2, ease: 'power2.out' });
+            } else {
+                gsap.set(open, { display: 'flex', rotate: 0, opacity: 1 });
+            }
         }
     }, [chatOpen]);
 
@@ -250,9 +254,16 @@ export const ChatBot = () => {
     useGSAP(() => {
         const btn = toggleRef.current;
         if (!btn) return;
-        const onEnter = () => gsap.to(btn, { scale: 1.1, duration: 0.2, ease: 'power2.out' });
-        const onLeave = () => gsap.to(btn, { scale: 1, duration: 0.2, ease: 'power2.out' });
-        const onDown = () => gsap.to(btn, { scale: 0.95, duration: 0.1 });
+        const isReduced = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const onEnter = () => {
+            if (!isReduced()) gsap.to(btn, { scale: 1.1, duration: 0.2, ease: 'power2.out' });
+        };
+        const onLeave = () => {
+            if (!isReduced()) gsap.to(btn, { scale: 1, duration: 0.2, ease: 'power2.out' });
+        };
+        const onDown = () => {
+            if (!isReduced()) gsap.to(btn, { scale: 0.95, duration: 0.1 });
+        };
         btn.addEventListener('mouseenter', onEnter);
         btn.addEventListener('mouseleave', onLeave);
         btn.addEventListener('mousedown', onDown);

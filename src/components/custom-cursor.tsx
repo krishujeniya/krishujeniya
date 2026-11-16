@@ -31,8 +31,11 @@ export const CustomCursor = () => {
 
         // Lerp ticker for ring (spring-like follow)
         const updateRing = () => {
-            ringX += (mouseX - ringX) * 0.18;
-            ringY += (mouseY - ringY) * 0.18;
+            const dx = mouseX - ringX;
+            const dy = mouseY - ringY;
+            if (Math.abs(dx) < 0.1 && Math.abs(dy) < 0.1) return;
+            ringX += dx * 0.18;
+            ringY += dy * 0.18;
             setRingX(ringX);
             setRingY(ringY);
         };

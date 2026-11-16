@@ -104,18 +104,18 @@ export function useGsapAnimations() {
               }
             }
 
-            // BrainCircuit box — gentle continuous wobble
+            // BrainCircuit box — gentle entrance and settling
             if (brainBox) {
               gsap.set(brainBox, { opacity: 0, scale: 0.7 });
               gsap.to(brainBox, { opacity: 1, scale: 1, duration: 0.8, ease: 'back.out(1.7)', delay: 0.15 });
               gsap.to(brainBox, {
                 rotate: 10,
-                scale: 1.08,
-                duration: 2.5,
-                repeat: -1,
+                scale: 1.05,
+                duration: 1.2,
+                repeat: 1,
                 yoyo: true,
                 ease: 'sine.inOut',
-                delay: 1,
+                delay: 0.95,
               });
             }
 
@@ -132,11 +132,11 @@ export function useGsapAnimations() {
                   // Float after entrance
                   gsap.to(aboutImg, {
                     y: -12,
-                    duration: 3,
-                    repeat: -1,
+                    duration: 1.5,
+                    repeat: 1,
                     yoyo: true,
                     ease: 'sine.inOut',
-                    delay: 1.1,
+                    delay: 1.0,
                   });
                 },
               });

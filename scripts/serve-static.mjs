@@ -33,7 +33,6 @@ createServer((request, response) => {
   const fileSize = statSync(file).size;
   response.writeHead(200, {
     'access-control-allow-origin': '*',
-    'connection': 'keep-alive',
     'content-length': fileSize,
     'content-type': contentTypes[extname(file)] ?? 'application/octet-stream',
   });
