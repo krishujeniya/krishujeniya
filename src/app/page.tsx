@@ -90,6 +90,8 @@ export default function Portfolio() {
     const [activeCursor, setActiveCursor] = useState<'line1' | 'line2' | null>('line1');
     const projectsTrackRef = useRef<HTMLDivElement | null>(null);
     const openerRef = useRef<HTMLElement | null>(null);
+    const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
+    const mobileNavRef = useRef<HTMLDivElement | null>(null);
 
     const isNameVisible = heroPhase === 'name' || heroPhase === 'buttons' || heroPhase === 'all';
     const isButtonsVisible = heroPhase === 'buttons' || heroPhase === 'all';
@@ -345,6 +347,36 @@ export default function Portfolio() {
         };
     }, []);
 
+    // Close mobile dropdown on outside click, Escape key, or resize to desktop
+    useEffect(() => {
+        if (!isMobileNavOpen) return;
+        const handleClickOutside = (e: MouseEvent | TouchEvent) => {
+            if (mobileNavRef.current && !mobileNavRef.current.contains(e.target as Node)) {
+                setIsMobileNavOpen(false);
+            }
+        };
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') {
+                setIsMobileNavOpen(false);
+            }
+        };
+        const handleResize = () => {
+            if (window.innerWidth >= 640) {
+                setIsMobileNavOpen(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        document.addEventListener('touchstart', handleClickOutside, { passive: true });
+        window.addEventListener('keydown', handleKeyDown);
+        window.addEventListener('resize', handleResize, { passive: true });
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+            document.removeEventListener('touchstart', handleClickOutside);
+            window.removeEventListener('keydown', handleKeyDown);
+            window.removeEventListener('resize', handleResize);
+        };
+    }, [isMobileNavOpen]);
+
     const scrollTo = (id: string) => {
         const el = document.getElementById(id);
         if (el) {
@@ -361,10 +393,75 @@ export default function Portfolio() {
 
             <a className="skip-link" href="#main-content">Skip to main content</a>
             <nav className={`fixed top-3 sm:top-5 inset-x-3 sm:inset-x-6 md:inset-x-8 max-w-[1440px] mx-auto z-[100] transition-all duration-700 ease-out rounded-full flex items-center justify-between px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 bg-black/60 backdrop-blur-2xl ${isAllVisible ? 'translate-y-0 opacity-100 pointer-events-auto' : '-translate-y-12 opacity-0 pointer-events-none'}`}>
-                {/* Left: Brand Name */}
+                {/* Left: Brand Name & Mobile Dropdown */}
                 <div className="flex-1 flex items-center justify-start min-w-[120px]">
+                    {/* Mobile Section Title with Dropdown Arrow */}
+                    <div ref={mobileNavRef} className="relative sm:hidden">
+                        <button
+                            type="button"
+                            onClick={() => setIsMobileNavOpen(!isMobileNavOpen)}
+                            aria-expanded={isMobileNavOpen}
+                            aria-haspopup="menu"
+                            aria-label="Toggle sections menu"
+                            className="flex items-center gap-1.5 text-xs font-black tracking-tighter text-white py-1 px-1.5 rounded-full hover:bg-white/10 active:scale-95 transition-all outline-none"
+                        >
+                            <span className="truncate max-w-[130px]">
+                                {activeSection === 'home' ? (
+                                    <>KRISH <span className="text-[#A1A1A1]">UJENIYA</span></>
+                                ) : activeSection.toUpperCase()}
+                            </span>
+                            <ChevronDown
+                                size={14}
+                                className={`transition-transform duration-300 shrink-0 text-[#A1A1A1] ${isMobileNavOpen ? 'rotate-180 text-white' : 'rotate-0'}`}
+                                aria-hidden="true"
+                            />
+                        </button>
+
+                        {/* Mobile Navigation Dropdown Options */}
+                        {isMobileNavOpen && (
+                            <div
+                                role="menu"
+                                aria-label="Navigate portfolio sections"
+                                className="absolute top-full left-0 mt-3 w-48 bg-black/95 backdrop-blur-2xl border border-white/10 rounded-2xl p-2 shadow-2xl z-[150] flex flex-col gap-1"
+                            >
+                                {[
+                                    { id: 'home', label: 'Home' },
+                                    { id: 'about', label: 'About' },
+                                    { id: 'experience', label: 'Experience' },
+                                    { id: 'services', label: 'Services' },
+                                    { id: 'projects', label: 'Projects' },
+                                    { id: 'documents', label: 'Documents' },
+                                    { id: 'testimonials', label: 'Testimonials' },
+                                    { id: 'contact', label: 'Contact' },
+                                ].map((section) => (
+                                    <button
+                                        key={section.id}
+                                        role="menuitem"
+                                        type="button"
+                                        onClick={() => {
+                                            scrollTo(section.id);
+                                            setActiveSection(section.id);
+                                            setIsMobileNavOpen(false);
+                                        }}
+                                        className={`flex items-center justify-between w-full px-3 py-2 text-left text-[11px] font-black uppercase tracking-[0.2em] rounded-xl transition-all ${
+                                            activeSection === section.id
+                                                ? 'bg-white text-black font-black'
+                                                : 'text-[#A1A1A1] hover:text-white hover:bg-white/10'
+                                        }`}
+                                    >
+                                        <span>{section.label}</span>
+                                        {activeSection === section.id && (
+                                            <div className="w-1.5 h-1.5 rounded-full bg-black shrink-0" />
+                                        )}
+                                    </button>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Desktop Brand Title */}
                     <div
-                        className="text-sm sm:text-base font-black tracking-tighter cursor-pointer hover:opacity-70 transition-opacity whitespace-nowrap outline-none flex items-center gap-2"
+                        className="hidden sm:flex text-sm sm:text-base font-black tracking-tighter cursor-pointer hover:opacity-70 transition-opacity whitespace-nowrap outline-none items-center gap-2"
                         onClick={() => scrollTo('home')}
                         role="button"
                         tabIndex={0}
@@ -375,14 +472,7 @@ export default function Portfolio() {
                             }
                         }}
                     >
-                        <span className="sm:hidden">
-                            {activeSection === 'home' ? (
-                                <>KRISH <span className="text-[#A1A1A1]">UJENIYA</span></>
-                            ) : activeSection.toUpperCase()}
-                        </span>
-                        <span className="hidden sm:inline">
-                            KRISH <span className="text-[#A1A1A1]">UJENIYA</span>
-                        </span>
+                        KRISH <span className="text-[#A1A1A1]">UJENIYA</span>
                     </div>
                 </div>
 
