@@ -33,6 +33,49 @@ import {
 const DOCS_BASE_URL = 'https://github.com/krishujeniya/krishujeniya/raw/main/Docs';
 const CONTACT_SUBMISSION_STORAGE_KEY = 'portfolio-contact-submission';
 
+const DOCUMENT_THEMES: Record<string, { gradient: string; accent: string; tag: string }> = {
+    'Certificates': {
+        gradient: 'from-[#FEF3C7] via-[#FDE68A] to-[#F59E0B]/30',
+        accent: 'text-[#92400E]',
+        tag: 'Verified Credentials',
+    },
+    'MLOps': {
+        gradient: 'from-[#EDE9FE] via-[#DDD6FE] to-[#8B5CF6]/30',
+        accent: 'text-[#5B21B6]',
+        tag: 'Pipelines & DSA',
+    },
+    'Cloud': {
+        gradient: 'from-[#E0F2FE] via-[#BAE6FD] to-[#38BDF8]/30',
+        accent: 'text-[#075985]',
+        tag: 'Cloud Infrastructure',
+    },
+    'CyberSecurity': {
+        gradient: 'from-[#D1FAE5] via-[#A7F3D0] to-[#10B981]/30',
+        accent: 'text-[#065F46]',
+        tag: 'Defense & Forensics',
+    },
+    'DBMS': {
+        gradient: 'from-[#DBEAFE] via-[#BFDBFE] to-[#60A5FA]/30',
+        accent: 'text-[#1E40AF]',
+        tag: 'Data Architecture',
+    },
+    'DevOps': {
+        gradient: 'from-[#FFEDD5] via-[#FED7AA] to-[#FB923C]/30',
+        accent: 'text-[#9A3412]',
+        tag: 'SDLC & Automation',
+    },
+    'BlockChain': {
+        gradient: 'from-[#FAE8FF] via-[#F5D0FE] to-[#C084FC]/30',
+        accent: 'text-[#86198F]',
+        tag: 'Decentralized Ledger',
+    },
+    'Digital Marketing': {
+        gradient: 'from-[#FFE4E6] via-[#FECDD3] to-[#F43F5E]/30',
+        accent: 'text-[#9F1239]',
+        tag: 'Growth & Analytics',
+    },
+};
+
 const createSubmissionId = () => {
     if (typeof crypto.randomUUID === 'function') return crypto.randomUUID();
     const bytes = crypto.getRandomValues(new Uint8Array(16));
@@ -116,6 +159,48 @@ export default function Portfolio() {
                 track.scrollTo({ left: maxScroll, behavior: 'smooth' });
             } else {
                 track.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+            }
+        }
+    };
+
+    const documentsTrackRef = useRef<HTMLDivElement | null>(null);
+    const [selectedDocCategory, setSelectedDocCategory] = useState<string>('All');
+
+    const scrollDocuments = (direction: 'left' | 'right') => {
+        const track = documentsTrackRef.current;
+        if (!track) return;
+        const card = track.querySelector<HTMLElement>('.document-card');
+        const cardWidth = card ? card.offsetWidth + 24 : 380;
+        const maxScroll = track.scrollWidth - track.clientWidth;
+
+        if (direction === 'right') {
+            if (track.scrollLeft >= maxScroll - 20) {
+                track.scrollTo({ left: 0, behavior: 'smooth' });
+            } else {
+                track.scrollBy({ left: cardWidth, behavior: 'smooth' });
+            }
+        } else {
+            if (track.scrollLeft <= 20) {
+                track.scrollTo({ left: maxScroll, behavior: 'smooth' });
+            } else {
+                track.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+            }
+        }
+    };
+
+    const filterDocuments = (categoryName: string) => {
+        setSelectedDocCategory(categoryName);
+        if (categoryName === 'All') {
+            documentsTrackRef.current?.scrollTo({ left: 0, behavior: 'smooth' });
+            return;
+        }
+        const index = portfolioData.documents.findIndex(d => d.name.toLowerCase() === categoryName.toLowerCase());
+        if (index !== -1 && documentsTrackRef.current) {
+            const track = documentsTrackRef.current;
+            const cards = track.querySelectorAll<HTMLElement>('.document-card');
+            const targetCard = cards[index];
+            if (targetCard) {
+                track.scrollTo({ left: targetCard.offsetLeft - track.offsetLeft - 16, behavior: 'smooth' });
             }
         }
     };
@@ -812,89 +897,185 @@ export default function Portfolio() {
                     </div>
                 </section>
 
-                {/* Documents Section */}
-                <section id="documents" className="py-24 px-6 md:px-12 bg-white/5">
-                    <div className="max-w-[1440px] mx-auto">
-                        <div className="flex flex-col items-center text-center gap-6 mb-32">
-                            <span className="text-[11px] font-black uppercase tracking-[0.4em] text-[#A1A1A1]">/ Resources</span>
-                            <h2 className="text-[clamp(2.5rem,7vw,7rem)] font-black tracking-tighter uppercase leading-none">Technical <br />Resources</h2>
+                {/* Documents Section — Google Labs Rounded Carousel Style */}
+                <section id="documents" className="py-24 px-4 sm:px-6 md:px-12 bg-[#F9F8F5] text-black rounded-[40px] md:rounded-[80px] my-12 relative overflow-hidden z-10">
+                    {/* Google Labs Style Playful Organic Ambient Shapes */}
+                    <div className="absolute -bottom-24 -left-24 w-96 h-96 rounded-full bg-[#3B82F6]/15 blur-3xl pointer-events-none" />
+                    <div className="absolute -bottom-24 -right-24 w-96 h-96 rounded-full bg-[#EC4899]/15 blur-3xl pointer-events-none" />
+                    <div className="absolute -top-24 right-1/4 w-80 h-80 rounded-full bg-[#10B981]/10 blur-3xl pointer-events-none" />
+
+                    <div className="max-w-[1440px] mx-auto relative z-10">
+                        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-16">
+                            <div className="flex flex-col items-start gap-3">
+                                <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#737373]">/ Resources</span>
+                                <h2 className="text-[clamp(2.75rem,7vw,6.5rem)] font-black tracking-tighter uppercase leading-none text-black">
+                                    Technical <br />Resources
+                                </h2>
+                            </div>
+                            <p className="text-sm sm:text-base text-[#666666] max-w-md leading-relaxed">
+                                Curated technical documentation, course notes, and verified credentials across AI, systems architecture, and engineering.
+                            </p>
                         </div>
 
-                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                            {portfolioData.documents.map((folder, i) => (
-                                <div key={i} className="group flex flex-col p-8 rounded-[32px] bg-white/5 border border-white/5 hover:border-white/10 transition-all duration-500 w-full min-w-0 overflow-hidden">
-                                    <div className="flex items-center justify-between mb-12">
-                                        <div className="w-12 h-12 flex items-center justify-center bg-black text-white rounded-2xl group-hover:bg-[#A1A1A1] transition-colors">
-                                            <folder.icon size={20} />
-                                        </div>
-                                        <span className="text-[11px] font-black uppercase tracking-[0.2em] text-[#A1A1A1]">{folder.files.length} Files</span>
-                                    </div>
-                                    <h3 className="text-2xl font-black uppercase tracking-tight mb-4">{folder.name}</h3>
-                                    <p className="text-[#A1A1A1] leading-relaxed text-sm mb-8 flex-grow">{folder.description}</p>
+                        {/* Google Labs Horizontal Carousel Track */}
+                        <div
+                            ref={documentsTrackRef}
+                            className="flex gap-5 sm:gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory no-scrollbar pb-6 pt-2 px-1"
+                        >
+                            {portfolioData.documents.map((folder, i) => {
+                                const theme = DOCUMENT_THEMES[folder.name] || {
+                                    gradient: 'from-[#F3F4F6] via-[#E5E7EB] to-[#D1D5DB]',
+                                    accent: 'text-[#374151]',
+                                    tag: 'Documentation',
+                                };
 
-                                    <button
-                                        onClick={() => setExpandedFolder(expandedFolder === i ? null : i)}
-                                        aria-label={expandedFolder === i ? `Collapse ${folder.name}` : `View Docs in ${folder.name}`}
-                                        aria-expanded={expandedFolder === i}
-                                        aria-controls={`documents-folder-${i}`}
-                                        className="flex items-center justify-between w-full py-4 border-t border-white/5 text-[10px] font-black uppercase tracking-[0.2em] text-white hover:text-[#A1A1A1] transition-colors"
-                                    >
-                                        <span>{expandedFolder === i ? 'Collapse' : 'View Docs'}</span>
-                                        {expandedFolder === i ? (
-                                            <ChevronUp size={16} aria-hidden="true" />
-                                        ) : (
-                                            <ChevronDown size={16} aria-hidden="true" />
-                                        )}
-                                    </button>
-
+                                return (
                                     <div
-                                        id={`documents-folder-${i}`}
-                                        className="overflow-hidden transition-all duration-500"
-                                        style={{
-                                            maxHeight: expandedFolder === i ? '2000px' : '0px',
-                                            opacity: expandedFolder === i ? 1 : 0,
-                                        }}
-                                        aria-hidden={expandedFolder !== i}
+                                        key={i}
+                                        className="document-card group flex-shrink-0 w-[calc(100vw-2.5rem)] xs:w-[320px] sm:w-[350px] md:w-[380px] max-w-[380px] bg-white text-black rounded-[32px] sm:rounded-[36px] p-6 sm:p-7 flex flex-col justify-between border border-black/5 hover:border-black/15 shadow-xl hover:shadow-2xl transition-all duration-500 snap-start overflow-hidden relative"
                                     >
-                                        <div className="pt-4 space-y-2 w-full max-w-full">
-                                            {folder.files.map((file, fi) => (
-                                                <a
-                                                    key={fi}
-                                                    href={`${DOCS_BASE_URL}/${folder.path}/${file.name.split('/').map(segment => encodeURIComponent(segment)).join('/')}`}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    tabIndex={expandedFolder === i ? 0 : -1}
-                                                    className="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-all group/file w-full min-w-0"
-                                                >
-                                                    <div className="flex items-center gap-3 min-w-0 flex-1">
-                                                        <File size={14} className="text-white/40 shrink-0" aria-hidden="true" />
-                                                        <span className="text-[11px] font-bold text-[#A1A1A1] group-hover/file:text-white truncate">{file.name.split('/').pop()}</span>
-                                                    </div>
-                                                    <span className="text-[9px] font-black uppercase text-white/70 ml-2 shrink-0">{file.type}</span>
-                                                </a>
-                                            ))}
+                                        {/* Upper Visual Illustration matching Google Labs card format */}
+                                        <div className={`w-full h-[180px] sm:h-[200px] rounded-[24px] p-5 flex flex-col justify-between relative overflow-hidden bg-gradient-to-br ${theme.gradient} border border-black/5 transition-transform duration-500 group-hover:scale-[1.02]`}>
+                                            <div className="flex items-center justify-between z-10">
+                                                <div className="w-11 h-11 rounded-2xl bg-white shadow-sm flex items-center justify-center text-black">
+                                                    <folder.icon size={22} />
+                                                </div>
+                                                <span className="text-[10px] font-black uppercase tracking-wider px-3.5 py-1.5 rounded-full bg-white/95 text-black shadow-sm">
+                                                    {folder.files.length} Files
+                                                </span>
+                                            </div>
+
+                                            <div className="z-10">
+                                                <span className={`text-[10px] font-black uppercase tracking-widest ${theme.accent}`}>
+                                                    {theme.tag}
+                                                </span>
+                                                <p className="text-xs font-black text-black/80 mt-0.5 truncate">
+                                                    {folder.name} Library
+                                                </p>
+                                            </div>
+
+                                            {/* Decorative soft blurred circles */}
+                                            <div className="absolute -bottom-8 -right-8 w-32 h-32 rounded-full bg-white/40 blur-xl pointer-events-none" />
+                                        </div>
+
+                                        {/* Middle Content */}
+                                        <div className="pt-5 flex-grow flex flex-col justify-start">
+                                            <h3 className="text-2xl sm:text-[26px] font-black uppercase tracking-tight text-black leading-tight mb-2">
+                                                {folder.name}
+                                            </h3>
+                                            <p className="text-xs sm:text-sm text-[#555555] leading-relaxed line-clamp-2">
+                                                {folder.description}
+                                            </p>
+                                        </div>
+
+                                        {/* Bottom Action: Expand / Collapse Button */}
+                                        <div className="pt-4">
+                                            <button
+                                                onClick={() => setExpandedFolder(expandedFolder === i ? null : i)}
+                                                aria-label={expandedFolder === i ? `Collapse ${folder.name}` : `View Docs in ${folder.name}`}
+                                                aria-expanded={expandedFolder === i}
+                                                aria-controls={`documents-folder-${i}`}
+                                                className="flex items-center justify-between w-full py-3.5 px-5 rounded-full bg-black/5 hover:bg-black hover:text-white text-black font-black text-[10px] uppercase tracking-[0.2em] transition-all duration-300 active:scale-95"
+                                            >
+                                                <span>{expandedFolder === i ? 'Collapse Docs' : 'View Docs'}</span>
+                                                <span className="flex items-center gap-1.5">
+                                                    <span className="text-[10px] opacity-70 font-bold">{folder.files.length}</span>
+                                                    {expandedFolder === i ? (
+                                                        <ChevronUp size={14} aria-hidden="true" />
+                                                    ) : (
+                                                        <ArrowRight size={14} aria-hidden="true" className="group-hover:translate-x-0.5 transition-transform" />
+                                                    )}
+                                                </span>
+                                            </button>
+
+                                            {/* Expanded File Drawer */}
+                                            <div
+                                                id={`documents-folder-${i}`}
+                                                className="overflow-hidden transition-all duration-500 w-full"
+                                                style={{
+                                                    maxHeight: expandedFolder === i ? '400px' : '0px',
+                                                    opacity: expandedFolder === i ? 1 : 0,
+                                                }}
+                                                aria-hidden={expandedFolder !== i}
+                                            >
+                                                <div className="pt-3 space-y-2 w-full max-h-56 overflow-y-auto pr-1">
+                                                    {folder.files.map((file, fi) => (
+                                                        <a
+                                                            key={fi}
+                                                            href={`${DOCS_BASE_URL}/${folder.path}/${file.name.split('/').map(segment => encodeURIComponent(segment)).join('/')}`}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            tabIndex={expandedFolder === i ? 0 : -1}
+                                                            className="flex items-center justify-between p-2.5 rounded-xl bg-black/5 hover:bg-black/10 transition-all text-black w-full min-w-0"
+                                                        >
+                                                            <div className="flex items-center gap-2.5 min-w-0 flex-1">
+                                                                <File size={13} className="text-black/50 shrink-0" aria-hidden="true" />
+                                                                <span className="text-[11px] font-bold text-black/85 hover:text-black truncate">{file.name.split('/').pop()}</span>
+                                                            </div>
+                                                            <span className="text-[9px] font-black uppercase text-black/50 ml-2 shrink-0">{file.type}</span>
+                                                        </a>
+                                                    ))}
+                                                </div>
+                                            </div>
+
+                                            <noscript>
+                                                <div className="pt-3 space-y-2 w-full">
+                                                    {folder.files.map((file, fi) => (
+                                                        <a
+                                                            key={fi}
+                                                            href={`${DOCS_BASE_URL}/${folder.path}/${file.name.split('/').map(segment => encodeURIComponent(segment)).join('/')}`}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            className="flex items-center justify-between p-2.5 rounded-xl bg-black/5 hover:bg-black/10 transition-all text-black w-full min-w-0"
+                                                        >
+                                                            <div className="flex items-center gap-2.5 min-w-0 flex-1">
+                                                                <File size={13} className="text-black/50 shrink-0" aria-hidden="true" />
+                                                                <span className="text-[11px] font-bold text-black/85 hover:text-black truncate">{file.name.split('/').pop()}</span>
+                                                            </div>
+                                                            <span className="text-[9px] font-black uppercase text-black/50 ml-2 shrink-0">{file.type}</span>
+                                                        </a>
+                                                    ))}
+                                                </div>
+                                            </noscript>
                                         </div>
                                     </div>
-                                    <noscript>
-                                        <div className="pt-4 space-y-2 w-full max-w-full">
-                                            {folder.files.map((file, fi) => (
-                                                <a
-                                                    key={fi}
-                                                    href={`${DOCS_BASE_URL}/${folder.path}/${file.name.split('/').map(segment => encodeURIComponent(segment)).join('/')}`}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-all group/file w-full min-w-0"
-                                                >
-                                                    <div className="flex items-center gap-3 min-w-0 flex-1">
-                                                        <File size={14} className="text-white/40 shrink-0" aria-hidden="true" />
-                                                        <span className="text-[11px] font-bold text-[#A1A1A1] group-hover/file:text-white truncate">{file.name.split('/').pop()}</span>
-                                                    </div>
-                                                    <span className="text-[9px] font-black uppercase text-white/70 ml-2 shrink-0">{file.type}</span>
-                                                </a>
-                                            ))}
-                                        </div>
-                                    </noscript>
-                                </div>
+                                );
+                            })}
+                        </div>
+
+                        {/* Carousel Navigation Arrows matching Google Labs */}
+                        <div className="flex items-center justify-center gap-4 mt-8 sm:mt-10">
+                            <button
+                                onClick={() => scrollDocuments('left')}
+                                aria-label="Previous documents"
+                                className="w-12 h-12 rounded-full border border-black/15 bg-white hover:bg-black hover:text-white text-black flex items-center justify-center transition-all duration-300 active:scale-95 shadow-md"
+                            >
+                                <ChevronLeft size={20} />
+                            </button>
+                            <button
+                                onClick={() => scrollDocuments('right')}
+                                aria-label="Next documents"
+                                className="w-12 h-12 rounded-full border border-black/15 bg-white hover:bg-black hover:text-white text-black flex items-center justify-center transition-all duration-300 active:scale-95 shadow-md"
+                            >
+                                <ChevronRight size={20} />
+                            </button>
+                        </div>
+
+                        {/* Category Filter Pills (matching Google Labs bottom pills) */}
+                        <div className="flex items-center justify-center gap-2 sm:gap-3 mt-6 flex-wrap px-2">
+                            {['All', 'Certificates', 'MLOps', 'Cloud', 'CyberSecurity', 'DBMS', 'DevOps'].map((category) => (
+                                <button
+                                    key={category}
+                                    type="button"
+                                    onClick={() => filterDocuments(category)}
+                                    className={`px-4 sm:px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.2em] transition-all duration-300 ${
+                                        selectedDocCategory === category
+                                            ? 'bg-black text-white shadow-md'
+                                            : 'bg-black/5 hover:bg-black/10 text-black/70'
+                                    }`}
+                                >
+                                    {category}
+                                </button>
                             ))}
                         </div>
                     </div>
