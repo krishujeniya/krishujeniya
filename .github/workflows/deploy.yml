@@ -121,6 +121,10 @@ jobs:
         env:
           PAGE_URL: ${{ steps.deployment.outputs.page_url }}
         run: |
+          if [[ -z "$PAGE_URL" ]]; then
+            echo "GitHub Pages deployment did not return a page URL"
+            exit 1
+          fi
           published_url="${PAGE_URL%/}/"
           html="$RUNNER_TEMP/published-portfolio.html"
           log="$RUNNER_TEMP/obscura-published-smoke.log"
@@ -134,4 +138,21 @@ jobs:
           done
           cat "$log"
           echo "Published contact form marker was not found at $published_url"
+          exit 1
+      - name: Check production Atlas readiness with Obscura
+        run: |
+          health_url="https://krishujeniya-backend.vercel.app/api/health/ready"
+          body="$RUNNER_TEMP/backend-readiness.json"
+          log="$RUNNER_TEMP/obscura-backend-smoke.log"
+          for attempt in {1..5}; do
+            if obscura fetch "$health_url" --dump text --timeout 30 > "$body" 2> "$log" && \
+              grep -Eq '"status"[[:space:]]*:[[:space:]]*"ready"' "$body"; then
+              echo "Production backend readiness confirmed"
+              exit 0
+            fi
+            sleep 5
+          done
+          cat "$log"
+          cat "$body"
+          echo "Production backend readiness was not confirmed"
           exit 1
