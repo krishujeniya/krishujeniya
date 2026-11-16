@@ -16,7 +16,7 @@ interface KnowledgeEntry {
 const knowledgeBase: KnowledgeEntry[] = [
     {
         keywords: ['hello', 'hi', 'hey', 'greetings', 'sup', 'yo', 'good morning', 'good evening', 'good afternoon'],
-        response: "Hey there! 👋 I'm Krish's AI assistant. I can tell you about his services, skills, projects, availability, or help you start a project inquiry. What would you like to know?",
+        response: "Hey there! 👋 I'm Krish's AI assistant. I can answer questions about his skills, projects, and services. Chat messages are interactive and not stored as inquiries; to submit a project inquiry or message Krish directly, please use the Contact form on this page or email ukideashare0021@gmail.com. What would you like to know?",
         priority: 1,
     },
     {
@@ -31,22 +31,22 @@ const knowledgeBase: KnowledgeEntry[] = [
     },
     {
         keywords: ['project', 'portfolio', 'built', 'created', 'developed', 'work', 'example', 'case study', 'past work'],
-        response: "Here are some of Krish's notable projects:\n\n🎵 **EchoNest** — AI-powered music recommendation engine\n🔬 **VemyPipeline** — End-to-end MLOps pipeline with ZenML\n📱 **SnapText** — OCR mobile app with ML Kit\n🤖 **AI Agents** — Custom autonomous agents for task automation\n🎮 **Game AI** — Intelligent game-playing bots\n\nYou can see them in the Portfolio section above! Want to discuss a similar project?",
+        response: "Here are Krish's featured projects in the portfolio:\n\n🧠 **AmberClaw** — AI Memory Assistant with persistent ChromaDB & Mem0 RAG\n📊 **Salary Predictions** — End-to-end ML pipeline with ZenML & MLflow\n📱 **SnapText** — On-device OCR mobile app using Flutter & ML Kit\n📈 **Fitness Tracker ML Analysis** — Sensor data clustering & lifestyle prediction\n🌐 **EchoNest** — Cross-platform social media app with real-time Firebase sync\n🤖 **All-In-One Discord Bot** — High-uptime community automation bot\n\nYou can explore each project with its case study and repository links in the Projects section above!",
         priority: 2,
     },
     {
         keywords: ['experience', 'background', 'career', 'job', 'intern', 'work history', 'resume'],
-        response: "Krish's professional journey:\n\n💼 **Freelance ML & Software Engineer** (2023–Present) — MLOps, LLMs, full-stack dev\n🧪 **ML Engineer Intern @ Mentorness** (2024) — Predictive models, fraud detection\n📱 **Flutter Developer @ Prelax Infotech** (2023) — SnapText OCR app\n🌐 **PHP Developer @ For Each Next** (2022) — Web development foundations\n\nHe's been building AI solutions professionally since 2022!",
+        response: "Krish's professional background:\n\n🎓 **AI & Data Engineering Trainee** (Microsoft Partner Program, Jul 2026)\n🔬 **AI & Quantum Technologies Trainee** (IBM SkillsBuild, Jun 2026)\n💼 **Freelance ML & Software Engineer** (2023–Present) — RAG systems, agents, MLOps\n🧪 **ML Engineer Intern @ Mentorness** (2024) — Scikit-learn predictive modeling\n📱 **Flutter Developer Intern @ Prelax Infotech** (2023) — SnapText on-device OCR\n🌐 **PHP Developer Intern @ For Each Next** (2022) — Web development foundations\n\nHe has software engineering experience dating back to 2022, specializing in machine learning and AI pipelines since 2023.",
         priority: 2,
     },
     {
         keywords: ['price', 'cost', 'rate', 'charge', 'budget', 'pricing', 'how much', 'afford', 'quote', 'estimate', 'fee'],
-        response: "Pricing depends on the project scope and complexity. Here's a rough guide:\n\n💡 **Consultation/Advisory:** Starting from $50/hr\n🤖 **AI Agent / LLM Project:** $2,000–$15,000+\n⚙️ **MLOps Pipeline Setup:** $3,000–$10,000+\n📱 **Full-Stack App:** $5,000–$20,000+\n\nFor an accurate quote, please describe your project in the contact form or email Krish directly at ukideashare0021@gmail.com",
+        response: "Pricing depends on the project scope and complexity. Here's a rough guide:\n\n💡 **Consultation/Advisory:** Starting from $50/hr\n🤖 **AI Agent / LLM Project:** $2,000–$15,000+\n⚙️ **MLOps Pipeline Setup:** $3,000–$10,000+\n📱 **Full-Stack App:** $5,000–$20,000+\n\nFor a specific quote, please submit your project details through the Contact form on this page or email Krish directly at ukideashare0021@gmail.com.",
         priority: 3,
     },
     {
         keywords: ['available', 'free', 'hire', 'freelance', 'contract', 'open', 'taking', 'accept', 'booking', 'schedule'],
-        response: "Yes! Krish is currently **available for freelance projects** and consulting work. 🟢\n\nHe typically responds within 24 hours. You can:\n📧 Email: ukideashare0021@gmail.com\n📝 Use the contact form on this page\n💬 Describe your project right here in chat!\n\nWhat kind of project are you planning?",
+        response: "Yes! Krish is currently **available for freelance projects** and consulting work. 🟢\n\nHe typically responds within 24 hours.\n\nTo ensure your project details reach Krish, please submit them through the **Contact form** on this page (or email ukideashare0021@gmail.com). Messages in this chat window are for interactive questions only and are not forwarded or saved.",
         priority: 3,
     },
     {
@@ -61,7 +61,7 @@ const knowledgeBase: KnowledgeEntry[] = [
     },
     {
         keywords: ['llm', 'large language', 'gpt', 'gemini', 'chatgpt', 'openai', 'fine-tune', 'fine tune', 'finetune'],
-        response: "Krish has deep expertise in LLMs:\n\n🧠 **Fine-tuning** — Custom LLMs for specific domains\n📚 **RAG Systems** — Retrieval Augmented Generation with vector databases\n🔗 **LangChain** — Building LLM-powered applications\n🤖 **Agent Frameworks** — Multi-step reasoning agents\n🔧 **Deployment** — Optimized inference pipelines\n\nWant to discuss an LLM project? Just describe your use case!",
+        response: "Krish has deep expertise in LLMs:\n\n🧠 **Fine-tuning** — Custom LLMs for specific domains\n📚 **RAG Systems** — Retrieval Augmented Generation with vector databases\n🔗 **LangChain** — Building LLM-powered applications\n🤖 **Agent Frameworks** — Multi-step reasoning agents\n🔧 **Deployment** — Optimized inference pipelines\n\nTo discuss an LLM project with Krish, submit an inquiry in the Contact section below!",
         priority: 3,
     },
     {
@@ -81,7 +81,7 @@ const knowledgeBase: KnowledgeEntry[] = [
     },
     {
         keywords: ['ai agent', 'autonomous', 'agent', 'automate', 'automation', 'workflow', 'bot'],
-        response: "Krish builds AI Agents that can:\n\n🧠 **Reason** — Multi-step problem solving\n🔧 **Use Tools** — API calls, database queries, web scraping\n📋 **Execute Tasks** — Automated workflows end-to-end\n🔄 **Learn** — Adapt from feedback and context\n\nUse cases: customer support bots, data analysis agents, research assistants, workflow automation. What process would you like to automate?",
+        response: "Krish builds AI Agents that can:\n\n🧠 **Reason** — Multi-step problem solving\n🔧 **Use Tools** — API calls, database queries, web scraping\n📋 **Execute Tasks** — Automated workflows end-to-end\n🔄 **Learn** — Adapt from feedback and context\n\nHave a workflow in mind? Reach out through the Contact form below to discuss an engagement!",
         priority: 3,
     },
     {
@@ -154,7 +154,7 @@ const getAIResponse = (userMessage: string): string => {
 
 const botMessages = [
     { from: 'bot' as const, text: "Hey there! 👋 I'm Krish's AI assistant. How can I help you today?" },
-    { from: 'bot' as const, text: "Ask me about Krish's services, skills, projects, pricing, availability, or anything about his portfolio!" },
+    { from: 'bot' as const, text: "Ask me about Krish's services, skills, projects, or background. (Note: To send a project proposal directly to Krish, please use the Contact form below)." },
 ];
 
 export const ChatBot = () => {

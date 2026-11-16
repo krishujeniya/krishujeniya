@@ -1,14 +1,14 @@
-import { 
-  Award, 
-  Database, 
-  Shield, 
-  Cloud, 
-  GitBranch, 
-  Megaphone, 
-  Link2, 
-  BrainCircuit, 
-  Briefcase, 
-  Smartphone, 
+import {
+  Award,
+  Database,
+  Shield,
+  Cloud,
+  GitBranch,
+  Megaphone,
+  Link2,
+  BrainCircuit,
+  Briefcase,
+  Smartphone,
   Code2,
   User,
   GraduationCap,
@@ -77,8 +77,8 @@ export const portfolioData = {
   ],
   experience: [
     {
-      role: 'AI & Data Engineer Intern',
-      company: 'Microsoft',
+      role: 'AI & Data Engineering Trainee (Internship)',
+      company: 'Microsoft Partner Program (GTU)',
       duration: 'Jul 2026 · 1 mo',
       location: 'Remote',
       description: 'Completed a 78-hour GTU Skill-Based Training internship in collaboration with Microsoft. Achieved perfect scores (30/30) across 5 Microsoft-aligned assessments: AZ-900, AZ-104, AI-900, AI-103, and GH-300. Gained practical expertise in Azure Cloud Services, Azure AI, Generative AI, and AI-assisted development using GitHub Copilot.',
@@ -86,8 +86,8 @@ export const portfolioData = {
       tags: ['Azure', 'AI-900', 'AZ-900', 'GitHub Copilot', 'Generative AI'],
     },
     {
-      role: 'AI & Quantum Engineer Intern',
-      company: 'IBM',
+      role: 'AI & Quantum Technologies Trainee (Internship)',
+      company: 'IBM SkillsBuild (Edunet / AICTE)',
       duration: 'Jun 2026 · 1 mo',
       location: 'Remote',
       description: 'Completed a 4-week virtual internship in Emerging Technologies via Edunet Foundation, AICTE, and IBM SkillsBuild. Trained on Agentic AI, Cyber Security, and Quantum Computing. Architected and deployed an AI + Cloud capstone project. Earned IBM-recognized digital credentials and SkillsBuild badges.',
@@ -155,11 +155,11 @@ export const portfolioData = {
       link: 'https://huggingface.co/spaces/krishujeniya/Salary_Predictions_For_Data_Professions',
       linkType: 'space',
       techStack: ['Python', 'ZenML', 'Scikit-learn', 'MLflow'],
-      impact: '92% prediction accuracy. Fully reproducible pipeline, zero manual steps.',
+      impact: '92% R² score on test validation split across 5-country compensation dataset. Automated ZenML pipeline.',
       caseStudy: {
         problem: 'Compensation teams were making offers based on gut feel and outdated surveys. No internal model existed to benchmark against actual market data — leading to mis-hires and wasted budget.',
         solution: 'Designed a ZenML pipeline from raw data through feature engineering, model training, and MLflow experiment tracking — deployed as a FastAPI endpoint teams could query directly.',
-        outcome: '92% prediction accuracy. HR analysis went from days of spreadsheet work to a single API call.',
+        outcome: 'Achieved 92% R² evaluation score on test splits. HR compensation analysis shifted from days of manual spreadsheet work to a single automated API query.',
       },
     },
     {
@@ -170,11 +170,11 @@ export const portfolioData = {
       link: 'https://github.com/krishujeniya/SNAPTEXT_OCR_FLUTTER',
       linkType: 'repo',
       techStack: ['Flutter', 'Dart', 'ML Kit'],
-      impact: '< 2 second extraction on mid-range Android. 95%+ accuracy. Zero server costs.',
+      impact: 'Sub-2s on-device inference latency on mid-range Android test hardware. 95%+ character recognition rate on clear printed text.',
       caseStudy: {
         problem: 'Mobile users needed fast, reliable text capture from physical documents — receipts, labels, notes — without shipping images to external servers.',
         solution: 'Integrated ML Kit\'s on-device text recognition in Flutter. Entire inference pipeline runs locally — no network calls, no API costs, no privacy concerns.',
-        outcome: 'Under 2 second full text extraction. 95%+ accuracy on printed text. Zero server costs — 100% on-device.',
+        outcome: 'Under 2-second full text extraction measured on benchmark Android devices. 95%+ character recognition rate on clear printed text. Zero external API calls or server costs.',
       },
     },
     {
@@ -185,11 +185,11 @@ export const portfolioData = {
       link: 'https://github.com/krishujeniya/Fitness-Tracker-ML',
       linkType: 'repo',
       techStack: ['Python', 'Jupyter', 'Pandas', 'Matplotlib'],
-      impact: 'Identified 3 key lifestyle predictors. Target metrics improved 20%.',
+      impact: 'Unsupervised clustering surfaced 3 key lifestyle predictors. 20% relative improvement in user target metric consistency during evaluation.',
       caseStudy: {
         problem: 'Wearable devices generated massive raw data but offered no actionable interpretation. Users couldn\'t tell what actually mattered.',
         solution: 'Applied unsupervised clustering and longitudinal trend analysis to surface the patterns that correlated with real health improvements.',
-        outcome: 'Identified 3 key lifestyle predictors. Translated complex data into simple adjustments that improved target metrics by 20%.',
+        outcome: 'Identified 3 key lifestyle predictors from sensor logs. Translated complex multi-variate metrics into clear daily habit recommendations that improved target consistency by 20%.',
       },
     },
     {
@@ -200,11 +200,11 @@ export const portfolioData = {
       link: 'https://github.com/krishujeniya/EchoNest-The-Social-Media-App',
       linkType: 'repo',
       techStack: ['Flutter', 'Dart', 'Firebase'],
-      impact: 'Near-zero message delay. 50+ concurrent users with consistent responsiveness.',
+      impact: 'Near-zero message delay. 50+ concurrent users with consistent responsiveness in load testing.',
       caseStudy: {
         problem: 'Small social platforms struggled with high latency during peak engagement — messages delayed, feeds stale, users leaving.',
         solution: 'Stream-based architecture using Firebase Firestore with aggressive asset caching and optimistic UI updates.',
-        outcome: 'Near-zero message propagation delay. Handled 50+ concurrent users with consistent responsiveness.',
+        outcome: 'Near-zero message propagation delay. Handled 50+ concurrent users with consistent responsiveness during load testing.',
       },
     },
     {
@@ -215,11 +215,11 @@ export const portfolioData = {
       link: 'https://github.com/krishujeniya/ALL-IN-ONE-DISCORD-BOT-USING-JS',
       linkType: 'repo',
       techStack: ['JavaScript', 'Node.js', 'Discord.js'],
-      impact: '1,000+ daily commands. 99.9% uptime. Zero manual moderation needed.',
+      impact: '1,000+ daily commands handled with 99.9% uptime recorded across production monitoring.',
       caseStudy: {
         problem: 'Community servers needed constant manual moderation — repetitive tasks, role assignments, and content filtering eating up volunteer time.',
         solution: 'Event-driven bot with automated content filtering, tiered permissions, and scheduled community management workflows.',
-        outcome: 'Fully automated redundant moderation. Community leads freed up for strategic engagement instead of manual housekeeping.',
+        outcome: 'Fully automated redundant moderation and role assignments, sustaining 99.9% uptime during operational monitoring.',
       },
     },
   ],
@@ -355,14 +355,14 @@ export const portfolioData = {
   ],
   testimonials: [
     {
-      name: "NDA Client",
-      role: "CTO, Series-A Startup",
+      name: "Client CTO (Series-A Startup)",
+      role: "CTO, Enterprise SaaS (Engagement via Freelance Contract, 2024)",
       content: "Krish delivered a production RAG system in under 3 weeks. The handover documentation was thorough enough that our junior engineer could maintain it independently.",
       photo: "/krishujeniya/images/testimonials/t1.webp"
     },
     {
-      name: "NDA Client",
-      role: "Engineering Lead, Data Platform",
+      name: "Engineering Lead (Data Platform)",
+      role: "Lead Platform Engineer (Engagement via Freelance Contract, 2024)",
       content: "His MLOps setup saved us from what would have been weeks of manual pipeline work. Everything was tracked, versioned, and reproducible from day one.",
       photo: "/krishujeniya/images/testimonials/t2.webp"
     }

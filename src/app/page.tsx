@@ -6,18 +6,24 @@ import Image from 'next/image';
 
 import { portfolioData } from '@/data/portfolio';
 
-import { 
-    Target, 
-    Lightbulb, 
-    TrendingUp, 
+import {
+    Target,
+    Lightbulb,
+    TrendingUp,
     File,
     BrainCircuit,
     Quote,
     Mail,
     Sparkles,
     ChevronRight,
+    ChevronDown,
+    ChevronUp,
     X,
     ArrowUp,
+    ArrowRight,
+    ArrowUpRight,
+    Compass,
+    Calendar,
 } from 'lucide-react';
 
 
@@ -73,6 +79,7 @@ export default function Portfolio() {
     const [errorMessage, setErrorMessage] = useState('Failed to send — email directly.');
     const [selectedServices, setSelectedServices] = useState<string[]>([]);
     const [selectedStages, setSelectedStages] = useState<string[]>([]);
+    const [contactMethod, setContactMethod] = useState('');
     const submissionKeyRef = useRef<{ fingerprint: string; id: string } | null>(null);
 
     const toggleService = (service: string) => {
@@ -185,7 +192,7 @@ export default function Portfolio() {
                 <div className="max-w-[1440px] mx-auto px-6 md:px-12 flex items-center justify-between gap-4">
                     <div className="flex items-center gap-8 overflow-hidden">
                         {/* Brand Title / Section Name */}
-                        <div 
+                        <div
                             className="text-lg sm:text-2xl font-black tracking-tighter cursor-pointer hover:opacity-70 transition-opacity whitespace-nowrap outline-none flex items-center gap-2"
                             onClick={() => scrollTo('home')}
                             role="button"
@@ -206,7 +213,7 @@ export default function Portfolio() {
                                 KRISH <span className="text-[#A1A1A1]">UJENIYA</span>
                             </span>
                         </div>
-                        
+
                         {/* Desktop Navigation Links */}
                         <div className="hidden md:flex items-center gap-8 overflow-x-auto no-scrollbar">
                             {['about', 'experience', 'services', 'projects', 'documents', 'testimonials', 'contact'].map((item) => (
@@ -226,8 +233,10 @@ export default function Portfolio() {
                         </div>
                     </div>
 
-                    <button 
-                        onClick={() => {
+                    <a
+                        href="#contact"
+                        onClick={(e) => {
+                            e.preventDefault();
                             scrollTo('contact');
                             setActiveSection('contact'); // Force immediate update
                         }}
@@ -235,7 +244,7 @@ export default function Portfolio() {
                         className="flex items-center gap-2 sm:gap-3 bg-white text-black text-[10px] sm:text-[11px] font-black uppercase tracking-[0.2em] px-5 sm:px-8 py-3 sm:py-4 rounded-full transition-all duration-500 shadow-xl shadow-white/5 active:scale-95 whitespace-nowrap"
                     >
                         Hire Me <Mail size={14} className="group-hover:translate-x-1 transition-transform" />
-                    </button>
+                    </a>
                 </div>
             </nav>
 
@@ -263,21 +272,22 @@ export default function Portfolio() {
                             {/* Metrics Removed */}
 
                             <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 w-full sm:w-auto pt-4">
-                                <button 
-                                    onClick={() => { scrollTo('projects'); setActiveSection('projects'); }}
+                                <a
+                                    href="#projects"
+                                    onClick={(e) => { e.preventDefault(); scrollTo('projects'); setActiveSection('projects'); }}
                                     aria-label="Explore Work and view my case studies"
                                     className="group w-full sm:w-auto flex items-center justify-center gap-4 bg-white text-black px-12 py-5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] transition-all duration-500 shadow-2xl shadow-white/5"
                                 >
-                                    Explore Work <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform" aria-hidden="true">explore</span>
-                                </button>
-                                <a 
+                                    Explore Work <Compass size={16} className="group-hover:translate-x-1 transition-transform" aria-hidden="true" />
+                                </a>
+                                <a
                                     href={portfolioData.profile.socials.calendar}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     aria-label="Book a Call on Google Calendar"
                                     className="w-full sm:w-auto flex items-center justify-center gap-4 bg-white/5 backdrop-blur-md border border-white/10 px-12 py-5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] hover:bg-white/10 hover:border-white/20 transition-all duration-500"
                                 >
-                                    Book a Call <span className="material-symbols-outlined" aria-hidden="true">calendar_today</span>
+                                    Book a Call <Calendar size={16} aria-hidden="true" />
                                 </a>
                             </div>
                         </div>
@@ -291,12 +301,12 @@ export default function Portfolio() {
                                 <span className="text-[11px] font-black uppercase tracking-[0.4em] text-[#A1A1A1]">/ Info</span>
                                 <h2 className="text-[clamp(3rem,8vw,8rem)] font-black tracking-tighter uppercase leading-none">About <br /><span className="text-[#A1A1A1]">Krish</span></h2>
                             </div>
-                            
+
                             <div className="lg:col-span-5 flex lg:justify-end">
                                 <div className="relative w-full max-w-sm aspect-square rounded-[20px] sm:rounded-[40px] overflow-hidden border border-black/5 bg-[#F5F5F5]">
-                                    <Image 
-                                        src={portfolioData.profile.photo.webp} 
-                                        alt="Krish Ujeniya – AI Researcher, Data Scientist & AI Freelancer based in India" 
+                                    <Image
+                                        src={portfolioData.profile.photo.webp}
+                                        alt="Krish Ujeniya – AI Researcher, Data Scientist & AI Freelancer based in India"
                                         fill
                                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 384px, 384px"
                                         className="object-cover"
@@ -331,7 +341,7 @@ export default function Portfolio() {
 
                         <div className="space-y-12">
                             {portfolioData.experience.map((exp, i) => (
-                                <div 
+                                <div
                                     key={i}
                                     className="group grid md:grid-cols-12 gap-8 border-t border-white/5 pt-12"
                                 >
@@ -367,12 +377,12 @@ export default function Portfolio() {
 
                         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                             {portfolioData.services.map((service, i) => (
-                                <div 
+                                <div
                                     key={i}
                                     className="group p-10 rounded-[40px] border border-black/5 bg-white hover:bg-black hover:text-white transition-all duration-700 hover:shadow-[0_30px_60px_rgba(0,0,0,0.1)] relative overflow-hidden"
                                 >
                                     <div className="absolute top-0 right-0 w-32 h-32 bg-black/[0.02] group-hover:bg-white/5 rounded-bl-full transition-colors" />
-                                    
+
                                     <div className="w-16 h-16 flex items-center justify-center bg-black text-white rounded-2xl mb-8 group-hover:bg-white group-hover:text-black transition-all duration-500 group-hover:scale-110 shadow-lg">
                                         <service.icon size={32} />
                                     </div>
@@ -402,8 +412,9 @@ export default function Portfolio() {
 
                         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
                             {portfolioData.projects.map((project, i) => (
-                                <div 
-                                    key={i} 
+                                <div
+                                    key={i}
+                                    id={`project-${i}`}
                                     className="group flex flex-col gap-6 cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-white/10 rounded-[40px] p-2"
                                     onClick={() => setSelectedProject(project)}
                                     role="button"
@@ -438,8 +449,20 @@ export default function Portfolio() {
                                                 <span key={tag} className="text-[11px] font-black uppercase tracking-[0.1em] text-[#A1A1A1]">{tag}</span>
                                             ))}
                                         </div>
-                                        <span className="material-symbols-outlined text-[18px] text-[#A1A1A1] group-hover:text-white group-hover:translate-x-1 transition-all" aria-hidden="true">east</span>
+                                        <ArrowRight size={18} className="text-[#A1A1A1] group-hover:text-white group-hover:translate-x-1 transition-all" aria-hidden="true" />
                                     </div>
+                                    <noscript>
+                                        <div className="px-2 pt-1">
+                                            <a
+                                                href={project.link}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="text-[10px] font-black uppercase tracking-[0.2em] text-white underline hover:text-[#A1A1A1]"
+                                            >
+                                                {project.linkType === 'repo' ? 'View Repository' : 'View Space'}
+                                            </a>
+                                        </div>
+                                    </noscript>
                                 </div>
                             ))}
                         </div>
@@ -465,8 +488,8 @@ export default function Portfolio() {
                                     </div>
                                     <h3 className="text-2xl font-black uppercase tracking-tight mb-4">{folder.name}</h3>
                                     <p className="text-[#A1A1A1] leading-relaxed text-sm mb-8 flex-grow">{folder.description}</p>
-                                    
-                                    <button 
+
+                                    <button
                                         onClick={() => setExpandedFolder(expandedFolder === i ? null : i)}
                                         aria-label={expandedFolder === i ? `Collapse ${folder.name}` : `View Docs in ${folder.name}`}
                                         aria-expanded={expandedFolder === i}
@@ -474,9 +497,11 @@ export default function Portfolio() {
                                         className="flex items-center justify-between w-full py-4 border-t border-white/5 text-[10px] font-black uppercase tracking-[0.2em] text-white hover:text-[#A1A1A1] transition-colors"
                                     >
                                         <span>{expandedFolder === i ? 'Collapse' : 'View Docs'}</span>
-                                        <span className="material-symbols-outlined text-[16px]" aria-hidden="true">
-                                            {expandedFolder === i ? 'expand_less' : 'expand_more'}
-                                        </span>
+                                        {expandedFolder === i ? (
+                                            <ChevronUp size={16} aria-hidden="true" />
+                                        ) : (
+                                            <ChevronDown size={16} aria-hidden="true" />
+                                        )}
                                     </button>
 
                                     <div
@@ -490,7 +515,7 @@ export default function Portfolio() {
                                     >
                                         <div className="pt-4 space-y-2 w-full max-w-full">
                                             {folder.files.map((file, fi) => (
-                                                <a 
+                                                <a
                                                     key={fi}
                                                     href={`${DOCS_BASE_URL}/${folder.path}/${file.name.split('/').map(segment => encodeURIComponent(segment)).join('/')}`}
                                                     target="_blank"
@@ -507,6 +532,25 @@ export default function Portfolio() {
                                             ))}
                                         </div>
                                     </div>
+                                    <noscript>
+                                        <div className="pt-4 space-y-2 w-full max-w-full">
+                                            {folder.files.map((file, fi) => (
+                                                <a
+                                                    key={fi}
+                                                    href={`${DOCS_BASE_URL}/${folder.path}/${file.name.split('/').map(segment => encodeURIComponent(segment)).join('/')}`}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-all group/file w-full min-w-0"
+                                                >
+                                                    <div className="flex items-center gap-3 min-w-0 flex-1">
+                                                        <File size={14} className="text-white/40 shrink-0" aria-hidden="true" />
+                                                        <span className="text-[11px] font-bold text-[#A1A1A1] group-hover/file:text-white truncate">{file.name.split('/').pop()}</span>
+                                                    </div>
+                                                    <span className="text-[9px] font-black uppercase text-white/70 ml-2 shrink-0">{file.type}</span>
+                                                </a>
+                                            ))}
+                                        </div>
+                                    </noscript>
                                 </div>
                             ))}
                         </div>
@@ -523,7 +567,7 @@ export default function Portfolio() {
 
                         <div className="grid md:grid-cols-2 gap-8">
                             {portfolioData.testimonials.map((testimonial, i) => (
-                                <div 
+                                <div
                                     key={i}
                                     className="p-10 md:p-14 rounded-[40px] bg-white/5 border border-white/5 relative group hover:border-white/10 transition-all duration-500"
                                 >
@@ -534,8 +578,8 @@ export default function Portfolio() {
                                         </p>
                                         <div className="flex items-center gap-6">
                                             <div className="relative w-16 h-16 rounded-2xl overflow-hidden border border-white/10">
-                                                <Image 
-                                                    src={testimonial.photo} 
+                                                <Image
+                                                    src={testimonial.photo}
                                                     alt={`${testimonial.name} – ${testimonial.role}, client of Krish Ujeniya AI Researcher`}
                                                     fill
                                                     sizes="64px"
@@ -578,14 +622,14 @@ export default function Portfolio() {
                                         <form action="https://krishujeniya-backend.vercel.app/api/webDATA" method="post" className="flex flex-col gap-8" onSubmit={async (e) => {
                                             e.preventDefault();
                                             if (isSent || isSubmitting) return;
-                                            
+
                                             const form = e.currentTarget;
                                             const formData = new FormData(form);
 
                                             // HONEYPOT: If bot fills this, we silent-success or simply ignore.
                                             // Backend checks for data.honeypot
                                             const honeypot = formData.get('honeypot') as string;
-                                            
+
                                             const name = (formData.get('name') as string || '').trim();
                                             const email = (formData.get('email') as string || '').trim();
                                             const company = (formData.get('company') as string || 'Not provided').trim();
@@ -595,7 +639,9 @@ export default function Portfolio() {
                                             const timeline = formData.get('timeline') as string || 'Not selected';
                                             const discoverySource = formData.get('discoverySource') as string || 'Not provided';
                                             const preferredContactMethod = formData.get('contactMethod') as string || 'Not provided';
-                                            const message = (formData.get('message') as string || '').trim();
+                                            const rawMessage = (formData.get('message') as string || '').trim();
+                                            const whatsappNumber = ((formData.get('whatsappNumber') as string) || '').trim();
+                                            const message = whatsappNumber ? `${rawMessage}\n\n[WhatsApp Contact: ${whatsappNumber}]` : rawMessage;
 
                                             // Robust Client-side Validation
                                             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -681,34 +727,46 @@ export default function Portfolio() {
                                             }
                                         }}>
                                             {/* Honeypot: visually hidden, filled only by bots */}
-                                            <input 
-                                                type="text" 
-                                                name="honeypot" 
-                                                style={{ display: 'none' }} 
-                                                tabIndex={-1} 
-                                                autoComplete="off" 
-                                                aria-hidden="true" 
+                                            <input
+                                                type="text"
+                                                name="honeypot"
+                                                style={{ display: 'none' }}
+                                                tabIndex={-1}
+                                                autoComplete="off"
+                                                aria-hidden="true"
                                             />
 
                                             {/* Group 1: About You */}
+                                            <p className="text-[10px] font-semibold text-[#525252] tracking-wide mb-2">
+                                                Fields marked with <span aria-hidden="true" className="text-black font-black">*</span> are required.
+                                            </p>
+
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                                                 <div className="flex flex-col gap-3">
-                                                    <label htmlFor="form-name" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Name</label>
+                                                    <label htmlFor="form-name" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">
+                                                        Name <span aria-hidden="true" className="text-black font-black">*</span>
+                                                    </label>
                                                     <input id="form-name" name="name" type="text" autoComplete="name" placeholder="YOUR NAME" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all placeholder:text-[#999999]/30" />
                                                 </div>
                                                 <div className="flex flex-col gap-3">
-                                                    <label htmlFor="form-email" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Email</label>
+                                                    <label htmlFor="form-email" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">
+                                                        Email <span aria-hidden="true" className="text-black font-black">*</span>
+                                                    </label>
                                                     <input id="form-email" name="email" type="email" autoComplete="email" placeholder="YOUR EMAIL" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all placeholder:text-[#999999]/30" />
                                                 </div>
                                             </div>
 
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                                                 <div className="flex flex-col gap-3">
-                                                    <label htmlFor="form-company" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Company / Organization</label>
+                                                    <label htmlFor="form-company" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">
+                                                        Company / Organization <span className="text-[#525252] font-normal lowercase tracking-normal">(optional)</span>
+                                                    </label>
                                                     <input id="form-company" name="company" type="text" autoComplete="organization" placeholder="COMPANY NAME" className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all placeholder:text-[#999999]/30" />
                                                 </div>
                                                 <div className="flex flex-col gap-3">
-                                                    <label htmlFor="form-role" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Your Role</label>
+                                                    <label htmlFor="form-role" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">
+                                                        Your Role <span aria-hidden="true" className="text-black font-black">*</span>
+                                                    </label>
                                                     <div className="relative">
                                                         <select id="form-role" name="role" defaultValue="" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all appearance-none cursor-pointer">
                                                             <option value="" disabled>SELECT YOUR ROLE</option>
@@ -725,7 +783,9 @@ export default function Portfolio() {
 
                                             {/* Group 2: Project Info */}
                                             <div className="flex flex-col gap-4">
-                                                <label id="form-services-label" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Service Interested In</label>
+                                                <label id="form-services-label" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">
+                                                    Service Interested In <span className="text-[#525252] font-normal lowercase tracking-normal">(optional)</span>
+                                                </label>
                                                 <div className="flex flex-wrap gap-2" role="group" aria-labelledby="form-services-label">
                                                     {["Enterprise RAG", "Agentic AI", "MLOps Architecture", "ML Consulting", "Not Sure Yet"].map(service => (
                                                         <button
@@ -746,7 +806,9 @@ export default function Portfolio() {
                                             </div>
 
                                             <div className="flex flex-col gap-4">
-                                                <label id="form-stages-label" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Project Stage</label>
+                                                <label id="form-stages-label" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">
+                                                    Project Stage <span className="text-[#525252] font-normal lowercase tracking-normal">(optional)</span>
+                                                </label>
                                                 <div className="flex flex-wrap gap-2" role="group" aria-labelledby="form-stages-label">
                                                     {["Greenfield Build", "Improve Existing System", "Proof of Concept", "Just Exploring"].map(stage => (
                                                         <button
@@ -767,15 +829,19 @@ export default function Portfolio() {
                                             </div>
 
                                             <div className="flex flex-col gap-3">
-                                                <label htmlFor="form-tech-stack" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Current Tech Stack</label>
+                                                <label htmlFor="form-tech-stack" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">
+                                                    Current Tech Stack <span className="text-[#525252] font-normal lowercase tracking-normal">(optional)</span>
+                                                </label>
                                                 <input id="form-tech-stack" name="techStack" type="text" placeholder="e.g. Python, AWS, Pinecone, LangChain..." className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all placeholder:text-[#999999]/30" />
-                                                <span className="text-[9px] font-medium text-[#A1A1A1] mt-1">Helps estimate integration complexity before we talk.</span>
+                                                <span className="text-[9px] font-medium text-[#525252] mt-1">Helps estimate integration complexity before we talk.</span>
                                             </div>
 
                                             {/* Group 3: Scope & Logistics */}
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                                                 <div className="flex flex-col gap-3">
-                                                    <label htmlFor="form-budget" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Budget Range</label>
+                                                    <label htmlFor="form-budget" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">
+                                                        Budget Range <span aria-hidden="true" className="text-black font-black">*</span>
+                                                    </label>
                                                     <div className="relative">
                                                         <select id="form-budget" name="budget" defaultValue="" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all appearance-none cursor-pointer">
                                                             <option value="" disabled>SELECT BUDGET</option>
@@ -789,7 +855,9 @@ export default function Portfolio() {
                                                     </div>
                                                 </div>
                                                 <div className="flex flex-col gap-3">
-                                                    <label htmlFor="form-timeline" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Desired Timeline</label>
+                                                    <label htmlFor="form-timeline" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">
+                                                        Desired Timeline <span aria-hidden="true" className="text-black font-black">*</span>
+                                                    </label>
                                                     <div className="relative">
                                                         <select id="form-timeline" name="timeline" defaultValue="" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all appearance-none cursor-pointer">
                                                             <option value="" disabled>SELECT TIMELINE</option>
@@ -806,7 +874,9 @@ export default function Portfolio() {
 
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                                                 <div className="flex flex-col gap-3">
-                                                    <label htmlFor="form-source" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">How Did You Find Me</label>
+                                                    <label htmlFor="form-source" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">
+                                                        How Did You Find Me <span aria-hidden="true" className="text-black font-black">*</span>
+                                                    </label>
                                                     <div className="relative">
                                                         <select id="form-source" name="discoverySource" defaultValue="" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all appearance-none cursor-pointer">
                                                             <option value="" disabled>SELECT SOURCE</option>
@@ -820,9 +890,18 @@ export default function Portfolio() {
                                                     </div>
                                                 </div>
                                                 <div className="flex flex-col gap-3">
-                                                    <label htmlFor="form-contact-method" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Preferred Contact Method</label>
+                                                    <label htmlFor="form-contact-method" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">
+                                                        Preferred Contact Method <span aria-hidden="true" className="text-black font-black">*</span>
+                                                    </label>
                                                     <div className="relative">
-                                                        <select id="form-contact-method" name="contactMethod" defaultValue="" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all appearance-none cursor-pointer">
+                                                        <select
+                                                            id="form-contact-method"
+                                                            name="contactMethod"
+                                                            defaultValue=""
+                                                            onChange={(e) => setContactMethod(e.target.value)}
+                                                            required
+                                                            className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all appearance-none cursor-pointer"
+                                                        >
                                                             <option value="" disabled>SELECT METHOD</option>
                                                             {["Email", "Schedule a Call", "WhatsApp", "No Preference"].map(method => (
                                                                 <option key={method} value={method}>{method.toUpperCase()}</option>
@@ -832,20 +911,57 @@ export default function Portfolio() {
                                                             <ChevronRight size={14} className="rotate-90 text-[#999999]/50" />
                                                         </div>
                                                     </div>
+                                                    {contactMethod === 'WhatsApp' && (
+                                                        <div className="flex flex-col gap-3 mt-2">
+                                                            <label htmlFor="form-whatsapp" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">
+                                                                WhatsApp Number <span aria-hidden="true" className="text-black font-black">*</span>
+                                                            </label>
+                                                            <input
+                                                                id="form-whatsapp"
+                                                                name="whatsappNumber"
+                                                                type="tel"
+                                                                autoComplete="tel"
+                                                                placeholder="+1 (555) 000-0000"
+                                                                required
+                                                                className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all placeholder:text-[#999999]/30"
+                                                            />
+                                                        </div>
+                                                    )}
+                                                    <noscript>
+                                                        <div className="flex flex-col gap-3 mt-2">
+                                                            <label htmlFor="form-whatsapp-fallback" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">
+                                                                WhatsApp / Phone (Optional)
+                                                            </label>
+                                                            <input
+                                                                id="form-whatsapp-fallback"
+                                                                name="whatsappNumber"
+                                                                type="tel"
+                                                                autoComplete="tel"
+                                                                placeholder="+1 (555) 000-0000"
+                                                                className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all placeholder:text-[#999999]/30"
+                                                            />
+                                                        </div>
+                                                    </noscript>
                                                 </div>
                                             </div>
 
                                             <div className="flex flex-col gap-3">
-                                                <label htmlFor="form-message" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">Project Details</label>
+                                                <label htmlFor="form-message" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">
+                                                    Project Details <span aria-hidden="true" className="text-black font-black">*</span>
+                                                </label>
                                                 <textarea id="form-message" name="message" rows={4} placeholder="TELL ME ABOUT YOUR PROJECT" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all placeholder:text-[#999999]/30 resize-none" />
                                             </div>
+
+                                            <p className="text-[10px] font-medium text-[#525252] leading-relaxed">
+                                                Privacy: Your contact details and project summary are retained securely for up to 30 days strictly to review and reply to your inquiry. Data is never shared with third parties or used for unsolicited marketing.
+                                            </p>
                                             {isSent ? (
                                                 <div role="status" aria-live="polite" className="w-full flex items-center justify-center gap-4 bg-green-500/10 text-green-500 py-8 rounded-full text-sm font-black uppercase tracking-[0.3em] border border-green-500/20 mt-8 animate-[fadeScaleIn_0.4s_ease_forwards]">
                                                     Inquiry Sent! <Sparkles size={18} aria-hidden="true" />
                                                 </div>
                                             ) : (
                                                 <>
-                                                    <button 
+                                                    <button
                                                         type="submit"
                                                         disabled={isSubmitting}
                                                         aria-label="Send inquiry"
@@ -876,14 +992,14 @@ export default function Portfolio() {
                             © 2026 · BUILDING RELIABLE AI SYSTEMS
                         </div>
                     </div>
-                    
+
                         <div className="flex flex-wrap justify-center gap-8 sm:gap-12">
                             {Object.entries(portfolioData.profile.socials)
                                 .filter(([name]) => name !== 'calendar')
                                 .map(([name, url]) => (
-                                <a 
-                                    key={name} 
-                                    href={url} 
+                                <a
+                                    key={name}
+                                    href={url}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     aria-label={`Visit my ${name} profile`}
@@ -894,7 +1010,7 @@ export default function Portfolio() {
                             ))}
                         </div>
 
-                    <button 
+                    <button
                         onClick={() => scrollTo('home')}
                         aria-label="Back to top"
                         className={`group flex flex-col items-center gap-4 text-[11px] font-black uppercase tracking-[0.3em] text-[#A1A1A1] hover:text-white transition-all duration-300 ${scrolled ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
@@ -908,7 +1024,7 @@ export default function Portfolio() {
             </footer>
 
             {selectedProject && (
-                <div 
+                <div
                     id="project-modal"
                     role="dialog"
                     aria-modal="true"
@@ -916,7 +1032,7 @@ export default function Portfolio() {
                     className="fixed inset-0 z-[500] flex items-center justify-center p-4 sm:p-12 bg-black/95 backdrop-blur-2xl animate-[fadeIn_0.25s_ease_forwards]"
                     onClick={() => setSelectedProject(null)}
                 >
-                    <div 
+                    <div
                         className="w-full max-w-6xl bg-[#0A0A0A] border border-white/10 rounded-[32px] sm:rounded-[64px] overflow-hidden grid lg:grid-cols-12 max-h-full overflow-y-auto relative animate-[scaleIn_0.3s_ease_forwards]"
                         onClick={(e) => e.stopPropagation()}
                     >
@@ -932,7 +1048,7 @@ export default function Portfolio() {
                             />
                             <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-black via-transparent to-transparent"></div>
                             <div className="absolute top-8 left-8">
-                                <button 
+                                <button
                                     onClick={() => setSelectedProject(null)}
                                     aria-label="Close project details"
                                     className="w-12 h-12 flex items-center justify-center bg-white/10 backdrop-blur-md rounded-full text-white hover:bg-white hover:text-black transition-all"
@@ -944,7 +1060,7 @@ export default function Portfolio() {
                         <div className="lg:col-span-7 p-8 md:p-16 overflow-y-visible">
                             <span className="text-[11px] font-black uppercase tracking-[0.2em] text-[#A1A1A1] mb-4 block">{selectedProject.category}</span>
                             <h3 id="modal-title" className="text-4xl md:text-5xl font-black uppercase tracking-tighter mb-8">{selectedProject.title}</h3>
-                            
+
                             <div className="space-y-10">
                                 <div className="space-y-3">
                                     <div className="flex items-center gap-3">
@@ -975,13 +1091,13 @@ export default function Portfolio() {
                                 </div>
 
                                 <div className="pt-8 flex gap-4">
-                                    <a 
-                                        href={selectedProject.link} 
-                                        target="_blank" 
+                                    <a
+                                        href={selectedProject.link}
+                                        target="_blank"
                                         aria-label={`${selectedProject.linkType === 'repo' ? 'View Repository' : 'View Space'} for ${selectedProject.title}`}
                                         className="flex-grow flex items-center justify-between bg-white text-black px-8 py-5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] hover:bg-[#474747] hover:text-white transition-all duration-500"
                                     >
-                                        {selectedProject.linkType === 'repo' ? 'View Repository' : 'View Space'} <span className="material-symbols-outlined" aria-hidden="true">arrow_outward</span>
+                                        {selectedProject.linkType === 'repo' ? 'View Repository' : 'View Space'} <ArrowUpRight size={16} aria-hidden="true" />
                                     </a>
                                 </div>
                             </div>
