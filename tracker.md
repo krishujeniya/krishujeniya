@@ -1,5 +1,19 @@
 Reviewed your [live site](https://krishujeniya.github.io/krishujeniya/), [frontend repository](https://github.com/krishujeniya/krishujeniya), and connected backend source. These are observed problems and code-supported failure cases—not a guarantee that every device or situation was tested. Email delivery and real-user performance metrics remain unverified.
 
+## Current status and follow-up plan — 2026-11-16
+
+The authorized bug-fix pass is complete and deployed. Frontend revision `768b44d04d36d3739264c3fd1991fd5894380925` passed GitHub Actions run `43807728643`, including dependency audit, lint, typecheck, build, nine Obscura browser checks, GitHub Pages deployment, a published contact-form markup check, and a production readiness request. That readiness request confirmed the Vercel backend can reach MongoDB Atlas. It did not submit an inquiry or verify SMTP delivery. No new features or copy changes were authorized; visual and interaction changes were limited to fixes for the tracked defects.
+
+The tracker as a whole is **not fully closed**. The remaining work is conditional on these inputs and decisions, in this order:
+
+1. **Choose the Atlas network and database-user posture.** The current access list includes `0.0.0.0/0`, and the older `mostlyoutlier_app` account still has access to the `mostlyoutlier` database. Determine whether to retain or remove that account and how to constrain access while the Vercel Hobby deployment uses dynamic egress. No credentials or connection strings belong in this document.
+2. **Set the contact-data and delivery policy.** Confirm whether the 30-day retention, daily retry schedule, two-record retry limit, potential duplicate after the SMTP/MongoDB crash window, and concurrent-lease behavior meet the intended operating requirements. A real SMTP and inquiry acceptance check remains outstanding.
+3. **Decide whether to authorize visible product changes.** Items 19, 35, 37–41, 44–47, and 53 require UI, UX, or content changes and remain outside the approved bug-only scope. Item 43 would retain visitor chat text and should wait for an explicit privacy and retention decision. Keep the current UI and content unchanged until that scope is approved.
+4. **Provide the missing audit input for item 12.** Its description is blank in the supplied tracker, so it cannot be evaluated yet.
+5. **Choose hosting for item 48.** A project-subpath GitHub Pages site cannot publish the required domain-root `/robots.txt`; resolving it requires a hosting or domain-routing decision.
+
+The backend uses MongoDB Atlas as requested. Do not introduce Redis for this portfolio backend. Redis references elsewhere in the repository describe separate profile or setup material, not this backend's storage configuration.
+
 1. **High — Chat accepts unsafe HTML.** User messages enter `dangerouslySetInnerHTML` without sanitization. Harmless HTML rendered during testing, confirming HTML injection and a self-XSS risk. This is not evidence of a remotely exploitable attack. [React](https://react.dev/reference/react-dom/components/common?utm_source=chatgpt.com)
 
 2. **High — Form submission can expose personal information when JavaScript fails.** The form has neither `action` nor `method`. Without its JavaScript handler, native submission defaults to GET, putting entered information into the page URL.
