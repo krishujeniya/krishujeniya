@@ -65,13 +65,33 @@ export function AntigravityCanvas({ className = '', config }: AntigravityCanvasP
     );
     intersectionObserver.observe(container);
 
-    // Global pointer tracking (canvas is pointer-events-none, window captures pointer)
+    // Localized pointer tracking: only activate when pointer is within this container
     const onPointerMove = (e: PointerEvent) => {
-      engine.updatePointer(e.clientX, e.clientY, true);
+      const rect = container.getBoundingClientRect();
+      const isInside =
+        e.clientX >= rect.left &&
+        e.clientX <= rect.right &&
+        e.clientY >= rect.top &&
+        e.clientY <= rect.bottom;
+
+      if (isInside) {
+        engine.updatePointer(e.clientX, e.clientY, true);
+      } else {
+        engine.updatePointer(-9999, -9999, false);
+      }
     };
 
     const onPointerEnter = (e: PointerEvent) => {
-      engine.updatePointer(e.clientX, e.clientY, true);
+      const rect = container.getBoundingClientRect();
+      const isInside =
+        e.clientX >= rect.left &&
+        e.clientX <= rect.right &&
+        e.clientY >= rect.top &&
+        e.clientY <= rect.bottom;
+
+      if (isInside) {
+        engine.updatePointer(e.clientX, e.clientY, true);
+      }
     };
 
     const onPointerLeave = () => {

@@ -188,9 +188,9 @@ export default function Portfolio() {
         <div className="min-h-screen bg-[#050505] text-[#FAFAFA] font-body selection:bg-[#474747] selection:text-white">
 
             <a className="skip-link" href="#main-content">Skip to main content</a>
-            <nav className="fixed top-0 inset-x-0 w-full z-[100] transition-all duration-300 flex items-center justify-between px-6 sm:px-10 md:px-14 py-3 sm:py-3.5 bg-black/60 backdrop-blur-2xl border-b border-white/5">
+            <nav className="fixed top-3 sm:top-5 inset-x-3 sm:inset-x-6 md:inset-x-8 max-w-[1440px] mx-auto z-[100] transition-all duration-300 rounded-full flex items-center justify-between px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 bg-black/60 backdrop-blur-2xl border border-white/10 shadow-2xl shadow-black/80">
                 {/* Left: Brand Name */}
-                <div className="flex-1 flex items-center justify-start min-w-[140px]">
+                <div className="flex-1 flex items-center justify-start min-w-[120px]">
                     <div
                         className="text-sm sm:text-base font-black tracking-tighter cursor-pointer hover:opacity-70 transition-opacity whitespace-nowrap outline-none flex items-center gap-2"
                         onClick={() => scrollTo('home')}
@@ -233,7 +233,7 @@ export default function Portfolio() {
                 </div>
 
                 {/* Right: Hire Me CTA */}
-                <div className="flex-1 flex items-center justify-end min-w-[140px]">
+                <div className="flex-1 flex items-center justify-end min-w-[120px]">
                     <a
                         href="#contact"
                         onClick={(e) => {
@@ -251,7 +251,7 @@ export default function Portfolio() {
 
 
             <main id="main-content" tabIndex={-1} className="flex flex-col">
-                <section id="home" className="relative min-h-screen flex flex-col justify-center items-center px-6 md:px-12 py-12">
+                <section id="home" className="relative min-h-screen flex flex-col justify-center items-center px-6 md:px-12 py-12 overflow-hidden">
                     <AntigravityCanvas />
                     <div className="max-w-[1440px] mx-auto w-full relative z-10 flex flex-col items-center text-center -translate-y-4 sm:-translate-y-6 md:-translate-y-8">
                         <div className="flex flex-col items-center text-center">
@@ -598,7 +598,7 @@ export default function Portfolio() {
                 </section>
 
                 {/* Contact Section */}
-                <section id="contact" className="pt-24 pb-12 px-6 md:px-12 bg-white text-black rounded-t-[40px] md:rounded-t-[80px] rounded-b-none relative z-10">
+                <section id="contact" className="py-24 px-6 md:px-12 bg-white text-black rounded-[40px] md:rounded-[80px] mb-20 relative z-10">
                     <div className="max-w-[1440px] mx-auto">
                         <div className="grid lg:grid-cols-12 gap-20">
                             <div className="lg:col-span-6 flex flex-col gap-10">
@@ -981,12 +981,13 @@ export default function Portfolio() {
                 </section>
             </main>
 
-            <footer className="pt-6 sm:pt-10 pb-16 px-4 sm:px-8 md:px-12 bg-white text-black overflow-hidden relative z-10 rounded-b-[40px] md:rounded-b-[80px] mb-8 sm:mb-16">
-                <div className="max-w-[1440px] mx-auto flex flex-col items-center">
+            <footer className="pt-20 sm:pt-28 pb-12 px-4 sm:px-8 md:px-12 border-t border-white/5 bg-[#050505] text-[#FAFAFA] relative overflow-hidden">
+                <AntigravityCanvas />
+                <div className="max-w-[1440px] mx-auto flex flex-col items-center relative z-10">
                     {/* Top Row: Tagline & Social Links */}
-                    <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-6 pb-8 sm:pb-12">
+                    <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-6 pb-12 sm:pb-16 border-b border-white/5">
                         <div className="text-[10px] sm:text-[11px] font-black uppercase tracking-[0.3em] text-[#737373] text-center sm:text-left">
-                            © 2026 · BUILDING RELIABLE AI SYSTEMS
+                            © 2026 · AVAILABLE FOR GLOBAL AI RESEARCH & CONTRACTS
                         </div>
 
                         <div className="flex flex-wrap justify-center items-center gap-6 sm:gap-8">
@@ -999,7 +1000,7 @@ export default function Portfolio() {
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     aria-label={`Visit my ${name} profile`}
-                                    className="text-[10px] font-black uppercase tracking-[0.2em] text-[#737373] hover:text-black transition-colors border-b border-transparent hover:border-black/30 pb-0.5"
+                                    className="text-[10px] font-black uppercase tracking-[0.2em] text-[#737373] hover:text-white transition-colors border-b border-transparent hover:border-white/30 pb-0.5"
                                 >
                                     {name === 'huggingface' ? 'HuggingFace' : name}
                                 </a>
@@ -1010,7 +1011,7 @@ export default function Portfolio() {
                     {/* Giant Monumental Name Banner like Google Antigravity */}
                     <div className="w-full py-12 sm:py-20 md:py-28 flex justify-center items-center overflow-visible select-none">
                         <div
-                            className="footer-brand-title w-full flex items-baseline justify-center font-black tracking-tighter text-[clamp(2.4rem,10.2vw,14.5rem)] leading-none text-black whitespace-nowrap"
+                            className="footer-brand-title w-full flex items-baseline justify-center font-black tracking-tighter text-[clamp(1.75rem,8.2vw,14.5rem)] leading-none text-white whitespace-nowrap"
                             aria-label="KRISH UJENIYA"
                         >
                             <span className="footer-letter inline-block">K</span>
@@ -1023,29 +1024,29 @@ export default function Portfolio() {
                             <span className="footer-letter inline-block">J</span>
                             <span className="footer-letter inline-block">E</span>
                             <span className="footer-letter inline-block">N</span>
-                            <span className="footer-letter floating-letter floating-letter-1 inline-block text-black" style={{ transformOrigin: 'bottom center' }}>I</span>
-                            <span className="footer-letter floating-letter floating-letter-2 inline-block text-black" style={{ transformOrigin: 'bottom center' }}>Y</span>
-                            <span className="footer-letter floating-letter floating-letter-3 inline-block text-black" style={{ transformOrigin: 'bottom center' }}>A</span>
+                            <span className="footer-letter floating-letter floating-letter-1 inline-block text-white" style={{ transformOrigin: 'bottom center' }}>I</span>
+                            <span className="footer-letter floating-letter floating-letter-2 inline-block text-white" style={{ transformOrigin: 'bottom center' }}>Y</span>
+                            <span className="footer-letter floating-letter floating-letter-3 inline-block text-white" style={{ transformOrigin: 'bottom center' }}>A</span>
                         </div>
                     </div>
 
                     {/* Bottom Row: Copyright & Back to Top */}
-                    <div className="w-full pt-8 sm:pt-12 flex flex-col sm:flex-row items-center justify-between gap-6 sm:gap-8">
+                    <div className="w-full pt-8 sm:pt-12 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-6 sm:gap-8">
                         <div className="flex items-center gap-3 text-[10px] sm:text-[11px] font-black uppercase tracking-[0.25em] text-[#737373]">
                             <span>KRISH UJENIYA</span>
-                            <span className="text-black/20">/</span>
+                            <span className="text-white/20">/</span>
                             <span>ALL RIGHTS RESERVED</span>
-                            <span className="hidden md:inline text-black/20">/</span>
+                            <span className="hidden md:inline text-white/20">/</span>
                             <span className="hidden md:inline">AVAILABLE WORLDWIDE</span>
                         </div>
 
                         <button
                             onClick={() => scrollTo('home')}
                             aria-label="Back to top"
-                            className={`group flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.25em] text-[#737373] hover:text-black transition-colors ${scrolled ? 'opacity-100' : 'opacity-70'}`}
+                            className={`group flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.25em] text-[#A1A1A1] hover:text-white transition-colors ${scrolled ? 'opacity-100' : 'opacity-70'}`}
                         >
                             Back to Top
-                            <span className="w-8 h-8 rounded-full border border-black/15 flex items-center justify-center group-hover:border-black/40 transition-all bg-black/5">
+                            <span className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center group-hover:border-white/30 transition-all bg-white/5">
                                 <ArrowUp size={14} aria-hidden="true" />
                             </span>
                         </button>
