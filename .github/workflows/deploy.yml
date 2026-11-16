@@ -145,7 +145,7 @@ jobs:
           body="$RUNNER_TEMP/backend-readiness.json"
           log="$RUNNER_TEMP/obscura-backend-smoke.log"
           for attempt in {1..5}; do
-            if obscura fetch "$health_url" --dump text --timeout 30 > "$body" 2> "$log" && \
+            if obscura fetch "$health_url" --dump original --timeout 30 > "$body" 2> "$log" && \
               grep -Eq '"status"[[:space:]]*:[[:space:]]*"ready"' "$body"; then
               echo "Production backend readiness confirmed"
               exit 0
