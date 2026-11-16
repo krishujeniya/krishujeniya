@@ -35,43 +35,43 @@ const CONTACT_SUBMISSION_STORAGE_KEY = 'portfolio-contact-submission';
 
 const DOCUMENT_THEMES: Record<string, { gradient: string; accent: string; tag: string }> = {
     'Certificates': {
-        gradient: 'from-[#1E1B18] via-[#2A241A] to-[#F59E0B]/20',
-        accent: 'text-amber-400',
+        gradient: 'from-[#FFFFFF] via-[#F5F5F5] to-[#E5E5E5]',
+        accent: 'text-neutral-700',
         tag: 'Verified Credentials',
     },
     'MLOps': {
-        gradient: 'from-[#161426] via-[#1E1B38] to-[#8B5CF6]/20',
-        accent: 'text-purple-400',
+        gradient: 'from-[#F8F9FA] via-[#E9ECEF] to-[#DEE2E6]',
+        accent: 'text-neutral-800',
         tag: 'Pipelines & DSA',
     },
     'Cloud': {
-        gradient: 'from-[#0C1E2E] via-[#0E283D] to-[#38BDF8]/20',
-        accent: 'text-sky-400',
+        gradient: 'from-[#F4F4F5] via-[#E4E4E7] to-[#D4D4D8]',
+        accent: 'text-neutral-700',
         tag: 'Cloud Infrastructure',
     },
     'CyberSecurity': {
-        gradient: 'from-[#0A2218] via-[#0F3024] to-[#10B981]/20',
-        accent: 'text-emerald-400',
+        gradient: 'from-[#F0F2F5] via-[#E2E5E9] to-[#CBD2D9]',
+        accent: 'text-neutral-800',
         tag: 'Defense & Forensics',
     },
     'DBMS': {
-        gradient: 'from-[#0F1B2E] via-[#142642] to-[#60A5FA]/20',
-        accent: 'text-blue-400',
+        gradient: 'from-[#FAFAFA] via-[#F0F0F0] to-[#DFDFDF]',
+        accent: 'text-neutral-700',
         tag: 'Data Architecture',
     },
     'DevOps': {
-        gradient: 'from-[#26160F] via-[#381F14] to-[#FB923C]/20',
-        accent: 'text-orange-400',
+        gradient: 'from-[#F6F7F9] via-[#EBECEF] to-[#D8DAE0]',
+        accent: 'text-neutral-800',
         tag: 'SDLC & Automation',
     },
     'BlockChain': {
-        gradient: 'from-[#220F2B] via-[#331442] to-[#C084FC]/20',
-        accent: 'text-fuchsia-400',
+        gradient: 'from-[#FFFFFF] via-[#F2F2F2] to-[#E1E1E1]',
+        accent: 'text-neutral-700',
         tag: 'Decentralized Ledger',
     },
     'Digital Marketing': {
-        gradient: 'from-[#2B0F18] via-[#3D1422] to-[#F43F5E]/20',
-        accent: 'text-rose-400',
+        gradient: 'from-[#F5F5F7] via-[#E5E5EA] to-[#D1D1D6]',
+        accent: 'text-neutral-800',
         tag: 'Growth & Analytics',
     },
 };
@@ -879,22 +879,22 @@ export default function Portfolio() {
                     </div>
                 </section>
 
-                {/* Documents Section — Google Labs Rounded Carousel Style (Dark Theme) */}
-                <section id="documents" className="py-24 px-4 sm:px-6 md:px-12 bg-[#050505] text-white my-12 relative overflow-hidden z-10">
-                    {/* Organic Ambient Glows */}
-                    <div className="absolute -bottom-24 -left-24 w-96 h-96 rounded-full bg-[#3B82F6]/10 blur-3xl pointer-events-none" />
-                    <div className="absolute -bottom-24 -right-24 w-96 h-96 rounded-full bg-[#EC4899]/10 blur-3xl pointer-events-none" />
-                    <div className="absolute -top-24 right-1/4 w-80 h-80 rounded-full bg-[#10B981]/10 blur-3xl pointer-events-none" />
+                {/* Documents Section — Google Labs Rounded Carousel Style (Light Monochrome) */}
+                <section id="documents" className="py-24 px-4 sm:px-6 md:px-12 bg-[#F5F5F7] text-black rounded-[40px] md:rounded-[64px] my-12 relative overflow-hidden z-10 border border-black/5">
+                    {/* Subtle Monochrome Ambient Shapes */}
+                    <div className="absolute -bottom-24 -left-24 w-96 h-96 rounded-full bg-black/[0.03] blur-3xl pointer-events-none" />
+                    <div className="absolute -bottom-24 -right-24 w-96 h-96 rounded-full bg-black/[0.03] blur-3xl pointer-events-none" />
+                    <div className="absolute -top-24 right-1/4 w-80 h-80 rounded-full bg-white/80 blur-3xl pointer-events-none" />
 
                     <div className="max-w-[1440px] mx-auto relative z-10">
                         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-16">
                             <div className="flex flex-col items-start gap-3">
-                                <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#A1A1A1]">/ Resources</span>
-                                <h2 className="text-[clamp(2.75rem,7vw,6.5rem)] font-black tracking-tighter uppercase leading-none text-white">
+                                <span className="text-[10px] font-black uppercase tracking-[0.4em] text-neutral-500">/ Resources</span>
+                                <h2 className="text-[clamp(2.75rem,7vw,6.5rem)] font-black tracking-tighter uppercase leading-none text-black">
                                     Technical <br />Resources
                                 </h2>
                             </div>
-                            <p className="text-sm sm:text-base text-[#A1A1A1] max-w-md leading-relaxed">
+                            <p className="text-sm sm:text-base text-neutral-600 max-w-md leading-relaxed">
                                 Curated technical documentation, course notes, and verified credentials across AI, systems architecture, and engineering.
                             </p>
                         </div>
@@ -906,23 +906,23 @@ export default function Portfolio() {
                         >
                             {portfolioData.documents.map((folder, i) => {
                                 const theme = DOCUMENT_THEMES[folder.name] || {
-                                    gradient: 'from-[#141416] via-[#1A1A1E] to-white/10',
-                                    accent: 'text-zinc-400',
+                                    gradient: 'from-[#FFFFFF] via-[#F5F5F5] to-[#E5E5E5]',
+                                    accent: 'text-neutral-700',
                                     tag: 'Documentation',
                                 };
 
                                 return (
                                     <div
                                         key={i}
-                                        className="document-card group flex-shrink-0 w-[calc(100vw-2.5rem)] xs:w-[320px] sm:w-[350px] md:w-[380px] max-w-[380px] bg-[#0E0E10] text-white rounded-[32px] sm:rounded-[36px] p-6 sm:p-7 flex flex-col justify-between border border-white/10 hover:border-white/25 shadow-2xl transition-all duration-500 snap-start overflow-hidden relative"
+                                        className="document-card group flex-shrink-0 w-[calc(100vw-2.5rem)] xs:w-[320px] sm:w-[350px] md:w-[380px] max-w-[380px] bg-white text-black rounded-[32px] sm:rounded-[36px] p-6 sm:p-7 flex flex-col justify-between border border-black/10 hover:border-black/25 shadow-lg hover:shadow-xl transition-all duration-500 snap-start overflow-hidden relative"
                                     >
                                         {/* Upper Visual Illustration matching Google Labs card format */}
-                                        <div className={`w-full h-[180px] sm:h-[200px] rounded-[24px] p-5 flex flex-col justify-between relative overflow-hidden bg-gradient-to-br ${theme.gradient} border border-white/10 transition-transform duration-500 group-hover:scale-[1.02]`}>
+                                        <div className={`w-full h-[180px] sm:h-[200px] rounded-[24px] p-5 flex flex-col justify-between relative overflow-hidden bg-gradient-to-br ${theme.gradient} border border-black/10 transition-transform duration-500 group-hover:scale-[1.02]`}>
                                             <div className="flex items-center justify-between z-10">
-                                                <div className="w-11 h-11 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 flex items-center justify-center text-white shadow-sm">
+                                                <div className="w-11 h-11 rounded-2xl bg-white shadow-sm border border-black/10 flex items-center justify-center text-black">
                                                     <folder.icon size={22} />
                                                 </div>
-                                                <span className="text-[10px] font-black uppercase tracking-wider px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-white/90 shadow-sm">
+                                                <span className="text-[10px] font-black uppercase tracking-wider px-3.5 py-1.5 rounded-full bg-white text-black shadow-sm border border-black/10">
                                                     {folder.files.length} Files
                                                 </span>
                                             </div>
@@ -931,21 +931,21 @@ export default function Portfolio() {
                                                 <span className={`text-[10px] font-black uppercase tracking-widest ${theme.accent}`}>
                                                     {theme.tag}
                                                 </span>
-                                                <p className="text-xs font-black text-white/90 mt-0.5 truncate">
+                                                <p className="text-xs font-black text-black mt-0.5 truncate">
                                                     {folder.name} Library
                                                 </p>
                                             </div>
 
                                             {/* Decorative soft blurred circles */}
-                                            <div className="absolute -bottom-8 -right-8 w-32 h-32 rounded-full bg-white/5 blur-xl pointer-events-none" />
+                                            <div className="absolute -bottom-8 -right-8 w-32 h-32 rounded-full bg-white/60 blur-xl pointer-events-none" />
                                         </div>
 
                                         {/* Middle Content */}
                                         <div className="pt-5 flex-grow flex flex-col justify-start">
-                                            <h3 className="text-2xl sm:text-[26px] font-black uppercase tracking-tight text-white leading-tight mb-2">
+                                            <h3 className="text-2xl sm:text-[26px] font-black uppercase tracking-tight text-black leading-tight mb-2">
                                                 {folder.name}
                                             </h3>
-                                            <p className="text-xs sm:text-sm text-[#A1A1A1] leading-relaxed line-clamp-2">
+                                            <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed line-clamp-2">
                                                 {folder.description}
                                             </p>
                                         </div>
@@ -957,7 +957,7 @@ export default function Portfolio() {
                                                 aria-label={expandedFolder === i ? `Collapse ${folder.name}` : `View Docs in ${folder.name}`}
                                                 aria-expanded={expandedFolder === i}
                                                 aria-controls={`documents-folder-${i}`}
-                                                className="flex items-center justify-between w-full py-3.5 px-5 rounded-full bg-white/5 hover:bg-white hover:text-black text-white font-black text-[10px] uppercase tracking-[0.2em] border border-white/10 hover:border-white transition-all duration-300 active:scale-95"
+                                                className="flex items-center justify-between w-full py-3.5 px-5 rounded-full bg-black/5 hover:bg-black hover:text-white text-black font-black text-[10px] uppercase tracking-[0.2em] border border-black/10 hover:border-black transition-all duration-300 active:scale-95"
                                             >
                                                 <span>{expandedFolder === i ? 'Collapse Docs' : 'View Docs'}</span>
                                                 <span className="flex items-center gap-1.5">
@@ -988,13 +988,13 @@ export default function Portfolio() {
                                                             target="_blank"
                                                             rel="noopener noreferrer"
                                                             tabIndex={expandedFolder === i ? 0 : -1}
-                                                            className="flex items-center justify-between p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 transition-all text-white w-full min-w-0 group/file"
+                                                            className="flex items-center justify-between p-2.5 rounded-xl bg-black/5 hover:bg-black/10 border border-black/5 transition-all text-black w-full min-w-0 group/file"
                                                         >
                                                             <div className="flex items-center gap-2.5 min-w-0 flex-1">
-                                                                <File size={13} className="text-white/40 group-hover/file:text-white/70 shrink-0" aria-hidden="true" />
-                                                                <span className="text-[11px] font-bold text-[#A1A1A1] group-hover/file:text-white truncate">{file.name.split('/').pop()}</span>
+                                                                <File size={13} className="text-neutral-500 group-hover/file:text-black shrink-0" aria-hidden="true" />
+                                                                <span className="text-[11px] font-bold text-neutral-800 group-hover/file:text-black truncate">{file.name.split('/').pop()}</span>
                                                             </div>
-                                                            <span className="text-[9px] font-black uppercase text-white/50 ml-2 shrink-0">{file.type}</span>
+                                                            <span className="text-[9px] font-black uppercase text-neutral-500 ml-2 shrink-0">{file.type}</span>
                                                         </a>
                                                     ))}
                                                 </div>
@@ -1008,13 +1008,13 @@ export default function Portfolio() {
                                                             href={`${DOCS_BASE_URL}/${folder.path}/${file.name.split('/').map(segment => encodeURIComponent(segment)).join('/')}`}
                                                             target="_blank"
                                                             rel="noopener noreferrer"
-                                                            className="flex items-center justify-between p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 transition-all text-white w-full min-w-0"
+                                                            className="flex items-center justify-between p-2.5 rounded-xl bg-black/5 hover:bg-black/10 border border-black/5 transition-all text-black w-full min-w-0"
                                                         >
                                                             <div className="flex items-center gap-2.5 min-w-0 flex-1">
-                                                                <File size={13} className="text-white/40 shrink-0" aria-hidden="true" />
-                                                                <span className="text-[11px] font-bold text-[#A1A1A1] truncate">{file.name.split('/').pop()}</span>
+                                                                <File size={13} className="text-neutral-500 shrink-0" aria-hidden="true" />
+                                                                <span className="text-[11px] font-bold text-neutral-800 truncate">{file.name.split('/').pop()}</span>
                                                             </div>
-                                                            <span className="text-[9px] font-black uppercase text-white/50 ml-2 shrink-0">{file.type}</span>
+                                                            <span className="text-[9px] font-black uppercase text-neutral-500 ml-2 shrink-0">{file.type}</span>
                                                         </a>
                                                     ))}
                                                 </div>
@@ -1025,19 +1025,19 @@ export default function Portfolio() {
                             })}
                         </div>
 
-                        {/* Carousel Navigation Arrows matching Google Labs */}
+                        {/* Carousel Navigation Arrows */}
                         <div className="flex items-center justify-center gap-4 mt-8 sm:mt-10">
                             <button
                                 onClick={() => scrollDocuments('left')}
                                 aria-label="Previous documents"
-                                className="w-12 h-12 rounded-full border border-white/15 bg-white/5 hover:bg-white hover:text-black text-white flex items-center justify-center transition-all duration-300 active:scale-95 shadow-md"
+                                className="w-12 h-12 rounded-full border border-black/15 bg-white hover:bg-black hover:text-white text-black flex items-center justify-center transition-all duration-300 active:scale-95 shadow-md"
                             >
                                 <ChevronLeft size={20} />
                             </button>
                             <button
                                 onClick={() => scrollDocuments('right')}
                                 aria-label="Next documents"
-                                className="w-12 h-12 rounded-full border border-white/15 bg-white/5 hover:bg-white hover:text-black text-white flex items-center justify-center transition-all duration-300 active:scale-95 shadow-md"
+                                className="w-12 h-12 rounded-full border border-black/15 bg-white hover:bg-black hover:text-white text-black flex items-center justify-center transition-all duration-300 active:scale-95 shadow-md"
                             >
                                 <ChevronRight size={20} />
                             </button>

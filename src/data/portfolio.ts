@@ -77,6 +77,15 @@ export const portfolioData = {
   ],
   experience: [
     {
+      role: 'Freelance ML & Software Engineer',
+      company: 'Self-Employed',
+      duration: '2023 — Present',
+      location: 'Remote',
+      description: 'Ship production-ready ML systems for startups and engineering teams — RAG pipelines, autonomous agents, and MLOps infrastructure. Every project includes monitoring, documentation, and full handover.',
+      icon: Briefcase,
+      tags: ['Python', 'ZenML', 'MLflow', 'Flutter'],
+    },
+    {
       role: 'AI & Data Engineering Trainee (Internship)',
       company: 'Microsoft Partner Program (GTU)',
       duration: 'Jul 2026 · 1 mo',
@@ -93,15 +102,6 @@ export const portfolioData = {
       description: 'Completed a 4-week virtual internship in Emerging Technologies via Edunet Foundation, AICTE, and IBM SkillsBuild. Trained on Agentic AI, Cyber Security, and Quantum Computing. Architected and deployed an AI + Cloud capstone project. Earned IBM-recognized digital credentials and SkillsBuild badges.',
       icon: Cpu,
       tags: ['IBM Cloud', 'Agentic AI', 'Quantum Computing', 'Cybersecurity', 'IBM SkillsBuild'],
-    },
-    {
-      role: 'Freelance ML & Software Engineer',
-      company: 'Self-Employed',
-      duration: '2023 — Present',
-      location: 'Remote',
-      description: 'Ship production-ready ML systems for startups and engineering teams — RAG pipelines, autonomous agents, and MLOps infrastructure. Every project includes monitoring, documentation, and full handover.',
-      icon: Briefcase,
-      tags: ['Python', 'ZenML', 'MLflow', 'Flutter'],
     },
     {
       role: 'Machine Learning Engineer Intern',
