@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useGsapAnimations } from '@/hooks/useGsapAnimations';
 import Image from 'next/image';
+import { AntigravityCanvas } from '@/components/client-dynamic';
 
 import { portfolioData } from '@/data/portfolio';
 
@@ -204,7 +205,7 @@ export default function Portfolio() {
                                 }
                             }}
                         >
-                            <span className="sm:hidden text-crossfade">
+                            <span className="sm:hidden">
                                 {activeSection === 'home' ? (
                                     <>KRISH <span className="text-[#A1A1A1]">UJENIYA</span></>
                                 ) : activeSection.toUpperCase()}
@@ -251,63 +252,27 @@ export default function Portfolio() {
 
             <main id="main-content" tabIndex={-1} className="flex flex-col">
                 <section id="home" className="relative min-h-screen flex flex-col justify-center px-6 md:px-12 pt-32 md:pt-20">
-                    <div className="max-w-[1440px] mx-auto w-full">
+                    <AntigravityCanvas />
+                    <div className="max-w-[1440px] mx-auto w-full relative z-10">
                         <div className="flex flex-col items-start gap-6 md:gap-8">
-                            <div className="flex items-center gap-3">
-                                <span className="sr-only">AI Research & Engineering</span>
-                                <span aria-hidden="true" className="text-[11px] font-black uppercase tracking-[0.4em] text-[#A1A1A1] char-split">
-                                    {Array.from('/ AI RESEARCH & ENGINEERING').map((char, index) => (
-                                        <span key={index} className="inline-block char-reveal">{char === ' ' ? '\u00A0' : char}</span>
-                                    ))}
-                                </span>
-                            </div>
+                            {/* Availability Removed */}
 
-                             <h1 className="text-[clamp(3rem,12vw,8rem)] sm:text-[10vw] md:text-[9vw] lg:text-[8vw] font-black tracking-tighter leading-[0.8] uppercase break-words overflow-visible blur-to-sharp headline-scale-reveal">
-                                <span className="text-clip-mask block"><span className="text-clip-inner text-white drop-shadow-2xl block">I Build AI</span></span>
-                                <span className="text-clip-mask block"><span className="text-clip-inner text-[#A1A1A1] text-color-interpolate hover:text-white block">Systems That</span></span>
+                             <h1 className="text-[clamp(3rem,12vw,8rem)] sm:text-[10vw] md:text-[9vw] lg:text-[8vw] font-black tracking-tighter leading-[0.8] uppercase break-words overflow-visible">
+                                <span className="text-white drop-shadow-2xl">I Build AI</span> <br />
+                                <span className="text-[#A1A1A1] text-color-interpolate hover:text-white">Systems That</span> <br />
                                 <span className="flex items-center gap-4 sm:gap-10">
-                                    <span className="text-clip-mask inline-block"><span className="text-clip-inner text-white inline-block">Actually Ship.</span></span>
+                                    Actually Ship.
                                     <span className="hidden md:inline-flex w-24 h-24 rounded-[32px] border-2 border-white/10 items-center justify-center p-4 bg-white/5">
                                         <BrainCircuit size={48} className="text-[#A1A1A1]" />
                                     </span>
                                 </span>
                             </h1>
 
-                            <p className="text-sm md:text-xl text-[#A1A1A1] max-w-xl leading-relaxed font-medium text-translate-up">
-                                {portfolioData.profile.tagline.split(' ').map((word, index) => (
-                                    <span key={index} className="inline-block overflow-hidden mr-[0.25em] align-top">
-                                        <span className="inline-block word-reveal">{word}</span>
-                                    </span>
-                                ))}
+                            <p className="text-sm md:text-xl text-[#A1A1A1] max-w-xl leading-relaxed font-medium">
+                                {portfolioData.profile.tagline}
                             </p>
 
-                            {/* 41. Animated Number Counters strip */}
-                            <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-6 border-t border-white/10 w-full max-w-3xl">
-                                <div>
-                                    <div className="text-2xl sm:text-3xl font-black text-white tracking-tight">
-                                        <span className="animated-counter" data-target="4" data-suffix="+">4+</span>
-                                    </div>
-                                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#A1A1A1] mt-1">Autonomous Systems</p>
-                                </div>
-                                <div>
-                                    <div className="text-2xl sm:text-3xl font-black text-white tracking-tight">
-                                        <span className="animated-counter" data-target="92" data-suffix="%">92%</span>
-                                    </div>
-                                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#A1A1A1] mt-1">Model Accuracy</p>
-                                </div>
-                                <div>
-                                    <div className="text-2xl sm:text-3xl font-black text-white tracking-tight">
-                                        <span className="animated-counter" data-target="99.9" data-suffix="%">99.9%</span>
-                                    </div>
-                                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#A1A1A1] mt-1">Production Uptime</p>
-                                </div>
-                                <div>
-                                    <div className="text-2xl sm:text-3xl font-black text-white tracking-tight">
-                                        <span className="animated-counter" data-target="100" data-suffix="%">100%</span>
-                                    </div>
-                                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#A1A1A1] mt-1">Reproducibility</p>
-                                </div>
-                            </div>
+                            {/* Metrics Removed */}
 
                             <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 w-full sm:w-auto pt-4">
                                 <a
@@ -336,12 +301,8 @@ export default function Portfolio() {
                     <div className="max-w-[1440px] mx-auto">
                         <div className="grid lg:grid-cols-12 gap-12 items-end mb-20">
                             <div className="lg:col-span-7 flex flex-col gap-4">
-                                <span className="text-[11px] font-black uppercase tracking-[0.4em] text-[#A1A1A1] char-split">
-                                    {Array.from('/ INFO').map((char, index) => (
-                                        <span key={index} className="inline-block char-reveal">{char === ' ' ? '\u00A0' : char}</span>
-                                    ))}
-                                </span>
-                                <h2 className="text-[clamp(3rem,8vw,8rem)] font-black tracking-tighter uppercase leading-none scroll-heading-reveal headline-scale-reveal blur-to-sharp">About <br /><span className="text-[#A1A1A1] text-color-interpolate hover:text-black">Krish</span></h2>
+                                <span className="text-[11px] font-black uppercase tracking-[0.4em] text-[#A1A1A1]">/ Info</span>
+                                <h2 className="text-[clamp(3rem,8vw,8rem)] font-black tracking-tighter uppercase leading-none">About <br /><span className="text-[#A1A1A1]">Krish</span></h2>
                             </div>
 
                             <div className="lg:col-span-5 flex lg:justify-end">
@@ -377,12 +338,8 @@ export default function Portfolio() {
                 <section id="experience" className="py-24 px-6 md:px-12 bg-white/5">
                     <div className="max-w-[1440px] mx-auto">
                         <div className="flex flex-col items-center text-center gap-6 mb-32">
-                            <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#A1A1A1] char-split">
-                                {Array.from('/ PATH').map((char, index) => (
-                                    <span key={index} className="inline-block char-reveal">{char === ' ' ? '\u00A0' : char}</span>
-                                ))}
-                            </span>
-                            <h2 className="text-[clamp(2.5rem,7vw,7rem)] font-black tracking-tighter uppercase leading-none scroll-heading-reveal headline-scale-reveal blur-to-sharp">Professional <br />Experience</h2>
+                            <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#A1A1A1]">/ Path</span>
+                            <h2 className="text-[clamp(2.5rem,7vw,7rem)] font-black tracking-tighter uppercase leading-none">Professional <br />Experience</h2>
                         </div>
 
                         <div className="space-y-12">
@@ -417,12 +374,8 @@ export default function Portfolio() {
                 <section id="services" className="py-32 px-6 md:px-12 bg-[#FAFAFA] text-black rounded-[40px] md:rounded-[80px] relative z-20 shadow-[0_-20px_50px_rgba(0,0,0,0.05)]">
                     <div className="max-w-[1440px] mx-auto">
                         <div className="flex flex-col items-start gap-4 mb-24">
-                            <span className="text-[11px] font-black uppercase tracking-[0.4em] text-[#A1A1A1] char-split">
-                                {Array.from('/ EXPERTISE').map((char, index) => (
-                                    <span key={index} className="inline-block char-reveal">{char === ' ' ? '\u00A0' : char}</span>
-                                ))}
-                            </span>
-                            <h2 className="text-[clamp(3rem,8vw,8rem)] font-black tracking-tighter uppercase leading-none scroll-heading-reveal headline-scale-reveal blur-to-sharp">Core <br /><span className="text-[#A1A1A1] text-color-interpolate hover:text-black">Services</span></h2>
+                            <span className="text-[11px] font-black uppercase tracking-[0.4em] text-[#A1A1A1]">/ Expertise</span>
+                            <h2 className="text-[clamp(3rem,8vw,8rem)] font-black tracking-tighter uppercase leading-none">Core <br /><span className="text-[#A1A1A1]">Services</span></h2>
                         </div>
 
                         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -456,12 +409,8 @@ export default function Portfolio() {
                 <section id="projects" className="py-24 px-6 md:px-12 bg-[#0A0A0A]">
                     <div className="max-w-[1440px] mx-auto">
                         <div className="flex flex-col items-start gap-4 mb-24">
-                            <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white/70 char-split">
-                                {Array.from('/ CATALOG').map((char, index) => (
-                                    <span key={index} className="inline-block char-reveal">{char === ' ' ? '\u00A0' : char}</span>
-                                ))}
-                            </span>
-                            <h2 className="text-[clamp(3rem,8vw,8rem)] font-black tracking-tighter uppercase leading-none scroll-heading-reveal headline-scale-reveal blur-to-sharp">Selected <br />Case Studies</h2>
+                            <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white/70">/ Catalog</span>
+                            <h2 className="text-[clamp(3rem,8vw,8rem)] font-black tracking-tighter uppercase leading-none">Selected <br />Case Studies</h2>
                         </div>
 
                         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
@@ -527,12 +476,8 @@ export default function Portfolio() {
                 <section id="documents" className="py-24 px-6 md:px-12 bg-white/5">
                     <div className="max-w-[1440px] mx-auto">
                         <div className="flex flex-col items-center text-center gap-6 mb-32">
-                            <span className="text-[11px] font-black uppercase tracking-[0.4em] text-[#A1A1A1] char-split">
-                                {Array.from('/ RESOURCES').map((char, index) => (
-                                    <span key={index} className="inline-block char-reveal">{char === ' ' ? '\u00A0' : char}</span>
-                                ))}
-                            </span>
-                            <h2 className="text-[clamp(2.5rem,7vw,7rem)] font-black tracking-tighter uppercase leading-none scroll-heading-reveal headline-scale-reveal blur-to-sharp">Technical <br />Resources</h2>
+                            <span className="text-[11px] font-black uppercase tracking-[0.4em] text-[#A1A1A1]">/ Resources</span>
+                            <h2 className="text-[clamp(2.5rem,7vw,7rem)] font-black tracking-tighter uppercase leading-none">Technical <br />Resources</h2>
                         </div>
 
                         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -619,12 +564,8 @@ export default function Portfolio() {
                 <section id="testimonials" className="py-24 px-6 md:px-12 bg-[#0A0A0A]">
                     <div className="max-w-[1440px] mx-auto">
                         <div className="flex flex-col items-center text-center gap-6 mb-32">
-                            <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#A1A1A1] char-split">
-                                {Array.from('/ FEEDBACK').map((char, index) => (
-                                    <span key={index} className="inline-block char-reveal">{char === ' ' ? '\u00A0' : char}</span>
-                                ))}
-                            </span>
-                            <h2 className="text-[clamp(2.5rem,7vw,7rem)] font-black tracking-tighter uppercase leading-none text-white whitespace-pre-wrap scroll-heading-reveal headline-scale-reveal blur-to-sharp">Trusted by <br />Industry Leads</h2>
+                            <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#A1A1A1]">/ Feedback</span>
+                            <h2 className="text-[clamp(2.5rem,7vw,7rem)] font-black tracking-tighter uppercase leading-none text-white whitespace-pre-wrap">Trusted by <br />Industry Leads</h2>
                         </div>
 
                         <div className="grid md:grid-cols-2 gap-8">
@@ -668,12 +609,8 @@ export default function Portfolio() {
                         <div className="grid lg:grid-cols-12 gap-20">
                             <div className="lg:col-span-6 flex flex-col gap-10">
                                 <div className="flex flex-col gap-4">
-                                    <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#999999] char-split">
-                                        {Array.from('/ INQUIRY').map((char, index) => (
-                                            <span key={index} className="inline-block char-reveal">{char === ' ' ? '\u00A0' : char}</span>
-                                        ))}
-                                    </span>
-                                    <h2 className="text-[clamp(3rem,8vw,8rem)] font-black tracking-tighter uppercase leading-[0.85] scroll-heading-reveal headline-scale-reveal blur-to-sharp">Let&apos;s Build <br />Something <br /><span className="text-[#A1A1A1] text-color-interpolate hover:text-black">That Works</span></h2>
+                                    <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#999999]">/ Inquiry</span>
+                                    <h2 className="text-[clamp(3rem,8vw,8rem)] font-black tracking-tighter uppercase leading-[0.85]">Let&apos;s Build <br />Something <br /><span className="text-[#A1A1A1]">That Works</span></h2>
                                 </div>
                                 <p className="text-xl text-black/60 leading-relaxed max-w-sm">
                                     Got a project in mind? Tell me what you&apos;re working on and I&apos;ll get back within 24 hours with honest thoughts on fit, scope, and timeline.
@@ -1033,8 +970,7 @@ export default function Portfolio() {
                                                         aria-label="Send inquiry"
                                                         className="w-full flex items-center justify-center gap-4 bg-black text-white py-8 rounded-full text-sm font-black uppercase tracking-[0.3em] hover:bg-black/80 hover:scale-[0.98] transition-all duration-500 mt-8 disabled:opacity-50 disabled:cursor-not-allowed"
                                                     >
-                                                        <span>{isSubmitting ? 'Sending…' : 'SEND INQUIRY'}</span>
-                                                        <ChevronRight size={18} aria-hidden="true" />
+                                                        {isSubmitting ? 'Sending…' : 'SEND INQUIRY'} <ChevronRight size={18} aria-hidden="true" />
                                                     </button>
                                                     {isError && (
                                                         <div role="alert" className="w-full flex items-center justify-center gap-3 bg-red-500/10 text-red-400 py-4 rounded-full text-[11px] font-black uppercase tracking-[0.2em] border border-red-500/20 mt-4 animate-[fadeScaleIn_0.4s_ease_forwards]">
@@ -1070,7 +1006,7 @@ export default function Portfolio() {
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     aria-label={`Visit my ${name} profile`}
-                                    className="text-[11px] font-black uppercase tracking-[0.2em] text-[#A1A1A1] hover:text-white transition-colors animated-underline pb-1"
+                                    className="text-[11px] font-black uppercase tracking-[0.2em] text-[#A1A1A1] hover:text-white transition-colors border-b border-transparent hover:border-white/20 pb-1"
                                 >
                                     {name === 'huggingface' ? 'HuggingFace' : name}
                                 </a>

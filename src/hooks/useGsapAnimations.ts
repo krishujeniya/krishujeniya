@@ -23,10 +23,8 @@ function revealOnScroll(
   const els = gsap.utils.toArray<HTMLElement>(selector);
   if (!els.length) return;
 
-  const isReduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const isAutomated = typeof navigator !== 'undefined' && navigator.webdriver;
-  if (isReduced || isAutomated) {
-    gsap.set(els, { opacity: 1, visibility: 'visible', clearProps: 'all' });
+  if (typeof navigator !== 'undefined' && navigator.webdriver) {
+    gsap.set(els, { opacity: 1, visibility: 'visible' });
     return;
   }
 
@@ -82,132 +80,13 @@ export function useGsapAnimations() {
           },
           (ctx) => {
             const { noMotion } = (ctx as unknown as { conditions: { noMotion: boolean } }).conditions;
-            const isReduced = noMotion || (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
-            const isAutomated = Boolean(typeof navigator !== 'undefined' && navigator.webdriver);
-            const skipMotion = isReduced || isAutomated;
+            const skipMotion = noMotion || (typeof navigator !== 'undefined' && navigator.webdriver);
 
             // ── Reduced motion or automated runner: make everything visible immediately ──
             if (skipMotion) {
-              gsap.set('section, section *', { opacity: 1, visibility: 'visible', clearProps: 'transform,filter' });
-              gsap.set(
-                '.char-reveal, .word-reveal, .text-clip-inner, .blur-to-sharp, .scroll-heading-reveal, .headline-scale-reveal, .animated-counter',
-                {
-                  opacity: 1,
-                  visibility: 'visible',
-                  filter: 'none',
-                  transform: 'none',
-                  clearProps: 'all',
-                }
-              );
+              gsap.set('section, section *', { opacity: 1, visibility: 'visible' });
               return;
             }
-
-            // ── 31. Character-by-character text entrance ──
-            const charEls = gsap.utils.toArray<HTMLElement>('.char-reveal');
-            if (charEls.length) {
-              gsap.fromTo(
-                charEls,
-                { opacity: 0, y: 12 },
-                { opacity: 1, y: 0, stagger: 0.02, duration: 0.45, ease: 'power2.out', delay: 0.1 }
-              );
-            }
-
-            // ── 32. Word-by-word staggered reveal ──
-            const wordEls = gsap.utils.toArray<HTMLElement>('.word-reveal');
-            if (wordEls.length) {
-              gsap.fromTo(
-                wordEls,
-                { opacity: 0, y: '100%' },
-                { opacity: 1, y: '0%', stagger: 0.035, duration: 0.6, ease: 'power3.out', delay: 0.3 }
-              );
-            }
-
-            // ── 35. Text clipping and masking ──
-            const clipInners = gsap.utils.toArray<HTMLElement>('.text-clip-mask .text-clip-inner');
-            clipInners.forEach((ci) => {
-              ScrollTrigger.create({
-                trigger: ci,
-                start: 'top 92%',
-                once: true,
-                onEnter: () => {
-                  gsap.fromTo(ci, { y: '110%', opacity: 0 }, { y: '0%', opacity: 1, duration: 0.8, ease: 'power3.out' });
-                },
-              });
-            });
-
-            // ── 36. Headline scale transitions ──
-            const scaleHeadlines = gsap.utils.toArray<HTMLElement>('.headline-scale-reveal');
-            scaleHeadlines.forEach((hl) => {
-              ScrollTrigger.create({
-                trigger: hl,
-                start: 'top 88%',
-                once: true,
-                onEnter: () => {
-                  gsap.fromTo(hl, { scale: 0.95 }, { scale: 1, duration: 0.85, ease: 'power2.out', clearProps: 'transform' });
-                },
-              });
-            });
-
-            // ── 37. Blur-to-sharp text entrance ──
-            const blurEls = gsap.utils.toArray<HTMLElement>('.blur-to-sharp');
-            blurEls.forEach((el) => {
-              ScrollTrigger.create({
-                trigger: el,
-                start: 'top 92%',
-                once: true,
-                onEnter: () => {
-                  gsap.fromTo(
-                    el,
-                    { filter: 'blur(10px)', opacity: 0 },
-                    { filter: 'blur(0px)', opacity: 1, duration: 0.9, ease: 'power2.out', clearProps: 'filter' }
-                  );
-                },
-              });
-            });
-
-            // ── 39. Scroll-triggered heading reveal ──
-            const scrollHeadings = gsap.utils.toArray<HTMLElement>('.scroll-heading-reveal');
-            scrollHeadings.forEach((sh) => {
-              ScrollTrigger.create({
-                trigger: sh,
-                start: 'top 88%',
-                once: true,
-                onEnter: () => {
-                  gsap.fromTo(
-                    sh,
-                    { y: 35, opacity: 0 },
-                    { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out', clearProps: 'transform' }
-                  );
-                },
-              });
-            });
-
-            // ── 41. Animated number counters ──
-            const counterEls = gsap.utils.toArray<HTMLElement>('.animated-counter');
-            counterEls.forEach((c) => {
-              const target = parseFloat(c.getAttribute('data-target') || '0');
-              const suffix = c.getAttribute('data-suffix') || '';
-              const isDecimal = target % 1 !== 0;
-              ScrollTrigger.create({
-                trigger: c,
-                start: 'top 92%',
-                once: true,
-                onEnter: () => {
-                  const obj = { val: 0 };
-                  gsap.to(obj, {
-                    val: target,
-                    duration: 1.4,
-                    ease: 'power2.out',
-                    onUpdate: () => {
-                      c.textContent = (isDecimal ? obj.val.toFixed(1) : Math.round(obj.val).toString()) + suffix;
-                    },
-                    onComplete: () => {
-                      c.textContent = (isDecimal ? target.toFixed(1) : target.toString()) + suffix;
-                    },
-                  });
-                },
-              });
-            });
 
             // ── 0. Hero entrance ──
             const heroH1 = document.querySelector('#home h1') as HTMLElement | null;

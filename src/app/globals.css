@@ -89,21 +89,6 @@
       transition-duration: 0.01ms !important;
       scroll-behavior: auto !important;
     }
-
-    .animated-underline::after {
-      display: none !important;
-    }
-
-    .blur-to-sharp {
-      filter: none !important;
-    }
-
-    .text-clip-inner,
-    .headline-scale-reveal,
-    .scroll-heading-reveal {
-      transform: none !important;
-      opacity: 1 !important;
-    }
   }
 
   body {
@@ -594,22 +579,21 @@
 }
 
 /* ============================================
-   TYPOGRAPHY & CONTENT MOTION PRINCIPLES
-   31. Character-by-character text entrance
-   32. Word-by-word staggered reveal
-   33. Text fade-in and fade-out
-   34. Text translate-up reveal
-   35. Text clipping and masking
-   36. Headline scale transitions
-   37. Blur-to-sharp text entrance
-   38. Text color interpolation
-   39. Scroll-triggered heading reveal
-   40. Animated underline
-   41. Animated number counters
-   42. Crossfading text between states
+   ANTIGRAVITY & MOTION DESIGN SYSTEM UTILITIES
    ============================================ */
 
-/* 35. Text clipping and masking */
+/* Smooth fluid transitions */
+.motion-fluid {
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Subtle text fade utilities */
+.text-fade-in {
+  opacity: 1;
+  transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Text clipping and masking (clean phrasing container) */
 .text-clip-mask {
   overflow: hidden;
   display: inline-block;
@@ -620,17 +604,12 @@
   display: inline-block;
 }
 
-/* 37. Blur-to-sharp entrance */
-.blur-to-sharp {
-  filter: blur(0px);
-}
-
-/* 38. Text color interpolation */
+/* Text color interpolation */
 .text-color-interpolate {
   transition: color 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease;
 }
 
-/* 40. Animated underline */
+/* Animated underline with pointer-events isolation */
 .animated-underline {
   position: relative;
   display: inline-block;
@@ -650,35 +629,23 @@
   pointer-events: none;
 }
 
-.animated-underline:hover::after,
-.animated-underline:focus-visible::after,
-.animated-underline[aria-current="page"]::after {
-  transform: scaleX(1);
-  transform-origin: bottom left;
+@media (hover: hover) and (pointer: fine) {
+  .animated-underline:hover::after,
+  .animated-underline:focus-visible::after,
+  .animated-underline[aria-current="page"]::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
 }
 
-/* 42. Crossfading text between states */
+/* Smooth opacity crossfade between states */
 .text-crossfade {
   transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .text-crossfade-anim {
-    animation: textCrossfade 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  }
-
-  @keyframes textCrossfade {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-
-  /* 33. Text fade in */
-  .text-fade-in {
-    animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+@media (prefers-reduced-motion: reduce) {
+  .animated-underline::after {
+    display: none !important;
   }
 }
 
