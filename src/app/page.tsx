@@ -184,11 +184,13 @@ export default function Portfolio() {
         }
     };
 
+    const isHomeHidden = activeSection === 'home' && !scrolled;
+
     return (
         <div className="min-h-screen bg-[#050505] text-[#FAFAFA] font-body selection:bg-[#474747] selection:text-white">
 
             <a className="skip-link" href="#main-content">Skip to main content</a>
-            <nav className={`fixed top-3 sm:top-5 inset-x-4 sm:inset-x-6 md:inset-x-8 max-w-[1440px] mx-auto z-[100] transition-all duration-500 rounded-full flex items-center justify-between gap-4 px-6 md:px-8 py-3 sm:py-3.5 border ${scrolled ? 'bg-black/90 backdrop-blur-2xl border-white/15 shadow-2xl shadow-black/80' : 'bg-black/60 backdrop-blur-xl border-white/10 shadow-lg shadow-black/40'}`}>
+            <nav className={`fixed top-3 sm:top-5 inset-x-4 sm:inset-x-6 md:inset-x-8 max-w-[1440px] mx-auto z-[100] transition-all duration-500 rounded-full flex items-center justify-between gap-4 px-6 md:px-8 py-3 sm:py-3.5 bg-black/50 backdrop-blur-2xl shadow-2xl shadow-black/80 ${isHomeHidden ? 'home-hidden opacity-0 -translate-y-4 pointer-events-none hover:opacity-100 hover:translate-y-0 hover:pointer-events-auto focus-within:opacity-100 focus-within:translate-y-0 focus-within:pointer-events-auto' : 'opacity-100 translate-y-0 pointer-events-auto'}`}>
                 <div className="flex items-center gap-8 overflow-hidden">
                     {/* Brand Title / Section Name */}
                     <div
