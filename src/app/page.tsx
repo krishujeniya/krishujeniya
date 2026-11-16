@@ -263,10 +263,6 @@ export default function Portfolio() {
                                 </span>
                             </h1>
 
-                            <p className="text-sm md:text-xl text-[#A1A1A1] max-w-2xl leading-relaxed font-medium mx-auto text-center">
-                                {portfolioData.profile.tagline}
-                            </p>
-
                             {/* Metrics Removed */}
 
                             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 w-full sm:w-auto pt-4">
