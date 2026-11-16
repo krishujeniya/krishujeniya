@@ -131,10 +131,51 @@ export default function Portfolio() {
     const [typedLine2, setTypedLine2] = useState('');
     const [heroPhase, setHeroPhase] = useState<'typing' | 'name' | 'buttons' | 'all'>('typing');
     const [activeCursor, setActiveCursor] = useState<'line1' | 'line2' | null>('line1');
+    const [selectedProjectCategory, setSelectedProjectCategory] = useState<string>('All');
     const projectsTrackRef = useRef<HTMLDivElement | null>(null);
     const openerRef = useRef<HTMLElement | null>(null);
     const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
     const mobileNavRef = useRef<HTMLDivElement | null>(null);
+
+    const projectCategories = [
+        { label: 'All', value: 'All' },
+        { label: 'Agentic AI', value: 'Agentic AI' },
+        { label: 'MLOps', value: 'MLOps' },
+        { label: 'Computer Vision', value: 'Computer Vision' },
+        { label: 'Mobile', value: 'Mobile' },
+        { label: 'Systems', value: 'Systems' },
+    ];
+
+    const projectContainerStyles: Record<string, { bg: string; badge: string }> = {
+        amberclaw: { bg: 'bg-[#EDE9FE]', badge: 'bg-[#DDD6FE] text-[#4C1D95]' },
+        hadron: { bg: 'bg-[#E0E7FF]', badge: 'bg-[#C7D2FE] text-[#312E81]' },
+        waferpulse: { bg: 'bg-[#D1FAE5]', badge: 'bg-[#A7F3D0] text-[#065F46]' },
+        somnostasis: { bg: 'bg-[#E0F2FE]', badge: 'bg-[#BAE6FD] text-[#075985]' },
+        hajree: { bg: 'bg-[#FCE7F3]', badge: 'bg-[#FBCFE8] text-[#831843]' },
+        curavex: { bg: 'bg-[#DCFCE7]', badge: 'bg-[#BBF7D0] text-[#14532D]' },
+        sureword: { bg: 'bg-[#FEF3C7]', badge: 'bg-[#FDE68A] text-[#78350F]' },
+        scanlark: { bg: 'bg-[#F1F5F9]', badge: 'bg-[#E2E8F0] text-[#1E293B]' },
+        saygrove: { bg: 'bg-[#FFE4E6]', badge: 'bg-[#FECDD3] text-[#881337]' },
+        sensor: { bg: 'bg-[#FEF9C3]', badge: 'bg-[#FEF08A] text-[#713F12]' },
+        salary: { bg: 'bg-[#EEF2FF]', badge: 'bg-[#E0E7FF] text-[#3730A3]' },
+        agyos: { bg: 'bg-[#F3F4F6]', badge: 'bg-[#E5E7EB] text-[#1F2937]' },
+        discord: { bg: 'bg-[#EDE9FE]', badge: 'bg-[#DDD6FE] text-[#4338CA]' },
+        sparkwa: { bg: 'bg-[#CCFBF1]', badge: 'bg-[#99F6E4] text-[#115E59]' },
+        netsweep: { bg: 'bg-[#F1F5F9]', badge: 'bg-[#CBD5E1] text-[#334155]' },
+    };
+
+    const filteredProjects = portfolioData.projects.filter(project => {
+        if (selectedProjectCategory === 'All') return true;
+        const cat = project.category.toLowerCase();
+        const tech = project.techStack.map(t => t.toLowerCase()).join(' ');
+        const combined = `${cat} ${tech}`;
+        if (selectedProjectCategory === 'Agentic AI') return combined.includes('agent') || combined.includes('rag');
+        if (selectedProjectCategory === 'MLOps') return combined.includes('mlops') || combined.includes('machine learning');
+        if (selectedProjectCategory === 'Computer Vision') return combined.includes('vision') || combined.includes('ocr') || combined.includes('biometric');
+        if (selectedProjectCategory === 'Mobile') return combined.includes('flutter') || combined.includes('mobile');
+        if (selectedProjectCategory === 'Systems') return combined.includes('systems') || combined.includes('distributed') || combined.includes('security') || combined.includes('bash') || combined.includes('node') || combined.includes('speech');
+        return true;
+    });
 
     const isNameVisible = heroPhase === 'name' || heroPhase === 'buttons' || heroPhase === 'all';
     const isButtonsVisible = heroPhase === 'buttons' || heroPhase === 'all';
@@ -739,142 +780,163 @@ export default function Portfolio() {
                 </section>
 
                 {/* Projects Section — Google Labs Style */}
-                <section id="projects" className="py-20 sm:py-24 px-4 sm:px-6 md:px-12 bg-[#0A0A0A] overflow-hidden">
-                    <div className="max-w-[1440px] mx-auto">
-                        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-20">
+                <section id="projects" className="py-20 sm:py-28 px-4 sm:px-6 md:px-12 bg-[#F6F5F2] text-neutral-900 rounded-[40px] md:rounded-[64px] my-12 relative overflow-hidden z-10 border border-neutral-200/70 shadow-xl">
+                    {/* Google Labs Ambient Organic Curved Shapes */}
+                    <div className="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-emerald-100/50 blur-3xl pointer-events-none" />
+                    <div className="absolute -bottom-32 -left-32 w-[30rem] h-[30rem] rounded-full bg-indigo-100/60 blur-3xl pointer-events-none" />
+                    <div className="absolute top-1/2 left-1/3 w-80 h-80 rounded-full bg-purple-100/40 blur-3xl pointer-events-none" />
+
+                    {/* Bottom Arched Wave matching Google Labs */}
+                    <div className="absolute -bottom-24 left-0 right-0 h-48 bg-gradient-to-t from-blue-100/30 via-indigo-50/20 to-transparent rounded-[100%_100%_0_0] pointer-events-none" />
+
+                    <div className="max-w-[1440px] mx-auto relative z-10">
+                        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-16">
                             <div className="flex flex-col items-start gap-4">
-                                <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white/70">/ Catalog</span>
-                                <h2 className="text-[clamp(2.75rem,7vw,7rem)] font-black tracking-tighter uppercase leading-none">
+                                <span className="text-[10px] font-black uppercase tracking-[0.4em] text-neutral-500">/ Experiments & Projects</span>
+                                <h2 className="text-[clamp(2.75rem,7vw,6.5rem)] font-black tracking-tighter uppercase leading-none text-neutral-900">
                                     Selected <br />Case Studies
                                 </h2>
                             </div>
-                            <p className="text-sm sm:text-base text-[#A1A1A1] max-w-md leading-relaxed">
+                            <p className="text-sm sm:text-base text-neutral-600 max-w-md leading-relaxed">
                                 Production AI systems, persistent agent architectures, and end-to-end MLOps engines built for scale.
                             </p>
                         </div>
 
-                        {/* Google Labs Horizontal Carousel Track */}
+                        {/* Google Labs Arched Carousel Track */}
                         <div
                             ref={projectsTrackRef}
-                            className="flex gap-4 sm:gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory no-scrollbar pb-6 pt-2 px-1"
+                            className="flex gap-4 sm:gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory no-scrollbar pb-8 pt-4 px-2"
                         >
-                            {portfolioData.projects.map((project, i) => (
-                                <div
-                                    key={i}
-                                    id={`project-${i}`}
-                                    role="button"
-                                    tabIndex={0}
-                                    aria-label={`View case study for ${project.title}`}
-                                    onClick={(e) => {
-                                        openerRef.current = e.currentTarget;
-                                        setSelectedProject(project);
-                                    }}
-                                    onKeyDown={(e) => {
-                                        if (e.key === 'Enter' || e.key === ' ') {
-                                            e.preventDefault();
+                            {filteredProjects.map((project, i) => {
+                                const projectKey = project.title.toLowerCase().split(' ')[0] || '';
+                                const style = projectContainerStyles[projectKey] || { bg: 'bg-[#F3F4F6]', badge: 'bg-[#E5E7EB] text-neutral-800' };
+                                const categoryBadge = project.category.split('/')[0]?.trim() || project.category;
+                                return (
+                                    <div
+                                        key={project.title}
+                                        id={`project-${i}`}
+                                        role="button"
+                                        tabIndex={0}
+                                        aria-label={`View case study for ${project.title}`}
+                                        onClick={(e) => {
                                             openerRef.current = e.currentTarget;
                                             setSelectedProject(project);
-                                        }
-                                    }}
-                                    className="group flex-shrink-0 w-[calc(100vw-2.5rem)] xs:w-[320px] sm:w-[350px] md:w-[380px] max-w-[380px] h-[520px] sm:h-[560px] bg-[#0E0E0E] hover:bg-[#141414] border border-white/10 hover:border-white/20 rounded-[28px] sm:rounded-[36px] p-5 sm:p-7 flex flex-col justify-between cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-white/20 transition-all duration-500 shadow-2xl shadow-black relative overflow-hidden snap-start"
-                                >
-                                    {/* Top Row: Clean Rounded Pill Badges with Category & Tech (Deduplicated, no arrows, no green dots) */}
-                                    {(() => {
-                                        const categoryBadge = project.category.split('/')[0]?.trim() || project.category;
-                                        const uniqueTech = project.techStack.filter(
-                                            (tech) => !categoryBadge.toLowerCase().includes(tech.toLowerCase()) &&
-                                                      !tech.toLowerCase().includes(categoryBadge.toLowerCase())
-                                        );
-                                        const badges = [
-                                            { label: categoryBadge, isCategory: true },
-                                            ...uniqueTech.slice(0, 2).map((tech) => ({ label: tech, isCategory: false })),
-                                        ];
-                                        return (
-                                            <div className="flex items-center gap-2 overflow-hidden z-10 flex-wrap">
-                                                {badges.map((b, bi) => (
+                                        }}
+                                        onKeyDown={(e) => {
+                                            if (e.key === 'Enter' || e.key === ' ') {
+                                                e.preventDefault();
+                                                openerRef.current = e.currentTarget;
+                                                setSelectedProject(project);
+                                            }
+                                        }}
+                                        className="group flex-shrink-0 w-[calc(100vw-3rem)] xs:w-[320px] sm:w-[350px] md:w-[380px] max-w-[380px] h-[520px] sm:h-[550px] bg-white hover:bg-white border border-neutral-200/90 rounded-[32px] p-5 sm:p-6 flex flex-col justify-between cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-neutral-900/30 transition-all duration-300 shadow-[0_4px_24px_rgba(0,0,0,0.06)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)] hover:-translate-y-2 relative overflow-hidden snap-start"
+                                    >
+                                        <div>
+                                            {/* Top Preview Block with vibrant rounded container matching Google Labs */}
+                                            <div className={`w-full h-[200px] sm:h-[220px] rounded-[22px] sm:rounded-[26px] overflow-hidden relative ${style.bg} border border-black/5 p-2 flex items-center justify-center transition-transform duration-500 group-hover:scale-[1.02]`}>
+                                                <div className="w-full h-full relative rounded-[18px] overflow-hidden bg-black/5">
+                                                    <Image
+                                                        src={project.imageUrl}
+                                                        alt={`${project.title} – AI project by Krish Ujeniya, ${project.category}`}
+                                                        fill
+                                                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                                                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                                                        loading="lazy"
+                                                        decoding="async"
+                                                    />
+                                                </div>
+                                            </div>
+
+                                            {/* Category Badge & Tech Badges */}
+                                            <div className="flex items-center gap-2 overflow-hidden mt-4 flex-wrap">
+                                                <span className={`text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full ${style.badge}`}>
+                                                    {categoryBadge}
+                                                </span>
+                                                {project.techStack.slice(0, 2).map((tech, ti) => (
                                                     <span
-                                                        key={bi}
-                                                        className={`text-[9px] sm:text-[10px] font-black uppercase tracking-wider px-3 sm:px-3.5 py-1.5 rounded-full border border-white/5 whitespace-nowrap transition-colors ${
-                                                            b.isCategory
-                                                                ? 'text-white bg-white/10 group-hover:bg-white/15'
-                                                                : 'text-[#A1A1A1] bg-white/5'
-                                                        }`}
+                                                        key={ti}
+                                                        className="text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full bg-neutral-100 text-neutral-600 border border-neutral-200/60"
                                                     >
-                                                        {b.label}
+                                                        {tech}
                                                     </span>
                                                 ))}
                                             </div>
-                                        );
-                                    })()}
 
-                                    {/* Middle Body: Media Preview (Clean image, responsive height) */}
-                                    <div className="w-full h-[200px] sm:h-[240px] relative rounded-[20px] sm:rounded-[24px] overflow-hidden bg-black/60 my-auto border border-white/5 group-hover:border-white/15 transition-all">
-                                        <Image
-                                            src={project.imageUrl}
-                                            alt={`${project.title} – AI project by Krish Ujeniya, ${project.category}`}
-                                            fill
-                                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
-                                            className="object-cover transition-transform duration-700 group-hover:scale-105 opacity-85 group-hover:opacity-100"
-                                            loading="lazy"
-                                            decoding="async"
-                                        />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent pointer-events-none" />
-                                    </div>
+                                            {/* Project Title */}
+                                            <h3 className="project-title-bounce text-xl sm:text-2xl font-bold tracking-tight text-neutral-900 leading-snug line-clamp-1 mt-3">
+                                                {project.title.split('—')[0]?.trim() || project.title}
+                                            </h3>
 
-                                    {/* Bottom Area: Title with physics bounce, description reveal, and Try it now button */}
-                                    <div className="flex flex-col gap-2 z-10 pt-2">
-                                        {/* Title with spring physics bounce on hover exit */}
-                                        <h3 className="project-title-bounce text-xl sm:text-[26px] font-black uppercase tracking-tight text-white leading-tight">
-                                            {project.title.split('—')[0]?.trim() || project.title}
-                                        </h3>
-
-                                        {/* One-line description that smoothly slides up from below on hover */}
-                                        <div className="project-desc-reveal">
-                                            <p className="text-[12px] sm:text-[13px] text-white/70 leading-relaxed line-clamp-2">
+                                            {/* Project Description */}
+                                            <p className="text-xs sm:text-sm text-neutral-600 line-clamp-2 leading-relaxed mt-2">
                                                 {project.description}
                                             </p>
                                         </div>
 
-                                        {/* Bottom Action Pill (No redundant right info text) */}
-                                        <div className="pt-2 flex items-center">
-                                            <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/20 group-hover:border-white group-hover:bg-white group-hover:text-black text-white text-[10px] font-black uppercase tracking-wider transition-all duration-300">
-                                                Try it now <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform" />
+                                        {/* Bottom Action Pill matching Google Labs "Try it now ->" */}
+                                        <div className="pt-3 flex items-center justify-between border-t border-neutral-100">
+                                            <span className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-neutral-900 group-hover:text-black uppercase tracking-wider transition-all duration-300">
+                                                Try it now <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                                            </span>
+                                            <span className="text-[11px] font-semibold text-neutral-400 group-hover:text-neutral-600 transition-colors">
+                                                Case study
                                             </span>
                                         </div>
-                                    </div>
 
-                                    <noscript>
-                                        <div className="px-2 pt-1">
-                                            <a
-                                                href={project.link}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="text-[10px] font-black uppercase tracking-[0.2em] text-white underline hover:text-[#A1A1A1]"
-                                            >
-                                                {project.linkType === 'repo' ? 'View Repository' : 'View Space'}
-                                            </a>
-                                        </div>
-                                    </noscript>
-                                </div>
-                            ))}
+                                        <noscript>
+                                            <div className="px-2 pt-1">
+                                                <a
+                                                    href={project.link}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="text-[10px] font-black uppercase tracking-[0.2em] text-neutral-900 underline hover:text-neutral-600"
+                                                >
+                                                    {project.linkType === 'repo' ? 'View Repository' : 'View Space'}
+                                                </a>
+                                            </div>
+                                        </noscript>
+                                    </div>
+                                );
+                            })}
                         </div>
 
                         {/* Carousel Navigation Arrows matching Google Labs */}
-                        <div className="flex items-center justify-center gap-4 mt-8 sm:mt-10">
+                        <div className="flex items-center justify-center gap-4 mt-8">
                             <button
                                 onClick={() => scrollProjects('left')}
                                 aria-label="Previous project"
-                                className="w-12 h-12 rounded-full border border-white/15 bg-white/5 hover:bg-white hover:text-black text-white flex items-center justify-center transition-all duration-300 active:scale-95 shadow-lg"
+                                className="w-12 h-12 rounded-full border border-neutral-300 bg-white hover:bg-neutral-900 hover:text-white text-neutral-800 flex items-center justify-center transition-all duration-300 active:scale-95 shadow-sm"
                             >
                                 <ChevronLeft size={20} />
                             </button>
                             <button
                                 onClick={() => scrollProjects('right')}
                                 aria-label="Next project"
-                                className="w-12 h-12 rounded-full border border-white/15 bg-white/5 hover:bg-white hover:text-black text-white flex items-center justify-center transition-all duration-300 active:scale-95 shadow-lg"
+                                className="w-12 h-12 rounded-full border border-neutral-300 bg-white hover:bg-neutral-900 hover:text-white text-neutral-800 flex items-center justify-center transition-all duration-300 active:scale-95 shadow-sm"
                             >
                                 <ChevronRight size={20} />
                             </button>
+                        </div>
+
+                        {/* Category Filter Pills matching Google Labs */}
+                        <div className="flex items-center justify-center gap-2 sm:gap-3 flex-wrap mt-6 px-4">
+                            {projectCategories.map((cat) => {
+                                const isActive = selectedProjectCategory === cat.value;
+                                return (
+                                    <button
+                                        key={cat.value}
+                                        onClick={() => setSelectedProjectCategory(cat.value)}
+                                        aria-pressed={isActive}
+                                        className={`px-5 py-2.5 rounded-full text-xs font-bold tracking-wide transition-all duration-300 ${
+                                            isActive
+                                                ? 'bg-[#E8E6DF] text-neutral-900 border border-neutral-300/80 shadow-sm'
+                                                : 'bg-[#F1EFEA] text-neutral-600 hover:bg-[#E8E6DF] hover:text-neutral-900'
+                                        }`}
+                                    >
+                                        {cat.label}
+                                    </button>
+                                );
+                            })}
                         </div>
                     </div>
                 </section>
