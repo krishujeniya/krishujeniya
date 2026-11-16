@@ -90,10 +90,58 @@ export default function Portfolio() {
     const [activeCursor, setActiveCursor] = useState<'line1' | 'line2' | null>('line1');
     const projectsTrackRef = useRef<HTMLDivElement | null>(null);
 
+    // Infinite project deck
+    const infiniteProjects = [
+        ...portfolioData.projects,
+        ...portfolioData.projects,
+        ...portfolioData.projects,
+    ];
+
+    // Initial position to middle set for infinite looping
+    useEffect(() => {
+        const track = projectsTrackRef.current;
+        if (!track) return;
+        const timer = setTimeout(() => {
+            if (track) {
+                const singleSetWidth = track.scrollWidth / 3;
+                track.scrollLeft = singleSetWidth;
+            }
+        }, 50);
+        return () => clearTimeout(timer);
+    }, []);
+
+    const handleProjectsScroll = () => {
+        const track = projectsTrackRef.current;
+        if (!track) return;
+        const singleSetWidth = track.scrollWidth / 3;
+        if (singleSetWidth <= 0) return;
+
+        // Wrap around seamlessly
+        if (track.scrollLeft >= singleSetWidth * 2 - 10) {
+            track.scrollLeft -= singleSetWidth;
+        } else if (track.scrollLeft <= 10) {
+            track.scrollLeft += singleSetWidth;
+        }
+    };
+
     const scrollProjects = (direction: 'left' | 'right') => {
-        if (!projectsTrackRef.current) return;
-        const amount = direction === 'left' ? -380 : 380;
-        projectsTrackRef.current.scrollBy({ left: amount, behavior: 'smooth' });
+        const track = projectsTrackRef.current;
+        if (!track) return;
+        const card = track.querySelector<HTMLElement>('[role="button"]');
+        const cardWidth = card ? card.offsetWidth + 24 : 380; // card width + gap-6
+        const singleSetWidth = track.scrollWidth / 3;
+
+        if (direction === 'right') {
+            if (track.scrollLeft >= singleSetWidth * 2 - cardWidth * 1.5) {
+                track.scrollLeft -= singleSetWidth;
+            }
+            track.scrollBy({ left: cardWidth, behavior: 'smooth' });
+        } else {
+            if (track.scrollLeft <= singleSetWidth * 0.5) {
+                track.scrollLeft += singleSetWidth;
+            }
+            track.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+        }
     };
 
     // Hero Typewriter with pause at "AI" and smooth cascade
@@ -101,11 +149,21 @@ export default function Portfolio() {
         const isReduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         const isAutomated = typeof navigator !== 'undefined' && (navigator as any).webdriver;
 
+        const triggerHomeReady = () => {
+            if (typeof document !== 'undefined') {
+                document.body.classList.add('hero-ready');
+            }
+            if (typeof window !== 'undefined') {
+                window.dispatchEvent(new CustomEvent('hero-typing-complete'));
+            }
+        };
+
         if (isReduced || isAutomated) {
             setTypedLine1('I Build AI Systems');
             setTypedLine2('That Actually Ship.');
             setIsTypingComplete(true);
             setActiveCursor(null);
+            triggerHomeReady();
             return;
         }
 
@@ -179,6 +237,7 @@ export default function Portfolio() {
                     if (!isMounted) return;
                     setActiveCursor(null);
                     setIsTypingComplete(true);
+                    triggerHomeReady();
                 }, 180);
             }
         };
@@ -189,6 +248,7 @@ export default function Portfolio() {
                 setTypedLine2('That Actually Ship.');
                 setIsTypingComplete(true);
                 setActiveCursor(null);
+                triggerHomeReady();
             }
         };
         window.addEventListener('scroll', onEarlyScroll, { passive: true, once: true });
@@ -544,12 +604,13 @@ export default function Portfolio() {
                             </p>
                         </div>
 
-                        {/* Google Labs Horizontal Carousel Track */}
+                        {/* Google Labs Infinite Horizontal Carousel Track */}
                         <div
                             ref={projectsTrackRef}
+                            onScroll={handleProjectsScroll}
                             className="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory no-scrollbar pb-6 pt-2 px-1"
                         >
-                            {portfolioData.projects.map((project, i) => (
+                            {infiniteProjects.map((project, i) => (
                                 <div
                                     key={i}
                                     id={`project-${i}`}
@@ -565,20 +626,19 @@ export default function Portfolio() {
                                     }}
                                     className="group flex-shrink-0 w-[300px] sm:w-[350px] md:w-[380px] h-[520px] sm:h-[560px] bg-[#0E0E0E] hover:bg-[#141414] border border-white/10 hover:border-white/20 rounded-[32px] sm:rounded-[36px] p-6 sm:p-7 flex flex-col justify-between cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-white/20 transition-all duration-500 shadow-2xl shadow-black relative overflow-hidden snap-start"
                                 >
-                                    {/* Top Row: Pill Badges */}
-                                    <div className="flex items-center justify-between gap-2 z-10">
-                                        <div className="flex items-center gap-2 overflow-hidden">
-                                            <span className="text-[10px] font-black uppercase tracking-wider text-white bg-white/10 group-hover:bg-white/15 px-3 py-1.5 rounded-full border border-white/5 whitespace-nowrap transition-colors">
-                                                {project.category.split('/')[0]?.trim() || project.category} →
+                                    {/* Top Row: Clean Rounded Pill Badges with Category & Tech (No arrows, no green dots) */}
+                                    <div className="flex items-center gap-2 overflow-hidden z-10 flex-wrap">
+                                        <span className="text-[10px] font-black uppercase tracking-wider text-white bg-white/10 group-hover:bg-white/15 px-3.5 py-1.5 rounded-full border border-white/5 whitespace-nowrap transition-colors">
+                                            {project.category.split('/')[0]?.trim() || project.category}
+                                        </span>
+                                        {project.techStack.slice(0, 2).map((tech) => (
+                                            <span key={tech} className="text-[10px] font-black uppercase tracking-wider text-[#A1A1A1] bg-white/5 px-3.5 py-1.5 rounded-full border border-white/5 whitespace-nowrap">
+                                                {tech}
                                             </span>
-                                            <span className="text-[10px] font-black uppercase tracking-wider text-[#A1A1A1] bg-white/5 px-3 py-1.5 rounded-full border border-white/5 whitespace-nowrap">
-                                                {project.techStack[0]}
-                                            </span>
-                                        </div>
-                                        <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse shrink-0" title="Production System" />
+                                        ))}
                                     </div>
 
-                                    {/* Middle Body: Media Preview */}
+                                    {/* Middle Body: Media Preview (Clean image, no interactive badge) */}
                                     <div className="w-full h-[220px] sm:h-[240px] relative rounded-[24px] overflow-hidden bg-black/60 my-auto border border-white/5 group-hover:border-white/15 transition-all">
                                         <Image
                                             src={project.imageUrl}
@@ -590,11 +650,6 @@ export default function Portfolio() {
                                             decoding="async"
                                         />
                                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent pointer-events-none" />
-
-                                        {/* Floating interactive mockup badge */}
-                                        <div className="absolute top-3 right-3 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/10 text-[9px] font-bold uppercase tracking-wider text-white/80">
-                                            Interactive
-                                        </div>
                                     </div>
 
                                     {/* Bottom Area: Title with physics bounce, description reveal, and Try it now button */}
@@ -611,13 +666,10 @@ export default function Portfolio() {
                                             </p>
                                         </div>
 
-                                        {/* Bottom Action Pill */}
-                                        <div className="pt-2 flex items-center justify-between">
+                                        {/* Bottom Action Pill (No redundant right info text) */}
+                                        <div className="pt-2 flex items-center">
                                             <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/20 group-hover:border-white group-hover:bg-white group-hover:text-black text-white text-[10px] font-black uppercase tracking-wider transition-all duration-300">
                                                 Try it now <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform" />
-                                            </span>
-                                            <span className="text-[10px] font-black uppercase tracking-widest text-[#737373] group-hover:text-[#A1A1A1] transition-colors">
-                                                {project.techStack.slice(0, 2).join(' · ')}
                                             </span>
                                         </div>
                                     </div>

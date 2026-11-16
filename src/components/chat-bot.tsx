@@ -159,6 +159,7 @@ const botMessages = [
 
 export const ChatBot = () => {
     const [chatOpen, setChatOpen] = useState(false);
+    const [isReady, setIsReady] = useState(false);
     const nextIdRef = useRef(botMessages.length);
     const [chatMessages, setChatMessages] = useState<Array<{ id: number; from: 'bot' | 'user'; text: string }>>(
         botMessages.map((m, i) => ({ ...m, id: i }))
@@ -176,7 +177,24 @@ export const ChatBot = () => {
 
     useEffect(() => {
         isMounted.current = true;
-        return () => { isMounted.current = false; };
+
+        // Test automation or reduced motion: show immediately
+        const isReduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const isAutomated = typeof navigator !== 'undefined' && (navigator as any).webdriver;
+        if (isReduced || isAutomated || (typeof document !== 'undefined' && document.body.classList.contains('hero-ready'))) {
+            setIsReady(true);
+            return () => { isMounted.current = false; };
+        }
+
+        const handleReady = () => setIsReady(true);
+        window.addEventListener('hero-typing-complete', handleReady, { once: true });
+        const fallbackTimer = setTimeout(() => setIsReady(true), 3500);
+
+        return () => {
+            isMounted.current = false;
+            window.removeEventListener('hero-typing-complete', handleReady);
+            clearTimeout(fallbackTimer);
+        };
     }, []);
 
     useEffect(() => {
@@ -294,7 +312,7 @@ export const ChatBot = () => {
     }, [chatInput, isTyping]);
 
     return (
-        <div className="chatbot-wrapper">
+        <div className={`chatbot-wrapper transition-all duration-700 ease-out ${isReady ? 'opacity-100 scale-100 pointer-events-auto' : 'opacity-0 scale-75 pointer-events-none'}`}>
             {/* Chat window — always rendered, shown/hidden by GSAP */}
             <div
                 ref={windowRef}
