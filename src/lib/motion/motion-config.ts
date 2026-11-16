@@ -31,7 +31,7 @@ export const defaultAntigravityConfig: AntigravityConfig = {
   particleCountDesktop: 480,
   particleCountMobile: 150,
   cursorInfluenceRadius: 180,
-  pointerSmoothing: 0.12,
+  pointerSmoothing: 0.32,
   springStiffness: 0.045,
   springDamping: 0.88,
   repulsionStrength: 260,

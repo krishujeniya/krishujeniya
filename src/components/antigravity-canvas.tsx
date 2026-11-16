@@ -70,16 +70,28 @@ export function AntigravityCanvas({ className = '', config }: AntigravityCanvasP
       engine.updatePointer(e.clientX, e.clientY, true);
     };
 
+    const onPointerEnter = (e: PointerEvent) => {
+      engine.updatePointer(e.clientX, e.clientY, true);
+    };
+
     const onPointerLeave = () => {
       engine.updatePointer(-9999, -9999, false);
     };
 
+    const onScroll = () => {
+      engine.refreshBounds();
+    };
+
     window.addEventListener('pointermove', onPointerMove, { passive: true });
+    window.addEventListener('pointerenter', onPointerEnter, { passive: true });
     document.addEventListener('pointerleave', onPointerLeave, { passive: true });
+    window.addEventListener('scroll', onScroll, { passive: true });
 
     return () => {
       window.removeEventListener('pointermove', onPointerMove);
+      window.removeEventListener('pointerenter', onPointerEnter);
       document.removeEventListener('pointerleave', onPointerLeave);
+      window.removeEventListener('scroll', onScroll);
       resizeObserver.disconnect();
       intersectionObserver.disconnect();
       engine.destroy();

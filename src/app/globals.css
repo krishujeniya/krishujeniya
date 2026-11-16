@@ -657,12 +657,6 @@
   cursor: pointer;
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .magnetic-btn {
-    cursor: none;
-  }
-}
-
 /* Hide scrollbar for Chrome, Safari and Opera */
 .no-scrollbar::-webkit-scrollbar {
   display: none;

@@ -6,18 +6,26 @@ import gsap from 'gsap';
 export const CustomCursor = () => {
     const ringRef = useRef<HTMLDivElement>(null);
     const dotRef = useRef<HTMLDivElement>(null);
-    const [isHidden, setIsHidden] = useState(false);
+    const [isHidden, setIsHidden] = useState(true);
 
     useEffect(() => {
         // Continuous detection for hybrid devices
         const hoverMedia = window.matchMedia('(hover: hover) and (pointer: fine)');
         const motionMedia = window.matchMedia('(prefers-reduced-motion: reduce)');
-        setIsHidden(!hoverMedia.matches);
+        const isAutomated = Boolean(typeof navigator !== 'undefined' && navigator.webdriver);
+
+        if (!hoverMedia.matches || isAutomated) {
+            setIsHidden(true);
+            return;
+        }
 
         if (!ringRef.current || !dotRef.current) return;
 
         const ring = ringRef.current;
         const dot = dotRef.current;
+
+        // Keep ring and dot centered on pointer coordinates when using quickSetter
+        gsap.set([ring, dot], { xPercent: -50, yPercent: -50 });
 
         // quickSetter for high-freq perf
         const setRingX = gsap.quickSetter(ring, 'x', 'px');
@@ -26,28 +34,37 @@ export const CustomCursor = () => {
         const setDotY = gsap.quickSetter(dot, 'y', 'px');
 
         // Spring state for ring
-        let ringX = -100, ringY = -100;
-        let mouseX = -100, mouseY = -100;
+        let ringX = 0, ringY = 0;
+        let mouseX = 0, mouseY = 0;
+        let isFirstMove = true;
 
-        // Lerp ticker for ring (spring-like follow)
+        // Lerp ticker for ring (fluid, snappy follow)
         const updateRing = () => {
             const dx = mouseX - ringX;
             const dy = mouseY - ringY;
             if (Math.abs(dx) < 0.1 && Math.abs(dy) < 0.1) return;
-            ringX += dx * 0.18;
-            ringY += dy * 0.18;
+            ringX += dx * 0.35;
+            ringY += dy * 0.35;
             setRingX(ringX);
             setRingY(ringY);
         };
 
         let tickerActive = false;
         const syncTicker = () => {
-            const isAutomated = Boolean(typeof navigator !== 'undefined' && navigator.webdriver);
-            setIsHidden(!hoverMedia.matches || isAutomated);
-            if (hoverMedia.matches && !motionMedia.matches && !isAutomated && !tickerActive) {
+            const automated = Boolean(typeof navigator !== 'undefined' && navigator.webdriver);
+            if (!hoverMedia.matches || automated) {
+                setIsHidden(true);
+                if (tickerActive) {
+                    gsap.ticker.remove(updateRing);
+                    tickerActive = false;
+                }
+                return;
+            }
+
+            if (!motionMedia.matches && !tickerActive) {
                 gsap.ticker.add(updateRing);
                 tickerActive = true;
-            } else if ((!hoverMedia.matches || motionMedia.matches || isAutomated) && tickerActive) {
+            } else if (motionMedia.matches && tickerActive) {
                 gsap.ticker.remove(updateRing);
                 tickerActive = false;
             }
@@ -57,9 +74,20 @@ export const CustomCursor = () => {
             if (!hoverMedia.matches || e.pointerType === 'touch') return;
             mouseX = e.clientX;
             mouseY = e.clientY;
+
             // Dot follows instantly
             setDotX(e.clientX);
             setDotY(e.clientY);
+
+            // First contact or recovery: snap ring immediately to cursor to prevent flying from (-100, -100)
+            if (isFirstMove) {
+                ringX = e.clientX;
+                ringY = e.clientY;
+                setRingX(e.clientX);
+                setRingY(e.clientY);
+                isFirstMove = false;
+            }
+
             if (motionMedia.matches) {
                 setRingX(e.clientX);
                 setRingY(e.clientY);
@@ -74,11 +102,11 @@ export const CustomCursor = () => {
             const target = e.target as HTMLElement;
             if (target.closest('a, button, input, textarea, [role="button"], .cursor-pointer')) {
                 if (motionMedia.matches) {
-                    gsap.set(ring, { width: 48, height: 48, borderColor: 'rgba(255,255,255,0.8)' });
-                    gsap.set(dot, { width: 8, height: 8, backgroundColor: '#ffffff' });
+                    gsap.set(ring, { width: 44, height: 44, borderColor: 'rgba(255,255,255,0.8)' });
+                    gsap.set(dot, { width: 7, height: 7, backgroundColor: '#ffffff' });
                 } else {
-                    gsap.to(ring, { width: 48, height: 48, borderColor: 'rgba(255,255,255,0.8)', duration: 0.2, ease: 'power2.out' });
-                    gsap.to(dot, { width: 8, height: 8, backgroundColor: '#ffffff', duration: 0.15, ease: 'power2.out' });
+                    gsap.to(ring, { width: 44, height: 44, borderColor: 'rgba(255,255,255,0.8)', duration: 0.2, ease: 'power2.out' });
+                    gsap.to(dot, { width: 7, height: 7, backgroundColor: '#ffffff', duration: 0.15, ease: 'power2.out' });
                 }
             }
         };
@@ -97,7 +125,10 @@ export const CustomCursor = () => {
             }
         };
 
-        const onMouseLeave = () => setIsHidden(true);
+        const onMouseLeave = () => {
+            setIsHidden(true);
+            isFirstMove = true;
+        };
 
         syncTicker();
         hoverMedia.addEventListener('change', syncTicker);

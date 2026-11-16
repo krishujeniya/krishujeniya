@@ -40,6 +40,9 @@ export class AntigravityEngine {
     targetY: 0,
   };
 
+  private hasUserInteracted = false;
+  private canvasRect: { left: number; top: number; width: number; height: number } | null = null;
+
   // Pointer tracking with velocity & smoothing
   private pointer = {
     x: -9999,
@@ -65,6 +68,7 @@ export class AntigravityEngine {
     this.ctx = canvas.getContext('2d', { alpha: true });
     this.dpr = typeof window !== 'undefined' ? Math.min(window.devicePixelRatio || 1, 2) : 1;
     this.resize();
+    this.refreshBounds();
 
     // Auto pause when browser tab is inactive to preserve battery and CPU
     this.visibilityHandler = () => {
@@ -134,28 +138,61 @@ export class AntigravityEngine {
       this.focalPoint.targetY = this.focalPoint.y;
     }
 
+    this.refreshBounds();
     this.spawnParticles();
+  }
+
+  public refreshBounds(): void {
+    if (!this.canvas) return;
+    const r = this.canvas.getBoundingClientRect();
+    this.canvasRect = { left: r.left, top: r.top, width: r.width, height: r.height };
   }
 
   public updatePointer(clientX: number, clientY: number, active: boolean): void {
     if (!this.canvas) return;
-    const rect = this.canvas.getBoundingClientRect();
+
+    if (!active) {
+      this.pointer.active = false;
+      this.pointer.targetX = -9999;
+      this.pointer.targetY = -9999;
+      this.pointer.vx = 0;
+      this.pointer.vy = 0;
+      this.pointer.speed = 0;
+      this.focalPoint.targetX = this.width * 0.5;
+      this.focalPoint.targetY = this.height * 0.5;
+      return;
+    }
+
+    if (!this.canvasRect) {
+      this.refreshBounds();
+    }
+    const rect = this.canvasRect || this.canvas.getBoundingClientRect();
     const canvasX = clientX - rect.left;
     const canvasY = clientY - rect.top;
 
+    const wasInactive = !this.pointer.active || this.pointer.x < -1000;
+    this.pointer.active = true;
     this.pointer.targetX = canvasX;
     this.pointer.targetY = canvasY;
-    this.pointer.active = active;
 
-    if (active) {
-      this.focalPoint.targetX = canvasX;
-      this.focalPoint.targetY = canvasY;
-    } else {
-      this.pointer.targetX = -9999;
-      this.pointer.targetY = -9999;
-      this.focalPoint.targetX = this.width * 0.5;
-      this.focalPoint.targetY = this.height * 0.5;
+    if (wasInactive) {
+      this.pointer.x = canvasX;
+      this.pointer.y = canvasY;
+      this.pointer.prevX = canvasX;
+      this.pointer.prevY = canvasY;
+      this.pointer.vx = 0;
+      this.pointer.vy = 0;
+      this.pointer.speed = 0;
+
+      if (!this.hasUserInteracted) {
+        this.focalPoint.x = canvasX;
+        this.focalPoint.y = canvasY;
+        this.hasUserInteracted = true;
+      }
     }
+
+    this.focalPoint.targetX = canvasX;
+    this.focalPoint.targetY = canvasY;
   }
 
   public setConfiguration(newConfig: Partial<AntigravityConfig>): void {
@@ -276,16 +313,37 @@ export class AntigravityEngine {
 
   private updatePhysics(dt: number, timeSec: number): void {
     if (this.pointer.active && this.pointer.targetX > -1000) {
-      const pSmooth = this.config.pointerSmoothing;
-      const dx = this.pointer.targetX - this.pointer.x;
-      const dy = this.pointer.targetY - this.pointer.y;
+      if (this.pointer.x < -1000) {
+        this.pointer.x = this.pointer.targetX;
+        this.pointer.y = this.pointer.targetY;
+        this.pointer.prevX = this.pointer.targetX;
+        this.pointer.prevY = this.pointer.targetY;
+        this.pointer.vx = 0;
+        this.pointer.vy = 0;
+        this.pointer.speed = 0;
+      } else {
+        const pSmooth = this.config.pointerSmoothing;
+        const dx = this.pointer.targetX - this.pointer.x;
+        const dy = this.pointer.targetY - this.pointer.y;
 
-      this.pointer.vx = (dx * pSmooth) / Math.max(dt, 0.016);
-      this.pointer.vy = (dy * pSmooth) / Math.max(dt, 0.016);
-      this.pointer.speed = Math.sqrt(this.pointer.vx * this.pointer.vx + this.pointer.vy * this.pointer.vy);
+        const effectiveDt = Math.max(dt, 0.016);
+        this.pointer.vx = (dx * pSmooth) / effectiveDt;
+        this.pointer.vy = (dy * pSmooth) / effectiveDt;
 
-      this.pointer.x += dx * pSmooth;
-      this.pointer.y += dy * pSmooth;
+        const rawSpeed = Math.sqrt(this.pointer.vx * this.pointer.vx + this.pointer.vy * this.pointer.vy);
+        const maxPointerSpeed = 1200;
+        if (rawSpeed > maxPointerSpeed) {
+          const ratio = maxPointerSpeed / rawSpeed;
+          this.pointer.vx *= ratio;
+          this.pointer.vy *= ratio;
+          this.pointer.speed = maxPointerSpeed;
+        } else {
+          this.pointer.speed = rawSpeed;
+        }
+
+        this.pointer.x += dx * pSmooth;
+        this.pointer.y += dy * pSmooth;
+      }
 
       this.focalPoint.targetX = this.pointer.x;
       this.focalPoint.targetY = this.pointer.y;
@@ -298,7 +356,9 @@ export class AntigravityEngine {
       this.focalPoint.targetY = this.height * 0.5;
     }
 
-    const focalFollow = Math.min(1.0, 4.5 * dt);
+    const distToTarget = Math.hypot(this.focalPoint.targetX - this.focalPoint.x, this.focalPoint.targetY - this.focalPoint.y);
+    const followRate = distToTarget > 250 ? 12.0 : 8.0;
+    const focalFollow = Math.min(1.0, followRate * dt);
     this.focalPoint.x += (this.focalPoint.targetX - this.focalPoint.x) * focalFollow;
     this.focalPoint.y += (this.focalPoint.targetY - this.focalPoint.y) * focalFollow;
 
