@@ -368,7 +368,6 @@ export class AntigravityEngine {
       springDamping,
       repulsionStrength,
       velocityTransferStrength,
-      orbitalStrength,
       ambientDriftSpeed,
       breathingPeriod,
       breathingAmplitude,
