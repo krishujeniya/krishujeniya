@@ -192,82 +192,101 @@ export function useGsapAnimations() {
                 if (float2) gsap.set(float2, { opacity: 1, y: -68, rotate: -5.5 });
                 if (float3) gsap.set(float3, { opacity: 1, y: -118, rotate: -9 });
               } else {
-                gsap.set(groundedLetters, { opacity: 0.8, y: 0 });
+                gsap.set(groundedLetters, { opacity: 0.9, y: 0 });
                 if (float1) gsap.set(float1, { opacity: 1, y: 0, rotate: 0 });
                 if (float2) gsap.set(float2, { opacity: 1, y: 0, rotate: 0 });
                 if (float3) gsap.set(float3, { opacity: 1, y: 0, rotate: 0 });
 
-                ScrollTrigger.create({
-                  trigger: footerContainer,
-                  start: 'top 85%',
-                  once: true,
-                  onEnter: () => {
-                    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+                let idleTweens: gsap.core.Tween[] = [];
 
-                    tl.fromTo(groundedLetters, { y: 25, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, stagger: 0.02 }, 0);
+                const killIdle = () => {
+                  idleTweens.forEach((t) => t.kill());
+                  idleTweens = [];
+                };
 
+                const startLiftoff = () => {
+                  killIdle();
+                  const isMobile = window.innerWidth < 768;
+                  const lift1 = isMobile ? -20 : -28;
+                  const lift2 = isMobile ? -50 : -72;
+                  const lift3 = isMobile ? -92 : -124;
+
+                  const bob1 = isMobile ? '-=8' : '-=12';
+                  const bob2 = isMobile ? '-=14' : '-=18';
+                  const bob3 = isMobile ? '-=20' : '-=26';
+
+                  const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+                  tl.fromTo(groundedLetters, { y: 20, opacity: 0.4 }, { y: 0, opacity: 1, duration: 0.7, stagger: 0.02 }, 0);
+
+                  if (float1) {
+                    tl.to(float1, { y: lift1, rotate: -2.5, duration: 1.1, ease: 'power3.out' }, 0.1);
+                  }
+                  if (float2) {
+                    tl.to(float2, { y: lift2, rotate: -5.5, duration: 1.3, ease: 'power3.out' }, 0.2);
+                  }
+                  if (float3) {
+                    tl.to(float3, { y: lift3, rotate: -9, duration: 1.5, ease: 'power3.out' }, 0.3);
+                  }
+
+                  tl.add(() => {
                     if (float1) {
-                      tl.to(float1, {
-                        y: -26,
-                        rotate: -2.5,
-                        duration: 1.2,
-                        ease: 'power3.out',
-                      }, 0.1);
-                    }
-
-                    if (float2) {
-                      tl.to(float2, {
-                        y: -68,
-                        rotate: -5.5,
-                        duration: 1.4,
-                        ease: 'power3.out',
-                      }, 0.2);
-                    }
-
-                    if (float3) {
-                      tl.to(float3, {
-                        y: -118,
-                        rotate: -9,
-                        duration: 1.6,
-                        ease: 'power3.out',
-                      }, 0.3);
-                    }
-
-                    tl.add(() => {
-                      if (float1) {
+                      idleTweens.push(
                         gsap.to(float1, {
-                          y: '-=10',
+                          y: bob1,
                           rotate: '+=1.5',
                           duration: 2.2,
                           repeat: -1,
                           yoyo: true,
                           ease: 'sine.inOut',
-                        });
-                      }
-                      if (float2) {
+                        })
+                      );
+                    }
+                    if (float2) {
+                      idleTweens.push(
                         gsap.to(float2, {
-                          y: '-=16',
+                          y: bob2,
                           rotate: '-=2',
                           duration: 2.7,
                           repeat: -1,
                           yoyo: true,
                           ease: 'sine.inOut',
                           delay: 0.2,
-                        });
-                      }
-                      if (float3) {
+                        })
+                      );
+                    }
+                    if (float3) {
+                      idleTweens.push(
                         gsap.to(float3, {
-                          y: '-=24',
+                          y: bob3,
                           rotate: '-=3',
                           duration: 3.2,
                           repeat: -1,
                           yoyo: true,
                           ease: 'sine.inOut',
                           delay: 0.4,
-                        });
-                      }
-                    });
-                  },
+                        })
+                      );
+                    }
+                  });
+                };
+
+                const returnToRealPlace = () => {
+                  killIdle();
+                  // Animate smoothly back into grounded real place on the baseline!
+                  const tl = gsap.timeline({ defaults: { ease: 'power2.inOut', duration: 0.65 } });
+                  if (float1) tl.to(float1, { y: 0, rotate: 0 }, 0);
+                  if (float2) tl.to(float2, { y: 0, rotate: 0 }, 0.05);
+                  if (float3) tl.to(float3, { y: 0, rotate: 0 }, 0.1);
+                };
+
+                ScrollTrigger.create({
+                  trigger: footerContainer,
+                  start: 'top 85%',
+                  end: 'bottom bottom',
+                  onEnter: startLiftoff,
+                  onEnterBack: startLiftoff,
+                  onLeaveBack: returnToRealPlace,
                 });
               }
             }
