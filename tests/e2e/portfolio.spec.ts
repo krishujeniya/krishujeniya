@@ -108,7 +108,24 @@ test('service and stage choices reject contradictory selections', async ({ page 
 });
 
 test('contact retries reuse an idempotency key only while the inquiry stays unchanged', async ({ page }) => {
-  const submissions: Array<{ submissionId?: string; message?: string }> = [];
+  let submissionCount = 0;
+  await page.addInitScript(() => {
+    const trackedWindow = window as Window & { __portfolioSubmissionIds?: string[] };
+    trackedWindow.__portfolioSubmissionIds = [];
+    const originalFetch = window.fetch;
+    window.fetch = (input, init) => {
+      if (String(input).endsWith('/api/webDATA') && typeof init?.body === 'string') {
+        try {
+          const body = JSON.parse(init.body) as { submissionId?: string };
+          if (body.submissionId) trackedWindow.__portfolioSubmissionIds?.push(body.submissionId);
+        } catch {
+          // The test records only valid JSON submission IDs.
+        }
+      }
+      return originalFetch.call(window, input, init);
+    };
+  });
+
   await page.route('**/api/webDATA', async route => {
     if (route.request().method() === 'OPTIONS') {
       await route.fulfill({
@@ -122,8 +139,13 @@ test('contact retries reuse an idempotency key only while the inquiry stays unch
       return;
     }
 
-    submissions.push(route.request().postDataJSON());
-    const status = submissions.length < 3 ? 503 : 200;
+    if (route.request().method() !== 'POST') {
+      await route.continue();
+      return;
+    }
+
+    submissionCount += 1;
+    const status = submissionCount < 3 ? 503 : 200;
     await route.fulfill({
       status,
       contentType: 'application/json',
@@ -146,8 +168,11 @@ test('contact retries reuse an idempotency key only while the inquiry stays unch
   const submit = contact.getByRole('button', { name: 'Send inquiry' });
 
   await submit.click();
-  await expect.poll(() => submissions.length).toBe(1);
+  await expect.poll(() => submissionCount).toBe(1);
   await expect(contact.getByRole('alert')).toBeVisible();
+  const firstId = await page.evaluate(() =>
+    (window as Window & { __portfolioSubmissionIds?: string[] }).__portfolioSubmissionIds?.[0]
+  );
   const savedRetry = await page.evaluate(() => sessionStorage.getItem('portfolio-contact-submission'));
   expect(savedRetry).not.toContain('An inquiry that can be retried.');
   expect(savedRetry).not.toContain('taylor@example.com');
@@ -161,18 +186,24 @@ test('contact retries reuse an idempotency key only while the inquiry stays unch
   await contact.locator('#form-contact-method').selectOption('Email');
   await message.fill('An inquiry that can be retried.');
   await submit.click();
-  await expect.poll(() => submissions.length).toBe(2);
+  await expect.poll(() => submissionCount).toBe(2);
   await expect(contact.getByRole('alert')).toBeVisible();
+  const secondId = await page.evaluate(() =>
+    (window as Window & { __portfolioSubmissionIds?: string[] }).__portfolioSubmissionIds?.[0]
+  );
   await message.fill('A changed inquiry gets a new key.');
   await submit.click();
-  await expect.poll(() => submissions.length).toBe(3);
+  await expect.poll(() => submissionCount).toBe(3);
   await expect(contact.getByRole('status')).toContainText('Inquiry Sent!');
+  const thirdId = await page.evaluate(() =>
+    (window as Window & { __portfolioSubmissionIds?: string[] }).__portfolioSubmissionIds?.[1]
+  );
   await expect.poll(() => page.evaluate(() => sessionStorage.getItem('portfolio-contact-submission'))).toBeNull();
 
-  expect(submissions).toHaveLength(3);
-  expect(submissions[0].submissionId).toMatch(/^[0-9a-f-]{36}$/);
-  expect(submissions[1].submissionId).toBe(submissions[0].submissionId);
-  expect(submissions[2].submissionId).not.toBe(submissions[1].submissionId);
+  expect(firstId).toMatch(/^[0-9a-f-]{36}$/);
+  expect(secondId).toBe(firstId);
+  expect(thirdId).toMatch(/^[0-9a-f-]{36}$/);
+  expect(thirdId).not.toBe(secondId);
 });
 
 test('service headings fit at tablet widths', async ({ page }) => {
