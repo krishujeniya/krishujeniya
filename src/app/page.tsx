@@ -12,7 +12,6 @@ import {
     Lightbulb,
     TrendingUp,
     File,
-    BrainCircuit,
     Quote,
     Mail,
     Sparkles,
@@ -259,11 +258,8 @@ export default function Portfolio() {
 
                              <h1 className="text-[clamp(2.5rem,7vw,6.5rem)] sm:text-[7vw] md:text-[6.5vw] lg:text-[6vw] font-black tracking-tighter leading-[0.95] uppercase break-words overflow-visible">
                                 <span className="text-white drop-shadow-2xl block">I Build AI Systems</span>
-                                <span className="text-[#A1A1A1] text-color-interpolate hover:text-white inline-flex items-center justify-center gap-4 sm:gap-8 flex-wrap mt-2 sm:mt-4">
+                                <span className="text-[#A1A1A1] text-color-interpolate hover:text-white block mt-2 sm:mt-4">
                                     That Actually Ship.
-                                    <span className="hidden md:inline-flex w-20 h-20 lg:w-24 lg:h-24 rounded-[28px] lg:rounded-[32px] border-2 border-white/10 items-center justify-center p-4 bg-white/5 align-middle">
-                                        <BrainCircuit size={44} className="text-[#A1A1A1]" />
-                                    </span>
                                 </span>
                             </h1>
 

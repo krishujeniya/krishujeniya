@@ -92,7 +92,6 @@ export function useGsapAnimations() {
             const heroH1 = document.querySelector('#home h1') as HTMLElement | null;
             const heroP = document.querySelector('#home p') as HTMLElement | null;
             const heroButtons = document.querySelector('#home .pt-4') as HTMLElement | null;
-            const brainBox = document.querySelector('#home .hidden.md\\:flex, #home .hidden.md\\:inline-flex') as HTMLElement | null;
 
             if (heroH1 || heroP || heroButtons) {
               const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
@@ -108,21 +107,6 @@ export function useGsapAnimations() {
                 gsap.set(heroButtons, { opacity: 0, y: 20 });
                 tl.to(heroButtons, { opacity: 1, y: 0, duration: 0.7 }, 0.4);
               }
-            }
-
-            // BrainCircuit box — gentle entrance and settling
-            if (brainBox) {
-              gsap.set(brainBox, { opacity: 0, scale: 0.7 });
-              gsap.to(brainBox, { opacity: 1, scale: 1, duration: 0.8, ease: 'back.out(1.7)', delay: 0.15 });
-              gsap.to(brainBox, {
-                rotate: 10,
-                scale: 1.05,
-                duration: 1.2,
-                repeat: 1,
-                yoyo: true,
-                ease: 'sine.inOut',
-                delay: 0.95,
-              });
             }
 
             // ── 1. About section ──
