@@ -647,11 +647,6 @@
   .animated-underline::after {
     display: none !important;
   }
-  nav.home-hidden {
-    opacity: 1 !important;
-    transform: none !important;
-    pointer-events: auto !important;
-  }
 }
 
 /* ============================================
