@@ -92,7 +92,7 @@ export function useGsapAnimations() {
             const heroH1 = document.querySelector('#home h1') as HTMLElement | null;
             const heroP = document.querySelector('#home p') as HTMLElement | null;
             const heroButtons = document.querySelector('#home .pt-4') as HTMLElement | null;
-            const brainBox = document.querySelector('#home .hidden.md\\:flex') as HTMLElement | null;
+            const brainBox = document.querySelector('#home .hidden.md\\:flex, #home .hidden.md\\:inline-flex') as HTMLElement | null;
 
             if (heroH1 || heroP || heroButtons) {
               const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });

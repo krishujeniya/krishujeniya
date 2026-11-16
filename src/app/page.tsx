@@ -254,27 +254,26 @@ export default function Portfolio() {
                 <section id="home" className="relative min-h-screen flex flex-col justify-center px-6 md:px-12 pt-32 md:pt-20">
                     <AntigravityCanvas />
                     <div className="max-w-[1440px] mx-auto w-full relative z-10">
-                        <div className="flex flex-col items-start gap-6 md:gap-8">
+                        <div className="flex flex-col items-center text-center gap-6 md:gap-8">
                             {/* Availability Removed */}
 
-                             <h1 className="text-[clamp(3rem,12vw,8rem)] sm:text-[10vw] md:text-[9vw] lg:text-[8vw] font-black tracking-tighter leading-[0.8] uppercase break-words overflow-visible">
-                                <span className="text-white drop-shadow-2xl">I Build AI</span> <br />
-                                <span className="text-[#A1A1A1] text-color-interpolate hover:text-white">Systems That</span> <br />
-                                <span className="flex items-center gap-4 sm:gap-10">
-                                    Actually Ship.
-                                    <span className="hidden md:inline-flex w-24 h-24 rounded-[32px] border-2 border-white/10 items-center justify-center p-4 bg-white/5">
-                                        <BrainCircuit size={48} className="text-[#A1A1A1]" />
+                             <h1 className="text-[clamp(2.5rem,7vw,6.5rem)] sm:text-[7vw] md:text-[6.5vw] lg:text-[6vw] font-black tracking-tighter leading-[0.95] uppercase break-words overflow-visible">
+                                <span className="text-white drop-shadow-2xl block">I Build AI Systems</span>
+                                <span className="text-[#A1A1A1] text-color-interpolate hover:text-white inline-flex items-center justify-center gap-4 sm:gap-8 flex-wrap mt-2 sm:mt-4">
+                                    That Actually Ship.
+                                    <span className="hidden md:inline-flex w-20 h-20 lg:w-24 lg:h-24 rounded-[28px] lg:rounded-[32px] border-2 border-white/10 items-center justify-center p-4 bg-white/5 align-middle">
+                                        <BrainCircuit size={44} className="text-[#A1A1A1]" />
                                     </span>
                                 </span>
                             </h1>
 
-                            <p className="text-sm md:text-xl text-[#A1A1A1] max-w-xl leading-relaxed font-medium">
+                            <p className="text-sm md:text-xl text-[#A1A1A1] max-w-2xl leading-relaxed font-medium mx-auto text-center">
                                 {portfolioData.profile.tagline}
                             </p>
 
                             {/* Metrics Removed */}
 
-                            <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 w-full sm:w-auto pt-4">
+                            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 w-full sm:w-auto pt-4">
                                 <a
                                     href="#projects"
                                     onClick={(e) => { e.preventDefault(); scrollTo('projects'); setActiveSection('projects'); }}
