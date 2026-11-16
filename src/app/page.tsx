@@ -15,6 +15,7 @@ import {
     Quote,
     Mail,
     Sparkles,
+    ChevronLeft,
     ChevronRight,
     ChevronDown,
     ChevronUp,
@@ -81,6 +82,125 @@ export default function Portfolio() {
     const [selectedStages, setSelectedStages] = useState<string[]>([]);
     const [contactMethod, setContactMethod] = useState('');
     const submissionKeyRef = useRef<{ fingerprint: string; id: string } | null>(null);
+
+    // Hero Typewriter states
+    const [typedLine1, setTypedLine1] = useState('');
+    const [typedLine2, setTypedLine2] = useState('');
+    const [isTypingComplete, setIsTypingComplete] = useState(false);
+    const [activeCursor, setActiveCursor] = useState<'line1' | 'line2' | null>('line1');
+    const projectsTrackRef = useRef<HTMLDivElement | null>(null);
+
+    const scrollProjects = (direction: 'left' | 'right') => {
+        if (!projectsTrackRef.current) return;
+        const amount = direction === 'left' ? -380 : 380;
+        projectsTrackRef.current.scrollBy({ left: amount, behavior: 'smooth' });
+    };
+
+    // Hero Typewriter with pause at "AI" and smooth cascade
+    useEffect(() => {
+        const isReduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const isAutomated = typeof navigator !== 'undefined' && (navigator as any).webdriver;
+
+        if (isReduced || isAutomated) {
+            setTypedLine1('I Build AI Systems');
+            setTypedLine2('That Actually Ship.');
+            setIsTypingComplete(true);
+            setActiveCursor(null);
+            return;
+        }
+
+        let timeoutId: NodeJS.Timeout;
+        let isMounted = true;
+
+        const line1Prefix = 'I Build ';
+        const line1Ai = 'AI';
+        const line1Suffix = ' Systems';
+        const line2Full = 'That Actually Ship.';
+
+        let idx = 0;
+        let line1Accum = '';
+        let line2Accum = '';
+
+        const typePrefix = () => {
+            if (!isMounted) return;
+            if (idx < line1Prefix.length) {
+                line1Accum += line1Prefix[idx];
+                setTypedLine1(line1Accum);
+                idx++;
+                timeoutId = setTimeout(typePrefix, 45);
+            } else {
+                idx = 0;
+                typeAi();
+            }
+        };
+
+        const typeAi = () => {
+            if (!isMounted) return;
+            if (idx < line1Ai.length) {
+                line1Accum += line1Ai[idx];
+                setTypedLine1(line1Accum);
+                idx++;
+                timeoutId = setTimeout(typeAi, 60);
+            } else {
+                // Deliberate pause right at the "AI" word
+                timeoutId = setTimeout(() => {
+                    idx = 0;
+                    typeSuffix();
+                }, 500);
+            }
+        };
+
+        const typeSuffix = () => {
+            if (!isMounted) return;
+            if (idx < line1Suffix.length) {
+                line1Accum += line1Suffix[idx];
+                setTypedLine1(line1Accum);
+                idx++;
+                timeoutId = setTimeout(typeSuffix, 40);
+            } else {
+                setActiveCursor('line2');
+                timeoutId = setTimeout(() => {
+                    idx = 0;
+                    typeLine2();
+                }, 220);
+            }
+        };
+
+        const typeLine2 = () => {
+            if (!isMounted) return;
+            if (idx < line2Full.length) {
+                line2Accum += line2Full[idx];
+                setTypedLine2(line2Accum);
+                idx++;
+                timeoutId = setTimeout(typeLine2, 35);
+            } else {
+                // Completed!
+                timeoutId = setTimeout(() => {
+                    if (!isMounted) return;
+                    setActiveCursor(null);
+                    setIsTypingComplete(true);
+                }, 180);
+            }
+        };
+
+        const onEarlyScroll = () => {
+            if (window.scrollY > 20) {
+                setTypedLine1('I Build AI Systems');
+                setTypedLine2('That Actually Ship.');
+                setIsTypingComplete(true);
+                setActiveCursor(null);
+            }
+        };
+        window.addEventListener('scroll', onEarlyScroll, { passive: true, once: true });
+
+        timeoutId = setTimeout(typePrefix, 200);
+
+        return () => {
+            isMounted = false;
+            clearTimeout(timeoutId);
+            window.removeEventListener('scroll', onEarlyScroll);
+        };
+    }, []);
 
     const toggleService = (service: string) => {
         setSelectedServices(prev => {
@@ -188,7 +308,7 @@ export default function Portfolio() {
         <div className="min-h-screen bg-[#050505] text-[#FAFAFA] font-body selection:bg-[#474747] selection:text-white">
 
             <a className="skip-link" href="#main-content">Skip to main content</a>
-            <nav className="fixed top-3 sm:top-5 inset-x-3 sm:inset-x-6 md:inset-x-8 max-w-[1440px] mx-auto z-[100] transition-all duration-300 rounded-full flex items-center justify-between px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 bg-black/60 backdrop-blur-2xl shadow-2xl shadow-black/80">
+            <nav className={`fixed top-3 sm:top-5 inset-x-3 sm:inset-x-6 md:inset-x-8 max-w-[1440px] mx-auto z-[100] transition-all duration-700 ease-out rounded-full flex items-center justify-between px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 bg-black/60 backdrop-blur-2xl shadow-2xl shadow-black/80 ${isTypingComplete ? 'translate-y-0 opacity-100 pointer-events-auto' : '-translate-y-12 opacity-0 pointer-events-none'}`}>
                 {/* Left: Brand Name */}
                 <div className="flex-1 flex items-center justify-start min-w-[120px]">
                     <div
@@ -252,23 +372,33 @@ export default function Portfolio() {
 
             <main id="main-content" tabIndex={-1} className="flex flex-col">
                 <section id="home" className="relative min-h-screen flex flex-col justify-center items-center px-6 md:px-12 py-12 overflow-hidden">
-                    <AntigravityCanvas />
+                    <div className={`transition-opacity duration-1000 ${isTypingComplete ? 'opacity-100' : 'opacity-0'}`}>
+                        <AntigravityCanvas />
+                    </div>
                     <div className="max-w-[1440px] mx-auto w-full relative z-10 flex flex-col items-center text-center -translate-y-4 sm:-translate-y-6 md:-translate-y-8">
                         <div className="flex flex-col items-center text-center">
-                            <div className="hero-name text-lg sm:text-2xl font-black tracking-tighter mb-6 sm:mb-8">
+                            <div className={`hero-name text-lg sm:text-2xl font-black tracking-tighter mb-6 sm:mb-8 transition-all duration-700 ease-out delay-100 ${isTypingComplete ? 'translate-y-0 opacity-100' : '-translate-y-4 opacity-0'}`}>
                                 KRISH <span className="text-[#A1A1A1]">UJENIYA</span>
                             </div>
 
                              <h1 className="text-[clamp(2.75rem,7.5vw,6.5rem)] sm:text-[7vw] md:text-[6.5vw] lg:text-[6vw] font-black tracking-tighter leading-[0.98] sm:leading-[1.0] uppercase break-words overflow-visible">
-                                <span className="text-white drop-shadow-2xl block">I Build AI Systems</span>
-                                <span className="text-[#A1A1A1] text-color-interpolate hover:text-white block mt-2 sm:mt-3">
-                                    That Actually Ship.
+                                <span className="text-white drop-shadow-2xl block min-h-[1.1em]">
+                                    {typedLine1}
+                                    {activeCursor === 'line1' && (
+                                        <span className="inline-block w-[3px] h-[0.75em] bg-white ml-1.5 align-middle animate-pulse" />
+                                    )}
+                                </span>
+                                <span className="text-[#A1A1A1] text-color-interpolate hover:text-white block mt-2 sm:mt-3 min-h-[1.1em]">
+                                    {typedLine2}
+                                    {activeCursor === 'line2' && (
+                                        <span className="inline-block w-[3px] h-[0.75em] bg-[#A1A1A1] ml-1.5 align-middle animate-pulse" />
+                                    )}
                                 </span>
                             </h1>
 
                             {/* Metrics Removed */}
 
-                            <div className="hero-buttons flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 w-full sm:w-auto mt-10 sm:mt-12 md:mt-14">
+                            <div className={`hero-buttons flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 w-full sm:w-auto mt-10 sm:mt-12 md:mt-14 transition-all duration-700 ease-out delay-200 ${isTypingComplete ? 'translate-y-0 opacity-100 pointer-events-auto' : 'translate-y-6 opacity-0 pointer-events-none'}`}>
                                 <a
                                     href="#projects"
                                     onClick={(e) => { e.preventDefault(); scrollTo('projects'); setActiveSection('projects'); }}
@@ -399,55 +529,99 @@ export default function Portfolio() {
                     </div>
                 </section>
 
-                {/* Projects Section */}
-                <section id="projects" className="py-24 px-6 md:px-12 bg-[#0A0A0A]">
+                {/* Projects Section — Google Labs Style */}
+                <section id="projects" className="py-24 px-6 md:px-12 bg-[#0A0A0A] overflow-hidden">
                     <div className="max-w-[1440px] mx-auto">
-                        <div className="flex flex-col items-start gap-4 mb-24">
-                            <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white/70">/ Catalog</span>
-                            <h2 className="text-[clamp(3rem,8vw,8rem)] font-black tracking-tighter uppercase leading-none">Selected <br />Case Studies</h2>
+                        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 sm:mb-20">
+                            <div className="flex flex-col items-start gap-4">
+                                <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white/70">/ Catalog</span>
+                                <h2 className="text-[clamp(2.75rem,7vw,7rem)] font-black tracking-tighter uppercase leading-none">
+                                    Selected <br />Case Studies
+                                </h2>
+                            </div>
+                            <p className="text-sm sm:text-base text-[#A1A1A1] max-w-md leading-relaxed">
+                                Production AI systems, persistent agent architectures, and end-to-end MLOps engines built for scale.
+                            </p>
                         </div>
 
-                        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
+                        {/* Google Labs Horizontal Carousel Track */}
+                        <div
+                            ref={projectsTrackRef}
+                            className="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory no-scrollbar pb-6 pt-2 px-1"
+                        >
                             {portfolioData.projects.map((project, i) => (
                                 <div
                                     key={i}
                                     id={`project-${i}`}
-                                    className="group flex flex-col gap-6 cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-white/10 rounded-[40px] p-2"
-                                    onClick={() => setSelectedProject(project)}
                                     role="button"
                                     tabIndex={0}
+                                    aria-label={`View case study for ${project.title}`}
+                                    onClick={() => setSelectedProject(project)}
                                     onKeyDown={(e) => {
                                         if (e.key === 'Enter' || e.key === ' ') {
                                             e.preventDefault();
                                             setSelectedProject(project);
                                         }
                                     }}
+                                    className="group flex-shrink-0 w-[300px] sm:w-[350px] md:w-[380px] h-[520px] sm:h-[560px] bg-[#0E0E0E] hover:bg-[#141414] border border-white/10 hover:border-white/20 rounded-[32px] sm:rounded-[36px] p-6 sm:p-7 flex flex-col justify-between cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-white/20 transition-all duration-500 shadow-2xl shadow-black relative overflow-hidden snap-start"
                                 >
-                                    <div className="aspect-[4/5] relative overflow-hidden rounded-[32px] bg-[#111]">
+                                    {/* Top Row: Pill Badges */}
+                                    <div className="flex items-center justify-between gap-2 z-10">
+                                        <div className="flex items-center gap-2 overflow-hidden">
+                                            <span className="text-[10px] font-black uppercase tracking-wider text-white bg-white/10 group-hover:bg-white/15 px-3 py-1.5 rounded-full border border-white/5 whitespace-nowrap transition-colors">
+                                                {project.category.split('/')[0]?.trim() || project.category} →
+                                            </span>
+                                            <span className="text-[10px] font-black uppercase tracking-wider text-[#A1A1A1] bg-white/5 px-3 py-1.5 rounded-full border border-white/5 whitespace-nowrap">
+                                                {project.techStack[0]}
+                                            </span>
+                                        </div>
+                                        <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse shrink-0" title="Production System" />
+                                    </div>
+
+                                    {/* Middle Body: Media Preview */}
+                                    <div className="w-full h-[220px] sm:h-[240px] relative rounded-[24px] overflow-hidden bg-black/60 my-auto border border-white/5 group-hover:border-white/15 transition-all">
                                         <Image
                                             src={project.imageUrl}
                                             alt={`${project.title} – AI project by Krish Ujeniya, ${project.category}`}
                                             fill
-                                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                                             className="object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-100"
+                                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
+                                            className="object-cover transition-transform duration-700 group-hover:scale-105 opacity-85 group-hover:opacity-100"
                                             loading="lazy"
                                             decoding="async"
                                         />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-8">
-                                            <div className="flex flex-col gap-2">
-                                                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/80">{project.category}</span>
-                                                <h3 className="text-2xl font-black uppercase leading-[1.1] text-white">{project.title}</h3>
-                                            </div>
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent pointer-events-none" />
+
+                                        {/* Floating interactive mockup badge */}
+                                        <div className="absolute top-3 right-3 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/10 text-[9px] font-bold uppercase tracking-wider text-white/80">
+                                            Interactive
                                         </div>
                                     </div>
-                                    <div className="flex items-center justify-between px-2">
-                                        <div className="flex flex-wrap gap-2">
-                                            {project.techStack.slice(0, 2).map(tag => (
-                                                <span key={tag} className="text-[11px] font-black uppercase tracking-[0.1em] text-[#A1A1A1]">{tag}</span>
-                                            ))}
+
+                                    {/* Bottom Area: Title with physics bounce, description reveal, and Try it now button */}
+                                    <div className="flex flex-col gap-2 z-10 pt-2">
+                                        {/* Title with spring physics bounce on hover exit */}
+                                        <h3 className="project-title-bounce text-2xl sm:text-[26px] font-black uppercase tracking-tight text-white leading-tight">
+                                            {project.title.split('—')[0]?.trim() || project.title}
+                                        </h3>
+
+                                        {/* One-line description that smoothly slides up from below on hover */}
+                                        <div className="project-desc-reveal">
+                                            <p className="text-[12px] sm:text-[13px] text-white/70 leading-relaxed line-clamp-2">
+                                                {project.description}
+                                            </p>
                                         </div>
-                                        <ArrowRight size={18} className="text-[#A1A1A1] group-hover:text-white group-hover:translate-x-1 transition-all" aria-hidden="true" />
+
+                                        {/* Bottom Action Pill */}
+                                        <div className="pt-2 flex items-center justify-between">
+                                            <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/20 group-hover:border-white group-hover:bg-white group-hover:text-black text-white text-[10px] font-black uppercase tracking-wider transition-all duration-300">
+                                                Try it now <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform" />
+                                            </span>
+                                            <span className="text-[10px] font-black uppercase tracking-widest text-[#737373] group-hover:text-[#A1A1A1] transition-colors">
+                                                {project.techStack.slice(0, 2).join(' · ')}
+                                            </span>
+                                        </div>
                                     </div>
+
                                     <noscript>
                                         <div className="px-2 pt-1">
                                             <a
@@ -462,6 +636,24 @@ export default function Portfolio() {
                                     </noscript>
                                 </div>
                             ))}
+                        </div>
+
+                        {/* Carousel Navigation Arrows matching Google Labs */}
+                        <div className="flex items-center justify-center gap-4 mt-8 sm:mt-10">
+                            <button
+                                onClick={() => scrollProjects('left')}
+                                aria-label="Previous project"
+                                className="w-12 h-12 rounded-full border border-white/15 bg-white/5 hover:bg-white hover:text-black text-white flex items-center justify-center transition-all duration-300 active:scale-95 shadow-lg"
+                            >
+                                <ChevronLeft size={20} />
+                            </button>
+                            <button
+                                onClick={() => scrollProjects('right')}
+                                aria-label="Next project"
+                                className="w-12 h-12 rounded-full border border-white/15 bg-white/5 hover:bg-white hover:text-black text-white flex items-center justify-center transition-all duration-300 active:scale-95 shadow-lg"
+                            >
+                                <ChevronRight size={20} />
+                            </button>
                         </div>
                     </div>
                 </section>

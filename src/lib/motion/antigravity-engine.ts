@@ -270,7 +270,7 @@ export class AntigravityEngine {
       const t = Math.sqrt((i + 0.5) / targetCount);
       const baseRadius = minR + t * (maxR - minR);
       const baseAngle = i * goldenAngle;
-      const orbitalSpeed = ((i % 2 === 0 ? 1 : -1) * (0.012 + Math.random() * 0.022)) / layerSpeed;
+      const orbitalSpeed = 0; // Pure jellyfish pulsation, zero rotation
 
       const initX = this.focalPoint.x + Math.cos(baseAngle) * baseRadius * ecc;
       const initY = this.focalPoint.y + Math.sin(baseAngle) * baseRadius;
@@ -381,16 +381,24 @@ export class AntigravityEngine {
     for (let i = 0; i < this.particles.length; i++) {
       const p = this.particles[i];
 
-      const curAngle = p.baseAngle + timeSec * p.orbitalSpeed;
-      const breath = Math.sin((timeSec * 2 * Math.PI) / breathingPeriod + p.noisePhase) * (breathingAmplitude * p.layerSpeed);
-      const curRadius = Math.max(20, p.baseRadius + breath);
+      // Jellyfish rhythmic breathing & undulating wave propagation (zero rotation)
+      const phase = (timeSec * 2 * Math.PI) / breathingPeriod + p.noisePhase;
+      // Asymmetric pulse: swift bell contraction, slow buoyant gliding expansion
+      const pulse = Math.pow(Math.max(0, Math.sin(phase)), 2.2) * 1.5 - 0.4 * Math.cos(phase);
+      const tentacleWave = Math.sin(phase - p.baseRadius * 0.012) * (breathingAmplitude * 1.4);
+      const radialOffset = (pulse * breathingAmplitude * 1.6 + tentacleWave) * p.layerSpeed;
+      const curRadius = Math.max(25, p.baseRadius + radialOffset);
+
+      // Stable radial angle without rotational orbit
+      const curAngle = p.baseAngle;
 
       const ox = this.focalPoint.x + Math.cos(curAngle) * curRadius * p.eccentricity;
       const oy = this.focalPoint.y + Math.sin(curAngle) * curRadius;
 
-      const driftAngle = p.noisePhase + timeSec * 0.5 * p.layerSpeed;
-      const driftX = Math.cos(driftAngle) * ambientDriftSpeed * p.layerSpeed;
-      const driftY = Math.sin(driftAngle) * ambientDriftSpeed * p.layerSpeed;
+      // Soft ambient organic drift (gentle hydrodynamic wave)
+      const driftAngle = p.noisePhase + Math.sin(timeSec * 0.3 + p.noisePhase);
+      const driftX = Math.cos(driftAngle) * ambientDriftSpeed * p.layerSpeed * 0.4;
+      const driftY = Math.sin(driftAngle) * ambientDriftSpeed * p.layerSpeed * 0.4;
 
       const springX = (ox - p.x) * springStiffness;
       const springY = (oy - p.y) * springStiffness;
@@ -411,17 +419,15 @@ export class AntigravityEngine {
           const proximity = 1 - dist / cursorInfluenceRadius;
           const smoothFalloff = proximity * proximity * (3 - 2 * proximity);
 
+          // Radial repulsion without rotation
           const repulse = repulsionStrength * smoothFalloff * p.layerSpeed;
           forceX += normX * repulse;
           forceY += normY * repulse;
 
+          // Drag velocity transfer from pointer
           const velocityTransfer = velocityTransferStrength * smoothFalloff * p.layerSpeed;
           forceX += this.pointer.vx * velocityTransfer;
           forceY += this.pointer.vy * velocityTransfer;
-
-          const tangentialSpeed = (this.pointer.speed * 0.04 + 2.5) * orbitalStrength * smoothFalloff * p.layerSpeed;
-          forceX += -normY * tangentialSpeed;
-          forceY += normX * tangentialSpeed;
 
           p.currentAlpha = Math.min(1.0, p.baseAlpha + smoothFalloff * 0.35);
         } else {
