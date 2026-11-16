@@ -23,8 +23,10 @@ function revealOnScroll(
   const els = gsap.utils.toArray<HTMLElement>(selector);
   if (!els.length) return;
 
-  if (typeof navigator !== 'undefined' && navigator.webdriver) {
-    gsap.set(els, { opacity: 1, visibility: 'visible' });
+  const isReduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isAutomated = typeof navigator !== 'undefined' && navigator.webdriver;
+  if (isReduced || isAutomated) {
+    gsap.set(els, { opacity: 1, visibility: 'visible', clearProps: 'all' });
     return;
   }
 
@@ -80,17 +82,23 @@ export function useGsapAnimations() {
           },
           (ctx) => {
             const { noMotion } = (ctx as unknown as { conditions: { noMotion: boolean } }).conditions;
-            const skipMotion = noMotion || (typeof navigator !== 'undefined' && navigator.webdriver);
+            const isReduced = noMotion || (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+            const isAutomated = Boolean(typeof navigator !== 'undefined' && navigator.webdriver);
+            const skipMotion = isReduced || isAutomated;
 
             // ── Reduced motion or automated runner: make everything visible immediately ──
             if (skipMotion) {
-              gsap.set('section, section *', { opacity: 1, visibility: 'visible' });
-              gsap.set('.char-reveal, .word-reveal, .text-clip-inner, .blur-to-sharp, .scroll-heading-reveal, .headline-scale-reveal', {
-                opacity: 1,
-                visibility: 'visible',
-                filter: 'none',
-                transform: 'none',
-              });
+              gsap.set('section, section *', { opacity: 1, visibility: 'visible', clearProps: 'transform,filter' });
+              gsap.set(
+                '.char-reveal, .word-reveal, .text-clip-inner, .blur-to-sharp, .scroll-heading-reveal, .headline-scale-reveal, .animated-counter',
+                {
+                  opacity: 1,
+                  visibility: 'visible',
+                  filter: 'none',
+                  transform: 'none',
+                  clearProps: 'all',
+                }
+              );
               return;
             }
 

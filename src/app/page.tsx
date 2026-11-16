@@ -204,7 +204,7 @@ export default function Portfolio() {
                                 }
                             }}
                         >
-                            <span className="sm:hidden text-crossfade" key={activeSection}>
+                            <span className="sm:hidden text-crossfade">
                                 {activeSection === 'home' ? (
                                     <>KRISH <span className="text-[#A1A1A1]">UJENIYA</span></>
                                 ) : activeSection.toUpperCase()}
@@ -263,14 +263,12 @@ export default function Portfolio() {
                             </div>
 
                              <h1 className="text-[clamp(3rem,12vw,8rem)] sm:text-[10vw] md:text-[9vw] lg:text-[8vw] font-black tracking-tighter leading-[0.8] uppercase break-words overflow-visible blur-to-sharp headline-scale-reveal">
-                                <span className="text-clip-mask"><span className="text-clip-inner text-white drop-shadow-2xl">I Build AI</span></span> <br />
-                                <span className="text-clip-mask"><span className="text-clip-inner text-[#A1A1A1] text-color-interpolate hover:text-white">Systems That</span></span> <br />
-                                <span className="flex items-center gap-4 sm:gap-10 text-clip-mask">
-                                    <span className="text-clip-inner text-white flex items-center gap-4 sm:gap-10">
-                                        Actually Ship.
-                                        <div className="hidden md:flex w-24 h-24 rounded-[32px] border-2 border-white/10 items-center justify-center p-4 bg-white/5">
-                                            <BrainCircuit size={48} className="text-[#A1A1A1]" />
-                                        </div>
+                                <span className="text-clip-mask block"><span className="text-clip-inner text-white drop-shadow-2xl block">I Build AI</span></span>
+                                <span className="text-clip-mask block"><span className="text-clip-inner text-[#A1A1A1] text-color-interpolate hover:text-white block">Systems That</span></span>
+                                <span className="flex items-center gap-4 sm:gap-10">
+                                    <span className="text-clip-mask inline-block"><span className="text-clip-inner text-white inline-block">Actually Ship.</span></span>
+                                    <span className="hidden md:inline-flex w-24 h-24 rounded-[32px] border-2 border-white/10 items-center justify-center p-4 bg-white/5">
+                                        <BrainCircuit size={48} className="text-[#A1A1A1]" />
                                     </span>
                                 </span>
                             </h1>
@@ -1035,9 +1033,7 @@ export default function Portfolio() {
                                                         aria-label="Send inquiry"
                                                         className="w-full flex items-center justify-center gap-4 bg-black text-white py-8 rounded-full text-sm font-black uppercase tracking-[0.3em] hover:bg-black/80 hover:scale-[0.98] transition-all duration-500 mt-8 disabled:opacity-50 disabled:cursor-not-allowed"
                                                     >
-                                                        <span className="text-crossfade" key={isSubmitting ? 'sending' : 'idle'}>
-                                                            {isSubmitting ? 'Sending…' : 'SEND INQUIRY'}
-                                                        </span>
+                                                        <span>{isSubmitting ? 'Sending…' : 'SEND INQUIRY'}</span>
                                                         <ChevronRight size={18} aria-hidden="true" />
                                                     </button>
                                                     {isError && (

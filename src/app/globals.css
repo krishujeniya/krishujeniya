@@ -89,6 +89,21 @@
       transition-duration: 0.01ms !important;
       scroll-behavior: auto !important;
     }
+
+    .animated-underline::after {
+      display: none !important;
+    }
+
+    .blur-to-sharp {
+      filter: none !important;
+    }
+
+    .text-clip-inner,
+    .headline-scale-reveal,
+    .scroll-heading-reveal {
+      transform: none !important;
+      opacity: 1 !important;
+    }
   }
 
   body {
@@ -603,13 +618,11 @@
 
 .text-clip-inner {
   display: inline-block;
-  will-change: transform, opacity;
 }
 
 /* 37. Blur-to-sharp entrance */
 .blur-to-sharp {
   filter: blur(0px);
-  will-change: filter, opacity, transform;
 }
 
 /* 38. Text color interpolation */
@@ -634,6 +647,7 @@
   transform: scaleX(0);
   transform-origin: bottom right;
   transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
 }
 
 .animated-underline:hover::after,
@@ -645,23 +659,27 @@
 
 /* 42. Crossfading text between states */
 .text-crossfade {
-  animation: textCrossfade 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@keyframes textCrossfade {
-  from {
-    opacity: 0;
-    transform: translateY(4px);
+@media (prefers-reduced-motion: no-preference) {
+  .text-crossfade-anim {
+    animation: textCrossfade 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 
-/* 33. Text fade in */
-.text-fade-in {
-  animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  @keyframes textCrossfade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* 33. Text fade in */
+  .text-fade-in {
+    animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
 }
 
 /* ============================================
