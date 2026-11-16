@@ -667,3 +667,23 @@
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }
+
+/* ============================================
+   FOOTER ANTIGRAVITY BRAND TYPOGRAPHY
+   ============================================ */
+
+.footer-brand-title {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.footer-letter {
+  display: inline-block;
+  will-change: transform;
+}
+
+.floating-letter {
+  display: inline-block;
+  will-change: transform;
+}

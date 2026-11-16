@@ -978,16 +978,63 @@ export default function Portfolio() {
                 </section>
             </main>
 
-            <footer className="py-24 px-6 md:px-12 border-t border-white/5 bg-[#0A0A0A]">
-                <div className="max-w-[1440px] mx-auto flex flex-col items-center gap-12 sm:gap-16">
-                    <div className="flex flex-col items-center gap-6">
-                        <div className="text-2xl font-black tracking-tighter text-white">KRISH UJENIYA</div>
-                        <div className="text-[11px] font-black uppercase tracking-[0.4em] text-[#A1A1A1] text-center max-w-xs leading-relaxed">
-                            © 2026 · BUILDING RELIABLE AI SYSTEMS
+            <footer className="pt-20 sm:pt-28 pb-12 px-4 sm:px-8 md:px-12 border-t border-white/5 bg-[#050505] overflow-hidden">
+                <div className="max-w-[1440px] mx-auto flex flex-col items-center">
+                    {/* Top Row: Navigation Links & Tagline */}
+                    <div className="w-full flex flex-col md:flex-row items-center justify-between gap-6 pb-12 sm:pb-16 border-b border-white/5">
+                        <div className="flex flex-wrap justify-center md:justify-start gap-6 sm:gap-8">
+                            {['about', 'experience', 'services', 'projects', 'documents', 'testimonials', 'contact'].map((item) => (
+                                <a
+                                    key={item}
+                                    href={`#${item}`}
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        scrollTo(item);
+                                    }}
+                                    className="text-[10px] font-black uppercase tracking-[0.25em] text-[#A1A1A1] hover:text-white transition-colors"
+                                >
+                                    {item}
+                                </a>
+                            ))}
+                        </div>
+                        <div className="text-[10px] font-black uppercase tracking-[0.3em] text-[#737373] text-center md:text-right">
+                            AVAILABLE FOR GLOBAL AI RESEARCH & CONTRACTS
                         </div>
                     </div>
 
-                        <div className="flex flex-wrap justify-center gap-8 sm:gap-12">
+                    {/* Giant Monumental Name Banner like Google Antigravity */}
+                    <div className="w-full py-12 sm:py-20 md:py-28 flex justify-center items-center overflow-visible select-none">
+                        <div
+                            className="footer-brand-title w-full flex items-baseline justify-center font-black tracking-tighter text-[clamp(2.5rem,10.2vw,14.5rem)] leading-none text-white whitespace-nowrap"
+                            aria-label="KRISH UJENIYA"
+                        >
+                            <span className="footer-letter inline-block">K</span>
+                            <span className="footer-letter inline-block">R</span>
+                            <span className="footer-letter inline-block">I</span>
+                            <span className="footer-letter inline-block">S</span>
+                            <span className="footer-letter inline-block">H</span>
+                            <span className="footer-letter inline-block mx-[0.18em]">&nbsp;</span>
+                            <span className="footer-letter inline-block">U</span>
+                            <span className="footer-letter inline-block">J</span>
+                            <span className="footer-letter inline-block">E</span>
+                            <span className="footer-letter inline-block">N</span>
+                            <span className="footer-letter floating-letter floating-letter-1 inline-block text-white" style={{ transformOrigin: 'bottom center' }}>I</span>
+                            <span className="footer-letter floating-letter floating-letter-2 inline-block text-white" style={{ transformOrigin: 'bottom center' }}>Y</span>
+                            <span className="footer-letter floating-letter floating-letter-3 inline-block text-white" style={{ transformOrigin: 'bottom center' }}>A</span>
+                        </div>
+                    </div>
+
+                    {/* Bottom Row: Copyright, Socials & Back to Top */}
+                    <div className="w-full pt-8 sm:pt-12 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-6 sm:gap-8">
+                        <div className="flex items-center gap-3 text-[11px] font-black uppercase tracking-[0.25em] text-[#737373]">
+                            <span>KRISH UJENIYA</span>
+                            <span className="text-white/20">/</span>
+                            <span>© 2026</span>
+                            <span className="hidden md:inline text-white/20">/</span>
+                            <span className="hidden md:inline">ALL RIGHTS RESERVED</span>
+                        </div>
+
+                        <div className="flex flex-wrap justify-center items-center gap-6 sm:gap-8">
                             {Object.entries(portfolioData.profile.socials)
                                 .filter(([name]) => name !== 'calendar')
                                 .map(([name, url]) => (
@@ -997,23 +1044,24 @@ export default function Portfolio() {
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     aria-label={`Visit my ${name} profile`}
-                                    className="text-[11px] font-black uppercase tracking-[0.2em] text-[#A1A1A1] hover:text-white transition-colors border-b border-transparent hover:border-white/20 pb-1"
+                                    className="text-[10px] font-black uppercase tracking-[0.2em] text-[#A1A1A1] hover:text-white transition-colors border-b border-transparent hover:border-white/30 pb-0.5"
                                 >
                                     {name === 'huggingface' ? 'HuggingFace' : name}
                                 </a>
                             ))}
                         </div>
 
-                    <button
-                        onClick={() => scrollTo('home')}
-                        aria-label="Back to top"
-                        className={`group flex flex-col items-center gap-4 text-[11px] font-black uppercase tracking-[0.3em] text-[#A1A1A1] hover:text-white transition-all duration-300 ${scrolled ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
-                    >
-                        <span className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:border-white/30 transition-all bg-white/5">
-                            <ArrowUp size={18} aria-hidden="true" />
-                        </span>
-                        Back to Top
-                    </button>
+                        <button
+                            onClick={() => scrollTo('home')}
+                            aria-label="Back to top"
+                            className="group flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.25em] text-[#A1A1A1] hover:text-white transition-colors"
+                        >
+                            Back to Top
+                            <span className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center group-hover:border-white/30 transition-all bg-white/5">
+                                <ArrowUp size={14} aria-hidden="true" />
+                            </span>
+                        </button>
+                    </div>
                 </div>
             </footer>
 
