@@ -89,58 +89,28 @@ export default function Portfolio() {
     const [isTypingComplete, setIsTypingComplete] = useState(false);
     const [activeCursor, setActiveCursor] = useState<'line1' | 'line2' | null>('line1');
     const projectsTrackRef = useRef<HTMLDivElement | null>(null);
+    const openerRef = useRef<HTMLElement | null>(null);
 
-    // Infinite project deck
-    const infiniteProjects = [
-        ...portfolioData.projects,
-        ...portfolioData.projects,
-        ...portfolioData.projects,
-    ];
-
-    // Initial position to middle set for infinite looping
-    useEffect(() => {
-        const track = projectsTrackRef.current;
-        if (!track) return;
-        const timer = setTimeout(() => {
-            if (track) {
-                const singleSetWidth = track.scrollWidth / 3;
-                track.scrollLeft = singleSetWidth;
-            }
-        }, 50);
-        return () => clearTimeout(timer);
-    }, []);
-
-    const handleProjectsScroll = () => {
-        const track = projectsTrackRef.current;
-        if (!track) return;
-        const singleSetWidth = track.scrollWidth / 3;
-        if (singleSetWidth <= 0) return;
-
-        // Wrap around seamlessly
-        if (track.scrollLeft >= singleSetWidth * 2 - 10) {
-            track.scrollLeft -= singleSetWidth;
-        } else if (track.scrollLeft <= 10) {
-            track.scrollLeft += singleSetWidth;
-        }
-    };
-
+    // Infinite carousel navigation: after last project display first project, and vice versa
     const scrollProjects = (direction: 'left' | 'right') => {
         const track = projectsTrackRef.current;
         if (!track) return;
         const card = track.querySelector<HTMLElement>('[role="button"]');
         const cardWidth = card ? card.offsetWidth + 24 : 380; // card width + gap-6
-        const singleSetWidth = track.scrollWidth / 3;
+        const maxScroll = track.scrollWidth - track.clientWidth;
 
         if (direction === 'right') {
-            if (track.scrollLeft >= singleSetWidth * 2 - cardWidth * 1.5) {
-                track.scrollLeft -= singleSetWidth;
+            if (track.scrollLeft >= maxScroll - 20) {
+                track.scrollTo({ left: 0, behavior: 'smooth' });
+            } else {
+                track.scrollBy({ left: cardWidth, behavior: 'smooth' });
             }
-            track.scrollBy({ left: cardWidth, behavior: 'smooth' });
         } else {
-            if (track.scrollLeft <= singleSetWidth * 0.5) {
-                track.scrollLeft += singleSetWidth;
+            if (track.scrollLeft <= 20) {
+                track.scrollTo({ left: maxScroll, behavior: 'smooth' });
+            } else {
+                track.scrollBy({ left: -cardWidth, behavior: 'smooth' });
             }
-            track.scrollBy({ left: -cardWidth, behavior: 'smooth' });
         }
     };
 
@@ -305,7 +275,11 @@ export default function Portfolio() {
             document.body.style.overflow = 'unset';
             clearTimeout(focusTimer);
             window.removeEventListener('keydown', handleKeyDown);
-            previouslyFocused?.focus();
+            if (openerRef.current) {
+                openerRef.current.focus();
+            } else if (previouslyFocused) {
+                previouslyFocused.focus();
+            }
         };
     }, [selectedProject]);
 
@@ -604,23 +578,26 @@ export default function Portfolio() {
                             </p>
                         </div>
 
-                        {/* Google Labs Infinite Horizontal Carousel Track */}
+                        {/* Google Labs Horizontal Carousel Track */}
                         <div
                             ref={projectsTrackRef}
-                            onScroll={handleProjectsScroll}
                             className="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory no-scrollbar pb-6 pt-2 px-1"
                         >
-                            {infiniteProjects.map((project, i) => (
+                            {portfolioData.projects.map((project, i) => (
                                 <div
                                     key={i}
                                     id={`project-${i}`}
                                     role="button"
                                     tabIndex={0}
                                     aria-label={`View case study for ${project.title}`}
-                                    onClick={() => setSelectedProject(project)}
+                                    onClick={(e) => {
+                                        openerRef.current = e.currentTarget;
+                                        setSelectedProject(project);
+                                    }}
                                     onKeyDown={(e) => {
                                         if (e.key === 'Enter' || e.key === ' ') {
                                             e.preventDefault();
+                                            openerRef.current = e.currentTarget;
                                             setSelectedProject(project);
                                         }
                                     }}
