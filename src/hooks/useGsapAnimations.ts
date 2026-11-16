@@ -89,23 +89,28 @@ export function useGsapAnimations() {
             }
 
             // ── 0. Hero entrance ──
+            const heroName = document.querySelector('#home .hero-name') as HTMLElement | null;
             const heroH1 = document.querySelector('#home h1') as HTMLElement | null;
             const heroP = document.querySelector('#home p') as HTMLElement | null;
             const heroButtons = document.querySelector('#home .pt-4') as HTMLElement | null;
 
-            if (heroH1 || heroP || heroButtons) {
+            if (heroName || heroH1 || heroP || heroButtons) {
               const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+              if (heroName) {
+                gsap.set(heroName, { opacity: 0, y: 20 });
+                tl.to(heroName, { opacity: 1, y: 0, duration: 0.8 }, 0.05);
+              }
               if (heroH1) {
                 gsap.set(heroH1, { opacity: 0, y: 40 });
-                tl.to(heroH1, { opacity: 1, y: 0, duration: 0.9 }, 0.1);
+                tl.to(heroH1, { opacity: 1, y: 0, duration: 0.9 }, 0.15);
               }
               if (heroP) {
                 gsap.set(heroP, { opacity: 0, y: 25 });
-                tl.to(heroP, { opacity: 1, y: 0, duration: 0.8 }, 0.25);
+                tl.to(heroP, { opacity: 1, y: 0, duration: 0.8 }, 0.3);
               }
               if (heroButtons) {
                 gsap.set(heroButtons, { opacity: 0, y: 20 });
-                tl.to(heroButtons, { opacity: 1, y: 0, duration: 0.7 }, 0.4);
+                tl.to(heroButtons, { opacity: 1, y: 0, duration: 0.7 }, 0.45);
               }
             }
 

@@ -254,7 +254,9 @@ export default function Portfolio() {
                     <AntigravityCanvas />
                     <div className="max-w-[1440px] mx-auto w-full relative z-10">
                         <div className="flex flex-col items-center text-center gap-6 md:gap-8">
-                            {/* Availability Removed */}
+                            <div className="hero-name text-lg sm:text-2xl font-black tracking-tighter">
+                                KRISH <span className="text-[#A1A1A1]">UJENIYA</span>
+                            </div>
 
                              <h1 className="text-[clamp(2.5rem,7vw,6.5rem)] sm:text-[7vw] md:text-[6.5vw] lg:text-[6vw] font-black tracking-tighter leading-[0.95] uppercase break-words overflow-visible">
                                 <span className="text-white drop-shadow-2xl block">I Build AI Systems</span>
