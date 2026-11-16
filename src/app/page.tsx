@@ -1054,7 +1054,7 @@ export default function Portfolio() {
                         <button
                             onClick={() => scrollTo('home')}
                             aria-label="Back to top"
-                            className="group flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.25em] text-[#A1A1A1] hover:text-white transition-colors"
+                            className={`group flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.25em] text-[#A1A1A1] hover:text-white transition-colors ${scrolled ? 'opacity-100' : 'opacity-70'}`}
                         >
                             Back to Top
                             <span className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center group-hover:border-white/30 transition-all bg-white/5">
