@@ -129,7 +129,7 @@ export class AntigravityEngine {
 
     if (this.focalPoint.x === 0 || this.focalPoint.y === 0) {
       this.focalPoint.x = w * 0.5;
-      this.focalPoint.y = h * 0.48;
+      this.focalPoint.y = h * 0.5;
       this.focalPoint.targetX = this.focalPoint.x;
       this.focalPoint.targetY = this.focalPoint.y;
     }
@@ -154,7 +154,7 @@ export class AntigravityEngine {
       this.pointer.targetX = -9999;
       this.pointer.targetY = -9999;
       this.focalPoint.targetX = this.width * 0.5;
-      this.focalPoint.targetY = this.height * 0.48;
+      this.focalPoint.targetY = this.height * 0.5;
     }
   }
 
@@ -196,7 +196,7 @@ export class AntigravityEngine {
 
     if (this.focalPoint.x === 0 || this.focalPoint.y === 0) {
       this.focalPoint.x = this.width * 0.5;
-      this.focalPoint.y = this.height * 0.48;
+      this.focalPoint.y = this.height * 0.5;
       this.focalPoint.targetX = this.focalPoint.x;
       this.focalPoint.targetY = this.focalPoint.y;
     }
@@ -295,7 +295,7 @@ export class AntigravityEngine {
       this.pointer.speed *= 0.85;
 
       this.focalPoint.targetX = this.width * 0.5;
-      this.focalPoint.targetY = this.height * 0.48;
+      this.focalPoint.targetY = this.height * 0.5;
     }
 
     const focalFollow = Math.min(1.0, 4.5 * dt);

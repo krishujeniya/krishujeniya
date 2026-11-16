@@ -248,9 +248,9 @@ export default function Portfolio() {
 
 
             <main id="main-content" tabIndex={-1} className="flex flex-col">
-                <section id="home" className="relative min-h-screen flex flex-col justify-center px-6 md:px-12 pt-32 md:pt-20">
+                <section id="home" className="relative min-h-screen flex flex-col justify-center items-center px-6 md:px-12 py-12">
                     <AntigravityCanvas />
-                    <div className="max-w-[1440px] mx-auto w-full relative z-10">
+                    <div className="max-w-[1440px] mx-auto w-full relative z-10 flex flex-col items-center text-center -translate-y-4 sm:-translate-y-6 md:-translate-y-8">
                         <div className="flex flex-col items-center text-center">
                             <div className="hero-name text-lg sm:text-2xl font-black tracking-tighter mb-6 sm:mb-8">
                                 KRISH <span className="text-[#A1A1A1]">UJENIYA</span>
