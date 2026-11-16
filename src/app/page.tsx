@@ -411,7 +411,7 @@ export default function Portfolio() {
                     </div>
                     <div className="max-w-[1440px] mx-auto w-full relative z-10 flex flex-col items-center text-center -translate-y-4 sm:-translate-y-6 md:-translate-y-8">
                         <div className="flex flex-col items-center text-center">
-                            <div className={`hero-name text-lg sm:text-2xl font-black tracking-tighter mb-6 sm:mb-8 transition-all duration-700 ease-out delay-100 ${isTypingComplete ? 'translate-y-0 opacity-100' : '-translate-y-4 opacity-0'}`}>
+                            <div className={`hero-name text-lg sm:text-2xl font-black tracking-tighter mb-6 sm:mb-8 transition-all duration-700 ease-out delay-100 ${isTypingComplete ? 'translate-y-0 opacity-100 pointer-events-auto' : '-translate-y-4 opacity-0 pointer-events-none'}`}>
                                 KRISH <span className="text-[#A1A1A1]">UJENIYA</span>
                             </div>
 

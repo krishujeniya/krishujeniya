@@ -89,24 +89,9 @@ export function useGsapAnimations() {
             }
 
             // ── 0. Hero entrance ──
-            const heroName = document.querySelector('#home .hero-name') as HTMLElement | null;
             const heroH1 = document.querySelector('#home h1') as HTMLElement | null;
-            const heroButtons = document.querySelector('#home .hero-buttons, #home .pt-4') as HTMLElement | null;
-
-            if (heroName || heroH1 || heroButtons) {
-              const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-              if (heroName) {
-                gsap.set(heroName, { opacity: 0, y: 20 });
-                tl.to(heroName, { opacity: 1, y: 0, duration: 0.8 }, 0.05);
-              }
-              if (heroH1) {
-                gsap.set(heroH1, { opacity: 0, y: 40 });
-                tl.to(heroH1, { opacity: 1, y: 0, duration: 0.9 }, 0.15);
-              }
-              if (heroButtons) {
-                gsap.set(heroButtons, { opacity: 0, y: 20 });
-                tl.to(heroButtons, { opacity: 1, y: 0, duration: 0.7 }, 0.35);
-              }
+            if (heroH1) {
+              gsap.fromTo(heroH1, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', delay: 0.1 });
             }
 
             // ── 1. About section ──
