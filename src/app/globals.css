@@ -579,6 +579,92 @@
 }
 
 /* ============================================
+   TYPOGRAPHY & CONTENT MOTION PRINCIPLES
+   31. Character-by-character text entrance
+   32. Word-by-word staggered reveal
+   33. Text fade-in and fade-out
+   34. Text translate-up reveal
+   35. Text clipping and masking
+   36. Headline scale transitions
+   37. Blur-to-sharp text entrance
+   38. Text color interpolation
+   39. Scroll-triggered heading reveal
+   40. Animated underline
+   41. Animated number counters
+   42. Crossfading text between states
+   ============================================ */
+
+/* 35. Text clipping and masking */
+.text-clip-mask {
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: bottom;
+}
+
+.text-clip-inner {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+
+/* 37. Blur-to-sharp entrance */
+.blur-to-sharp {
+  filter: blur(0px);
+  will-change: filter, opacity, transform;
+}
+
+/* 38. Text color interpolation */
+.text-color-interpolate {
+  transition: color 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease;
+}
+
+/* 40. Animated underline */
+.animated-underline {
+  position: relative;
+  display: inline-block;
+}
+
+.animated-underline::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: -2px;
+  left: 0;
+  background-color: currentColor;
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.animated-underline:hover::after,
+.animated-underline:focus-visible::after,
+.animated-underline[aria-current="page"]::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+/* 42. Crossfading text between states */
+.text-crossfade {
+  animation: textCrossfade 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes textCrossfade {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 33. Text fade in */
+.text-fade-in {
+  animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ============================================
    MAGNETIC BUTTON EFFECT
    ============================================ */
 
