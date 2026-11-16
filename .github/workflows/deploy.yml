@@ -102,3 +102,36 @@ jobs:
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
+      - name: Install Obscura headless engine
+        env:
+          OBSCURA_VERSION: v0.2.7
+          OBSCURA_SHA256: 11b53d27cd743e00e196e216920e7f3f794cf378e3f1792b8d25d3beabaf9cad
+        run: |
+          archive="$RUNNER_TEMP/obscura-x86_64-linux.tar.gz"
+          install_dir="$RUNNER_TEMP/obscura"
+          curl --fail --location --silent --show-error \
+            "https://github.com/h4ckf0r0day/obscura/releases/download/${OBSCURA_VERSION}/obscura-x86_64-linux.tar.gz" \
+            --output "$archive"
+          echo "$OBSCURA_SHA256  $archive" | sha256sum --check
+          mkdir -p "$install_dir"
+          tar -xzf "$archive" -C "$install_dir"
+          chmod +x "$install_dir/obscura" "$install_dir/obscura-worker"
+          echo "$install_dir" >> "$GITHUB_PATH"
+      - name: Smoke test published portfolio with Obscura
+        env:
+          PAGE_URL: ${{ steps.deployment.outputs.page_url }}
+        run: |
+          published_url="${PAGE_URL%/}/"
+          html="$RUNNER_TEMP/published-portfolio.html"
+          log="$RUNNER_TEMP/obscura-published-smoke.log"
+          for attempt in {1..5}; do
+            if obscura fetch "$published_url" --dump html --timeout 30 > "$html" 2> "$log" && \
+              grep -Fq 'id="form-name"' "$html"; then
+              echo "Published contact form confirmed at $published_url"
+              exit 0
+            fi
+            sleep 5
+          done
+          cat "$log"
+          echo "Published contact form marker was not found at $published_url"
+          exit 1
