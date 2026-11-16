@@ -980,25 +980,27 @@ export default function Portfolio() {
 
             <footer className="pt-20 sm:pt-28 pb-12 px-4 sm:px-8 md:px-12 border-t border-white/5 bg-[#050505] overflow-hidden">
                 <div className="max-w-[1440px] mx-auto flex flex-col items-center">
-                    {/* Top Row: Navigation Links & Tagline */}
-                    <div className="w-full flex flex-col md:flex-row items-center justify-between gap-6 pb-12 sm:pb-16 border-b border-white/5">
-                        <div className="flex flex-wrap justify-center md:justify-start gap-6 sm:gap-8">
-                            {['about', 'experience', 'services', 'projects', 'documents', 'testimonials', 'contact'].map((item) => (
+                    {/* Top Row: Tagline & Social Links */}
+                    <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-6 pb-12 sm:pb-16 border-b border-white/5">
+                        <div className="text-[10px] sm:text-[11px] font-black uppercase tracking-[0.3em] text-[#A1A1A1] text-center sm:text-left">
+                            © 2026 · BUILDING RELIABLE AI SYSTEMS
+                        </div>
+
+                        <div className="flex flex-wrap justify-center items-center gap-6 sm:gap-8">
+                            {Object.entries(portfolioData.profile.socials)
+                                .filter(([name]) => name !== 'calendar')
+                                .map(([name, url]) => (
                                 <a
-                                    key={item}
-                                    href={`#${item}`}
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        scrollTo(item);
-                                    }}
-                                    className="text-[10px] font-black uppercase tracking-[0.25em] text-[#A1A1A1] hover:text-white transition-colors"
+                                    key={name}
+                                    href={url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label={`Visit my ${name} profile`}
+                                    className="text-[10px] font-black uppercase tracking-[0.2em] text-[#A1A1A1] hover:text-white transition-colors border-b border-transparent hover:border-white/30 pb-0.5"
                                 >
-                                    {item}
+                                    {name === 'huggingface' ? 'HuggingFace' : name}
                                 </a>
                             ))}
-                        </div>
-                        <div className="text-[10px] font-black uppercase tracking-[0.3em] text-[#737373] text-center md:text-right">
-                            AVAILABLE FOR GLOBAL AI RESEARCH & CONTRACTS
                         </div>
                     </div>
 
@@ -1024,31 +1026,14 @@ export default function Portfolio() {
                         </div>
                     </div>
 
-                    {/* Bottom Row: Copyright, Socials & Back to Top */}
+                    {/* Bottom Row: Copyright & Back to Top */}
                     <div className="w-full pt-8 sm:pt-12 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-6 sm:gap-8">
                         <div className="flex items-center gap-3 text-[11px] font-black uppercase tracking-[0.25em] text-[#737373]">
                             <span>KRISH UJENIYA</span>
                             <span className="text-white/20">/</span>
-                            <span>© 2026</span>
+                            <span>ALL RIGHTS RESERVED</span>
                             <span className="hidden md:inline text-white/20">/</span>
-                            <span className="hidden md:inline">ALL RIGHTS RESERVED</span>
-                        </div>
-
-                        <div className="flex flex-wrap justify-center items-center gap-6 sm:gap-8">
-                            {Object.entries(portfolioData.profile.socials)
-                                .filter(([name]) => name !== 'calendar')
-                                .map(([name, url]) => (
-                                <a
-                                    key={name}
-                                    href={url}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    aria-label={`Visit my ${name} profile`}
-                                    className="text-[10px] font-black uppercase tracking-[0.2em] text-[#A1A1A1] hover:text-white transition-colors border-b border-transparent hover:border-white/30 pb-0.5"
-                                >
-                                    {name === 'huggingface' ? 'HuggingFace' : name}
-                                </a>
-                            ))}
+                            <span className="hidden md:inline">AVAILABLE WORLDWIDE</span>
                         </div>
 
                         <button
