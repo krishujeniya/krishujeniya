@@ -35,6 +35,13 @@ createServer((request, response) => {
     'content-length': fileSize,
     'content-type': contentTypes[extname(file)] ?? 'application/octet-stream',
   });
+  if (extname(file) === '.js') {
+    response.once('close', () => {
+      if (!response.writableFinished) {
+        console.error(`[DEBUG-STATIC-CHUNK-CLOSE] ${pathname} bytesWritten=${response.bytesWritten}/${fileSize}`);
+      }
+    });
+  }
   const stream = createReadStream(file);
   stream.on('error', error => {
     console.error(`Static file read failed for ${pathname}: ${error.message}`);
