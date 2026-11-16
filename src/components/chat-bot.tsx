@@ -201,6 +201,7 @@ export const ChatBot = () => {
         chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, [chatMessages, isTyping]);
 
+    // Close chat on Escape key or click outside
     useEffect(() => {
         if (!chatOpen) return;
         const handleKeyDown = (event: KeyboardEvent) => {
@@ -208,10 +209,27 @@ export const ChatBot = () => {
                 setChatOpen(false);
             }
         };
+        const handleClickOutside = (event: MouseEvent | TouchEvent) => {
+            const target = event.target as Node;
+            if (
+                windowRef.current &&
+                !windowRef.current.contains(target) &&
+                toggleRef.current &&
+                !toggleRef.current.contains(target)
+            ) {
+                setChatOpen(false);
+            }
+        };
+
         const toggleButton = toggleRef.current;
         window.addEventListener('keydown', handleKeyDown);
+        document.addEventListener('mousedown', handleClickOutside);
+        document.addEventListener('touchstart', handleClickOutside, { passive: true });
+
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
+            document.removeEventListener('mousedown', handleClickOutside);
+            document.removeEventListener('touchstart', handleClickOutside);
             toggleButton?.focus();
         };
     }, [chatOpen]);
@@ -227,12 +245,12 @@ export const ChatBot = () => {
         const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches || Boolean(typeof navigator !== 'undefined' && navigator.webdriver);
         if (reduceMotion) {
             gsap.set(win, { display: chatOpen ? 'flex' : 'none', opacity: 1, scale: 1, y: 0 });
-            if (chatOpen) inputRef.current?.focus();
+            if (chatOpen) inputRef.current?.focus({ preventScroll: true });
             return;
         }
         if (chatOpen) {
             gsap.set(win, { display: 'flex' });
-            inputRef.current?.focus();
+            inputRef.current?.focus({ preventScroll: true });
             gsap.fromTo(win,
                 { opacity: 0, scale: 0.85, y: 20 },
                 { opacity: 1, scale: 1, y: 0, duration: 0.3, ease: 'power3.out' }
@@ -259,12 +277,7 @@ export const ChatBot = () => {
             if (!reduceMotion) gsap.to(close, { rotate: 0, opacity: 1, duration: 0.2, ease: 'power2.out' });
         } else {
             gsap.set(close, { display: 'none' });
-            if (previousChatOpenRef.current && !reduceMotion) {
-                gsap.set(open, { display: 'flex', rotate: 90, opacity: 0 });
-                gsap.to(open, { rotate: 0, opacity: 1, duration: 0.2, ease: 'power2.out' });
-            } else {
-                gsap.set(open, { display: 'flex', rotate: 0, opacity: 1 });
-            }
+            gsap.set(open, { display: 'flex', rotate: 0, opacity: 1 });
         }
     }, [chatOpen]);
 
@@ -312,7 +325,7 @@ export const ChatBot = () => {
     }, [chatInput, isTyping]);
 
     return (
-        <div className={`chatbot-wrapper transition-all duration-700 ease-out ${isReady ? 'opacity-100 scale-100 pointer-events-auto' : 'opacity-0 scale-75 pointer-events-none'}`}>
+        <div className={`chatbot-wrapper transition-opacity duration-700 ease-out ${isReady ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
             {/* Chat window — always rendered, shown/hidden by GSAP */}
             <div
                 ref={windowRef}
@@ -388,7 +401,7 @@ export const ChatBot = () => {
             {/* Chat toggle button */}
             <button
                 ref={toggleRef}
-                className="chatbot-toggle magnetic-btn"
+                className={`chatbot-toggle magnetic-btn transition-transform duration-500 ease-out hover:scale-105 active:scale-95 ${isReady ? 'scale-100' : 'scale-0'}`}
                 onClick={() => setChatOpen(!chatOpen)}
                 aria-label="Toggle AI chat"
                 aria-expanded={chatOpen}

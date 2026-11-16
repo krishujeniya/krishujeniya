@@ -83,13 +83,17 @@ export default function Portfolio() {
     const [contactMethod, setContactMethod] = useState('');
     const submissionKeyRef = useRef<{ fingerprint: string; id: string } | null>(null);
 
-    // Hero Typewriter states
+    // Hero Typewriter & Sequential Entrance phases: typing -> name -> buttons -> all
     const [typedLine1, setTypedLine1] = useState('');
     const [typedLine2, setTypedLine2] = useState('');
-    const [isTypingComplete, setIsTypingComplete] = useState(false);
+    const [heroPhase, setHeroPhase] = useState<'typing' | 'name' | 'buttons' | 'all'>('typing');
     const [activeCursor, setActiveCursor] = useState<'line1' | 'line2' | null>('line1');
     const projectsTrackRef = useRef<HTMLDivElement | null>(null);
     const openerRef = useRef<HTMLElement | null>(null);
+
+    const isNameVisible = heroPhase === 'name' || heroPhase === 'buttons' || heroPhase === 'all';
+    const isButtonsVisible = heroPhase === 'buttons' || heroPhase === 'all';
+    const isAllVisible = heroPhase === 'all';
 
     // Infinite carousel navigation: after last project display first project, and vice versa
     const scrollProjects = (direction: 'left' | 'right') => {
@@ -131,7 +135,7 @@ export default function Portfolio() {
         if (isReduced || isAutomated) {
             setTypedLine1('I Build AI Systems');
             setTypedLine2('That Actually Ship.');
-            setIsTypingComplete(true);
+            setHeroPhase('all');
             setActiveCursor(null);
             triggerHomeReady();
             return;
@@ -206,9 +210,23 @@ export default function Portfolio() {
                 timeoutId = setTimeout(() => {
                     if (!isMounted) return;
                     setActiveCursor(null);
-                    setIsTypingComplete(true);
-                    triggerHomeReady();
-                }, 180);
+
+                    // Step 1: Name appears first
+                    setHeroPhase('name');
+
+                    // Step 2: Buttons appear next
+                    timeoutId = setTimeout(() => {
+                        if (!isMounted) return;
+                        setHeroPhase('buttons');
+
+                        // Step 3: All remaining elements (navbar, chat bubble, particles) appear
+                        timeoutId = setTimeout(() => {
+                            if (!isMounted) return;
+                            setHeroPhase('all');
+                            triggerHomeReady();
+                        }, 400);
+                    }, 350);
+                }, 150);
             }
         };
 
@@ -216,7 +234,7 @@ export default function Portfolio() {
             if (window.scrollY > 20) {
                 setTypedLine1('I Build AI Systems');
                 setTypedLine2('That Actually Ship.');
-                setIsTypingComplete(true);
+                setHeroPhase('all');
                 setActiveCursor(null);
                 triggerHomeReady();
             }
@@ -342,7 +360,7 @@ export default function Portfolio() {
         <div className="min-h-screen bg-[#050505] text-[#FAFAFA] font-body selection:bg-[#474747] selection:text-white">
 
             <a className="skip-link" href="#main-content">Skip to main content</a>
-            <nav className={`fixed top-3 sm:top-5 inset-x-3 sm:inset-x-6 md:inset-x-8 max-w-[1440px] mx-auto z-[100] transition-all duration-700 ease-out rounded-full flex items-center justify-between px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 bg-black/60 backdrop-blur-2xl shadow-2xl shadow-black/80 ${isTypingComplete ? 'translate-y-0 opacity-100 pointer-events-auto' : '-translate-y-12 opacity-0 pointer-events-none'}`}>
+            <nav className={`fixed top-3 sm:top-5 inset-x-3 sm:inset-x-6 md:inset-x-8 max-w-[1440px] mx-auto z-[100] transition-all duration-700 ease-out rounded-full flex items-center justify-between px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 bg-black/60 backdrop-blur-2xl ${isAllVisible ? 'translate-y-0 opacity-100 pointer-events-auto' : '-translate-y-12 opacity-0 pointer-events-none'}`}>
                 {/* Left: Brand Name */}
                 <div className="flex-1 flex items-center justify-start min-w-[120px]">
                     <div
@@ -406,12 +424,12 @@ export default function Portfolio() {
 
             <main id="main-content" tabIndex={-1} className="flex flex-col">
                 <section id="home" className="relative min-h-screen flex flex-col justify-center items-center px-6 md:px-12 py-12 overflow-hidden">
-                    <div className={`transition-opacity duration-1000 ${isTypingComplete ? 'opacity-100' : 'opacity-0'}`}>
+                    <div className={`transition-opacity duration-1000 ${isAllVisible ? 'opacity-100' : 'opacity-0'}`}>
                         <AntigravityCanvas />
                     </div>
                     <div className="max-w-[1440px] mx-auto w-full relative z-10 flex flex-col items-center text-center -translate-y-4 sm:-translate-y-6 md:-translate-y-8">
                         <div className="flex flex-col items-center text-center">
-                            <div className={`hero-name text-lg sm:text-2xl font-black tracking-tighter mb-6 sm:mb-8 transition-all duration-700 ease-out delay-100 ${isTypingComplete ? 'translate-y-0 opacity-100 pointer-events-auto' : '-translate-y-4 opacity-0 pointer-events-none'}`}>
+                            <div className={`hero-name text-lg sm:text-2xl font-black tracking-tighter mb-6 sm:mb-8 transition-all duration-700 ease-out ${isNameVisible ? 'translate-y-0 opacity-100 pointer-events-auto' : '-translate-y-4 opacity-0 pointer-events-none'}`}>
                                 KRISH <span className="text-[#A1A1A1]">UJENIYA</span>
                             </div>
 
@@ -432,7 +450,7 @@ export default function Portfolio() {
 
                             {/* Metrics Removed */}
 
-                            <div className={`hero-buttons flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 w-full sm:w-auto mt-10 sm:mt-12 md:mt-14 transition-all duration-700 ease-out delay-200 ${isTypingComplete ? 'translate-y-0 opacity-100 pointer-events-auto' : 'translate-y-6 opacity-0 pointer-events-none'}`}>
+                            <div className={`hero-buttons flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 w-full sm:w-auto mt-10 sm:mt-12 md:mt-14 transition-all duration-700 ease-out ${isButtonsVisible ? 'translate-y-0 opacity-100 pointer-events-auto' : 'translate-y-6 opacity-0 pointer-events-none'}`}>
                                 <a
                                     href="#projects"
                                     onClick={(e) => { e.preventDefault(); scrollTo('projects'); setActiveSection('projects'); }}
@@ -564,9 +582,9 @@ export default function Portfolio() {
                 </section>
 
                 {/* Projects Section — Google Labs Style */}
-                <section id="projects" className="py-24 px-6 md:px-12 bg-[#0A0A0A] overflow-hidden">
+                <section id="projects" className="py-20 sm:py-24 px-4 sm:px-6 md:px-12 bg-[#0A0A0A] overflow-hidden">
                     <div className="max-w-[1440px] mx-auto">
-                        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 sm:mb-20">
+                        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-20">
                             <div className="flex flex-col items-start gap-4">
                                 <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white/70">/ Catalog</span>
                                 <h2 className="text-[clamp(2.75rem,7vw,7rem)] font-black tracking-tighter uppercase leading-none">
@@ -581,7 +599,7 @@ export default function Portfolio() {
                         {/* Google Labs Horizontal Carousel Track */}
                         <div
                             ref={projectsTrackRef}
-                            className="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory no-scrollbar pb-6 pt-2 px-1"
+                            className="flex gap-4 sm:gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory no-scrollbar pb-6 pt-2 px-1"
                         >
                             {portfolioData.projects.map((project, i) => (
                                 <div
@@ -601,22 +619,39 @@ export default function Portfolio() {
                                             setSelectedProject(project);
                                         }
                                     }}
-                                    className="group flex-shrink-0 w-[300px] sm:w-[350px] md:w-[380px] h-[520px] sm:h-[560px] bg-[#0E0E0E] hover:bg-[#141414] border border-white/10 hover:border-white/20 rounded-[32px] sm:rounded-[36px] p-6 sm:p-7 flex flex-col justify-between cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-white/20 transition-all duration-500 shadow-2xl shadow-black relative overflow-hidden snap-start"
+                                    className="group flex-shrink-0 w-[calc(100vw-2.5rem)] xs:w-[320px] sm:w-[350px] md:w-[380px] max-w-[380px] h-[520px] sm:h-[560px] bg-[#0E0E0E] hover:bg-[#141414] border border-white/10 hover:border-white/20 rounded-[28px] sm:rounded-[36px] p-5 sm:p-7 flex flex-col justify-between cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-white/20 transition-all duration-500 shadow-2xl shadow-black relative overflow-hidden snap-start"
                                 >
-                                    {/* Top Row: Clean Rounded Pill Badges with Category & Tech (No arrows, no green dots) */}
-                                    <div className="flex items-center gap-2 overflow-hidden z-10 flex-wrap">
-                                        <span className="text-[10px] font-black uppercase tracking-wider text-white bg-white/10 group-hover:bg-white/15 px-3.5 py-1.5 rounded-full border border-white/5 whitespace-nowrap transition-colors">
-                                            {project.category.split('/')[0]?.trim() || project.category}
-                                        </span>
-                                        {project.techStack.slice(0, 2).map((tech) => (
-                                            <span key={tech} className="text-[10px] font-black uppercase tracking-wider text-[#A1A1A1] bg-white/5 px-3.5 py-1.5 rounded-full border border-white/5 whitespace-nowrap">
-                                                {tech}
-                                            </span>
-                                        ))}
-                                    </div>
+                                    {/* Top Row: Clean Rounded Pill Badges with Category & Tech (Deduplicated, no arrows, no green dots) */}
+                                    {(() => {
+                                        const categoryBadge = project.category.split('/')[0]?.trim() || project.category;
+                                        const uniqueTech = project.techStack.filter(
+                                            (tech) => !categoryBadge.toLowerCase().includes(tech.toLowerCase()) &&
+                                                      !tech.toLowerCase().includes(categoryBadge.toLowerCase())
+                                        );
+                                        const badges = [
+                                            { label: categoryBadge, isCategory: true },
+                                            ...uniqueTech.slice(0, 2).map((tech) => ({ label: tech, isCategory: false })),
+                                        ];
+                                        return (
+                                            <div className="flex items-center gap-2 overflow-hidden z-10 flex-wrap">
+                                                {badges.map((b, bi) => (
+                                                    <span
+                                                        key={bi}
+                                                        className={`text-[9px] sm:text-[10px] font-black uppercase tracking-wider px-3 sm:px-3.5 py-1.5 rounded-full border border-white/5 whitespace-nowrap transition-colors ${
+                                                            b.isCategory
+                                                                ? 'text-white bg-white/10 group-hover:bg-white/15'
+                                                                : 'text-[#A1A1A1] bg-white/5'
+                                                        }`}
+                                                    >
+                                                        {b.label}
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        );
+                                    })()}
 
-                                    {/* Middle Body: Media Preview (Clean image, no interactive badge) */}
-                                    <div className="w-full h-[220px] sm:h-[240px] relative rounded-[24px] overflow-hidden bg-black/60 my-auto border border-white/5 group-hover:border-white/15 transition-all">
+                                    {/* Middle Body: Media Preview (Clean image, responsive height) */}
+                                    <div className="w-full h-[200px] sm:h-[240px] relative rounded-[20px] sm:rounded-[24px] overflow-hidden bg-black/60 my-auto border border-white/5 group-hover:border-white/15 transition-all">
                                         <Image
                                             src={project.imageUrl}
                                             alt={`${project.title} – AI project by Krish Ujeniya, ${project.category}`}
@@ -632,7 +667,7 @@ export default function Portfolio() {
                                     {/* Bottom Area: Title with physics bounce, description reveal, and Try it now button */}
                                     <div className="flex flex-col gap-2 z-10 pt-2">
                                         {/* Title with spring physics bounce on hover exit */}
-                                        <h3 className="project-title-bounce text-2xl sm:text-[26px] font-black uppercase tracking-tight text-white leading-tight">
+                                        <h3 className="project-title-bounce text-xl sm:text-[26px] font-black uppercase tracking-tight text-white leading-tight">
                                             {project.title.split('—')[0]?.trim() || project.title}
                                         </h3>
 
