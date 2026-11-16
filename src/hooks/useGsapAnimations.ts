@@ -91,7 +91,7 @@ export function useGsapAnimations() {
             // ── 0. Hero entrance ──
             const heroName = document.querySelector('#home .hero-name') as HTMLElement | null;
             const heroH1 = document.querySelector('#home h1') as HTMLElement | null;
-            const heroButtons = document.querySelector('#home .pt-4') as HTMLElement | null;
+            const heroButtons = document.querySelector('#home .hero-buttons, #home .pt-4') as HTMLElement | null;
 
             if (heroName || heroH1 || heroButtons) {
               const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });

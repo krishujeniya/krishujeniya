@@ -251,21 +251,21 @@ export default function Portfolio() {
                 <section id="home" className="relative min-h-screen flex flex-col justify-center px-6 md:px-12 pt-32 md:pt-20">
                     <AntigravityCanvas />
                     <div className="max-w-[1440px] mx-auto w-full relative z-10">
-                        <div className="flex flex-col items-center text-center gap-6 md:gap-8">
-                            <div className="hero-name text-lg sm:text-2xl font-black tracking-tighter">
+                        <div className="flex flex-col items-center text-center">
+                            <div className="hero-name text-lg sm:text-2xl font-black tracking-tighter mb-6 sm:mb-8">
                                 KRISH <span className="text-[#A1A1A1]">UJENIYA</span>
                             </div>
 
-                             <h1 className="text-[clamp(2.5rem,7vw,6.5rem)] sm:text-[7vw] md:text-[6.5vw] lg:text-[6vw] font-black tracking-tighter leading-[0.95] uppercase break-words overflow-visible">
+                             <h1 className="text-[clamp(2.75rem,7.5vw,6.5rem)] sm:text-[7vw] md:text-[6.5vw] lg:text-[6vw] font-black tracking-tighter leading-[0.98] sm:leading-[1.0] uppercase break-words overflow-visible">
                                 <span className="text-white drop-shadow-2xl block">I Build AI Systems</span>
-                                <span className="text-[#A1A1A1] text-color-interpolate hover:text-white block mt-2 sm:mt-4">
+                                <span className="text-[#A1A1A1] text-color-interpolate hover:text-white block mt-2 sm:mt-3">
                                     That Actually Ship.
                                 </span>
                             </h1>
 
                             {/* Metrics Removed */}
 
-                            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 w-full sm:w-auto pt-4">
+                            <div className="hero-buttons flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 w-full sm:w-auto mt-10 sm:mt-12 md:mt-14">
                                 <a
                                     href="#projects"
                                     onClick={(e) => { e.preventDefault(); scrollTo('projects'); setActiveSection('projects'); }}

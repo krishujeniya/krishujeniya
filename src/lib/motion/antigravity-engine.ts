@@ -3,18 +3,20 @@ import { AntigravityConfig, defaultAntigravityConfig } from './motion-config';
 interface Particle {
   x: number;
   y: number;
-  ox: number; // origin x
-  oy: number; // origin y
   vx: number;
   vy: number;
+  baseAngle: number;
+  baseRadius: number;
+  eccentricity: number;
+  orbitalSpeed: number;
   radius: number;
+  dashLength: number;
   color: string;
   baseAlpha: number;
   currentAlpha: number;
-  depthLayer: number; // 0, 1, 2
+  depthLayer: number;
   layerSpeed: number;
   noisePhase: number;
-  jitterAngle: number;
 }
 
 export class AntigravityEngine {
@@ -29,6 +31,14 @@ export class AntigravityEngine {
   private width = 0;
   private height = 0;
   private dpr = 1;
+
+  // Dynamic focal center for the particle halo
+  private focalPoint = {
+    x: 0,
+    y: 0,
+    targetX: 0,
+    targetY: 0,
+  };
 
   // Pointer tracking with velocity & smoothing
   private pointer = {
@@ -117,6 +127,13 @@ export class AntigravityEngine {
       this.ctx.scale(this.dpr, this.dpr);
     }
 
+    if (this.focalPoint.x === 0 || this.focalPoint.y === 0) {
+      this.focalPoint.x = w * 0.5;
+      this.focalPoint.y = h * 0.48;
+      this.focalPoint.targetX = this.focalPoint.x;
+      this.focalPoint.targetY = this.focalPoint.y;
+    }
+
     this.spawnParticles();
   }
 
@@ -130,9 +147,14 @@ export class AntigravityEngine {
     this.pointer.targetY = canvasY;
     this.pointer.active = active;
 
-    if (!active) {
+    if (active) {
+      this.focalPoint.targetX = canvasX;
+      this.focalPoint.targetY = canvasY;
+    } else {
       this.pointer.targetX = -9999;
       this.pointer.targetY = -9999;
+      this.focalPoint.targetX = this.width * 0.5;
+      this.focalPoint.targetY = this.height * 0.48;
     }
   }
 
@@ -172,50 +194,67 @@ export class AntigravityEngine {
     const colors = this.config.particleColors;
     const numColors = colors.length;
 
-    // Golden ratio spiral distribution blended with loose grid for natural weightless density
+    if (this.focalPoint.x === 0 || this.focalPoint.y === 0) {
+      this.focalPoint.x = this.width * 0.5;
+      this.focalPoint.y = this.height * 0.48;
+      this.focalPoint.targetX = this.focalPoint.x;
+      this.focalPoint.targetY = this.focalPoint.y;
+    }
+
+    const minR = isMobile ? this.config.haloMinRadius * 0.7 : this.config.haloMinRadius;
+    const maxR = isMobile ? this.config.haloMaxRadius * 0.65 : this.config.haloMaxRadius;
+    const ecc = this.config.haloEccentricity;
+    const goldenAngle = Math.PI * (3 - Math.sqrt(5));
+
     for (let i = 0; i < targetCount; i++) {
       const depthLayer = i % this.config.depthLayers;
       let radius: number;
       let layerSpeed: number;
       let baseAlpha: number;
+      let dashLength: number;
 
       if (depthLayer === 0) {
-        // Distant background
-        radius = 0.75 + Math.random() * 0.4;
-        layerSpeed = 0.55;
-        baseAlpha = 0.22 + Math.random() * 0.15;
+        radius = 0.8 + Math.random() * 0.4;
+        dashLength = 2.5 + Math.random() * 3.5;
+        layerSpeed = 0.6;
+        baseAlpha = 0.35 + Math.random() * 0.2;
       } else if (depthLayer === 1) {
-        // Midground
-        radius = 1.2 + Math.random() * 0.6;
+        radius = 1.3 + Math.random() * 0.5;
+        dashLength = 4.0 + Math.random() * 5.0;
         layerSpeed = 1.0;
-        baseAlpha = 0.4 + Math.random() * 0.2;
+        baseAlpha = 0.55 + Math.random() * 0.25;
       } else {
-        // Foreground
-        radius = 1.9 + Math.random() * 0.7;
+        radius = 1.8 + Math.random() * 0.6;
+        dashLength = 6.0 + Math.random() * 6.5;
         layerSpeed = 1.35;
-        baseAlpha = 0.65 + Math.random() * 0.25;
+        baseAlpha = 0.75 + Math.random() * 0.25;
       }
 
-      // Natural semi-random distribution across canvas with soft margin
-      const margin = 40;
-      const ox = margin + Math.random() * (this.width - margin * 2);
-      const oy = margin + Math.random() * (this.height - margin * 2);
+      const t = Math.sqrt((i + 0.5) / targetCount);
+      const baseRadius = minR + t * (maxR - minR);
+      const baseAngle = i * goldenAngle;
+      const orbitalSpeed = ((i % 2 === 0 ? 1 : -1) * (0.012 + Math.random() * 0.022)) / layerSpeed;
+
+      const initX = this.focalPoint.x + Math.cos(baseAngle) * baseRadius * ecc;
+      const initY = this.focalPoint.y + Math.sin(baseAngle) * baseRadius;
 
       particles.push({
-        x: ox,
-        y: oy,
-        ox,
-        oy,
-        vx: (Math.random() - 0.5) * 0.3,
-        vy: (Math.random() - 0.5) * 0.3,
+        x: initX,
+        y: initY,
+        vx: (Math.random() - 0.5) * 0.2,
+        vy: (Math.random() - 0.5) * 0.2,
+        baseAngle,
+        baseRadius,
+        eccentricity: ecc + (Math.random() - 0.5) * 0.15,
+        orbitalSpeed,
         radius,
+        dashLength,
         color: colors[i % numColors],
         baseAlpha,
         currentAlpha: baseAlpha,
         depthLayer,
         layerSpeed,
         noisePhase: Math.random() * Math.PI * 2,
-        jitterAngle: Math.random() * Math.PI * 2,
       });
     }
 
@@ -225,7 +264,6 @@ export class AntigravityEngine {
   private tick = (currentTime: number): void => {
     if (!this.isRunning || this.isPaused) return;
 
-    // Delta time calculation clamped to avoid physics explosions during frame drops
     const rawDt = (currentTime - this.lastTime) / 1000;
     const dt = Math.min(Math.max(rawDt, 0.001), 0.045);
     this.lastTime = currentTime;
@@ -237,24 +275,32 @@ export class AntigravityEngine {
   };
 
   private updatePhysics(dt: number, timeSec: number): void {
-    // 1. Pointer smoothing and velocity calculation
     if (this.pointer.active && this.pointer.targetX > -1000) {
       const pSmooth = this.config.pointerSmoothing;
       const dx = this.pointer.targetX - this.pointer.x;
       const dy = this.pointer.targetY - this.pointer.y;
 
-      // Filtered velocity calculation
       this.pointer.vx = (dx * pSmooth) / Math.max(dt, 0.016);
       this.pointer.vy = (dy * pSmooth) / Math.max(dt, 0.016);
       this.pointer.speed = Math.sqrt(this.pointer.vx * this.pointer.vx + this.pointer.vy * this.pointer.vy);
 
       this.pointer.x += dx * pSmooth;
       this.pointer.y += dy * pSmooth;
+
+      this.focalPoint.targetX = this.pointer.x;
+      this.focalPoint.targetY = this.pointer.y;
     } else {
       this.pointer.vx *= 0.85;
       this.pointer.vy *= 0.85;
       this.pointer.speed *= 0.85;
+
+      this.focalPoint.targetX = this.width * 0.5;
+      this.focalPoint.targetY = this.height * 0.48;
     }
+
+    const focalFollow = Math.min(1.0, 4.5 * dt);
+    this.focalPoint.x += (this.focalPoint.targetX - this.focalPoint.x) * focalFollow;
+    this.focalPoint.y += (this.focalPoint.targetY - this.focalPoint.y) * focalFollow;
 
     const {
       cursorInfluenceRadius,
@@ -272,37 +318,26 @@ export class AntigravityEngine {
     const influenceRadiusSq = cursorInfluenceRadius * cursorInfluenceRadius;
     const timeBasedDamping = Math.pow(springDamping, dt * 60);
 
-    // Global breathing scale factor
-    const breathingCycle = Math.sin((timeSec * 2 * Math.PI) / breathingPeriod);
-    const breathingOffset = breathingCycle * (breathingAmplitude * 0.05);
-
-    const cx = this.width * 0.5;
-    const cy = this.height * 0.5;
-
     for (let i = 0; i < this.particles.length; i++) {
       const p = this.particles[i];
 
-      // A. Organic drift and low-frequency harmonic oscillation (Perlin-like continuous wave)
-      const driftAngle = p.noisePhase + timeSec * 0.4 * p.layerSpeed;
-      const driftX = Math.cos(driftAngle * 1.2 + p.oy * 0.003) * ambientDriftSpeed * p.layerSpeed;
-      const driftY = Math.sin(driftAngle * 0.8 + p.ox * 0.003) * ambientDriftSpeed * p.layerSpeed;
+      const curAngle = p.baseAngle + timeSec * p.orbitalSpeed;
+      const breath = Math.sin((timeSec * 2 * Math.PI) / breathingPeriod + p.noisePhase) * (breathingAmplitude * p.layerSpeed);
+      const curRadius = Math.max(20, p.baseRadius + breath);
 
-      // Jellyfish-style breathing expansion from center
-      const centerVecX = cx > 0 ? (p.ox - cx) / cx : 0;
-      const centerVecY = cy > 0 ? (p.oy - cy) / cy : 0;
-      const breathForceX = centerVecX * breathingOffset;
-      const breathForceY = centerVecY * breathingOffset;
+      const ox = this.focalPoint.x + Math.cos(curAngle) * curRadius * p.eccentricity;
+      const oy = this.focalPoint.y + Math.sin(curAngle) * curRadius;
 
-      // B. Spring restoration force toward anchor position
-      const currentOriginX = p.ox + breathForceX;
-      const currentOriginY = p.oy + breathForceY;
-      const springX = (currentOriginX - p.x) * springStiffness;
-      const springY = (currentOriginY - p.y) * springStiffness;
+      const driftAngle = p.noisePhase + timeSec * 0.5 * p.layerSpeed;
+      const driftX = Math.cos(driftAngle) * ambientDriftSpeed * p.layerSpeed;
+      const driftY = Math.sin(driftAngle) * ambientDriftSpeed * p.layerSpeed;
+
+      const springX = (ox - p.x) * springStiffness;
+      const springY = (oy - p.y) * springStiffness;
 
       let forceX = springX + driftX;
       let forceY = springY + driftY;
 
-      // C. Cursor physics interaction
       if (this.pointer.active && this.pointer.x > -1000) {
         const dx = p.x - this.pointer.x;
         const dy = p.y - this.pointer.y;
@@ -313,26 +348,21 @@ export class AntigravityEngine {
           const normX = dx / dist;
           const normY = dy / dist;
 
-          // Smooth distance-weighted falloff: smoothstep (1 - d/r)^2
           const proximity = 1 - dist / cursorInfluenceRadius;
           const smoothFalloff = proximity * proximity * (3 - 2 * proximity);
 
-          // 1. Distance-weighted radial repulsion force
           const repulse = repulsionStrength * smoothFalloff * p.layerSpeed;
           forceX += normX * repulse;
           forceY += normY * repulse;
 
-          // 2. Cursor velocity and momentum transfer
           const velocityTransfer = velocityTransferStrength * smoothFalloff * p.layerSpeed;
           forceX += this.pointer.vx * velocityTransfer;
           forceY += this.pointer.vy * velocityTransfer;
 
-          // 3. Tangential flow (vortex fluid bending around the cursor)
-          const tangentialSpeed = (this.pointer.speed * 0.03 + 2.0) * orbitalStrength * smoothFalloff * p.layerSpeed;
+          const tangentialSpeed = (this.pointer.speed * 0.04 + 2.5) * orbitalStrength * smoothFalloff * p.layerSpeed;
           forceX += -normY * tangentialSpeed;
           forceY += normX * tangentialSpeed;
 
-          // Dynamic alpha brightening when near cursor
           p.currentAlpha = Math.min(1.0, p.baseAlpha + smoothFalloff * 0.35);
         } else {
           p.currentAlpha += (p.baseAlpha - p.currentAlpha) * 0.06;
@@ -341,15 +371,12 @@ export class AntigravityEngine {
         p.currentAlpha += (p.baseAlpha - p.currentAlpha) * 0.06;
       }
 
-      // D. Velocity integration
       p.vx += forceX * dt;
       p.vy += forceY * dt;
 
-      // E. Frame-rate-independent damping
       p.vx *= timeBasedDamping;
       p.vy *= timeBasedDamping;
 
-      // F. Velocity clamping to avoid numerical instability
       const speed = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
       if (speed > maxParticleVelocity) {
         const scale = maxParticleVelocity / speed;
@@ -357,36 +384,40 @@ export class AntigravityEngine {
         p.vy *= scale;
       }
 
-      // G. Position integration
       p.x += p.vx * dt * 60;
       p.y += p.vy * dt * 60;
-
-      // H. Soft boundary wrapping with margin
-      const margin = 20;
-      if (p.x < -margin) p.x = this.width + margin;
-      else if (p.x > this.width + margin) p.x = -margin;
-      if (p.y < -margin) p.y = this.height + margin;
-      else if (p.y > this.height + margin) p.y = -margin;
     }
   }
 
   private draw(): void {
     if (!this.ctx) return;
 
-    // Clean canvas clear
     this.ctx.clearRect(0, 0, this.width, this.height);
 
     const particles = this.particles;
     const len = particles.length;
+    const fx = this.focalPoint.x;
+    const fy = this.focalPoint.y;
 
-    // Draw all particles with soft depth-differentiated discs
     for (let i = 0; i < len; i++) {
       const p = particles[i];
+
+      const dx = p.x - fx;
+      const dy = p.y - fy;
+      const angle = Math.atan2(dy, dx);
+
+      const cosA = Math.cos(angle);
+      const sinA = Math.sin(angle);
+      const halfLen = p.dashLength * 0.5;
+
       this.ctx.beginPath();
-      this.ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-      this.ctx.fillStyle = p.color;
+      this.ctx.strokeStyle = p.color;
+      this.ctx.lineWidth = p.radius * 2;
+      this.ctx.lineCap = 'round';
       this.ctx.globalAlpha = p.currentAlpha;
-      this.ctx.fill();
+      this.ctx.moveTo(p.x - cosA * halfLen, p.y - sinA * halfLen);
+      this.ctx.lineTo(p.x + cosA * halfLen, p.y + sinA * halfLen);
+      this.ctx.stroke();
     }
 
     this.ctx.globalAlpha = 1.0;

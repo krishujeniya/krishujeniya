@@ -21,32 +21,42 @@ export interface AntigravityConfig {
   particleColors: string[];
   particleBaseOpacity: number;
   maxParticleVelocity: number;
+  haloMinRadius: number;
+  haloMaxRadius: number;
+  haloEccentricity: number;
 }
 
 export const defaultAntigravityConfig: AntigravityConfig = {
   targetFps: 60,
-  particleCountDesktop: 650,
-  particleCountMobile: 180,
-  cursorInfluenceRadius: 160,
-  pointerSmoothing: 0.14,
-  springStiffness: 0.035,
+  particleCountDesktop: 480,
+  particleCountMobile: 150,
+  cursorInfluenceRadius: 180,
+  pointerSmoothing: 0.12,
+  springStiffness: 0.045,
   springDamping: 0.88,
-  repulsionStrength: 240,
-  velocityTransferStrength: 0.22,
-  orbitalStrength: 0.08,
-  ambientDriftSpeed: 0.45,
-  breathingPeriod: 4.8,
-  breathingAmplitude: 14,
+  repulsionStrength: 260,
+  velocityTransferStrength: 0.28,
+  orbitalStrength: 0.09,
+  ambientDriftSpeed: 0.35,
+  breathingPeriod: 5.2,
+  breathingAmplitude: 16,
   depthLayers: 3,
+  haloMinRadius: 110,
+  haloMaxRadius: 420,
+  haloEccentricity: 1.25,
   particleColors: [
-    'rgba(255, 255, 255, 0.75)',
-    'rgba(229, 229, 229, 0.55)',
-    'rgba(161, 161, 161, 0.45)',
-    'rgba(115, 115, 115, 0.35)',
-    'rgba(82, 82, 82, 0.25)',
+    'rgba(255, 255, 255, 0.85)',
+    'rgba(66, 133, 244, 0.75)',
+    'rgba(168, 85, 247, 0.70)',
+    'rgba(234, 67, 53, 0.70)',
+    'rgba(251, 188, 5, 0.75)',
+    'rgba(52, 168, 83, 0.70)',
+    'rgba(161, 161, 161, 0.60)',
+    'rgba(216, 180, 254, 0.70)',
+    'rgba(147, 197, 253, 0.70)',
   ],
-  particleBaseOpacity: 0.5,
-  maxParticleVelocity: 16,
+  particleBaseOpacity: 0.65,
+  maxParticleVelocity: 18,
 };
 
 export const motionTokens = {
