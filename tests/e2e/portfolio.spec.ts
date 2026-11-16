@@ -3,7 +3,8 @@ import AxeBuilder from '@axe-core/playwright';
 
 const portfolioUrl = 'http://127.0.0.1:4173/krishujeniya/';
 
-test.beforeEach(({ page }) => {
+test.beforeEach(async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
   page.on('requestfailed', request => {
     if (request.url().includes('/_next/static/chunks/')) {
       console.error(`[Obscura chunk request failed] ${request.url()} (${request.failure()?.errorText ?? 'unknown'})`);

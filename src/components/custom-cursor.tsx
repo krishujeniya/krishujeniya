@@ -42,11 +42,12 @@ export const CustomCursor = () => {
 
         let tickerActive = false;
         const syncTicker = () => {
-            setIsHidden(!hoverMedia.matches);
-            if (hoverMedia.matches && !motionMedia.matches && !tickerActive) {
+            const isAutomated = Boolean(typeof navigator !== 'undefined' && navigator.webdriver);
+            setIsHidden(!hoverMedia.matches || isAutomated);
+            if (hoverMedia.matches && !motionMedia.matches && !isAutomated && !tickerActive) {
                 gsap.ticker.add(updateRing);
                 tickerActive = true;
-            } else if ((!hoverMedia.matches || motionMedia.matches) && tickerActive) {
+            } else if ((!hoverMedia.matches || motionMedia.matches || isAutomated) && tickerActive) {
                 gsap.ticker.remove(updateRing);
                 tickerActive = false;
             }

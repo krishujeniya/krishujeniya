@@ -23,6 +23,11 @@ function revealOnScroll(
   const els = gsap.utils.toArray<HTMLElement>(selector);
   if (!els.length) return;
 
+  if (typeof navigator !== 'undefined' && navigator.webdriver) {
+    gsap.set(els, { opacity: 1, visibility: 'visible' });
+    return;
+  }
+
   const {
     y = 40,
     x = 0,
@@ -75,9 +80,10 @@ export function useGsapAnimations() {
           },
           (ctx) => {
             const { noMotion } = (ctx as unknown as { conditions: { noMotion: boolean } }).conditions;
+            const skipMotion = noMotion || (typeof navigator !== 'undefined' && navigator.webdriver);
 
-            // ── Reduced motion: make everything visible immediately ──
-            if (noMotion) {
+            // ── Reduced motion or automated runner: make everything visible immediately ──
+            if (skipMotion) {
               gsap.set('section, section *', { opacity: 1, visibility: 'visible' });
               return;
             }

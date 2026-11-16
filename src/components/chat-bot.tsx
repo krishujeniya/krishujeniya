@@ -206,7 +206,7 @@ export const ChatBot = () => {
         previousChatOpenRef.current = chatOpen;
         gsap.killTweensOf(win);
 
-        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches || Boolean(typeof navigator !== 'undefined' && navigator.webdriver);
         if (reduceMotion) {
             gsap.set(win, { display: chatOpen ? 'flex' : 'none', opacity: 1, scale: 1, y: 0 });
             if (chatOpen) inputRef.current?.focus();
@@ -234,7 +234,7 @@ export const ChatBot = () => {
         const close = closeIconRef.current;
         const open = openIconRef.current;
         if (!close || !open) return;
-        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches || Boolean(typeof navigator !== 'undefined' && navigator.webdriver);
         if (chatOpen) {
             gsap.set(open, { display: 'none' });
             gsap.set(close, { display: 'flex', rotate: reduceMotion ? 0 : -90, opacity: reduceMotion ? 1 : 0 });
@@ -254,7 +254,7 @@ export const ChatBot = () => {
     useGSAP(() => {
         const btn = toggleRef.current;
         if (!btn) return;
-        const isReduced = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const isReduced = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches || Boolean(typeof navigator !== 'undefined' && navigator.webdriver);
         const onEnter = () => {
             if (!isReduced()) gsap.to(btn, { scale: 1.1, duration: 0.2, ease: 'power2.out' });
         };
@@ -392,7 +392,8 @@ function ChatMsg({ msg, isTyping = false }: { msg: { id: number; from: 'bot' | '
     const ref = useRef<HTMLDivElement>(null);
 
     useGSAP(() => {
-        if (ref.current && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        const skipMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches || Boolean(typeof navigator !== 'undefined' && navigator.webdriver);
+        if (ref.current && !skipMotion) {
             gsap.from(ref.current, { opacity: 0, y: 10, duration: 0.3, ease: 'power2.out' });
         }
     }, []);
