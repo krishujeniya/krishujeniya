@@ -188,11 +188,11 @@ export default function Portfolio() {
         <div className="min-h-screen bg-[#050505] text-[#FAFAFA] font-body selection:bg-[#474747] selection:text-white">
 
             <a className="skip-link" href="#main-content">Skip to main content</a>
-            <nav className="fixed top-3 sm:top-5 inset-x-4 sm:inset-x-6 md:inset-x-8 max-w-[1440px] mx-auto z-[100] transition-all duration-500 rounded-full flex items-center justify-between gap-4 px-6 md:px-8 py-3 sm:py-3.5 bg-black/50 backdrop-blur-2xl shadow-2xl shadow-black/80">
-                <div className="flex items-center gap-8 overflow-hidden">
+            <nav className="fixed top-3 sm:top-5 inset-x-4 sm:inset-x-6 md:inset-x-8 max-w-5xl mx-auto z-[100] transition-all duration-500 rounded-full flex items-center justify-between gap-4 px-4 sm:px-6 py-2 sm:py-2.5 bg-black/50 backdrop-blur-2xl shadow-2xl shadow-black/80">
+                <div className="flex items-center gap-6 overflow-hidden">
                     {/* Brand Title / Section Name */}
                     <div
-                        className="text-lg sm:text-2xl font-black tracking-tighter cursor-pointer hover:opacity-70 transition-opacity whitespace-nowrap outline-none flex items-center gap-2"
+                        className="text-sm sm:text-base font-black tracking-tighter cursor-pointer hover:opacity-70 transition-opacity whitespace-nowrap outline-none flex items-center gap-2"
                         onClick={() => scrollTo('home')}
                         role="button"
                         tabIndex={0}
@@ -214,7 +214,7 @@ export default function Portfolio() {
                     </div>
 
                     {/* Desktop Navigation Links */}
-                    <div className="hidden md:flex items-center gap-8 overflow-x-auto no-scrollbar">
+                    <div className="hidden md:flex items-center gap-6 overflow-x-auto no-scrollbar">
                         {['about', 'experience', 'services', 'projects', 'documents', 'testimonials', 'contact'].map((item) => (
                             <a
                                 key={item}
@@ -223,7 +223,7 @@ export default function Portfolio() {
                                     e.preventDefault();
                                     scrollTo(item);
                                 }}
-                                className={`text-[11px] font-black uppercase tracking-[0.3em] transition-all hover:text-white py-2 whitespace-nowrap animated-underline ${activeSection === item ? 'text-white' : 'text-white/60'}`}
+                                className={`text-[10px] font-black uppercase tracking-[0.25em] transition-all hover:text-white py-1.5 whitespace-nowrap animated-underline ${activeSection === item ? 'text-white' : 'text-white/60'}`}
                                 aria-current={activeSection === item ? 'page' : undefined}
                             >
                                 {item}
@@ -240,9 +240,9 @@ export default function Portfolio() {
                         setActiveSection('contact'); // Force immediate update
                     }}
                     aria-label="Hire me for your next project"
-                    className="flex items-center gap-2 sm:gap-3 bg-white text-black text-[10px] sm:text-[11px] font-black uppercase tracking-[0.2em] px-5 sm:px-8 py-3 sm:py-3.5 rounded-full transition-all duration-500 shadow-xl shadow-white/5 active:scale-95 whitespace-nowrap"
+                    className="flex items-center gap-2 bg-white text-black text-[9px] sm:text-[10px] font-black uppercase tracking-[0.2em] px-4 sm:px-5 py-2 rounded-full transition-all duration-500 shadow-xl shadow-white/5 active:scale-95 whitespace-nowrap"
                 >
-                    Hire Me <Mail size={14} className="group-hover:translate-x-1 transition-transform" />
+                    Hire Me <Mail size={12} className="group-hover:translate-x-1 transition-transform" />
                 </a>
             </nav>
 
