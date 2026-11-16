@@ -180,19 +180,21 @@ export function useGsapAnimations() {
 
             // ── 9. Footer Antigravity Liftoff & Floating Flow ──
             const footerContainer = document.querySelector('footer') as HTMLElement | null;
+            const nameBanner = document.querySelector('.footer-brand-title') as HTMLElement | null;
             const groundedLetters = gsap.utils.toArray<HTMLElement>('.footer-brand-title .footer-letter:not(.floating-letter)');
             const float1 = document.querySelector('.floating-letter-1') as HTMLElement | null;
             const float2 = document.querySelector('.floating-letter-2') as HTMLElement | null;
             const float3 = document.querySelector('.floating-letter-3') as HTMLElement | null;
 
-            if (footerContainer && (groundedLetters.length || float1 || float2 || float3)) {
+            if ((footerContainer || nameBanner) && (groundedLetters.length || float1 || float2 || float3)) {
               if (skipMotion) {
-                gsap.set(groundedLetters, { opacity: 1, yPercent: 0 });
+                gsap.set(groundedLetters, { opacity: 1, yPercent: 0, y: 0 });
                 if (float1) gsap.set(float1, { opacity: 1, yPercent: -20, rotate: -2 });
                 if (float2) gsap.set(float2, { opacity: 1, yPercent: -45, rotate: -5 });
                 if (float3) gsap.set(float3, { opacity: 1, yPercent: -75, rotate: -8 });
               } else {
-                gsap.set(groundedLetters, { opacity: 0.9, yPercent: 0 });
+                // Rock-solid visibility: never flicker or blink grounded letters
+                gsap.set(groundedLetters, { opacity: 1, yPercent: 0, y: 0 });
                 if (float1) gsap.set(float1, { opacity: 1, yPercent: 0, rotate: 0 });
                 if (float2) gsap.set(float2, { opacity: 1, yPercent: 0, rotate: 0 });
                 if (float3) gsap.set(float3, { opacity: 1, yPercent: 0, rotate: 0 });
@@ -218,8 +220,7 @@ export function useGsapAnimations() {
                   const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
                   activeTimeline = tl;
 
-                  tl.fromTo(groundedLetters, { y: 15, opacity: 0.4 }, { y: 0, opacity: 1, duration: 0.6, stagger: 0.02 }, 0);
-
+                  // Grounded letters stay completely static with no blinking or opacity jumps
                   if (float1) {
                     tl.to(float1, { yPercent: -20, rotate: -2, duration: 1.0 }, 0.05);
                   }
@@ -282,10 +283,12 @@ export function useGsapAnimations() {
                   if (float3) tl.to(float3, { yPercent: 0, rotate: 0 }, 0.08);
                 };
 
+                // Trigger animation when the viewport bottom edge crosses the vertical center (half) of the name banner
+                const triggerTarget = nameBanner || footerContainer;
                 ScrollTrigger.create({
-                  trigger: footerContainer,
-                  start: 'top 85%',
-                  end: 'bottom bottom',
+                  trigger: triggerTarget,
+                  start: 'center bottom',
+                  end: 'bottom top',
                   onEnter: startLiftoff,
                   onEnterBack: startLiftoff,
                   onLeaveBack: returnToRealPlace,
