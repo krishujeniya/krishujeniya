@@ -88,7 +88,8 @@ jobs:
           echo "$install_dir" >> "$GITHUB_PATH"
       - name: Start Obscura headless engine
         run: |
-          obscura serve --port 9222 > "$RUNNER_TEMP/obscura.log" 2>&1 &
+          # Obscura requires --allow-private-network to allow browser navigation to loopback 127.0.0.1:4173 in the isolated test runner
+          obscura serve --port 9222 --allow-private-network > "$RUNNER_TEMP/obscura.log" 2>&1 &
           for attempt in {1..40}; do
             if curl --fail --silent http://127.0.0.1:9222/json/version > /dev/null; then
               exit 0
@@ -117,6 +118,8 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+    outputs:
+      page_url: ${{ steps.deployment.outputs.page_url }}
     needs: build
     runs-on: ubuntu-latest
     permissions:
