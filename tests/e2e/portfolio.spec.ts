@@ -390,9 +390,9 @@ test.describe('responsive navigation and breakpoint isolation', () => {
     await expect(contact).toBeVisible();
 
     const contactMethodSelect = contact.locator('#form-contact-method');
-    await contactMethodSelect.selectOption('Phone');
+    await contactMethodSelect.selectOption('WhatsApp');
 
-    const phoneInput = contact.locator('#form-phone');
+    const phoneInput = contact.locator('#form-whatsapp');
     await expect(phoneInput).toBeVisible();
     await expect(phoneInput).toHaveAttribute('type', 'tel');
     await expect(phoneInput).toHaveAttribute('inputmode', 'tel');

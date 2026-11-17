@@ -580,7 +580,6 @@ export default function Portfolio() {
                                             scrollTo(section.id);
                                             setActiveSection(section.id);
                                             setIsMobileNavOpen(false);
-                                            mobileNavToggleRef.current?.focus();
                                         }}
                                         className={`flex items-center justify-between w-full px-3 py-2 text-left text-[11px] font-black uppercase tracking-[0.2em] rounded-xl transition-all ${
                                             activeSection === section.id
@@ -1525,6 +1524,7 @@ export default function Portfolio() {
                                                                 id="form-whatsapp"
                                                                 name="whatsappNumber"
                                                                 type="tel"
+                                                                inputMode="tel"
                                                                 maxLength={25}
                                                                 autoComplete="tel"
                                                                 placeholder="+1 (555) 000-0000"
