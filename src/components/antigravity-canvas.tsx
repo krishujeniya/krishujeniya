@@ -19,45 +19,46 @@ export function AntigravityCanvas({ className = '', config }: AntigravityCanvasP
     const container = containerRef.current;
     if (!canvas || !container) return;
 
-    // Check accessibility and automation constraints
-    const isReduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const isAutomated = typeof navigator !== 'undefined' && navigator.webdriver;
+    // Accessibility and automation constraints
+    const motionMedia = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const isAutomated = Boolean(typeof navigator !== 'undefined' && (navigator as any).webdriver);
 
     const engine = new AntigravityEngine(config);
     engineRef.current = engine;
     engine.initialize(canvas);
 
-    if (isReduced || isAutomated) {
-      // Under reduced motion or automated test runners: render a calm static frame, no animation loop
-      engine.renderStaticFrame();
-      return () => {
-        engine.destroy();
-        engineRef.current = null;
-      };
-    }
+    let isIntersecting = false;
+    let cachedRect: DOMRect | null = null;
 
-    // Start fluid physics loop
-    engine.start();
+    const updateCachedBounds = () => {
+      if (isIntersecting) {
+        cachedRect = container.getBoundingClientRect();
+      }
+    };
 
-    // Resize handling with ResizeObserver for exact responsive bounds
+    // Resize handling with ResizeObserver for exact responsive bounds (active even in static frame)
     const resizeObserver = new ResizeObserver((entries) => {
       for (const entry of entries) {
         const { width, height } = entry.contentRect;
         if (width > 0 && height > 0) {
           engine.resize(width, height);
+          if (motionMedia.matches || isAutomated) {
+            engine.renderStaticFrame();
+          }
         }
       }
+      updateCachedBounds();
     });
     resizeObserver.observe(container);
 
-    // Viewport intersection handling to pause when scrolled out of view
+    // Viewport intersection handling to pause when scrolled out of view and track visibility state
     const intersectionObserver = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          if (entry.isIntersecting) {
-            engine.resume();
-          } else {
-            engine.pause();
+          isIntersecting = entry.isIntersecting;
+          engine.setIntersecting(isIntersecting);
+          if (isIntersecting) {
+            cachedRect = container.getBoundingClientRect();
           }
         }
       },
@@ -65,14 +66,28 @@ export function AntigravityCanvas({ className = '', config }: AntigravityCanvasP
     );
     intersectionObserver.observe(container);
 
-    // Localized pointer tracking: only activate when pointer is within this container
+    const syncMotion = () => {
+      if (motionMedia.matches || isAutomated) {
+        engine.pause();
+        engine.renderStaticFrame();
+      } else {
+        engine.start();
+        if (isIntersecting) {
+          engine.resume();
+        }
+      }
+    };
+    syncMotion();
+    motionMedia.addEventListener('change', syncMotion);
+
+    // Localized pointer tracking: only measure bounds when active and intersecting
     const onPointerMove = (e: PointerEvent) => {
-      const rect = container.getBoundingClientRect();
+      if (!isIntersecting || !cachedRect) return;
       const isInside =
-        e.clientX >= rect.left &&
-        e.clientX <= rect.right &&
-        e.clientY >= rect.top &&
-        e.clientY <= rect.bottom;
+        e.clientX >= cachedRect.left &&
+        e.clientX <= cachedRect.right &&
+        e.clientY >= cachedRect.top &&
+        e.clientY <= cachedRect.bottom;
 
       if (isInside) {
         engine.updatePointer(e.clientX, e.clientY, true);
@@ -82,12 +97,13 @@ export function AntigravityCanvas({ className = '', config }: AntigravityCanvasP
     };
 
     const onPointerEnter = (e: PointerEvent) => {
-      const rect = container.getBoundingClientRect();
+      if (!isIntersecting) return;
+      if (!cachedRect) cachedRect = container.getBoundingClientRect();
       const isInside =
-        e.clientX >= rect.left &&
-        e.clientX <= rect.right &&
-        e.clientY >= rect.top &&
-        e.clientY <= rect.bottom;
+        e.clientX >= cachedRect.left &&
+        e.clientX <= cachedRect.right &&
+        e.clientY >= cachedRect.top &&
+        e.clientY <= cachedRect.bottom;
 
       if (isInside) {
         engine.updatePointer(e.clientX, e.clientY, true);
@@ -99,7 +115,10 @@ export function AntigravityCanvas({ className = '', config }: AntigravityCanvasP
     };
 
     const onScroll = () => {
-      engine.refreshBounds();
+      if (isIntersecting) {
+        cachedRect = container.getBoundingClientRect();
+        engine.refreshBounds();
+      }
     };
 
     window.addEventListener('pointermove', onPointerMove, { passive: true });
@@ -108,6 +127,7 @@ export function AntigravityCanvas({ className = '', config }: AntigravityCanvasP
     window.addEventListener('scroll', onScroll, { passive: true });
 
     return () => {
+      motionMedia.removeEventListener('change', syncMotion);
       window.removeEventListener('pointermove', onPointerMove);
       window.removeEventListener('pointerenter', onPointerEnter);
       document.removeEventListener('pointerleave', onPointerLeave);

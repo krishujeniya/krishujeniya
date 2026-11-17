@@ -9,8 +9,9 @@
     "build": "next build",
     "images:responsive": "node scripts/generate-responsive-images.mjs",
     "test:e2e": "playwright test",
+    "test:smoke": "node scripts/smoke-published.mjs",
     "verify:docs": "node scripts/verify-docs.mjs",
-    "lint": "next lint",
+    "lint": "eslint src tests scripts --ext .js,.mjs,.ts,.tsx",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

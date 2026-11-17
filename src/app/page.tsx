@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useGsapAnimations } from '@/hooks/useGsapAnimations';
 import Image from 'next/image';
 import { AntigravityCanvas } from '@/components/client-dynamic';
+import docsManifest from '../../public/docs-manifest.json';
 
 import { portfolioData } from '@/data/portfolio';
 
@@ -27,13 +28,19 @@ import {
     Calendar,
 } from 'lucide-react';
 
-
-
-
 const DOCS_COMMIT_SHA = process.env.NEXT_PUBLIC_DOCS_COMMIT_SHA || 'b09e098ef5d24859dda5c51b5e7a31ca7bdfe103';
 const DOCS_BASE_URL = `https://raw.githubusercontent.com/krishujeniya/krishujeniya/${DOCS_COMMIT_SHA}/Docs`;
 const CONTACT_SUBMISSION_STORAGE_KEY = 'portfolio-contact-submission';
 const CONTACT_API_URL = process.env.NEXT_PUBLIC_VERCEL_API_URL || 'https://krishujeniya-backend.vercel.app/api/webDATA';
+
+const manifestFiles: Record<string, { bytes: number; sha256: string }> = (docsManifest as any)?.files || {};
+
+const formatFileSize = (bytes?: number) => {
+    if (!bytes || bytes <= 0) return '';
+    if (bytes < 1024) return `${bytes} B`;
+    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(0)} KB`;
+    return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+};
 
 const DOCUMENT_THEMES: Record<string, { gradient: string; accent: string; tag: string }> = {
     'Certificates': {
@@ -128,39 +135,49 @@ export default function Portfolio() {
     const [contactMethod, setContactMethod] = useState('');
     const submissionKeyRef = useRef<{ fingerprint: string; id: string } | null>(null);
 
-    // Hero Typewriter & Sequential Entrance phases: typing -> name -> buttons -> all
-    const [typedLine1, setTypedLine1] = useState('');
-    const [typedLine2, setTypedLine2] = useState('');
-    const [heroPhase, setHeroPhase] = useState<'typing' | 'name' | 'buttons' | 'all'>('typing');
-    const [activeCursor, setActiveCursor] = useState<'line1' | 'line2' | null>('line1');
+    // Initial state provides full heading and visible actions for SSR and un-hydrated visitors
+    const [typedLine1, setTypedLine1] = useState('I Build AI Systems');
+    const [typedLine2, setTypedLine2] = useState('That Actually Ship.');
+    const [heroPhase, setHeroPhase] = useState<'typing' | 'name' | 'buttons' | 'all'>('all');
+    const [activeCursor, setActiveCursor] = useState<'line1' | 'line2' | null>(null);
     const projectsTrackRef = useRef<HTMLDivElement | null>(null);
     const openerRef = useRef<HTMLElement | null>(null);
     const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
     const mobileNavRef = useRef<HTMLDivElement | null>(null);
+    const mobileNavToggleRef = useRef<HTMLButtonElement | null>(null);
 
     const isNameVisible = heroPhase === 'name' || heroPhase === 'buttons' || heroPhase === 'all';
     const isButtonsVisible = heroPhase === 'buttons' || heroPhase === 'all';
     const isAllVisible = heroPhase === 'all';
 
-    // Infinite carousel navigation: after last project display first project, and vice versa
+    const computeStep = (track: HTMLElement, selector: string) => {
+        const card = track.querySelector<HTMLElement>(selector);
+        if (!card) return 380;
+        const trackStyle = window.getComputedStyle(track);
+        const gap = parseFloat(trackStyle.columnGap || trackStyle.gap || '24') || 24;
+        return card.offsetWidth + gap;
+    };
+
+    // Carousel navigation with dynamic gap measurement and reduced motion support
     const scrollProjects = (direction: 'left' | 'right') => {
         const track = projectsTrackRef.current;
         if (!track) return;
-        const card = track.querySelector<HTMLElement>('[role="button"]');
-        const cardWidth = card ? card.offsetWidth + 24 : 380; // card width + gap-6
+        const cardWidth = computeStep(track, '[role="button"]');
         const maxScroll = track.scrollWidth - track.clientWidth;
+        const isReduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const behavior: ScrollBehavior = isReduced ? 'auto' : 'smooth';
 
         if (direction === 'right') {
             if (track.scrollLeft >= maxScroll - 20) {
-                track.scrollTo({ left: 0, behavior: 'smooth' });
+                track.scrollTo({ left: 0, behavior });
             } else {
-                track.scrollBy({ left: cardWidth, behavior: 'smooth' });
+                track.scrollBy({ left: cardWidth, behavior });
             }
         } else {
             if (track.scrollLeft <= 20) {
-                track.scrollTo({ left: maxScroll, behavior: 'smooth' });
+                track.scrollTo({ left: maxScroll, behavior });
             } else {
-                track.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+                track.scrollBy({ left: -cardWidth, behavior });
             }
         }
     };
@@ -170,21 +187,22 @@ export default function Portfolio() {
     const scrollDocuments = (direction: 'left' | 'right') => {
         const track = documentsTrackRef.current;
         if (!track) return;
-        const card = track.querySelector<HTMLElement>('.document-card');
-        const cardWidth = card ? card.offsetWidth + 24 : 380;
+        const cardWidth = computeStep(track, '.document-card');
         const maxScroll = track.scrollWidth - track.clientWidth;
+        const isReduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const behavior: ScrollBehavior = isReduced ? 'auto' : 'smooth';
 
         if (direction === 'right') {
             if (track.scrollLeft >= maxScroll - 20) {
-                track.scrollTo({ left: 0, behavior: 'smooth' });
+                track.scrollTo({ left: 0, behavior });
             } else {
-                track.scrollBy({ left: cardWidth, behavior: 'smooth' });
+                track.scrollBy({ left: cardWidth, behavior });
             }
         } else {
             if (track.scrollLeft <= 20) {
-                track.scrollTo({ left: maxScroll, behavior: 'smooth' });
+                track.scrollTo({ left: maxScroll, behavior });
             } else {
-                track.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+                track.scrollBy({ left: -cardWidth, behavior });
             }
         }
     };
@@ -212,8 +230,37 @@ export default function Portfolio() {
             return;
         }
 
-        let timeoutId: NodeJS.Timeout;
+        let timeoutId: NodeJS.Timeout | null = null;
         let isMounted = true;
+        let isCompleted = false;
+
+        const completeHero = () => {
+            if (isCompleted || !isMounted) return;
+            isCompleted = true;
+            if (timeoutId) {
+                clearTimeout(timeoutId);
+                timeoutId = null;
+            }
+            setTypedLine1('I Build AI Systems');
+            setTypedLine2('That Actually Ship.');
+            setHeroPhase('all');
+            setActiveCursor(null);
+            triggerHomeReady();
+            window.removeEventListener('scroll', onEarlyScroll);
+        };
+
+        const onEarlyScroll = () => {
+            if (window.scrollY > 20) {
+                completeHero();
+            }
+        };
+        window.addEventListener('scroll', onEarlyScroll, { passive: true });
+
+        // Reset to start typing animation only after client mounts successfully
+        setTypedLine1('');
+        setTypedLine2('');
+        setHeroPhase('typing');
+        setActiveCursor('line1');
 
         const line1Prefix = 'I Build ';
         const line1Ai = 'AI';
@@ -225,7 +272,7 @@ export default function Portfolio() {
         let line2Accum = '';
 
         const typePrefix = () => {
-            if (!isMounted) return;
+            if (!isMounted || isCompleted) return;
             if (idx < line1Prefix.length) {
                 line1Accum += line1Prefix[idx];
                 setTypedLine1(line1Accum);
@@ -238,7 +285,7 @@ export default function Portfolio() {
         };
 
         const typeAi = () => {
-            if (!isMounted) return;
+            if (!isMounted || isCompleted) return;
             if (idx < line1Ai.length) {
                 line1Accum += line1Ai[idx];
                 setTypedLine1(line1Accum);
@@ -254,7 +301,7 @@ export default function Portfolio() {
         };
 
         const typeSuffix = () => {
-            if (!isMounted) return;
+            if (!isMounted || isCompleted) return;
             if (idx < line1Suffix.length) {
                 line1Accum += line1Suffix[idx];
                 setTypedLine1(line1Accum);
@@ -270,7 +317,7 @@ export default function Portfolio() {
         };
 
         const typeLine2 = () => {
-            if (!isMounted) return;
+            if (!isMounted || isCompleted) return;
             if (idx < line2Full.length) {
                 line2Accum += line2Full[idx];
                 setTypedLine2(line2Accum);
@@ -279,7 +326,7 @@ export default function Portfolio() {
             } else {
                 // Completed!
                 timeoutId = setTimeout(() => {
-                    if (!isMounted) return;
+                    if (!isMounted || isCompleted) return;
                     setActiveCursor(null);
 
                     // Step 1: Name appears first
@@ -287,36 +334,24 @@ export default function Portfolio() {
 
                     // Step 2: Buttons appear next
                     timeoutId = setTimeout(() => {
-                        if (!isMounted) return;
+                        if (!isMounted || isCompleted) return;
                         setHeroPhase('buttons');
 
                         // Step 3: All remaining elements (navbar, chat bubble, particles) appear
                         timeoutId = setTimeout(() => {
-                            if (!isMounted) return;
-                            setHeroPhase('all');
-                            triggerHomeReady();
+                            if (!isMounted || isCompleted) return;
+                            completeHero();
                         }, 400);
                     }, 350);
                 }, 150);
             }
         };
 
-        const onEarlyScroll = () => {
-            if (window.scrollY > 20) {
-                setTypedLine1('I Build AI Systems');
-                setTypedLine2('That Actually Ship.');
-                setHeroPhase('all');
-                setActiveCursor(null);
-                triggerHomeReady();
-            }
-        };
-        window.addEventListener('scroll', onEarlyScroll, { passive: true, once: true });
-
         timeoutId = setTimeout(typePrefix, 200);
 
         return () => {
             isMounted = false;
-            clearTimeout(timeoutId);
+            if (timeoutId) clearTimeout(timeoutId);
             window.removeEventListener('scroll', onEarlyScroll);
         };
     }, []);
@@ -331,6 +366,21 @@ export default function Portfolio() {
 
     const toggleStage = (stage: string) => {
         setSelectedStages(prev => prev.includes(stage) ? [] : [stage]);
+    };
+
+    const openProjectModal = (project: typeof portfolioData.projects[0], triggerEl?: HTMLElement) => {
+        if (triggerEl) openerRef.current = triggerEl;
+        setSelectedProject(project);
+        if (window.location.hash !== `#project-${project.slug}`) {
+            window.history.pushState({ project: project.slug }, '', `#project-${project.slug}`);
+        }
+    };
+
+    const closeProjectModal = () => {
+        setSelectedProject(null);
+        if (window.location.hash.startsWith('#project-')) {
+            window.history.pushState(null, '', window.location.pathname + window.location.search);
+        }
     };
 
     // Modal: scroll lock + focus trap + keyboard handling
@@ -351,7 +401,7 @@ export default function Portfolio() {
         const focusTimer = setTimeout(() => firstEl?.focus(), 50);
 
         const handleKeyDown = (e: KeyboardEvent) => {
-            if (e.key === 'Escape') { setSelectedProject(null); return; }
+            if (e.key === 'Escape') { closeProjectModal(); return; }
             if (e.key !== 'Tab' || focusableEls.length === 0) return;
             if (e.shiftKey) {
                 if (document.activeElement === firstEl) { e.preventDefault(); lastEl?.focus(); }
@@ -402,9 +452,27 @@ export default function Portfolio() {
         // Run once on mount so the initial state is correct
         getActiveSection();
 
+        // Check for direct project deep-link on initial load
+        if (typeof window !== 'undefined' && window.location.hash.startsWith('#project-')) {
+            const initialSlug = window.location.hash.replace('#project-', '');
+            const matched = portfolioData.projects.find(p => p.slug === initialSlug);
+            if (matched) setSelectedProject(matched);
+        }
+
         window.addEventListener('scroll', handleScroll, { passive: true });
         const handlePopState = () => {
-            const requestedSection = window.location.hash.slice(1) || 'home';
+            const hash = window.location.hash;
+            if (hash.startsWith('#project-')) {
+                const slug = hash.replace('#project-', '');
+                const matched = portfolioData.projects.find(p => p.slug === slug);
+                if (matched) {
+                    setSelectedProject(matched);
+                    return;
+                }
+            } else {
+                setSelectedProject(null);
+            }
+            const requestedSection = hash.slice(1) || 'home';
             const sectionId = SECTIONS.includes(requestedSection) ? requestedSection : 'home';
             document.getElementById(sectionId)?.scrollIntoView();
             setActiveSection(sectionId);
@@ -427,10 +495,11 @@ export default function Portfolio() {
         const handleKeyDown = (e: KeyboardEvent) => {
             if (e.key === 'Escape') {
                 setIsMobileNavOpen(false);
+                mobileNavToggleRef.current?.focus();
             }
         };
         const handleResize = () => {
-            if (window.innerWidth >= 640) {
+            if (window.innerWidth >= 768) {
                 setIsMobileNavOpen(false);
             }
         };
@@ -459,18 +528,17 @@ export default function Portfolio() {
 
     return (
         <div className="min-h-screen bg-[#050505] text-[#FAFAFA] font-body selection:bg-[#474747] selection:text-white">
-
-            <a className="skip-link" href="#main-content">Skip to main content</a>
-            <nav className={`fixed top-3 sm:top-5 inset-x-3 sm:inset-x-6 md:inset-x-8 max-w-[1440px] mx-auto z-[100] transition-all duration-700 ease-out rounded-full flex items-center justify-between px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 bg-black/60 backdrop-blur-2xl ${isAllVisible ? 'translate-y-0 opacity-100 pointer-events-auto' : '-translate-y-12 opacity-0 pointer-events-none'}`}>
+            <nav className="fixed top-3 sm:top-5 inset-x-3 sm:inset-x-6 md:inset-x-8 max-w-[1440px] mx-auto z-[100] transition-all duration-700 ease-out rounded-full flex items-center justify-between px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 bg-black/60 backdrop-blur-2xl translate-y-0 opacity-100 pointer-events-auto">
                 {/* Left: Brand Name & Mobile Dropdown */}
                 <div className="flex-1 flex items-center justify-start min-w-[120px]">
                     {/* Mobile Section Title with Dropdown Arrow */}
-                    <div ref={mobileNavRef} className="relative sm:hidden">
+                    <div ref={mobileNavRef} className="relative md:hidden">
                         <button
+                            ref={mobileNavToggleRef}
                             type="button"
                             onClick={() => setIsMobileNavOpen(!isMobileNavOpen)}
                             aria-expanded={isMobileNavOpen}
-                            aria-haspopup="menu"
+                            aria-haspopup="true"
                             aria-label="Toggle sections menu"
                             className="flex items-center gap-1.5 text-xs font-black tracking-tighter text-white py-1 px-1.5 rounded-full hover:bg-white/10 active:scale-95 transition-all outline-none"
                         >
@@ -489,8 +557,8 @@ export default function Portfolio() {
                         {/* Mobile Navigation Dropdown Options */}
                         {isMobileNavOpen && (
                             <div
-                                role="menu"
-                                aria-label="Navigate portfolio sections"
+                                role="region"
+                                aria-label="Sections menu"
                                 className="absolute top-full left-0 mt-3 w-48 bg-black/95 backdrop-blur-2xl border border-white/10 rounded-2xl p-2 shadow-2xl z-[150] flex flex-col gap-1"
                             >
                                 {[
@@ -503,14 +571,15 @@ export default function Portfolio() {
                                     { id: 'testimonials', label: 'Testimonials' },
                                     { id: 'contact', label: 'Contact' },
                                 ].map((section) => (
-                                    <button
+                                    <a
                                         key={section.id}
-                                        role="menuitem"
-                                        type="button"
-                                        onClick={() => {
+                                        href={`#${section.id}`}
+                                        onClick={(e) => {
+                                            e.preventDefault();
                                             scrollTo(section.id);
                                             setActiveSection(section.id);
                                             setIsMobileNavOpen(false);
+                                            mobileNavToggleRef.current?.focus();
                                         }}
                                         className={`flex items-center justify-between w-full px-3 py-2 text-left text-[11px] font-black uppercase tracking-[0.2em] rounded-xl transition-all ${
                                             activeSection === section.id
@@ -522,7 +591,7 @@ export default function Portfolio() {
                                         {activeSection === section.id && (
                                             <div className="w-1.5 h-1.5 rounded-full bg-black shrink-0" />
                                         )}
-                                    </button>
+                                    </a>
                                 ))}
                             </div>
                         )}
@@ -530,7 +599,7 @@ export default function Portfolio() {
 
                     {/* Desktop Brand Title */}
                     <div
-                        className="hidden sm:flex text-sm sm:text-base font-black tracking-tighter cursor-pointer hover:opacity-70 transition-opacity whitespace-nowrap outline-none items-center gap-2"
+                        className="hidden md:flex text-sm sm:text-base font-black tracking-tighter cursor-pointer hover:opacity-70 transition-opacity whitespace-nowrap outline-none items-center gap-2"
                         onClick={() => scrollTo('home')}
                         role="button"
                         tabIndex={0}
@@ -762,20 +831,18 @@ export default function Portfolio() {
                         >
                             {portfolioData.projects.map((project, i) => (
                                 <div
-                                    key={i}
-                                    id={`project-${i}`}
+                                    key={project.slug || i}
+                                    id={`project-${project.slug || i}`}
                                     role="button"
                                     tabIndex={0}
                                     aria-label={`View case study for ${project.title}`}
                                     onClick={(e) => {
-                                        openerRef.current = e.currentTarget;
-                                        setSelectedProject(project);
+                                        openProjectModal(project, e.currentTarget);
                                     }}
                                     onKeyDown={(e) => {
                                         if (e.key === 'Enter' || e.key === ' ') {
                                             e.preventDefault();
-                                            openerRef.current = e.currentTarget;
-                                            setSelectedProject(project);
+                                            openProjectModal(project, e.currentTarget);
                                         }
                                     }}
                                     className="group flex-shrink-0 w-[calc(100vw-2.5rem)] xs:w-[320px] sm:w-[350px] md:w-[380px] max-w-[380px] h-[520px] sm:h-[560px] bg-[#0E0E0E] hover:bg-[#141414] border border-white/10 hover:border-white/20 rounded-[28px] sm:rounded-[36px] p-5 sm:p-7 flex flex-col justify-between cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-white/20 transition-all duration-500 shadow-2xl shadow-black relative overflow-hidden snap-start"
@@ -840,7 +907,7 @@ export default function Portfolio() {
                                         {/* Bottom Action Pill (No redundant right info text) */}
                                         <div className="pt-2 flex items-center">
                                             <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/20 group-hover:border-white group-hover:bg-white group-hover:text-black text-white text-[10px] font-black uppercase tracking-wider transition-all duration-300">
-                                                Try it now <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform" />
+                                                View case study <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform" />
                                             </span>
                                         </div>
                                     </div>
@@ -883,6 +950,9 @@ export default function Portfolio() {
 
                 {/* Documents Section — Google Labs Rounded Carousel Style (Light Monochrome) */}
                 <section id="documents" className="py-24 px-4 sm:px-6 md:px-12 bg-[#F5F5F7] text-black rounded-[40px] md:rounded-[64px] my-12 relative overflow-hidden z-10 border border-black/5">
+                    <noscript>
+                        <style dangerouslySetInnerHTML={{ __html: '[id^="documents-folder-"] { max-height: none !important; opacity: 1 !important; display: block !important; }' }} />
+                    </noscript>
                     {/* Subtle Monochrome Ambient Shapes */}
                     <div className="absolute -bottom-24 -left-24 w-96 h-96 rounded-full bg-black/[0.03] blur-3xl pointer-events-none" />
                     <div className="absolute -bottom-24 -right-24 w-96 h-96 rounded-full bg-black/[0.03] blur-3xl pointer-events-none" />
@@ -983,44 +1053,35 @@ export default function Portfolio() {
                                                 aria-hidden={expandedFolder !== i}
                                             >
                                                 <div className="pt-3 space-y-2 w-full max-h-56 overflow-y-auto pr-1">
-                                                    {folder.files.map((file, fi) => (
-                                                        <a
-                                                            key={fi}
-                                                            href={`${DOCS_BASE_URL}/${folder.path}/${file.name.split('/').map(segment => encodeURIComponent(segment)).join('/')}`}
-                                                            target="_blank"
-                                                            rel="noopener noreferrer"
-                                                            tabIndex={expandedFolder === i ? 0 : -1}
-                                                            className="flex items-center justify-between p-2.5 rounded-xl bg-black/5 hover:bg-black/10 border border-black/5 transition-all text-black w-full min-w-0 group/file"
-                                                        >
-                                                            <div className="flex items-center gap-2.5 min-w-0 flex-1">
-                                                                <File size={13} className="text-neutral-500 group-hover/file:text-black shrink-0" aria-hidden="true" />
-                                                                <span className="text-[11px] font-bold text-neutral-800 group-hover/file:text-black truncate">{file.name.split('/').pop()}</span>
-                                                            </div>
-                                                            <span className="text-[9px] font-black uppercase text-neutral-500 ml-2 shrink-0">{file.type}</span>
-                                                        </a>
-                                                    ))}
+                                                    {folder.files.map((file, fi) => {
+                                                        const manifestKey = `${folder.path}/${file.name}`;
+                                                        const fileMeta = manifestFiles[manifestKey];
+                                                        const sizeFormatted = fileMeta ? formatFileSize(fileMeta.bytes) : '';
+                                                        const displayTitle = (file as any).title || file.name.split('/').pop()?.replace(/\.[^/.]+$/, '').replace(/_/g, ' ') || file.name;
+                                                        return (
+                                                            <a
+                                                                key={fi}
+                                                                href={`${DOCS_BASE_URL}/${folder.path}/${file.name.split('/').map(segment => encodeURIComponent(segment)).join('/')}`}
+                                                                target="_blank"
+                                                                rel="noopener noreferrer"
+                                                                tabIndex={expandedFolder === i ? 0 : -1}
+                                                                className="flex items-center justify-between p-2.5 rounded-xl bg-black/5 hover:bg-black/10 border border-black/5 transition-all text-black w-full min-w-0 group/file"
+                                                            >
+                                                                <div className="flex items-center gap-2.5 min-w-0 flex-1">
+                                                                    <File size={13} className="text-neutral-500 group-hover/file:text-black shrink-0" aria-hidden="true" />
+                                                                    <span className="text-[11px] font-bold text-neutral-800 group-hover/file:text-black truncate">{displayTitle}</span>
+                                                                </div>
+                                                                <div className="flex items-center gap-1.5 ml-2 shrink-0">
+                                                                    {sizeFormatted && (
+                                                                        <span className="text-[9px] font-semibold text-neutral-500">{sizeFormatted}</span>
+                                                                    )}
+                                                                    <span className="text-[9px] font-black uppercase text-neutral-600 bg-black/5 px-1.5 py-0.5 rounded">{file.type}</span>
+                                                                </div>
+                                                            </a>
+                                                        );
+                                                    })}
                                                 </div>
                                             </div>
-
-                                            <noscript>
-                                                <div className="pt-3 space-y-2 w-full">
-                                                    {folder.files.map((file, fi) => (
-                                                        <a
-                                                            key={fi}
-                                                            href={`${DOCS_BASE_URL}/${folder.path}/${file.name.split('/').map(segment => encodeURIComponent(segment)).join('/')}`}
-                                                            target="_blank"
-                                                            rel="noopener noreferrer"
-                                                            className="flex items-center justify-between p-2.5 rounded-xl bg-black/5 hover:bg-black/10 border border-black/5 transition-all text-black w-full min-w-0"
-                                                        >
-                                                            <div className="flex items-center gap-2.5 min-w-0 flex-1">
-                                                                <File size={13} className="text-neutral-500 shrink-0" aria-hidden="true" />
-                                                                <span className="text-[11px] font-bold text-neutral-800 truncate">{file.name.split('/').pop()}</span>
-                                                            </div>
-                                                            <span className="text-[9px] font-black uppercase text-neutral-500 ml-2 shrink-0">{file.type}</span>
-                                                        </a>
-                                                    ))}
-                                                </div>
-                                            </noscript>
                                         </div>
                                     </div>
                                 );
@@ -1070,7 +1131,8 @@ export default function Portfolio() {
                                             <div className="relative w-16 h-16 rounded-2xl overflow-hidden border border-white/10">
                                                 <Image
                                                     src={testimonial.photo}
-                                                    alt={`${testimonial.name} – ${testimonial.role}, client of Krish Ujeniya AI Researcher`}
+                                                    alt=""
+                                                    aria-hidden="true"
                                                     fill
                                                     sizes="64px"
                                                     className="object-cover"
@@ -1131,7 +1193,7 @@ export default function Portfolio() {
                                             const rawMessage = (formData.get('message') as string || '').trim().slice(0, 3000);
                                             const whatsappNumber = ((formData.get('whatsappNumber') as string) || '').trim().slice(0, 25);
 
-                                            // Robust Client-side Validation: only require essential contact fields for general inquiries
+                                            // Robust Client-side Validation: require essential fields and validate formats
                                             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                                             if (!name || !email || !rawMessage) {
                                                 setErrorMessage('Please fill in your name, email, and project message.');
@@ -1145,10 +1207,17 @@ export default function Portfolio() {
                                                 return;
                                             }
 
+                                            if (preferredContactMethod === 'WhatsApp' && !whatsappNumber) {
+                                                setErrorMessage('Please enter your WhatsApp number.');
+                                                setIsError(true);
+                                                return;
+                                            }
+
                                             if (whatsappNumber) {
-                                                const phoneRegex = /^\+?[0-9\s\-().]{7,25}$/;
-                                                if (!phoneRegex.test(whatsappNumber)) {
-                                                    setErrorMessage('Please enter a valid phone number (digits, spaces, hyphens, optional +).');
+                                                const phoneClean = whatsappNumber.replace(/[\s\-\(\)\.]/g, '');
+                                                const phoneRegex = /^\+?[0-9]{7,15}$/;
+                                                if (!phoneRegex.test(phoneClean) || /[a-zA-Z]/.test(whatsappNumber)) {
+                                                    setErrorMessage('Please enter a valid phone number (digits, hyphens, and optional leading +).');
                                                     setIsError(true);
                                                     return;
                                                 }
@@ -1209,23 +1278,27 @@ export default function Portfolio() {
                                                     form.reset();
                                                     setSelectedServices([]);
                                                     setSelectedStages([]);
-                                                    setTimeout(() => setIsSent(false), 5000);
+                                                    setContactMethod('');
                                                 } else {
                                                     if (response.status === 403) {
-                                                        throw new Error('Unauthorized source. Please submit from the official site.');
-                                                    } else if (response.status === 500) {
-                                                        throw new Error('Internal Server Error. Please try again later.');
+                                                        throw new Error('Unauthorized source. Please submit directly or email ukideashare0021@gmail.com.');
+                                                    } else if (response.status === 422) {
+                                                        throw new Error('Validation error on server. Please check your inputs or email ukideashare0021@gmail.com.');
+                                                    } else if (response.status === 429) {
+                                                        throw new Error('Too many requests. Please wait a minute before retrying, or email ukideashare0021@gmail.com.');
+                                                    } else if (response.status >= 500) {
+                                                        throw new Error('Server temporarily unavailable. Please email ukideashare0021@gmail.com directly.');
                                                     } else {
-                                                        throw new Error('Failed to send inquiry.');
+                                                        throw new Error('Failed to send inquiry — please email ukideashare0021@gmail.com directly.');
                                                     }
                                                 }
                                             } catch (error: any) {
                                                 clearTimeout(timeoutId);
                                                 console.error('Submission error:', error);
                                                 if (error.name === 'AbortError') {
-                                                    setErrorMessage('Submission timed out. Please verify your connection or email directly.');
+                                                    setErrorMessage('Submission timed out after 15 seconds. Your details were kept — retry or email ukideashare0021@gmail.com directly.');
                                                 } else {
-                                                    setErrorMessage(error.message || 'Failed to send — email directly.');
+                                                    setErrorMessage(error.message || 'Failed to send — email ukideashare0021@gmail.com directly.');
                                                 }
                                                 setIsError(true);
                                             } finally {
@@ -1309,6 +1382,19 @@ export default function Portfolio() {
                                                         </button>
                                                     ))}
                                                 </div>
+                                                <noscript>
+                                                    <div className="flex flex-col gap-2 my-2">
+                                                        <span className="text-[10px] font-bold text-neutral-600">Select services (optional):</span>
+                                                        <div className="flex flex-wrap gap-3">
+                                                            {["Enterprise RAG", "Agentic AI", "MLOps Architecture", "ML Consulting", "Not Sure Yet"].map(service => (
+                                                                <label key={service} className="flex items-center gap-1.5 text-xs text-neutral-800">
+                                                                    <input type="checkbox" name="services" value={service} />
+                                                                    <span>{service}</span>
+                                                                </label>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                </noscript>
                                             </div>
 
                                             <div className="flex flex-col gap-4">
@@ -1332,6 +1418,19 @@ export default function Portfolio() {
                                                         </button>
                                                     ))}
                                                 </div>
+                                                <noscript>
+                                                    <div className="flex flex-col gap-2 my-2">
+                                                        <span className="text-[10px] font-bold text-neutral-600">Select project stage (optional):</span>
+                                                        <div className="flex flex-wrap gap-3">
+                                                            {["Greenfield Build", "Improve Existing System", "Proof of Concept", "Just Exploring"].map(stage => (
+                                                                <label key={stage} className="flex items-center gap-1.5 text-xs text-neutral-800">
+                                                                    <input type="radio" name="stage" value={stage} />
+                                                                    <span>{stage}</span>
+                                                                </label>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                </noscript>
                                             </div>
 
                                             <div className="flex flex-col gap-3">
@@ -1463,22 +1562,36 @@ export default function Portfolio() {
                                                 Inquiries are securely submitted via Vercel serverless functions and stored in MongoDB Atlas strictly for review and reply. Contact records and project briefs are retained for up to 30 days and never sold or shared with third parties for marketing. To request early deletion or data removal, email ukideashare0021@gmail.com with your submission details.
                                             </p>
                                             {isSent ? (
-                                                <div role="status" aria-live="polite" className="w-full flex items-center justify-center gap-4 bg-green-500/10 text-green-500 py-8 rounded-full text-sm font-black uppercase tracking-[0.3em] border border-green-500/20 mt-8 animate-[fadeScaleIn_0.4s_ease_forwards]">
-                                                    Inquiry Sent! <Sparkles size={18} aria-hidden="true" />
+                                                <div role="status" aria-live="polite" className="w-full flex flex-col items-center justify-center gap-2 bg-[#E8F5E9] text-[#1B5E20] py-6 px-6 rounded-3xl text-sm font-black uppercase tracking-[0.2em] border border-[#A5D6A7] mt-8 animate-[fadeScaleIn_0.4s_ease_forwards]">
+                                                    <div className="flex items-center gap-3">
+                                                        Inquiry Sent! <Sparkles size={18} aria-hidden="true" />
+                                                    </div>
+                                                    <p className="text-[11px] font-normal normal-case text-[#2E7D32]">Thank you for reaching out. I will reply within 24 hours.</p>
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => setIsSent(false)}
+                                                        className="mt-2 text-[10px] font-black uppercase tracking-wider underline hover:opacity-80 transition-opacity"
+                                                    >
+                                                        Send Another Message
+                                                    </button>
                                                 </div>
                                             ) : (
                                                 <>
                                                     <button
                                                         type="submit"
                                                         disabled={isSubmitting}
-                                                        aria-label="Send inquiry"
+                                                        aria-label={isSubmitting ? "Sending inquiry, please wait" : "Send inquiry"}
+                                                        aria-busy={isSubmitting}
                                                         className="w-full flex items-center justify-center gap-4 bg-black text-white py-8 rounded-full text-sm font-black uppercase tracking-[0.3em] hover:bg-black/80 hover:scale-[0.98] transition-all duration-500 mt-8 disabled:opacity-50 disabled:cursor-not-allowed"
                                                     >
                                                         {isSubmitting ? 'Sending…' : 'SEND INQUIRY'} <ChevronRight size={18} aria-hidden="true" />
                                                     </button>
                                                     {isError && (
-                                                        <div role="alert" className="w-full flex items-center justify-center gap-3 bg-red-500/10 text-red-400 py-4 rounded-full text-[11px] font-black uppercase tracking-[0.2em] border border-red-500/20 mt-4 animate-[fadeScaleIn_0.4s_ease_forwards]">
-                                                            {errorMessage}
+                                                        <div role="alert" className="w-full flex flex-col items-center justify-center gap-2 bg-[#FFEBEE] text-[#B71C1C] py-4 px-6 rounded-2xl text-[11px] font-black uppercase tracking-[0.15em] border border-[#EF9A9A] mt-4 animate-[fadeScaleIn_0.4s_ease_forwards]">
+                                                            <span>{errorMessage}</span>
+                                                            <span className="text-[10px] font-normal normal-case text-[#C62828]">
+                                                                Direct email: <a href="mailto:ukideashare0021@gmail.com" className="underline font-bold text-[#B71C1C]">ukideashare0021@gmail.com</a>
+                                                            </span>
                                                         </div>
                                                     )}
                                                 </>
@@ -1496,7 +1609,7 @@ export default function Portfolio() {
                 <div className="max-w-[1440px] mx-auto flex flex-col items-center relative z-10">
                     {/* Top Row: Tagline & Social Links */}
                     <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-6 pb-12 sm:pb-16 border-b border-white/5">
-                        <div className="text-[10px] sm:text-[11px] font-black uppercase tracking-[0.3em] text-[#737373] text-center sm:text-left">
+                        <div className="text-[10px] sm:text-[11px] font-black uppercase tracking-[0.3em] text-[#A3A3A3] text-center sm:text-left">
                             © 2026 · AVAILABLE FOR GLOBAL AI RESEARCH & CONTRACTS
                         </div>
 
@@ -1510,7 +1623,7 @@ export default function Portfolio() {
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     aria-label={`Visit my ${name} profile`}
-                                    className="text-[10px] font-black uppercase tracking-[0.2em] text-[#737373] hover:text-white transition-colors border-b border-transparent hover:border-white/30 pb-0.5"
+                                    className="text-[10px] font-black uppercase tracking-[0.2em] text-[#A3A3A3] hover:text-white transition-colors border-b border-transparent hover:border-white/30 pb-0.5"
                                 >
                                     {name === 'huggingface' ? 'HuggingFace' : name}
                                 </a>
@@ -1542,7 +1655,7 @@ export default function Portfolio() {
 
                     {/* Bottom Row: Copyright & Back to Top */}
                     <div className="w-full pt-8 sm:pt-12 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-6 sm:gap-8">
-                        <div className="flex items-center gap-3 text-[10px] sm:text-[11px] font-black uppercase tracking-[0.25em] text-[#737373]">
+                        <div className="flex items-center gap-3 text-[10px] sm:text-[11px] font-black uppercase tracking-[0.25em] text-[#A3A3A3]">
                             <span>KRISH UJENIYA</span>
                             <span className="text-white/20">/</span>
                             <span>ALL RIGHTS RESERVED</span>
@@ -1571,7 +1684,7 @@ export default function Portfolio() {
                     aria-modal="true"
                     aria-labelledby="modal-title"
                     className="fixed inset-0 z-[500] flex items-center justify-center p-4 sm:p-12 bg-black/95 backdrop-blur-2xl animate-[fadeIn_0.25s_ease_forwards]"
-                    onClick={() => setSelectedProject(null)}
+                    onClick={() => closeProjectModal()}
                 >
                     <div
                         className="w-full max-w-6xl bg-[#0A0A0A] border border-white/10 rounded-[32px] sm:rounded-[64px] overflow-hidden grid lg:grid-cols-12 max-h-full overflow-y-auto relative animate-[scaleIn_0.3s_ease_forwards]"
@@ -1582,7 +1695,7 @@ export default function Portfolio() {
                                 src={selectedProject.imageUrl}
                                 alt={`${selectedProject.title} – AI project by Krish Ujeniya, Data Scientist & AI Researcher`}
                                 fill
-                                sizes="(max-width: 1024px) 100vw, 500px"
+                                sizes="(max-width: 1024px) 100vw, 480px"
                                 className="object-cover"
                                 loading="lazy"
                                 decoding="async"
@@ -1590,7 +1703,7 @@ export default function Portfolio() {
                             <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-black via-transparent to-transparent"></div>
                             <div className="absolute top-8 left-8">
                                 <button
-                                    onClick={() => setSelectedProject(null)}
+                                    onClick={() => closeProjectModal()}
                                     aria-label="Close project details"
                                     className="w-12 h-12 flex items-center justify-center bg-white/10 backdrop-blur-md rounded-full text-white hover:bg-white hover:text-black transition-all"
                                 >

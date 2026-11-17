@@ -26,8 +26,10 @@ export class AntigravityEngine {
   private particles: Particle[] = [];
   private isRunning = false;
   private isPaused = false;
+  private isIntersecting = true;
   private animationFrameId: number | null = null;
   private lastTime = 0;
+  private lastFrameTime = 0;
   private width = 0;
   private height = 0;
   private dpr = 1;
@@ -75,7 +77,7 @@ export class AntigravityEngine {
       if (typeof document !== 'undefined') {
         if (document.hidden) {
           this.pause();
-        } else {
+        } else if (this.isIntersecting) {
           this.resume();
         }
       }
@@ -85,11 +87,21 @@ export class AntigravityEngine {
     }
   }
 
+  public setIntersecting(intersecting: boolean): void {
+    this.isIntersecting = intersecting;
+    if (!intersecting) {
+      this.pause();
+    } else if (typeof document === 'undefined' || !document.hidden) {
+      this.resume();
+    }
+  }
+
   public start(): void {
     if (this.isRunning) return;
     this.isRunning = true;
     this.isPaused = false;
     this.lastTime = performance.now();
+    this.lastFrameTime = performance.now();
     this.tick(this.lastTime);
   }
 
@@ -102,9 +114,10 @@ export class AntigravityEngine {
   }
 
   public resume(): void {
-    if (!this.isRunning || !this.isPaused) return;
+    if (!this.isRunning || !this.isPaused || !this.isIntersecting || (typeof document !== 'undefined' && document.hidden)) return;
     this.isPaused = false;
     this.lastTime = performance.now();
+    this.lastFrameTime = performance.now();
     this.tick(this.lastTime);
   }
 
@@ -267,6 +280,10 @@ export class AntigravityEngine {
         baseAlpha = 0.75 + Math.random() * 0.25;
       }
 
+      if (typeof this.config.particleBaseOpacity === 'number') {
+        baseAlpha *= this.config.particleBaseOpacity;
+      }
+
       const t = Math.sqrt((i + 0.5) / targetCount);
       const baseRadius = minR + t * (maxR - minR);
       const baseAngle = i * goldenAngle;
@@ -299,7 +316,16 @@ export class AntigravityEngine {
   }
 
   private tick = (currentTime: number): void => {
-    if (!this.isRunning || this.isPaused) return;
+    if (!this.isRunning || this.isPaused || !this.isIntersecting) return;
+
+    this.animationFrameId = requestAnimationFrame(this.tick);
+
+    const minFrameInterval = this.config.targetFps > 0 ? 1000 / this.config.targetFps : 0;
+    const elapsed = currentTime - this.lastFrameTime;
+    if (minFrameInterval > 0 && elapsed < minFrameInterval - 1) {
+      return;
+    }
+    this.lastFrameTime = currentTime;
 
     const rawDt = (currentTime - this.lastTime) / 1000;
     const dt = Math.min(Math.max(rawDt, 0.001), 0.045);
@@ -307,8 +333,6 @@ export class AntigravityEngine {
 
     this.updatePhysics(dt, currentTime * 0.001);
     this.draw();
-
-    this.animationFrameId = requestAnimationFrame(this.tick);
   };
 
   private updatePhysics(dt: number, timeSec: number): void {
@@ -427,6 +451,11 @@ export class AntigravityEngine {
           const velocityTransfer = velocityTransferStrength * smoothFalloff * p.layerSpeed;
           forceX += this.pointer.vx * velocityTransfer;
           forceY += this.pointer.vy * velocityTransfer;
+
+          if (this.config.orbitalStrength > 0) {
+            forceX += -normY * this.config.orbitalStrength * smoothFalloff * 200 * p.layerSpeed;
+            forceY += normX * this.config.orbitalStrength * smoothFalloff * 200 * p.layerSpeed;
+          }
 
           p.currentAlpha = Math.min(1.0, p.baseAlpha + smoothFalloff * 0.35);
         } else {

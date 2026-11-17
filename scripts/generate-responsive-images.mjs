@@ -10,7 +10,7 @@ const sourcePaths = new Set(
   [...portfolioSource.matchAll(/['"]\/krishujeniya\/images\/([^'"]+\.webp)['"]/g)]
     .map((match) => match[1]),
 );
-const widths = [64, 128, 256, 320, 480, 640, 800];
+const widths = [64, 128, 256, 320, 480, 640, 800, 1024, 1200];
 
 if (sourcePaths.size === 0) {
   throw new Error('No portfolio WebP source images were found.');

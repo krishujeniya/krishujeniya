@@ -4,6 +4,7 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { Send, X, Bot, User, Sparkles, MessageCircle, RotateCcw } from 'lucide-react';
+import { portfolioData } from '@/data/portfolio';
 
 gsap.registerPlugin(useGSAP);
 
@@ -13,7 +14,19 @@ interface KnowledgeEntry {
     priority?: number;
 }
 
+const projectKnowledgeEntries: KnowledgeEntry[] = portfolioData.projects.map(project => {
+    const rawName = project.title.split('—')[0].trim().toLowerCase();
+    const tokens = rawName.split(/\s+/).filter(t => t.length > 2);
+    const keywords = [rawName, ...tokens];
+    return {
+        keywords,
+        response: `**${project.title}** (${project.category})\n\n${project.description}\n\n💡 **Impact:** ${project.impact}\n\nExplore: [View Case Study](#projects) · [Project Source](${project.link})`,
+        priority: 4,
+    };
+});
+
 const knowledgeBase: KnowledgeEntry[] = [
+    ...projectKnowledgeEntries,
     {
         keywords: ['hello', 'hi', 'hey', 'greetings', 'sup', 'yo', 'good morning', 'good evening', 'good afternoon'],
         response: "Hey there! 👋 I'm Krish's AI assistant. I can answer questions about his skills, projects, and services. Chat messages are interactive and not stored as inquiries; to submit a project inquiry or message Krish directly, please use the Contact form on this page or email ukideashare0021@gmail.com. What would you like to know?",
@@ -113,11 +126,13 @@ const knowledgeBase: KnowledgeEntry[] = [
 
 const getAIResponse = (userMessage: string): string => {
     const rawMsg = userMessage.toLowerCase().trim();
+    const isNegated = /\b(no|not|never|stop|quit|don['\s]?t|won['\s]?t|can['\s]?t)\b/i.test(rawMsg);
     const normalizedMsg = rawMsg.replace(/[^a-z0-9]+/g, ' ').trim();
     const words = normalizedMsg.split(/\s+/);
 
-    const negations = ['no', 'not', 'don t', 'dont', 'stop', 'quit', 'never'];
-    const isNegated = negations.some(n => words.includes(n));
+    if (isNegated && words.length <= 4 && (words.includes('hire') || words.includes('start') || words.includes('contact') || words.includes('book'))) {
+        return "Understood! No worries at all. Feel free to explore Krish's projects or research papers at your own pace.";
+    }
 
     let bestMatch: KnowledgeEntry | null = null;
     let bestScore = 0;
@@ -471,11 +486,38 @@ function ChatMsg({ msg, isTyping = false }: { msg: { id: number; from: 'bot' | '
                 <div
                     className={`chatbot-msg-bubble ${msg.from === 'bot' ? 'chatbot-msg-bubble-bot' : 'chatbot-msg-bubble-user'} whitespace-pre-wrap`}
                 >
-                    {msg.text.split(/(\*\*[\s\S]*?\*\*)/).map((part, index) =>
-                        part.startsWith('**') && part.endsWith('**')
-                            ? <strong key={index}>{part.slice(2, -2)}</strong>
-                            : part
-                    )}
+                    {(() => {
+                        const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
+                        const parts: (string | JSX.Element)[] = [];
+                        let lastIndex = 0;
+                        let match: RegExpExecArray | null;
+                        while ((match = linkRegex.exec(msg.text)) !== null) {
+                            if (match.index > lastIndex) {
+                                parts.push(msg.text.slice(lastIndex, match.index));
+                            }
+                            parts.push(
+                                <a
+                                    key={match.index}
+                                    href={match[2]}
+                                    target={match[2].startsWith('#') ? undefined : '_blank'}
+                                    rel={match[2].startsWith('#') ? undefined : 'noopener noreferrer'}
+                                    className="underline text-white font-medium hover:text-white/80 transition-colors"
+                                >
+                                    {match[1]}
+                                </a>
+                            );
+                            lastIndex = match.index + match[0].length;
+                        }
+                        if (lastIndex < msg.text.length) {
+                            parts.push(msg.text.slice(lastIndex));
+                        }
+                        return parts.map((part, i) => {
+                            if (typeof part !== 'string') return part;
+                            return part.split(/(\*\*[\s\S]*?\*\*)/).map((sub, j) =>
+                                sub.startsWith('**') && sub.endsWith('**') ? <strong key={`${i}-${j}`}>{sub.slice(2, -2)}</strong> : sub
+                            );
+                        });
+                    })()}
                 </div>
             )}
         </div>

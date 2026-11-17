@@ -15,19 +15,20 @@ X, y = data.data, data.target
 feature_names = data.feature_names
 target_names = data.target_names
 
-# Step 2: Preprocess the data
-scaler = StandardScaler()
-X_scaled = scaler.fit_transform(X)
+# Step 2: Split the data into training and testing sets first to prevent data leakage
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-# Step 3: Split the data into training and testing sets
-X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.2, random_state=42)
+# Step 3: Fit scaler only on training data and transform train and test sets separately
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
 
 # Step 4: Train a Support Vector Machine (SVM) model
 svm_model = SVC(kernel='linear', C=1.0, random_state=42)
-svm_model.fit(X_train, y_train)
+svm_model.fit(X_train_scaled, y_train)
 
 # Step 5: Evaluate the model's performance
-y_pred = svm_model.predict(X_test)
+y_pred = svm_model.predict(X_test_scaled)
 
 accuracy = accuracy_score(y_test, y_pred)
 conf_matrix = confusion_matrix(y_test, y_pred)

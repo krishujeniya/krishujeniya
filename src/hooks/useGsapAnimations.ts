@@ -127,11 +127,11 @@ export function useGsapAnimations() {
             // Also reveal section heading
             revealOnScroll('#services h2', { y: 50, stagger: 0, start: 'top 88%' });
 
-            // ── 4. Projects grid ──
-            revealOnScroll('#projects .grid > div', { y: 40, stagger: 0.08, start: 'top 88%', duration: 0.65 });
+            // ── 4. Projects carousel cards ──
+            revealOnScroll('#projects [role="button"]', { y: 40, stagger: 0.08, start: 'top 88%', duration: 0.65 });
 
-            // ── 5. Documents / Resources ──
-            revealOnScroll('#documents .grid > div', { scale: 0.96, y: 15, stagger: 0.05, start: 'top 95%', duration: 0.35 });
+            // ── 5. Documents / Resources carousel cards ──
+            revealOnScroll('#documents .document-card', { scale: 0.96, y: 15, stagger: 0.05, start: 'top 95%', duration: 0.35 });
             revealOnScroll('#documents h2', { y: 30, stagger: 0, start: 'top 95%', duration: 0.4 });
 
             // ── 6. Testimonials ──

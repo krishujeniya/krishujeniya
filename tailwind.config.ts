@@ -101,6 +101,9 @@ export default {
         "headline": ["var(--font-space-grotesk)", "sans-serif"],
         "body": ["var(--font-inter)", "sans-serif"],
         "label": ["var(--font-inter)", "sans-serif"]
+      },
+      screens: {
+        xs: '375px'
       }
     },
   },

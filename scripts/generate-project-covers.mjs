@@ -21,7 +21,7 @@ async function run() {
 
   // 1. AmberClaw (My Approach) -> amberclaw.webp
   await fitTo16x9(
-    'public/images/contra_new/amberclaw_cover.jpg',
+    'assets/images/contra_new/amberclaw_cover.jpg',
     'public/images/projects/amberclaw.webp'
   );
 
@@ -43,9 +43,9 @@ async function run() {
       .webp({ quality: 92 })
       .toFile('public/images/projects/hadron.webp');
     console.log('[OK] Generated public/images/projects/hadron.webp from vector social card');
-  } else {
+  } else if (fs.existsSync('assets/images/contra_new/hadron_cover.jpg')) {
     await fitTo16x9(
-      'public/images/contra_new/hadron_cover.jpg',
+      'assets/images/contra_new/hadron_cover.jpg',
       'public/images/projects/hadron.webp'
     );
   }
@@ -67,6 +67,26 @@ async function run() {
       .webp({ quality: 92 })
       .toFile('public/images/projects/waferpulse.webp');
     console.log('[OK] Generated public/images/projects/waferpulse.webp from vector social card');
+  } else {
+    const waferFallbackSvg = `
+    <svg width="1200" height="675" viewBox="0 0 1200 675" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="wfbg" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#080c14" />
+          <stop offset="50%" stop-color="#0f172a" />
+          <stop offset="100%" stop-color="#080c14" />
+        </linearGradient>
+      </defs>
+      <rect width="1200" height="675" fill="url(#wfbg)" />
+      <circle cx="600" cy="240" r="140" fill="none" stroke="#38bdf8" stroke-width="2" stroke-opacity="0.5" />
+      <circle cx="600" cy="240" r="100" fill="none" stroke="#38bdf8" stroke-width="1" stroke-dasharray="4 4" stroke-opacity="0.3" />
+      <circle cx="600" cy="240" r="60" fill="none" stroke="#38bdf8" stroke-width="1" stroke-opacity="0.4" />
+      <text x="600" y="445" font-family="-apple-system, sans-serif" font-size="13" font-weight="800" letter-spacing="4" fill="#38bdf8" text-anchor="middle">SEMICONDUCTOR TELEMETRY ML</text>
+      <text x="600" y="500" font-family="-apple-system, sans-serif" font-size="44" font-weight="900" letter-spacing="-1" fill="#f8fafc" text-anchor="middle">WaferPulse</text>
+      <text x="600" y="540" font-family="-apple-system, sans-serif" font-size="17" font-weight="500" fill="#94a3b8" text-anchor="middle">Real-Time Sensor Ingestion · Defect Pattern Classification</text>
+    </svg>`;
+    await sharp(Buffer.from(waferFallbackSvg)).webp({ quality: 92 }).toFile('public/images/projects/waferpulse.webp');
+    console.log('[OK] Generated public/images/projects/waferpulse.webp from standalone vector SVG');
   }
 
   // 4. Somnostasis -> somnostasis.webp
@@ -268,19 +288,19 @@ async function run() {
 
   // 8. Scanlark -> snaptext.webp
   await fitTo16x9(
-    'public/images/contra_new/snaptext_cover.jpg',
+    'assets/images/contra_new/snaptext_cover.jpg',
     'public/images/projects/snaptext.webp'
   );
 
   // 9. Saygrove -> echonest.webp
   await fitTo16x9(
-    'public/images/contra_new/echonest_cover.jpg',
+    'assets/images/contra_new/echonest_cover.jpg',
     'public/images/projects/echonest.webp'
   );
 
   // 10. Sensor Activity Recognition -> fitness-tracker.webp
   await fitTo16x9(
-    'public/images/contra_new/fitness_tracker_cover.jpg',
+    'assets/images/contra_new/fitness_tracker_cover.jpg',
     'public/images/projects/fitness-tracker.webp'
   );
 
@@ -369,20 +389,7 @@ async function run() {
     console.log('[OK] Generated public/images/projects/agyos.webp');
   }
 
-  // 13. Discord Bot -> discord-bot.webp
-  const discordOldBuf = await sharp('public/images/projects/discord-bot.webp')
-    .resize(280, 280)
-    .composite([
-      {
-        input: Buffer.from(
-          `<svg width="280" height="280"><circle cx="140" cy="140" r="140" fill="#fff" /></svg>`
-        ),
-        blend: 'dest-in',
-      },
-    ])
-    .png()
-    .toBuffer();
-
+  // 13. Discord Bot -> discord-bot.webp (Standalone vector SVG)
   const discordSvg = `
   <svg width="1200" height="675" viewBox="0 0 1200 675" xmlns="http://www.w3.org/2000/svg">
     <defs>
@@ -391,7 +398,7 @@ async function run() {
         <stop offset="50%" stop-color="#151733" />
         <stop offset="100%" stop-color="#0a0a14" />
       </linearGradient>
-      <radialGradient id="dglow" cx="50%" cy="40%" r="50%">
+      <radialGradient id="dglow" cx="50%" cy="38%" r="45%">
         <stop offset="0%" stop-color="#5865F2" stop-opacity="0.35" />
         <stop offset="100%" stop-color="#0a0a14" stop-opacity="0" />
       </radialGradient>
@@ -401,6 +408,12 @@ async function run() {
 
     <!-- Ambient glowing orbit ring -->
     <circle cx="600" cy="245" r="170" stroke="#5865F2" stroke-width="2" stroke-opacity="0.4" stroke-dasharray="6 8" fill="none" />
+
+    <!-- Vector Discord Mascot Badge -->
+    <g transform="translate(470, 115)">
+      <circle cx="130" cy="130" r="110" fill="#5865F2" />
+      <path d="M178 88c-12-5.5-25-9.5-38.5-11.5-.5 1-1 2.2-1.5 3.5-14.5-2.2-29-2.2-43.5 0-.5-1.3-1-2.5-1.5-3.5-13.5 2-26.5 6-38.5 11.5-24 35.5-30.5 70-27.5 104 16 11.8 31.5 19 46.5 23.8 3.8-5.1 7.1-10.6 9.9-16.5-5.5-2-10.7-4.7-15.6-7.9 1.3-.9 2.6-1.9 3.8-2.9 30.5 14 63.5 14 93.6 0 1.2 1 2.5 2 3.8 2.9-4.9 3.2-10.1 5.9-15.6 7.9 2.8 5.8 6.1 11.3 9.9 16.5 15-4.8 30.5-12 46.5-23.8 3.8-39-6.5-73.5-27.5-104.4zm-75 79c-8.8 0-16-8-16-18s7-18 16-18 16.2 8 16 18c0 10-7 18-16 18zm54 0c-8.8 0-16-8-16-18s7-18 16-18 16.2 8 16 18c0 10-7.2 18-16 18z" fill="#ffffff" />
+    </g>
 
     <text x="600" y="450" font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" font-size="13" font-weight="800" letter-spacing="4" fill="#5865F2" text-anchor="middle">
       DISTRIBUTED AUTOMATION BOT
@@ -415,23 +428,11 @@ async function run() {
   `;
 
   await sharp(Buffer.from(discordSvg))
-    .composite([
-      {
-        input: discordOldBuf,
-        top: 105,
-        left: 460,
-      },
-    ])
     .webp({ quality: 92 })
     .toFile('public/images/projects/discord-bot.webp');
   console.log('[OK] Generated public/images/projects/discord-bot.webp');
 
-  // 14. SparkWA -> sparkwa.webp
-  const sparkMarkSvg = fs.readFileSync('/tmp/sparkwa_assets/sparkwa-mark.svg', 'utf8');
-  const sparkMarkBuf = await sharp(Buffer.from(sparkMarkSvg))
-    .resize(240, 240)
-    .toBuffer();
-
+  // 14. SparkWA -> sparkwa.webp (Standalone vector SVG)
   const sparkBgSvg = `
   <svg width="1200" height="675" viewBox="0 0 1200 675" xmlns="http://www.w3.org/2000/svg">
     <defs>
@@ -440,7 +441,7 @@ async function run() {
         <stop offset="50%" stop-color="#072b1b" />
         <stop offset="100%" stop-color="#02120b" />
       </linearGradient>
-      <radialGradient id="spglow" cx="50%" cy="40%" r="50%">
+      <radialGradient id="spglow" cx="50%" cy="38%" r="45%">
         <stop offset="0%" stop-color="#25D366" stop-opacity="0.3" />
         <stop offset="100%" stop-color="#02120b" stop-opacity="0" />
       </radialGradient>
@@ -451,6 +452,12 @@ async function run() {
     <!-- WhatsApp bridge pulse -->
     <circle cx="600" cy="240" r="160" stroke="#25D366" stroke-width="1.5" stroke-opacity="0.4" fill="none" />
 
+    <!-- Vector WhatsApp & AI Spark Icon Badge -->
+    <g transform="translate(485, 125)">
+      <circle cx="115" cy="115" r="95" fill="#25D366" />
+      <path d="M152 78c-10-10-23.2-15.5-37-15.5-28.8 0-52.2 23.4-52.2 52.2 0 9.2 2.4 18.2 7 26.1l-7.4 27.2 27.8-7.3c7.6 4.1 16.1 6.3 24.8 6.3h.1c28.8 0 52.2-23.4 52.2-52.2 0-13.8-5.4-27-15.3-36.8zm-37 88.5h-.1c-7.8 0-15.4-2.1-22.1-6.1l-1.6-.9-16.5 4.3 4.4-16.1-1-1.6c-4.4-7-6.7-15-6.7-23.3 0-24 19.5-43.5 43.6-43.5 11.6 0 22.6 4.5 30.8 12.8 8.2 8.3 12.7 19.2 12.7 30.8 0 24-19.5 43.6-43.5 43.6z" fill="#ffffff" />
+    </g>
+
     <text x="600" y="445" font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" font-size="13" font-weight="800" letter-spacing="4" fill="#25D366" text-anchor="middle">
       HEADLESS WHATSAPP AI BRIDGE
     </text>
@@ -458,28 +465,62 @@ async function run() {
       SparkWA
     </text>
     <text x="600" y="540" font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" font-size="17" font-weight="500" fill="#94a3b8" text-anchor="middle">
-      Google Gemini Multi-Modal Ingestion · SQLite Context Store · Zero Memory Leaks
+      Google Gemini Multi-Modal Ingestion · Gmail Event Dispatcher · Sub-400ms Daemon
     </text>
   </svg>
   `;
 
   await sharp(Buffer.from(sparkBgSvg))
-    .composite([
-      {
-        input: sparkMarkBuf,
-        top: 120,
-        left: 480,
-      },
-    ])
     .webp({ quality: 92 })
     .toFile('public/images/projects/sparkwa.webp');
   console.log('[OK] Generated public/images/projects/sparkwa.webp');
 
-  // 15. NetSweep -> netsweep.webp
-  await fitTo16x9(
-    'public/images/projects/netsweep.webp',
-    'public/images/projects/netsweep.webp'
-  );
+  // 15. NetSweep -> netsweep.webp (Standalone vector SVG)
+  const netSweepSvg = `
+  <svg width="1200" height="675" viewBox="0 0 1200 675" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="nsbg" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#030712" />
+        <stop offset="50%" stop-color="#0f172a" />
+        <stop offset="100%" stop-color="#030712" />
+      </linearGradient>
+      <radialGradient id="nsglow" cx="50%" cy="38%" r="45%">
+        <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.3" />
+        <stop offset="100%" stop-color="#030712" stop-opacity="0" />
+      </radialGradient>
+    </defs>
+    <rect width="1200" height="675" fill="url(#nsbg)" />
+    <circle cx="600" cy="240" r="320" fill="url(#nsglow)" />
+
+    <!-- Radar scan grid -->
+    <circle cx="600" cy="240" r="160" stroke="#06b6d4" stroke-width="1.5" stroke-opacity="0.4" fill="none" />
+    <circle cx="600" cy="240" r="110" stroke="#06b6d4" stroke-width="1" stroke-dasharray="6 6" stroke-opacity="0.3" fill="none" />
+    <circle cx="600" cy="240" r="60" stroke="#06b6d4" stroke-width="1" stroke-opacity="0.4" fill="none" />
+    <line x1="440" y1="240" x2="760" y2="240" stroke="#06b6d4" stroke-width="1" stroke-opacity="0.3" />
+    <line x1="600" y1="80" x2="600" y2="400" stroke="#06b6d4" stroke-width="1" stroke-opacity="0.3" />
+
+    <!-- Discovered host nodes on radar -->
+    <circle cx="670" cy="180" r="6" fill="#22d3ee" />
+    <circle cx="540" cy="290" r="5" fill="#38bdf8" />
+    <circle cx="620" cy="310" r="4" fill="#06b6d4" />
+    <circle cx="510" cy="200" r="5.5" fill="#22d3ee" />
+
+    <text x="600" y="445" font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" font-size="13" font-weight="800" letter-spacing="4" fill="#06b6d4" text-anchor="middle">
+      AUTOMATED NETWORK RECONNAISSANCE
+    </text>
+    <text x="600" y="500" font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" font-size="44" font-weight="900" letter-spacing="-1" fill="#f8fafc" text-anchor="middle">
+      NetSweep
+    </text>
+    <text x="600" y="540" font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" font-size="17" font-weight="500" fill="#94a3b8" text-anchor="middle">
+      Multi-Subnet Discovery · Port Auditing · Automated Vulnerability Mapping
+    </text>
+  </svg>
+  `;
+
+  await sharp(Buffer.from(netSweepSvg))
+    .webp({ quality: 92 })
+    .toFile('public/images/projects/netsweep.webp');
+  console.log('[OK] Generated public/images/projects/netsweep.webp');
 
   console.log('All 15 project covers successfully generated at 1200x675!');
 }

@@ -14,7 +14,7 @@ export const CustomCursor = () => {
         const motionMedia = window.matchMedia('(prefers-reduced-motion: reduce)');
         const isAutomated = Boolean(typeof navigator !== 'undefined' && navigator.webdriver);
 
-        if (!hoverMedia.matches || isAutomated) {
+        if (isAutomated) {
             setIsHidden(true);
             return;
         }
@@ -38,18 +38,25 @@ export const CustomCursor = () => {
         let mouseX = 0, mouseY = 0;
         let isFirstMove = true;
 
-        // Lerp ticker for ring (fluid, snappy follow)
+        let tickerActive = false;
+
+        // Lerp ticker for ring (fluid, snappy follow) - stops when stationary
         const updateRing = () => {
             const dx = mouseX - ringX;
             const dy = mouseY - ringY;
-            if (Math.abs(dx) < 0.1 && Math.abs(dy) < 0.1) return;
+            if (Math.abs(dx) < 0.1 && Math.abs(dy) < 0.1) {
+                if (tickerActive) {
+                    gsap.ticker.remove(updateRing);
+                    tickerActive = false;
+                }
+                return;
+            }
             ringX += dx * 0.35;
             ringY += dy * 0.35;
             setRingX(ringX);
             setRingY(ringY);
         };
 
-        let tickerActive = false;
         const syncTicker = () => {
             const automated = Boolean(typeof navigator !== 'undefined' && navigator.webdriver);
             if (!hoverMedia.matches || automated) {
@@ -59,14 +66,6 @@ export const CustomCursor = () => {
                     tickerActive = false;
                 }
                 return;
-            }
-
-            if (!motionMedia.matches && !tickerActive) {
-                gsap.ticker.add(updateRing);
-                tickerActive = true;
-            } else if (motionMedia.matches && tickerActive) {
-                gsap.ticker.remove(updateRing);
-                tickerActive = false;
             }
         };
 
@@ -93,6 +92,9 @@ export const CustomCursor = () => {
                 setRingY(e.clientY);
                 ringX = e.clientX;
                 ringY = e.clientY;
+            } else if (!tickerActive) {
+                gsap.ticker.add(updateRing);
+                tickerActive = true;
             }
             setIsHidden(false);
         };

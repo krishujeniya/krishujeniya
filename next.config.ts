@@ -8,7 +8,7 @@ const nextConfig: NextConfig = {
   images: {
     loader: 'custom',
     loaderFile: './src/lib/responsiveImageLoader.ts',
-    deviceSizes: [320, 480, 640, 800],
+    deviceSizes: [320, 480, 640, 800, 1024, 1200],
     imageSizes: [64, 128, 256],
     remotePatterns: [
       { protocol: 'https', hostname: 'raw.githubusercontent.com' },

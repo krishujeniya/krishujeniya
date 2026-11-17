@@ -171,9 +171,9 @@ export default function RootLayout({
         </a>
         <ThemeProvider>
           <CustomCursor />
-          <main id="main-content">
+          <div className="relative min-h-screen">
             {children}
-          </main>
+          </div>
           <ChatBot />
         </ThemeProvider>
       </body>

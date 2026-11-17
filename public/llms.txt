@@ -28,15 +28,15 @@ full systems to production in under 4 weeks. He works with startups and engineer
    hybrid RAG pipeline, and multi-source document ingestion for cross-session intelligence.
    GitHub: https://github.com/krishujeniya/AmberClaw
 
-2. Salary Predictions for Data Professions: End-to-end ZenML + MLflow pipeline achieving 92% prediction
-   accuracy across 5 countries. Deployed on Hugging Face Spaces.
+2. Salary Predictions for Data Professions: End-to-end ZenML + MLflow pipeline achieving 0.92 R² evaluation
+   score on test validation split across 5 countries. Deployed on Hugging Face Spaces.
    Space: https://huggingface.co/spaces/krishujeniya/Salary_Predictions_For_Data_Professions
 
-3. SnapText — OCR App: On-device OCR Flutter app using ML Kit. Under 2s extraction, 95%+ accuracy, zero server costs.
-   GitHub: https://github.com/krishujeniya/SNAPTEXT_OCR_FLUTTER
+3. Scanlark — On-Device OCR Mobile Engine: On-device text extraction Flutter app using Google ML Kit. Under 2s extraction, 95%+ character recognition rate, zero server costs.
+   GitHub: https://github.com/krishujeniya/Scanlark
 
-4. Fitness Tracker ML Analysis: Unsupervised clustering of wearable sensor data revealing 3 key health predictors.
-   GitHub: https://github.com/krishujeniya/Fitness-Tracker-ML
+4. Sensor Activity Recognition & Telemetry ML: Accelerometer & gyroscope telemetry classification and clustering.
+   GitHub: https://github.com/krishujeniya/fitness-activity-recognition
 
 ## Social Profiles
 - GitHub: https://github.com/krishujeniya

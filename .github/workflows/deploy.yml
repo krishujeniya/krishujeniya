@@ -5,6 +5,8 @@ on:
     branches: ["main"]
     paths:
       - ".github/workflows/**"
+      - ".eslintrc.json"
+      - ".eslintignore"
       - "src/**"
       - "public/**"
       - "Docs/**"
@@ -22,6 +24,8 @@ on:
     branches: ["main"]
     paths:
       - ".github/workflows/**"
+      - ".eslintrc.json"
+      - ".eslintignore"
       - "src/**"
       - "public/**"
       - "Docs/**"
@@ -137,6 +141,17 @@ jobs:
     permissions:
       contents: read
     steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Setup Node
+        uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
+        with:
+          node-version: '22'
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
       - name: Install Obscura headless engine
         env:
           OBSCURA_VERSION: v0.2.7
@@ -152,22 +167,28 @@ jobs:
           tar -xzf "$archive" -C "$install_dir"
           chmod +x "$install_dir/obscura" "$install_dir/obscura-worker"
           echo "$install_dir" >> "$GITHUB_PATH"
-      - name: Smoke test published portfolio with Obscura
-        env:
-          PAGE_URL: ${{ needs.deploy.outputs.page_url }}
+      - name: Start Obscura headless engine
         run: |
-          target_url="https://krishujeniya.github.io/krishujeniya/"
-          html="$RUNNER_TEMP/published-portfolio.html"
-          log="$RUNNER_TEMP/obscura-published-smoke.log"
-          for attempt in {1..5}; do
-            if obscura fetch "$target_url" --dump html --timeout 30 > "$html" 2> "$log" && \
-              grep -Fq 'id="form-name"' "$html"; then
-              echo "Published contact form confirmed at $target_url"
+          obscura serve --port 9222 --allow-private-network > "$RUNNER_TEMP/obscura.log" 2>&1 &
+          for attempt in {1..40}; do
+            if curl --fail --silent http://127.0.0.1:9222/json/version > /dev/null; then
               exit 0
             fi
-            sleep 5
+            sleep 0.5
           done
-          echo "Published contact form marker was not found at $target_url"
+          cat "$RUNNER_TEMP/obscura.log"
+          exit 1
+      - name: Interactive smoke test published portfolio with Obscura
+        env:
+          PAGE_URL: https://krishujeniya.github.io/krishujeniya/
+        run: |
+          for attempt in {1..5}; do
+            if node scripts/smoke-published.mjs; then
+              exit 0
+            fi
+            echo "Attempt $attempt failed. Waiting 10s for GitHub Pages deployment..."
+            sleep 10
+          done
           exit 1
       - name: Check production backend readiness with Obscura
         run: |

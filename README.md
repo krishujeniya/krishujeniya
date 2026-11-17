@@ -430,3 +430,31 @@ Available for freelance engagements, technical consulting, and collaborative res
 </p>
 
 </div>
+
+---
+
+### Local Verification &amp; End-to-End Testing
+
+The repository runs end-to-end browser verification via Playwright connected to an Obscura headless browser engine over Chrome DevTools Protocol (CDP).
+
+#### Prerequisites &amp; Setup
+
+1. **Obscura Headless Engine** (pinned release `v0.2.7`):
+   ```bash
+   curl -sSL "https://github.com/h4ckf0r0day/obscura/releases/download/v0.2.7/obscura-x86_64-linux.tar.gz" -o obscura.tar.gz
+   echo "11b53d27cd743e00e196e216920e7f3f794cf378e3f1792b8d25d3beabaf9cad  obscura.tar.gz" | sha256sum --check
+   tar -xzf obscura.tar.gz
+   sudo install -m 0755 obscura obscura-worker /usr/local/bin/
+   ```
+
+2. **Start the Engine Daemon**:
+   ```bash
+   obscura serve --port 9222 --allow-private-network
+   ```
+
+3. **Run the Test Suite**:
+   ```bash
+   npm run test:e2e
+   ```
+
+*Local Development Fallback*: When running on a clean local environment where the Obscura daemon is not active, `npm run test:e2e` automatically launches the local Playwright Chromium binary. In CI environments (`CI=true`), the Obscura CDP endpoint is strictly required.
