@@ -351,6 +351,10 @@ test.describe('normal motion suite', () => {
 });
 
 test.describe('responsive navigation and breakpoint isolation', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+  });
+
   test('header navigation and mobile menu operate correctly at 700px breakpoint (640-767px gap)', async ({ page }) => {
     await page.setViewportSize({ width: 700, height: 900 });
     await page.goto(portfolioUrl);
