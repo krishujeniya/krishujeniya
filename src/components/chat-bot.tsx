@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useCallback, type ReactNode } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { Send, X, Bot, User, Sparkles, MessageCircle, RotateCcw } from 'lucide-react';
@@ -488,7 +488,7 @@ function ChatMsg({ msg, isTyping = false }: { msg: { id: number; from: 'bot' | '
                 >
                     {(() => {
                         const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
-                        const parts: (string | JSX.Element)[] = [];
+                        const parts: ReactNode[] = [];
                         let lastIndex = 0;
                         let match: RegExpExecArray | null;
                         while ((match = linkRegex.exec(msg.text)) !== null) {
