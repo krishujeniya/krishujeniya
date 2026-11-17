@@ -32,7 +32,7 @@ import {
 
 const DOCS_COMMIT_SHA = process.env.NEXT_PUBLIC_DOCS_COMMIT_SHA || 'b09e098ef5d24859dda5c51b5e7a31ca7bdfe103';
 const DOCS_BASE_URL = `https://raw.githubusercontent.com/krishujeniya/krishujeniya/${DOCS_COMMIT_SHA}/Docs`;
-const CONTACT_SUBMISSION_STORAGE_KEY = 'portfolio-contact-submission-v1-krishujeniya';
+const CONTACT_SUBMISSION_STORAGE_KEY = 'portfolio-contact-submission';
 const CONTACT_API_URL = process.env.NEXT_PUBLIC_VERCEL_API_URL || 'https://krishujeniya-backend.vercel.app/api/webDATA';
 
 const DOCUMENT_THEMES: Record<string, { gradient: string; accent: string; tag: string }> = {
