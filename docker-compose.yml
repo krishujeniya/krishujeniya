@@ -1,0 +1,20 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: krishujeniya_portfolio
+    restart: unless-stopped
+    ports:
+      - "9002:80"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:80/healthz"]
+      interval: 20s
+      timeout: 3s
+      retries: 3
+    networks:
+      - portfolio-net
+
+networks:
+  portfolio-net:
+    driver: bridge

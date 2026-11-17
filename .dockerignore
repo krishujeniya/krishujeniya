@@ -1,0 +1,23 @@
+# Version control
+.git/
+.gitignore
+.github/
+
+# Dependencies & caches
+node_modules/
+.npm/
+.next/
+out/
+*.tsbuildinfo
+
+# Sensitive credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Tests & OS
+test-results/
+playwright-report/
+.DS_Store
