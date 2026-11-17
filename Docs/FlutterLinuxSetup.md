@@ -29,32 +29,34 @@ sudo snap install --classic code
 
 ## Step 4: Configure Android SDK
 
-Download Android SDK and set up directory structure:
-- Download Android SDK from [link](https://t.me/krishujeniya/11)
-- Extract and organize SDK files as follows:
+Download official Android command-line tools directly from Google's Android developer repository:
+- Download the official Linux command-line tools from [developer.android.com](https://developer.android.com/studio#command-line-tools-only).
+- Verify the publisher's SHA-256 checksum against the value published on the official Android Developers download page before extracting:
+  ```bash
+  echo "<official_sha256>  commandlinetools-linux_latest.zip" | sha256sum --check
   ```
-  Android 
-    ├── Sdk
-          ├── build-tools
-          ├── emulator
-          ├── platforms
-          ├── skins
-          ├── system-images
-          ├── cmdline-tools
-          ├── licenses
-          ├── platform-tools
-          ├── sources
-          ├── tools
+- Extract and set up the Android SDK directory structure:
+  ```bash
+  mkdir -p ~/Android/Sdk/cmdline-tools/latest
+  unzip commandlinetools-linux_latest.zip -d ~/Android/Sdk/cmdline-tools/latest
   ```
+
+Organize the SDK directories using the official Android SDK Manager:
+```bash
+export ANDROID_HOME=$HOME/Android/Sdk
+export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools
+sdkmanager "platform-tools" "platforms;android-34" "build-tools;34.0.0"
+```
 
 ## Step 5: Environment Setup
 
-Edit `.bashrc` and set Chrome executable path:
+Configure environment variables in `~/.bashrc`:
 ```bash
-nano ~/.bashrc
-# Add the following line at the end:
+cat << 'EOF' >> ~/.bashrc
+export ANDROID_HOME=$HOME/Android/Sdk
+export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools
 export CHROME_EXECUTABLE=/snap/bin/chromium
-# Save and exit (Ctrl + X, Y, Enter)
+EOF
 source ~/.bashrc
 ```
 
@@ -66,12 +68,11 @@ flutter doctor -v
 
 ## Step 6: Integrate Firebase
 
-Install Firebase tools and configure Firebase for Flutter:
+Install Firebase CLI using npm (or verify the standalone binary checksum before execution):
 ```bash
-curl -sL https://firebase.tools | bash
+npm install -g firebase-tools
 firebase login
 dart pub global activate flutterfire_cli
-firebase init
 flutterfire configure
 ```
 

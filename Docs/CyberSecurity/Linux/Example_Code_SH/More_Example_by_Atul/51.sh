@@ -1,7 +1,16 @@
-read -p "Enter Filename:-" file
-character=`cat $file | wc -c`
-word=`cat $file | wc -w`
-line=`cat $file | wc -l`
-echo "Total Characters in $file:- $character"
-echo "Total Word in $file:- $word"
-echo "Total Lines in $file:- $line"
+#!/bin/bash
+set -euo pipefail
+
+read -r -p "Enter Filename: " file
+if [[ ! -f "$file" ]]; then
+    echo "Error: File '$file' not found." >&2
+    exit 1
+fi
+
+character=$(wc -c < "$file")
+word=$(wc -w < "$file")
+line=$(wc -l < "$file")
+
+echo "Total Characters in $file: $character"
+echo "Total Words in $file: $word"
+echo "Total Lines in $file: $line"

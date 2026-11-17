@@ -9,6 +9,7 @@
     "build": "next build",
     "images:responsive": "node scripts/generate-responsive-images.mjs",
     "test:e2e": "playwright test",
+    "verify:docs": "node scripts/verify-docs.mjs",
     "lint": "next lint",
     "typecheck": "tsc --noEmit"
   },

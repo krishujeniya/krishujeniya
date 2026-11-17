@@ -88,11 +88,15 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className="dark">
       <head>
-        {/* Additional security policies require response headers unavailable on this GitHub Pages site. */}
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https: blob:; connect-src 'self' https://krishujeniya-backend.vercel.app https://raw.githubusercontent.com https://github.com; form-action 'self' https://krishujeniya-backend.vercel.app; base-uri 'self'; object-src 'none';" />
+        <meta http-equiv="X-Frame-Options" content="DENY" />
+        <meta http-equiv="X-Content-Type-Options" content="nosniff" />
         <meta name="referrer" content="strict-origin-when-cross-origin" />
-        <link rel="preconnect" href="https://github.com" />
-        <link rel="preconnect" href="https://raw.githubusercontent.com" />
-        <link rel="preconnect" href="https://storage.googleapis.com" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: "if(window.top!==window.self){try{window.top.location=window.self.location;}catch(e){}}",
+          }}
+        />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />

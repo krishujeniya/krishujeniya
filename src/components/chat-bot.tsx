@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
-import { Send, X, Bot, User, Sparkles, MessageCircle } from 'lucide-react';
+import { Send, X, Bot, User, Sparkles, MessageCircle, RotateCcw } from 'lucide-react';
 
 gsap.registerPlugin(useGSAP);
 
@@ -174,6 +174,7 @@ export const ChatBot = () => {
     const openIconRef = useRef<HTMLDivElement>(null);
     const isMounted = useRef(true);
     const previousChatOpenRef = useRef(false);
+    const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
         isMounted.current = true;
@@ -309,20 +310,32 @@ export const ChatBot = () => {
 
     const handleChatSend = useCallback(() => {
         if (!chatInput.trim() || isTyping) return;
-        const userMsg = chatInput.trim();
+        const userMsg = chatInput.trim().slice(0, 500);
         const userMsgId = nextIdRef.current++;
         setChatMessages((prev) => [...prev, { id: userMsgId, from: 'user' as const, text: userMsg }].slice(-50));
         setChatInput('');
         setIsTyping(true);
         const thinkTime = 400 + Math.random() * 600;
-        setTimeout(() => {
+        if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current);
+        typingTimeoutRef.current = setTimeout(() => {
             if (!isMounted.current) return;
             const aiResponse = getAIResponse(userMsg);
             const botMsgId = nextIdRef.current++;
             setChatMessages((prev) => [...prev, { id: botMsgId, from: 'bot' as const, text: aiResponse }].slice(-50));
             setIsTyping(false);
+            typingTimeoutRef.current = null;
         }, thinkTime);
     }, [chatInput, isTyping]);
+
+    const handleClearChat = useCallback(() => {
+        if (typingTimeoutRef.current) {
+            clearTimeout(typingTimeoutRef.current);
+            typingTimeoutRef.current = null;
+        }
+        setIsTyping(false);
+        setChatInput('');
+        setChatMessages(botMessages.map((m, i) => ({ ...m, id: i })));
+    }, []);
 
     return (
         <div className={`chatbot-wrapper transition-opacity duration-700 ease-out ${isReady ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
@@ -349,13 +362,23 @@ export const ChatBot = () => {
                             </p>
                         </div>
                     </div>
-                    <button
-                        onClick={() => setChatOpen(false)}
-                        className="chatbot-close"
-                        aria-label="Close chat"
-                    >
-                        <X className="w-4 h-4" />
-                    </button>
+                    <div className="flex items-center gap-1">
+                        <button
+                            onClick={handleClearChat}
+                            className="chatbot-close"
+                            title="Clear conversation"
+                            aria-label="Clear conversation"
+                        >
+                            <RotateCcw className="w-4 h-4" />
+                        </button>
+                        <button
+                            onClick={() => setChatOpen(false)}
+                            className="chatbot-close"
+                            aria-label="Close chat"
+                        >
+                            <X className="w-4 h-4" />
+                        </button>
+                    </div>
                 </div>
 
                 {/* Chat messages */}
@@ -381,6 +404,7 @@ export const ChatBot = () => {
                     <input
                         ref={inputRef}
                         type="text"
+                        maxLength={500}
                         value={chatInput}
                         onChange={(e) => setChatInput(e.target.value)}
                         onKeyDown={(e) => e.key === 'Enter' && handleChatSend()}

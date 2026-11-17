@@ -125,34 +125,59 @@ dvc push
 
 #### 5. Containerize with Docker
 
-Create a `Dockerfile` for the MLOps pipeline:
+Create a `.dockerignore` to avoid copying raw datasets, virtual environments, VCS directories, and secrets into image layers:
+
+```dockerignore
+.git
+.gitignore
+.env*
+.venv
+__pycache__
+*.pyc
+data/
+*.dvc
+tests/
+```
+
+Create a production `Dockerfile` with minimal surface and a non-root user:
 
 ```Dockerfile
 FROM python:3.10-slim
 
 WORKDIR /app
 
-COPY . .
+# Run as non-privileged application user
+RUN groupadd -g 1000 appgroup && \
+    useradd -u 1000 -g appgroup -s /bin/sh -m appuser
 
+# Install dependencies in cached layer
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy only production runtime files
+COPY src/ ./src/
+COPY main.py .
+
+RUN chown -R appuser:appgroup /app
+USER appuser
 
 EXPOSE 8080
 
 CMD ["python", "main.py"]
 ```
 
-Build and run:
+Build and run, binding explicitly to the loopback interface (`127.0.0.1`):
 
 ```bash
-docker build -t mlops-pipeline .
-docker run -p 8080:8080 mlops-pipeline
+docker build -t mlops-pipeline:v1.0.0 .
+docker run -d --rm -p 127.0.0.1:8080:8080 --name mlops-service mlops-pipeline:v1.0.0
 ```
 
 ---
 
 #### 6. Automate with GitHub Actions (CI/CD)
 
-Create `.github/workflows/main.yml`:
+Create `.github/workflows/main.yml` with pinned action versions, immutable image tagging, and least-privilege tokens:
 
 ```yaml
 name: MLOps CI/CD Pipeline
@@ -161,35 +186,38 @@ on:
   push:
     branches: [ "main" ]
 
+permissions:
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0
         with:
           python-version: '3.10'
 
       - name: Install UV
-        run: pip install uv
+        run: pip install uv==0.5.20
 
       - name: Install Dependencies
-        run: uv pip install -r requirements.txt
+        run: uv pip install --system -r requirements.txt
 
       - name: Run Tests
         run: pytest
 
-      - name: Build Docker Image
-        run: docker build -t mlops-pipeline .
-
-      - name: Push Docker Image to Registry
+      - name: Build Docker Image with Commit SHA Tag
         run: |
-          docker tag mlops-pipeline:latest <registry_url>/mlops-pipeline:latest
-          docker push <registry_url>/mlops-pipeline:latest
+          IMAGE_TAG="${GITHUB_SHA::7}"
+          docker build -t <registry_url>/mlops-pipeline:"$IMAGE_TAG" .
+          docker push <registry_url>/mlops-pipeline:"$IMAGE_TAG"
 ```
 
 This workflow automates your CI/CD steps: testing, building, and pushing Docker images.

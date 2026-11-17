@@ -30,8 +30,10 @@ import {
 
 
 
-const DOCS_BASE_URL = 'https://github.com/krishujeniya/krishujeniya/raw/main/Docs';
-const CONTACT_SUBMISSION_STORAGE_KEY = 'portfolio-contact-submission';
+const DOCS_COMMIT_SHA = process.env.NEXT_PUBLIC_DOCS_COMMIT_SHA || 'b09e098ef5d24859dda5c51b5e7a31ca7bdfe103';
+const DOCS_BASE_URL = `https://raw.githubusercontent.com/krishujeniya/krishujeniya/${DOCS_COMMIT_SHA}/Docs`;
+const CONTACT_SUBMISSION_STORAGE_KEY = 'portfolio-contact-submission-v1-krishujeniya';
+const CONTACT_API_URL = process.env.NEXT_PUBLIC_VERCEL_API_URL || 'https://krishujeniya-backend.vercel.app/api/webDATA';
 
 const DOCUMENT_THEMES: Record<string, { gradient: string; accent: string; tag: string }> = {
     'Certificates': {
@@ -1107,7 +1109,7 @@ export default function Portfolio() {
                             </div>
 
                             <div className="lg:col-span-6">
-                                        <form action="https://krishujeniya-backend.vercel.app/api/webDATA" method="post" className="flex flex-col gap-8" onSubmit={async (e) => {
+                                        <form action={CONTACT_API_URL} method="post" className="flex flex-col gap-8" onSubmit={async (e) => {
                                             e.preventDefault();
                                             if (isSent || isSubmitting) return;
 
@@ -1115,26 +1117,24 @@ export default function Portfolio() {
                                             const formData = new FormData(form);
 
                                             // HONEYPOT: If bot fills this, we silent-success or simply ignore.
-                                            // Backend checks for data.honeypot
-                                            const honeypot = formData.get('honeypot') as string;
+                                            const honeypot = (formData.get('honeypot') as string || '').slice(0, 100);
 
-                                            const name = (formData.get('name') as string || '').trim();
-                                            const email = (formData.get('email') as string || '').trim();
-                                            const company = (formData.get('company') as string || 'Not provided').trim();
-                                            const role = formData.get('role') as string || 'Not provided';
-                                            const techStack = (formData.get('techStack') as string || 'Not provided').trim();
-                                            const budget = formData.get('budget') as string || 'Not selected';
-                                            const timeline = formData.get('timeline') as string || 'Not selected';
-                                            const discoverySource = formData.get('discoverySource') as string || 'Not provided';
-                                            const preferredContactMethod = formData.get('contactMethod') as string || 'Not provided';
-                                            const rawMessage = (formData.get('message') as string || '').trim();
-                                            const whatsappNumber = ((formData.get('whatsappNumber') as string) || '').trim();
-                                            const message = whatsappNumber ? `${rawMessage}\n\n[WhatsApp Contact: ${whatsappNumber}]` : rawMessage;
+                                            const name = (formData.get('name') as string || '').trim().slice(0, 100);
+                                            const email = (formData.get('email') as string || '').trim().slice(0, 120);
+                                            const company = (formData.get('company') as string || '').trim().slice(0, 150);
+                                            const role = ((formData.get('role') as string) || '').slice(0, 100);
+                                            const techStack = (formData.get('techStack') as string || '').trim().slice(0, 200);
+                                            const budget = ((formData.get('budget') as string) || '').slice(0, 50);
+                                            const timeline = ((formData.get('timeline') as string) || '').slice(0, 50);
+                                            const discoverySource = ((formData.get('discoverySource') as string) || '').slice(0, 100);
+                                            const preferredContactMethod = ((formData.get('contactMethod') as string) || 'Email').slice(0, 50);
+                                            const rawMessage = (formData.get('message') as string || '').trim().slice(0, 3000);
+                                            const whatsappNumber = ((formData.get('whatsappNumber') as string) || '').trim().slice(0, 25);
 
-                                            // Robust Client-side Validation
+                                            // Robust Client-side Validation: only require essential contact fields for general inquiries
                                             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                                            if (!name || !email || !message || !role || !budget || !timeline || !discoverySource || !preferredContactMethod) {
-                                                setErrorMessage('Please fill in all required fields.');
+                                            if (!name || !email || !rawMessage) {
+                                                setErrorMessage('Please fill in your name, email, and project message.');
                                                 setIsError(true);
                                                 return;
                                             }
@@ -1145,27 +1145,38 @@ export default function Portfolio() {
                                                 return;
                                             }
 
+                                            if (whatsappNumber) {
+                                                const phoneRegex = /^\+?[0-9\s\-().]{7,25}$/;
+                                                if (!phoneRegex.test(whatsappNumber)) {
+                                                    setErrorMessage('Please enter a valid phone number (digits, spaces, hyphens, optional +).');
+                                                    setIsError(true);
+                                                    return;
+                                                }
+                                            }
+
                                             setIsSubmitting(true);
                                             setIsError(false);
 
                                             const submission = {
                                                 name,
                                                 email,
-                                                company,
-                                                role,
+                                                company: company || 'Not provided',
+                                                role: role || 'Not provided',
                                                 services: selectedServices,
                                                 stage: selectedStages,
-                                                techStack,
-                                                budget,
-                                                timeline,
-                                                discoverySource,
-                                                preferredContactMethod,
-                                                message,
+                                                techStack: techStack || 'Not provided',
+                                                budget: budget || 'Not selected',
+                                                timeline: timeline || 'Not selected',
+                                                discoverySource: discoverySource || 'Not provided',
+                                                preferredContactMethod: preferredContactMethod || 'Email',
+                                                whatsappNumber: whatsappNumber || undefined,
+                                                message: rawMessage,
                                                 honeypot: honeypot || "",
                                             };
                                             const fingerprint = JSON.stringify(submission);
 
-                                            const API_URL = process.env.NEXT_PUBLIC_VERCEL_API_URL || 'https://krishujeniya-backend.vercel.app/api/webDATA';
+                                            const controller = new AbortController();
+                                            const timeoutId = setTimeout(() => controller.abort(), 15000);
 
                                             try {
                                                 const fingerprintHash = await getSubmissionFingerprint(fingerprint);
@@ -1176,14 +1187,16 @@ export default function Portfolio() {
                                                 submissionKeyRef.current = { fingerprint, id: submissionId };
                                                 if (fingerprintHash) storeSubmissionId(fingerprintHash, submissionId);
 
-                                                const response = await fetch(API_URL, {
+                                                const response = await fetch(CONTACT_API_URL, {
                                                     method: 'POST',
                                                     headers: { 'Content-Type': 'application/json' },
                                                     body: JSON.stringify({
                                                         ...submission,
                                                         submissionId,
                                                     }),
+                                                    signal: controller.signal,
                                                 });
+                                                clearTimeout(timeoutId);
 
                                                 if (response.ok) {
                                                     submissionKeyRef.current = null;
@@ -1207,8 +1220,13 @@ export default function Portfolio() {
                                                     }
                                                 }
                                             } catch (error: any) {
+                                                clearTimeout(timeoutId);
                                                 console.error('Submission error:', error);
-                                                setErrorMessage(error.message || 'Failed to send — email directly.');
+                                                if (error.name === 'AbortError') {
+                                                    setErrorMessage('Submission timed out. Please verify your connection or email directly.');
+                                                } else {
+                                                    setErrorMessage(error.message || 'Failed to send — email directly.');
+                                                }
                                                 setIsError(true);
                                             } finally {
                                                 setIsSubmitting(false);
@@ -1234,13 +1252,13 @@ export default function Portfolio() {
                                                     <label htmlFor="form-name" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">
                                                         Name <span aria-hidden="true" className="text-black font-black">*</span>
                                                     </label>
-                                                    <input id="form-name" name="name" type="text" autoComplete="name" placeholder="YOUR NAME" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all placeholder:text-[#999999]/30" />
+                                                    <input id="form-name" name="name" type="text" maxLength={100} autoComplete="name" placeholder="YOUR NAME" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all placeholder:text-[#999999]/30" />
                                                 </div>
                                                 <div className="flex flex-col gap-3">
                                                     <label htmlFor="form-email" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">
                                                         Email <span aria-hidden="true" className="text-black font-black">*</span>
                                                     </label>
-                                                    <input id="form-email" name="email" type="email" autoComplete="email" placeholder="YOUR EMAIL" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all placeholder:text-[#999999]/30" />
+                                                    <input id="form-email" name="email" type="email" maxLength={120} autoComplete="email" placeholder="YOUR EMAIL" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all placeholder:text-[#999999]/30" />
                                                 </div>
                                             </div>
 
@@ -1249,15 +1267,15 @@ export default function Portfolio() {
                                                     <label htmlFor="form-company" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">
                                                         Company / Organization <span className="text-[#525252] font-normal lowercase tracking-normal">(optional)</span>
                                                     </label>
-                                                    <input id="form-company" name="company" type="text" autoComplete="organization" placeholder="COMPANY NAME" className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all placeholder:text-[#999999]/30" />
+                                                    <input id="form-company" name="company" type="text" maxLength={150} autoComplete="organization" placeholder="COMPANY NAME" className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all placeholder:text-[#999999]/30" />
                                                 </div>
                                                 <div className="flex flex-col gap-3">
                                                     <label htmlFor="form-role" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">
-                                                        Your Role <span aria-hidden="true" className="text-black font-black">*</span>
+                                                        Your Role <span className="text-[#525252] font-normal lowercase tracking-normal">(optional)</span>
                                                     </label>
                                                     <div className="relative">
-                                                        <select id="form-role" name="role" defaultValue="" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all appearance-none cursor-pointer">
-                                                            <option value="" disabled>SELECT YOUR ROLE</option>
+                                                        <select id="form-role" name="role" defaultValue="" className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all appearance-none cursor-pointer">
+                                                            <option value="">SELECT YOUR ROLE (OPTIONAL)</option>
                                                             {["Founder / Co-founder", "CTO / VP Engineering", "Engineering Lead / Manager", "Product Manager", "Data / ML Team Lead", "Individual / Freelancer", "Other"].map(role => (
                                                                 <option key={role} value={role}>{role.toUpperCase()}</option>
                                                             ))}
@@ -1320,7 +1338,7 @@ export default function Portfolio() {
                                                 <label htmlFor="form-tech-stack" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">
                                                     Current Tech Stack <span className="text-[#525252] font-normal lowercase tracking-normal">(optional)</span>
                                                 </label>
-                                                <input id="form-tech-stack" name="techStack" type="text" placeholder="e.g. Python, AWS, Pinecone, LangChain..." className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all placeholder:text-[#999999]/30" />
+                                                <input id="form-tech-stack" name="techStack" type="text" maxLength={200} placeholder="e.g. Python, AWS, Pinecone, LangChain..." className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all placeholder:text-[#999999]/30" />
                                                 <span className="text-[9px] font-medium text-[#525252] mt-1">Helps estimate integration complexity before we talk.</span>
                                             </div>
 
@@ -1328,11 +1346,11 @@ export default function Portfolio() {
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                                                 <div className="flex flex-col gap-3">
                                                     <label htmlFor="form-budget" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">
-                                                        Budget Range <span aria-hidden="true" className="text-black font-black">*</span>
+                                                        Budget Range <span className="text-[#525252] font-normal lowercase tracking-normal">(optional)</span>
                                                     </label>
                                                     <div className="relative">
-                                                        <select id="form-budget" name="budget" defaultValue="" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all appearance-none cursor-pointer">
-                                                            <option value="" disabled>SELECT BUDGET</option>
+                                                        <select id="form-budget" name="budget" defaultValue="" className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all appearance-none cursor-pointer">
+                                                            <option value="">SELECT BUDGET (OPTIONAL)</option>
                                                             {["Under $5,000", "$5,000–$15,000", "$15,000–$30,000", "$30,000+", "Let's Discuss"].map(budget => (
                                                                 <option key={budget} value={budget}>{budget.toUpperCase()}</option>
                                                             ))}
@@ -1344,11 +1362,11 @@ export default function Portfolio() {
                                                 </div>
                                                 <div className="flex flex-col gap-3">
                                                     <label htmlFor="form-timeline" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">
-                                                        Desired Timeline <span aria-hidden="true" className="text-black font-black">*</span>
+                                                        Desired Timeline <span className="text-[#525252] font-normal lowercase tracking-normal">(optional)</span>
                                                     </label>
                                                     <div className="relative">
-                                                        <select id="form-timeline" name="timeline" defaultValue="" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all appearance-none cursor-pointer">
-                                                            <option value="" disabled>SELECT TIMELINE</option>
+                                                        <select id="form-timeline" name="timeline" defaultValue="" className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all appearance-none cursor-pointer">
+                                                            <option value="">SELECT TIMELINE (OPTIONAL)</option>
                                                             {["ASAP (within 2 weeks)", "1–3 months", "3–6 months", "Flexible", "No hard deadline"].map(timeline => (
                                                                 <option key={timeline} value={timeline}>{timeline.toUpperCase()}</option>
                                                             ))}
@@ -1363,11 +1381,11 @@ export default function Portfolio() {
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                                                 <div className="flex flex-col gap-3">
                                                     <label htmlFor="form-source" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">
-                                                        How Did You Find Me <span aria-hidden="true" className="text-black font-black">*</span>
+                                                        How Did You Find Me <span className="text-[#525252] font-normal lowercase tracking-normal">(optional)</span>
                                                     </label>
                                                     <div className="relative">
-                                                        <select id="form-source" name="discoverySource" defaultValue="" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all appearance-none cursor-pointer">
-                                                            <option value="" disabled>SELECT SOURCE</option>
+                                                        <select id="form-source" name="discoverySource" defaultValue="" className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all appearance-none cursor-pointer">
+                                                            <option value="">SELECT SOURCE (OPTIONAL)</option>
                                                             {["LinkedIn", "GitHub", "Google Search", "Hugging Face", "Personal Referral", "Medium", "Other"].map(source => (
                                                                 <option key={source} value={source}>{source.toUpperCase()}</option>
                                                             ))}
@@ -1379,7 +1397,7 @@ export default function Portfolio() {
                                                 </div>
                                                 <div className="flex flex-col gap-3">
                                                     <label htmlFor="form-contact-method" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">
-                                                        Preferred Contact Method <span aria-hidden="true" className="text-black font-black">*</span>
+                                                        Preferred Contact Method <span className="text-[#525252] font-normal lowercase tracking-normal">(optional)</span>
                                                     </label>
                                                     <div className="relative">
                                                         <select
@@ -1387,10 +1405,9 @@ export default function Portfolio() {
                                                             name="contactMethod"
                                                             defaultValue=""
                                                             onChange={(e) => setContactMethod(e.target.value)}
-                                                            required
                                                             className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all appearance-none cursor-pointer"
                                                         >
-                                                            <option value="" disabled>SELECT METHOD</option>
+                                                            <option value="">SELECT METHOD (OPTIONAL)</option>
                                                             {["Email", "Schedule a Call", "WhatsApp", "No Preference"].map(method => (
                                                                 <option key={method} value={method}>{method.toUpperCase()}</option>
                                                             ))}
@@ -1408,6 +1425,7 @@ export default function Portfolio() {
                                                                 id="form-whatsapp"
                                                                 name="whatsappNumber"
                                                                 type="tel"
+                                                                maxLength={25}
                                                                 autoComplete="tel"
                                                                 placeholder="+1 (555) 000-0000"
                                                                 required
@@ -1424,6 +1442,7 @@ export default function Portfolio() {
                                                                 id="form-whatsapp-fallback"
                                                                 name="whatsappNumber"
                                                                 type="tel"
+                                                                maxLength={25}
                                                                 autoComplete="tel"
                                                                 placeholder="+1 (555) 000-0000"
                                                                 className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all placeholder:text-[#999999]/30"
@@ -1437,11 +1456,11 @@ export default function Portfolio() {
                                                 <label htmlFor="form-message" className="text-[10px] font-black uppercase tracking-[0.2em] text-[#999999]">
                                                     Project Details <span aria-hidden="true" className="text-black font-black">*</span>
                                                 </label>
-                                                <textarea id="form-message" name="message" rows={4} placeholder="TELL ME ABOUT YOUR PROJECT" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all placeholder:text-[#999999]/30 resize-none" />
+                                                <textarea id="form-message" name="message" rows={4} maxLength={3000} placeholder="TELL ME ABOUT YOUR PROJECT" required className="w-full bg-transparent border-0 border-b border-[#E0E0E0] py-4 text-sm font-black uppercase tracking-[0.2em] focus:ring-0 focus:border-black transition-all placeholder:text-[#999999]/30 resize-none" />
                                             </div>
 
                                             <p className="text-[10px] font-medium text-[#525252] leading-relaxed">
-                                                Privacy: Your contact details and project summary are retained securely for up to 30 days strictly to review and reply to your inquiry. Data is never shared with third parties or used for unsolicited marketing.
+                                                Inquiries are securely submitted via Vercel serverless functions and stored in MongoDB Atlas strictly for review and reply. Contact records and project briefs are retained for up to 30 days and never sold or shared with third parties for marketing. To request early deletion or data removal, email ukideashare0021@gmail.com with your submission details.
                                             </p>
                                             {isSent ? (
                                                 <div role="status" aria-live="polite" className="w-full flex items-center justify-center gap-4 bg-green-500/10 text-green-500 py-8 rounded-full text-sm font-black uppercase tracking-[0.3em] border border-green-500/20 mt-8 animate-[fadeScaleIn_0.4s_ease_forwards]">

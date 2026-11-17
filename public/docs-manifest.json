@@ -1,0 +1,263 @@
+{
+  "version": "1.0.0",
+  "verifiedCommit": "b09e098ef5d24859dda5c51b5e7a31ca7bdfe103",
+  "filesCount": 64,
+  "files": {
+    "Certificates/GenAI.jpeg": {
+      "sha256": "995ecaafddc28b26a637c7e07a8125614da6e8d668a62c593b0f4a86c7d87aac",
+      "bytes": 71723
+    },
+    "Certificates/ChatGPT.pdf": {
+      "sha256": "c5f8cf13ac26be989c62a2b8f9e70f9653fe9d853fb00336434584e1b3ae407f",
+      "bytes": 214830
+    },
+    "Certificates/FDM Certificate.pdf": {
+      "sha256": "7436c35ae66d5313513be286511a43cfa51b1289512dd24fbb04f329dc56c015",
+      "bytes": 1042474
+    },
+    "Certificates/FLASK UDEMY.pdf": {
+      "sha256": "215058ea6007aeab53b2bb3b6a416f923d8a1286abdb669bdc799778251f30be",
+      "bytes": 226823
+    },
+    "Certificates/ai.pdf": {
+      "sha256": "5abb2d6a8c644f1397c8962ecc5b450a84cb22ef5b8ada576d65476c82be9fe6",
+      "bytes": 656671
+    },
+    "Certificates/deep learning .pdf": {
+      "sha256": "fbb5c9516d133b4ac843376f03893e6921c894c202c8f17d3b4517e529eedb1a",
+      "bytes": 657609
+    },
+    "Certificates/ml.pdf": {
+      "sha256": "9c243a7008f3fb5ecdf46902b92298a96967297592aeeee4dae7a5ed641b9a0c",
+      "bytes": 657078
+    },
+    "Certificates/nlp.pdf": {
+      "sha256": "045a35ec68982e285be77e0d40c26411c048903b9a012879a37ce943f3af08e2",
+      "bytes": 656815
+    },
+    "Certificates/python.pdf": {
+      "sha256": "0f2216b78cc830ead541fb809c0f3383df0f573c500216f8f30ce2f5404352db",
+      "bytes": 657103
+    },
+    "MLOps/AI_info.pdf": {
+      "sha256": "8dd44f4a42f4823c1724b3962b2db7e421d505adfa71e39f9a0a733196a722a1",
+      "bytes": 1855412
+    },
+    "MLOps/ML_info.pdf": {
+      "sha256": "1a9e088957d94fa477fd011f543c8bc0d751bfa696e110aab1abb23648d64a16",
+      "bytes": 1402355
+    },
+    "MLOps/NLP_info.pdf": {
+      "sha256": "bca1537571644b325828ba1d363f04d5052f1c0d0d042dc1f6d32d26ffc28907",
+      "bytes": 426375
+    },
+    "MLOps/NeuralNetworks_info.pdf": {
+      "sha256": "caf700133da7182d7fa9e0a419306bd7ce6823fe4d0b9d7dc90667945364d033",
+      "bytes": 2699492
+    },
+    "MLOps/OOPs_in_python.pdf": {
+      "sha256": "fe9a4a2cf58fc3695152e81d9c5fa5f36a5d72fc65cb35c8d9aacf8edcf72c34",
+      "bytes": 9918619
+    },
+    "MLOps/ML/Introduction_ML.pdf": {
+      "sha256": "3ac8cb526414c036c949feaeb344e8ed27494be881a6ac181b2223ece25adfef",
+      "bytes": 5448913
+    },
+    "MLOps/ML/Supervised_Learning.pdf": {
+      "sha256": "f80e43da6e56cf6f13ae9f6ac3f8f79662fc416378a7e98702c933e90477a47a",
+      "bytes": 5193283
+    },
+    "MLOps/ML/Unsupervised_Learning.pdf": {
+      "sha256": "b325f2a2c3d22a035097d2372af16c5d49173687e36d2066fcbe8d00fe17e59d",
+      "bytes": 4208200
+    },
+    "MLOps/ML/Preparing_Model.pdf": {
+      "sha256": "c2baf454f5c63a84b5b042e91c098b9e5240b1a5728b0666f1d4927d82ea3be1",
+      "bytes": 3717211
+    },
+    "MLOps/ML/Modeling_Evaluation.pdf": {
+      "sha256": "aef56a5245c2d0738e09f9a949ecbb87dbdffd18fedfbe220d3c6a91572c5d01",
+      "bytes": 5569218
+    },
+    "MLOps/ML/Python_Lib_ML.pdf": {
+      "sha256": "7faff3c585955bc555eafc175f156742715a525c987eacfef885c757e03705fc",
+      "bytes": 4311340
+    },
+    "MLOps/DSA/Basic_of_DSA.pdf": {
+      "sha256": "356918e5a7bff55eb68647a04d50c7115ef1ff67de943f7039f09a4c00aa6717",
+      "bytes": 2146474
+    },
+    "MLOps/DSA/Linked_Lists.pdf": {
+      "sha256": "4d6a50c7211c3fad81e908e4d787a46b908e5392271b6364f226e06e10789cc7",
+      "bytes": 1915368
+    },
+    "MLOps/DSA/Stack_Queue.pdf": {
+      "sha256": "8d67a1ce9c66de00510144ba482596ca9e7c7c1e87b085ae1666200fcaa75e9b",
+      "bytes": 1680135
+    },
+    "MLOps/DSA/Trees.pdf": {
+      "sha256": "516a444fae3ce606118b6a4c7a34ad88ebc60a958801895bd042b6534333bf52",
+      "bytes": 8879213
+    },
+    "MLOps/DSA/Searching_Sorting_001.pdf": {
+      "sha256": "657f5f79c57bd14ae07e78904062ebde3f65e4e104551eba600bbd762c22d638",
+      "bytes": 2993224
+    },
+    "MLOps/DSA/Searching_Sorting_002.pdf": {
+      "sha256": "1fae6ef94e94f00fafe0b7fe165aedfbe721d02e595573a948764a7448a0eb8c",
+      "bytes": 1592631
+    },
+    "Cloud/Overview_Cloud.pdf": {
+      "sha256": "a88799628ba47c660d18225bf5a4c77cf7d6f6f24b508486283e1cb8b2045dd3",
+      "bytes": 1029336
+    },
+    "Cloud/Intro_Cloud_Computing.pdf": {
+      "sha256": "a95524e65ae8e79677bf6bc400a80f4963720126278ac816099f2d1ac93d7128",
+      "bytes": 3345083
+    },
+    "Cloud/Cloud_Security_and_Compilance.pdf": {
+      "sha256": "bfaffc7a3037d70e67c0f971e90380090bdcef399b8fa125251740b36db2f4c5",
+      "bytes": 887999
+    },
+    "Cloud/Cloud_Storage_and_Database_Services.pdf": {
+      "sha256": "453b9a6d244be392b7c988e4ab0804e587659ff5c206a1e579002d4a28a364be",
+      "bytes": 3644422
+    },
+    "Cloud/Data_Center_Architecture.pdf": {
+      "sha256": "170f46edf0e8911c69cea14ea5d820660d40f6f8c7ee90b18508ee8a67eb70d3",
+      "bytes": 5550678
+    },
+    "Cloud/Emerging_Technologies_with_Cloud_Computing.pdf": {
+      "sha256": "a853421f70ecf6f6eba5efda001edde86cc54ca80c03ada42959009d72b03d10",
+      "bytes": 1664085
+    },
+    "Cloud/Virtualization_Hypervisors.pdf": {
+      "sha256": "ff0ae80dde1e5b908988d68ec7a9e703a449ed565c86b629888d0e7387e1babf",
+      "bytes": 1960267
+    },
+    "CyberSecurity/Overview_CS.pdf": {
+      "sha256": "f117e0a2d2b1fc2e6e45e885a42c273071bcdf7354e6981a52e3ae33caa49cb0",
+      "bytes": 935310
+    },
+    "CyberSecurity/Cryptography.pdf": {
+      "sha256": "5ee8b9d25a6ca8c0b9a6fd1ea29c82e38f04f7390230046fd0620e29bdad8e35",
+      "bytes": 12358677
+    },
+    "CyberSecurity/Ethical_Hacking_Data_Forensics.pdf": {
+      "sha256": "595d54bba543cd9b4fb9ff2f22cf541eff14d47a2d99f02ef697d8a75fd5760a",
+      "bytes": 17003512
+    },
+    "CyberSecurity/Network_Crime_Security.pdf": {
+      "sha256": "7a705c6c3306b0c01d6e82e41c1d95aae1ad3705d6fa08ba8ba2827d91946eab",
+      "bytes": 17537068
+    },
+    "DBMS/Overview_DBMS.pdf": {
+      "sha256": "d93121a7dfd487f85ec1ee45ef6d7cf635fd1ae69bb5fbd5f82a8aab74ff70f9",
+      "bytes": 636068
+    },
+    "DBMS/Introduction.pptx": {
+      "sha256": "a11c83e9561c13226500eff63d4c66646b00dac75e7050795e8ec402bb1bc39a",
+      "bytes": 302964
+    },
+    "DBMS/ER_Diagrams.ppt": {
+      "sha256": "213ff572450e0b68e4c866018cddcb9aada214a448518084c0ac91eab9fb0467",
+      "bytes": 1453912
+    },
+    "DBMS/SQL_Commands.ppt": {
+      "sha256": "f1ae61598da1341776ccc95dadb4bd8479bc65e11b4664948529189c71dd72b5",
+      "bytes": 1539584
+    },
+    "DBMS/Constraints.ppt": {
+      "sha256": "112a873d80966e2e603aa191b05cba8b4988641b12312a423c385793b41b5779",
+      "bytes": 659968
+    },
+    "DBMS/Operators_Joins.pptx": {
+      "sha256": "3298dd5b0f87304773f4f2824e96c26ff087f08dea2795a708fc1850b7142463",
+      "bytes": 309805
+    },
+    "DBMS/Normalization .ppt": {
+      "sha256": "4a7903b3af26abada49b1a5055758c23c131ba6f97ae19f77031192b34eb4986",
+      "bytes": 2743808
+    },
+    "DBMS/Transaction_Management.pdf": {
+      "sha256": "97e7d0f17df0b96ef3de5194d82dd63ddfcbafddbddbb12e3b3144f4de4e0552",
+      "bytes": 319581
+    },
+    "DBMS/DBMS_by_leaf_notes.pdf": {
+      "sha256": "a92ec72a7fe47b5717535f1984f94e7ce36ed327646532b8889c4d6d1a9fdcb4",
+      "bytes": 3215395
+    },
+    "DevOps/Overview_SD.pdf": {
+      "sha256": "dc0e81842c4a2c47b61f30def1449baa3597c7310b7ab81b1b74d5c998605f39",
+      "bytes": 581435
+    },
+    "DevOps/About_Software_Development.pdf": {
+      "sha256": "16885f14117da5c54b5c65d96810d0258509e2a09d3274fe776415e92232fb2a",
+      "bytes": 2643795
+    },
+    "DevOps/SDLC.pptx": {
+      "sha256": "007dae84d617113cc653cec830af1efcc80dbffabe4eba0e46da13152930c53b",
+      "bytes": 3880877
+    },
+    "DevOps/Aglie.pptx": {
+      "sha256": "c48f7028d08b0bfa874f334857dde44161ba13236278b6223875aec72cc01a1b",
+      "bytes": 3419925
+    },
+    "DevOps/SRS.pptx": {
+      "sha256": "f64abc567cbdd84fca91375fbfdc82c142503707f7205cad1d3d5919b79ba83e",
+      "bytes": 3090468
+    },
+    "DevOps/Risk_Management.pptx": {
+      "sha256": "5de0d274aa4369fbbd9076424009707ae2c041e2859a666cc9a06b681579f389",
+      "bytes": 3683340
+    },
+    "DevOps/Software_Design.pdf": {
+      "sha256": "32f1c76076f14a2780782cdd507f6f27ad5ed52a2edf90d1d079032313266c19",
+      "bytes": 8516071
+    },
+    "DevOps/Software_Coding_and_Testing.pdf": {
+      "sha256": "b835b73a91e09df0870cda51b5b22ad7fd31d99d1692f760c728efe360e9f754",
+      "bytes": 7883899
+    },
+    "DevOps/Software_Life_cycle_models.pdf": {
+      "sha256": "d1cf68523e7e39af3eb8c6b7be6bf3b0f9de7b514df4faa06471bc91da4c389e",
+      "bytes": 5815722
+    },
+    "BlockChain/Intro_BlockChain.pdf": {
+      "sha256": "93364f0f8eb0d9274ae62b60b43bfb3ca404c3041a6841c5d9cbce26e87e9737",
+      "bytes": 22784657
+    },
+    "DigitalMarketing/Overview_DM.pdf": {
+      "sha256": "74047a7df39974eedb155166bbd46edf817e5bf126e86b5f3ddb44f94306b35d",
+      "bytes": 622367
+    },
+    "DigitalMarketing/Gpt_001.pdf": {
+      "sha256": "c192d90fc23c5ff7d1c7314d740e3b665e8e6361010299a670cb94745fe39280",
+      "bytes": 290842
+    },
+    "DigitalMarketing/Gpt_002.pdf": {
+      "sha256": "b3d7aeecd44e7479db5e7afa83bef188939588e9f30b23e0448a62fa93736d8a",
+      "bytes": 529993
+    },
+    "DigitalMarketing/Entrepreneurship/Overview_Entrepreneurship.pdf": {
+      "sha256": "b290630bd08507d0fe5ccda36a5bd6edf901db639db0d472b576e6b830526e6e",
+      "bytes": 632053
+    },
+    "DigitalMarketing/Entrepreneurship/Gpt_001.pdf": {
+      "sha256": "8ae77a3c7d89c186a824a2c461f092765372cfd81b4b526d1e43df5e3c2535b4",
+      "bytes": 781258
+    },
+    "DigitalMarketing/Entrepreneurship/Gpt_002_1.pdf": {
+      "sha256": "333b96cba1e58c6c86e74df4907cac6dcb4126df70f74f80a56ce60df7aa52c1",
+      "bytes": 430954
+    },
+    "DigitalMarketing/Entrepreneurship/Gpt_002_2.pdf": {
+      "sha256": "b0fa98af3517555b61d3d7ab62f5778d8b0dbabb0676cb3f08eed76c62cb0f33",
+      "bytes": 391119
+    },
+    "DigitalMarketing/Entrepreneurship/Gpt_003.pdf": {
+      "sha256": "03b694c6b43673b7350acdf9fdf163e09d5eb49f09dd011d56120bb09ab0261f",
+      "bytes": 723809
+    }
+  }
+}

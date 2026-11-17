@@ -48,13 +48,15 @@ To start the installation, change the file permissions to make the installer exe
    ```sh
    cd /home/[username]/Downloads
    ```
-2. Make the file executable using the following syntax:
+2. Verify the package integrity against the official SHA-256 published by Apache Friends before granting executable permissions:
    ```sh
-   sudo chmod 755 [package_name]
+   sha256sum [package_name]
    ```
-   Replace `[package_name]` with the complete name of the downloaded package. You can use the `ls` command to list the contents of the directory and copy the full file name:
+   Compare the resulting digest with the official checksum listed on [apachefriends.org](https://www.apachefriends.org).
+
+3. Make the file executable:
    ```sh
-   ls –l [package_name]
+   chmod +x [package_name]
    ```
 
 ### Step 3: Install XAMPP

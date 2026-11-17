@@ -4,6 +4,7 @@ import sharp from 'sharp';
 
 const WIDTH = 1200;
 const HEIGHT = 675;
+const FREELANCE_DIR = process.env.PROJECTS_DIR || path.resolve(process.cwd(), '../Freelance');
 
 // Helper: standard container resizing for 16:9 images
 async function fitTo16x9(inputPath, outputPath, quality = 92) {
@@ -26,7 +27,7 @@ async function run() {
 
   // 2. Hadron -> hadron.webp
   // Hadron has a gorgeous 1200x630 vector social card; let's center it on #121317 1200x675
-  const hadronSvgPath = '/home/ai/Documents/projects/Freelance/Hadron/assets/social-card.svg';
+  const hadronSvgPath = path.join(FREELANCE_DIR, 'Hadron/assets/social-card.svg');
   if (fs.existsSync(hadronSvgPath)) {
     const hadronSvg = fs.readFileSync(hadronSvgPath, 'utf8');
     const hadronCard = await sharp(Buffer.from(hadronSvg)).resize(1200, 630).toBuffer();
@@ -50,37 +51,40 @@ async function run() {
   }
 
   // 3. WaferPulse -> waferpulse.webp
-  const waferPulseSvgPath = '/home/ai/Documents/projects/Freelance/WaferPulse/assets/social-card.svg';
-  const waferPulseSvg = fs.readFileSync(waferPulseSvgPath, 'utf8');
-  const waferCard = await sharp(Buffer.from(waferPulseSvg)).resize(1200, 630).toBuffer();
-  await sharp({
-    create: {
-      width: WIDTH,
-      height: HEIGHT,
-      channels: 4,
-      background: '#080c14',
-    },
-  })
-    .composite([{ input: waferCard, top: 22, left: 0 }])
-    .webp({ quality: 92 })
-    .toFile('public/images/projects/waferpulse.webp');
-  console.log('[OK] Generated public/images/projects/waferpulse.webp from vector social card');
+  const waferPulseSvgPath = path.join(FREELANCE_DIR, 'WaferPulse/assets/social-card.svg');
+  if (fs.existsSync(waferPulseSvgPath)) {
+    const waferPulseSvg = fs.readFileSync(waferPulseSvgPath, 'utf8');
+    const waferCard = await sharp(Buffer.from(waferPulseSvg)).resize(1200, 630).toBuffer();
+    await sharp({
+      create: {
+        width: WIDTH,
+        height: HEIGHT,
+        channels: 4,
+        background: '#080c14',
+      },
+    })
+      .composite([{ input: waferCard, top: 22, left: 0 }])
+      .webp({ quality: 92 })
+      .toFile('public/images/projects/waferpulse.webp');
+    console.log('[OK] Generated public/images/projects/waferpulse.webp from vector social card');
+  }
 
   // 4. Somnostasis -> somnostasis.webp
   // Composite the official circular emblem with sleep ECG waveforms and dark emerald canvas
-  const somnoEmblemPath = '/home/ai/Documents/projects/Freelance/somnostasis/reports/figures/somnostasis_logo_emblem.jpg';
-  const somnoEmblemBuf = await sharp(somnoEmblemPath)
-    .resize(320, 320, { fit: 'cover' })
-    .composite([
-      {
-        input: Buffer.from(
-          `<svg width="320" height="320"><rect width="320" height="320" rx="48" fill="#fff" /></svg>`
-        ),
-        blend: 'dest-in',
-      },
-    ])
-    .png()
-    .toBuffer();
+  const somnoEmblemPath = path.join(FREELANCE_DIR, 'somnostasis/reports/figures/somnostasis_logo_emblem.jpg');
+  if (fs.existsSync(somnoEmblemPath)) {
+    const somnoEmblemBuf = await sharp(somnoEmblemPath)
+      .resize(320, 320, { fit: 'cover' })
+      .composite([
+        {
+          input: Buffer.from(
+            `<svg width="320" height="320"><rect width="320" height="320" rx="48" fill="#fff" /></svg>`
+          ),
+          blend: 'dest-in',
+        },
+      ])
+      .png()
+      .toBuffer();
 
   const somnoBgSvg = `
   <svg width="1200" height="675" viewBox="0 0 1200 675" xmlns="http://www.w3.org/2000/svg">
@@ -133,10 +137,12 @@ async function run() {
   console.log('[OK] Generated public/images/projects/somnostasis.webp');
 
   // 5. Hajree (Biometric Attendance) -> face-lock.webp
-  const hajreeSvg = fs.readFileSync('/home/ai/Documents/projects/Freelance/Hajree/assets/logo.svg', 'utf8');
-  const hajreeLogoBuf = await sharp(Buffer.from(hajreeSvg))
-    .resize(320, 320)
-    .toBuffer();
+  const hajreeSvgPath = path.join(FREELANCE_DIR, 'Hajree/assets/logo.svg');
+  if (fs.existsSync(hajreeSvgPath)) {
+    const hajreeSvg = fs.readFileSync(hajreeSvgPath, 'utf8');
+    const hajreeLogoBuf = await sharp(Buffer.from(hajreeSvg))
+      .resize(320, 320)
+      .toBuffer();
 
   const hajreeBgSvg = `
   <svg width="1200" height="675" viewBox="0 0 1200 675" xmlns="http://www.w3.org/2000/svg">
@@ -183,10 +189,12 @@ async function run() {
   console.log('[OK] Generated public/images/projects/face-lock.webp');
 
   // 6. Curavex -> curavex.webp
-  const curavexSvg = fs.readFileSync('/home/ai/Documents/projects/Freelance/curavex/frontend/assets/curavex-logo.svg', 'utf8');
-  const curavexLogoBuf = await sharp(Buffer.from(curavexSvg))
-    .resize(960, 240)
-    .toBuffer();
+  const curavexSvgPath = path.join(FREELANCE_DIR, 'curavex/frontend/assets/curavex-logo.svg');
+  if (fs.existsSync(curavexSvgPath)) {
+    const curavexSvg = fs.readFileSync(curavexSvgPath, 'utf8');
+    const curavexLogoBuf = await sharp(Buffer.from(curavexSvg))
+      .resize(960, 240)
+      .toBuffer();
 
   const curavexBgSvg = `
   <svg width="1200" height="675" viewBox="0 0 1200 675" xmlns="http://www.w3.org/2000/svg">
@@ -240,20 +248,23 @@ async function run() {
   console.log('[OK] Generated public/images/projects/curavex.webp');
 
   // 7. Sureword -> sureword.webp
-  const surewordSvg = fs.readFileSync('/home/ai/Documents/projects/Freelance/Sureword/assets/social-card.svg', 'utf8');
-  const surewordCard = await sharp(Buffer.from(surewordSvg)).resize(1200, 600).toBuffer();
-  await sharp({
-    create: {
-      width: WIDTH,
-      height: HEIGHT,
-      channels: 4,
-      background: '#0a0d14',
-    },
-  })
-    .composite([{ input: surewordCard, top: 37, left: 0 }])
-    .webp({ quality: 92 })
-    .toFile('public/images/projects/sureword.webp');
-  console.log('[OK] Generated public/images/projects/sureword.webp');
+  const surewordSvgPath = path.join(FREELANCE_DIR, 'Sureword/assets/social-card.svg');
+  if (fs.existsSync(surewordSvgPath)) {
+    const surewordSvg = fs.readFileSync(surewordSvgPath, 'utf8');
+    const surewordCard = await sharp(Buffer.from(surewordSvg)).resize(1200, 600).toBuffer();
+    await sharp({
+      create: {
+        width: WIDTH,
+        height: HEIGHT,
+        channels: 4,
+        background: '#0a0d14',
+      },
+    })
+      .composite([{ input: surewordCard, top: 37, left: 0 }])
+      .webp({ quality: 92 })
+      .toFile('public/images/projects/sureword.webp');
+    console.log('[OK] Generated public/images/projects/sureword.webp');
+  }
 
   // 8. Scanlark -> snaptext.webp
   await fitTo16x9(
@@ -340,20 +351,23 @@ async function run() {
   console.log('[OK] Generated public/images/m1.webp');
 
   // 12. AGYOS -> agyos.webp
-  const agyosSvg = fs.readFileSync('/home/ai/Documents/projects/Freelance/AGYOS/docs/assets/social-card.svg', 'utf8');
-  const agyosCard = await sharp(Buffer.from(agyosSvg)).resize(1200, 600).toBuffer();
-  await sharp({
-    create: {
-      width: WIDTH,
-      height: HEIGHT,
-      channels: 4,
-      background: '#090a0f',
-    },
-  })
-    .composite([{ input: agyosCard, top: 37, left: 0 }])
-    .webp({ quality: 92 })
-    .toFile('public/images/projects/agyos.webp');
-  console.log('[OK] Generated public/images/projects/agyos.webp');
+  const agyosSvgPath = path.join(FREELANCE_DIR, 'AGYOS/docs/assets/social-card.svg');
+  if (fs.existsSync(agyosSvgPath)) {
+    const agyosSvg = fs.readFileSync(agyosSvgPath, 'utf8');
+    const agyosCard = await sharp(Buffer.from(agyosSvg)).resize(1200, 600).toBuffer();
+    await sharp({
+      create: {
+        width: WIDTH,
+        height: HEIGHT,
+        channels: 4,
+        background: '#090a0f',
+      },
+    })
+      .composite([{ input: agyosCard, top: 37, left: 0 }])
+      .webp({ quality: 92 })
+      .toFile('public/images/projects/agyos.webp');
+    console.log('[OK] Generated public/images/projects/agyos.webp');
+  }
 
   // 13. Discord Bot -> discord-bot.webp
   const discordOldBuf = await sharp('public/images/projects/discord-bot.webp')

@@ -1,8 +1,8 @@
 '''
 To use pre-trained word embeddings like GloVe (Global Vectors for Word Representation) in NLP, we need to follow these steps:
 
-1. Download and load pre-trained word embeddings (GloVe in this case).
-link - https://t.me/krishujeniya/13
+1. Download and load pre-trained word embeddings from the official Stanford NLP source:
+https://nlp.stanford.edu/projects/glove/
 2. Prepare a sample text for which we'll obtain word embeddings.
 3. Tokenize the text and convert words to their corresponding pre-trained word embeddings.
 4. Output the word embeddings for the sample text.
