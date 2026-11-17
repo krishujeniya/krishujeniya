@@ -53,30 +53,30 @@ jobs:
           else
             echo "Notice: STRIX_LLM and LLM_API_KEY or STRIX_API_TOKEN not configured."
             echo "Executing Strix static security audit preflight and secret leakage defense..."
-            python3 -c "
-            import os, sys
-            print('Running Strix repository security audit...')
-            banned_keywords = ['BEGIN PRIVATE KEY', 'aws_secret_access_key', 'ghp_']
-            found_secrets = False
-            for root, _, files in os.walk('.'):
-                if any(p in root for p in ['.git', 'node_modules', '.venv', '__pycache__', 'dist', '.next']):
-                    continue
-                for f in files:
-                    fp = os.path.join(root, f)
-                    try:
-                        with open(fp, 'r', errors='ignore') as src:
-                            txt = src.read()
-                            for kw in banned_keywords:
-                                if kw in txt and 'test' not in fp and 'example' not in fp:
-                                    print(f'SECURITY ALERT: Potential credential pattern in {fp}')
-                                    found_secrets = True
-                    except Exception:
-                        pass
-            if found_secrets:
-                print('Security warning: sensitive patterns detected in codebase.')
-            else:
-                print('Strix static security preflight passed: 0 exposed plaintext credentials.')
-            "
+            python3 - <<'PY'
+import os, sys
+print("Running Strix repository security audit...")
+banned_keywords = ["BEGIN PRIVATE KEY", "aws_secret_access_key", "ghp_"]
+found_secrets = False
+for root, _, files in os.walk("."):
+    if any(p in root for p in [".git", "node_modules", ".venv", "__pycache__", "dist", ".next"]):
+        continue
+    for f in files:
+        fp = os.path.join(root, f)
+        try:
+            with open(fp, "r", errors="ignore") as src:
+                txt = src.read()
+                for kw in banned_keywords:
+                    if kw in txt and "test" not in fp and "example" not in fp:
+                        print(f"SECURITY ALERT: Potential credential pattern in {fp}")
+                        found_secrets = True
+        except Exception:
+            pass
+if found_secrets:
+    print("Security warning: sensitive patterns detected in codebase.")
+else:
+    print("Strix static security preflight passed: 0 exposed plaintext credentials.")
+PY
           fi
 
       - name: Upload SARIF report
