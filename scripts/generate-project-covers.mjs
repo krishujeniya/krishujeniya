@@ -92,8 +92,9 @@ async function run() {
   // 4. Somnostasis -> somnostasis.webp
   // Composite the official circular emblem with sleep ECG waveforms and dark emerald canvas
   const somnoEmblemPath = path.join(FREELANCE_DIR, 'somnostasis/reports/figures/somnostasis_logo_emblem.jpg');
+  let somnoEmblemBuf;
   if (fs.existsSync(somnoEmblemPath)) {
-    const somnoEmblemBuf = await sharp(somnoEmblemPath)
+    somnoEmblemBuf = await sharp(somnoEmblemPath)
       .resize(320, 320, { fit: 'cover' })
       .composite([
         {
@@ -105,6 +106,19 @@ async function run() {
       ])
       .png()
       .toBuffer();
+  } else {
+    somnoEmblemBuf = await sharp(
+      Buffer.from(
+        `<svg width="320" height="320" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg">
+          <rect width="320" height="320" rx="48" fill="#071b26" stroke="#06b6d4" stroke-width="4" />
+          <path d="M 40 160 L 90 160 L 110 110 L 140 220 L 170 80 L 200 240 L 220 160 L 280 160" stroke="#22d3ee" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+          <circle cx="170" cy="80" r="10" fill="#38bdf8" />
+        </svg>`
+      )
+    )
+      .png()
+      .toBuffer();
+  }
 
   const somnoBgSvg = `
   <svg width="1200" height="675" viewBox="0 0 1200 675" xmlns="http://www.w3.org/2000/svg">
@@ -158,11 +172,29 @@ async function run() {
 
   // 5. Hajree (Biometric Attendance) -> face-lock.webp
   const hajreeSvgPath = path.join(FREELANCE_DIR, 'Hajree/assets/logo.svg');
+  let hajreeLogoBuf;
   if (fs.existsSync(hajreeSvgPath)) {
     const hajreeSvg = fs.readFileSync(hajreeSvgPath, 'utf8');
-    const hajreeLogoBuf = await sharp(Buffer.from(hajreeSvg))
+    hajreeLogoBuf = await sharp(Buffer.from(hajreeSvg))
       .resize(320, 320)
       .toBuffer();
+  } else {
+    hajreeLogoBuf = await sharp(
+      Buffer.from(
+        `<svg width="320" height="320" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg">
+          <rect width="320" height="320" rx="48" fill="#0f1124" stroke="#6366f1" stroke-width="4" />
+          <circle cx="160" cy="130" r="45" fill="none" stroke="#818cf8" stroke-width="6" />
+          <path d="M 100 240 C 100 195 130 185 160 185 C 190 185 220 195 220 240" fill="none" stroke="#818cf8" stroke-width="6" stroke-linecap="round" />
+          <rect x="75" y="75" width="40" height="40" fill="none" stroke="#6366f1" stroke-width="5" />
+          <rect x="205" y="75" width="40" height="40" fill="none" stroke="#6366f1" stroke-width="5" />
+          <rect x="75" y="205" width="40" height="40" fill="none" stroke="#6366f1" stroke-width="5" />
+          <rect x="205" y="205" width="40" height="40" fill="none" stroke="#6366f1" stroke-width="5" />
+        </svg>`
+      )
+    )
+      .png()
+      .toBuffer();
+  }
 
   const hajreeBgSvg = `
   <svg width="1200" height="675" viewBox="0 0 1200 675" xmlns="http://www.w3.org/2000/svg">
@@ -210,11 +242,25 @@ async function run() {
 
   // 6. Curavex -> curavex.webp
   const curavexSvgPath = path.join(FREELANCE_DIR, 'curavex/frontend/assets/curavex-logo.svg');
+  let curavexLogoBuf;
   if (fs.existsSync(curavexSvgPath)) {
     const curavexSvg = fs.readFileSync(curavexSvgPath, 'utf8');
-    const curavexLogoBuf = await sharp(Buffer.from(curavexSvg))
+    curavexLogoBuf = await sharp(Buffer.from(curavexSvg))
       .resize(960, 240)
       .toBuffer();
+  } else {
+    curavexLogoBuf = await sharp(
+      Buffer.from(
+        `<svg width="960" height="240" viewBox="0 0 960 240" xmlns="http://www.w3.org/2000/svg">
+          <text x="480" y="160" font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" font-size="96" font-weight="900" letter-spacing="-2" fill="#38bdf8" text-anchor="middle">
+            CURAVEX
+          </text>
+        </svg>`
+      )
+    )
+      .png()
+      .toBuffer();
+  }
 
   const curavexBgSvg = `
   <svg width="1200" height="675" viewBox="0 0 1200 675" xmlns="http://www.w3.org/2000/svg">

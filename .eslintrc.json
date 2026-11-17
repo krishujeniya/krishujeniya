@@ -2,6 +2,13 @@
   "extends": "next/core-web-vitals",
   "overrides": [
     {
+      "files": ["scripts/**/*.{js,mjs}"],
+      "env": {
+        "node": true,
+        "es2022": true
+      }
+    },
+    {
       "files": ["tests/**/*.{ts,tsx,js,mjs}"],
       "rules": {
         "react-hooks/rules-of-hooks": "off"
