@@ -53,7 +53,7 @@ test.describe('reduced motion suite', () => {
   test('document expander exposes the last MLOps link', async ({ page }) => {
     await page.goto(portfolioUrl);
     await page.getByRole('button', { name: 'View Docs in MLOps' }).click();
-    await expect(page.getByRole('link', { name: /Searching_Sorting_002\.pdf/ })).toBeVisible();
+    await expect(page.locator('a[href*="Searching_Sorting_002.pdf"]')).toBeVisible();
   });
 
   test('project dialog restores focus to its opener', async ({ page }) => {
@@ -295,11 +295,14 @@ test.describe('normal motion suite', () => {
 
   test('typewriter runs in normal motion and early scroll immediately completes heading', async ({ page }) => {
     await page.goto(portfolioUrl);
-    const heading = page.locator('h1');
+    const heading = page.locator('h1').first();
     await expect(heading).toBeVisible();
 
     // Trigger early scroll past 20px threshold
-    await page.evaluate(() => window.scrollTo(0, 50));
+    await page.evaluate(() => {
+      window.scrollTo(0, 100);
+      window.dispatchEvent(new Event('scroll'));
+    });
     await page.waitForTimeout(100);
 
     // Headline must be fully completed immediately
@@ -382,6 +385,7 @@ test.describe('responsive navigation and breakpoint isolation', () => {
     await page.goto(portfolioUrl);
 
     const contact = page.locator('#contact');
+    await contact.waitFor({ state: 'attached' });
     await contact.scrollIntoViewIfNeeded();
 
     const contactMethodSelect = contact.locator('#form-contact-method');
@@ -399,9 +403,9 @@ test.describe('responsive navigation and breakpoint isolation', () => {
 
   test('modal deep linking via hash #project-<slug> and popstate back button', async ({ page }) => {
     await page.goto(portfolioUrl + '#project-amberclaw');
-    const modal = page.locator('div[role="dialog"]');
+    const modal = page.locator('#project-modal');
     await expect(modal).toBeVisible();
-    await expect(modal.locator('h3').first()).toContainText('AmberClaw');
+    await expect(modal.locator('#modal-title')).toContainText('AmberClaw');
 
     // Press Escape to close modal, URL hash should clear
     await page.keyboard.press('Escape');

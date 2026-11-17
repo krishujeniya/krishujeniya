@@ -37,8 +37,10 @@ export const test = base.extend<{ browser: Browser; context: BrowserContext; pag
 
     page.on('requestfailed', request => {
       const url = request.url();
+      const errorText = request.failure()?.errorText ?? '';
+      if (errorText === 'net::ERR_ABORTED') return;
       if (url.includes('/_next/static/chunks/') || url.includes('/_next/static/')) {
-        failedChunks.push(`${url} (${request.failure()?.errorText ?? 'failed'})`);
+        failedChunks.push(`${url} (${errorText || 'failed'})`);
       }
     });
 

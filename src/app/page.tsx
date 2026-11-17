@@ -210,7 +210,6 @@ export default function Portfolio() {
     // Hero Typewriter with pause at "AI" and smooth cascade
     useEffect(() => {
         const isReduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        const isAutomated = typeof navigator !== 'undefined' && (navigator as any).webdriver;
 
         const triggerHomeReady = () => {
             if (typeof document !== 'undefined') {
@@ -221,7 +220,7 @@ export default function Portfolio() {
             }
         };
 
-        if (isReduced || isAutomated) {
+        if (isReduced) {
             setTypedLine1('I Build AI Systems');
             setTypedLine2('That Actually Ship.');
             setHeroPhase('all');
@@ -539,7 +538,7 @@ export default function Portfolio() {
                             onClick={() => setIsMobileNavOpen(!isMobileNavOpen)}
                             aria-expanded={isMobileNavOpen}
                             aria-haspopup="true"
-                            aria-label="Toggle sections menu"
+                            aria-label="Toggle mobile menu"
                             className="flex items-center gap-1.5 text-xs font-black tracking-tighter text-white py-1 px-1.5 rounded-full hover:bg-white/10 active:scale-95 transition-all outline-none"
                         >
                             <span className="truncate max-w-[130px]">
