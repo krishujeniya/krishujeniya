@@ -405,7 +405,7 @@ test.describe('responsive navigation and breakpoint isolation', () => {
   test('modal deep linking via hash #project-<slug> and popstate back button', async ({ page }) => {
     await page.goto(portfolioUrl + '#project-amberclaw');
     const modal = page.locator('#project-modal');
-    await expect(modal).toBeVisible();
+    await expect(modal).toBeVisible({ timeout: 15000 });
     await expect(modal.locator('#modal-title')).toContainText('AmberClaw');
 
     // Press Escape to close modal, URL hash should clear

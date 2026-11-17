@@ -477,9 +477,11 @@ export default function Portfolio() {
             setActiveSection(sectionId);
         };
         window.addEventListener('popstate', handlePopState);
+        window.addEventListener('hashchange', handlePopState);
         return () => {
             window.removeEventListener('scroll', handleScroll);
             window.removeEventListener('popstate', handlePopState);
+            window.removeEventListener('hashchange', handlePopState);
         };
     }, []);
 
