@@ -29,7 +29,7 @@ try {
 
   // 2. Open a case study / project dialog
   const projectButton = page.locator('#projects').getByRole('button').first();
-  await projectButton.scrollIntoViewIfNeeded();
+  await projectButton.evaluate(el => el.scrollIntoView());
   await projectButton.click({ force: true });
   const dialog = page.locator('#project-modal');
   await dialog.waitFor({ state: 'visible', timeout: 8000 });
@@ -42,8 +42,8 @@ try {
 
   // 4. Toggle a field in the contact section
   const serviceBtn = page.locator('#contact button').filter({ hasText: 'Agentic AI' });
-  await serviceBtn.scrollIntoViewIfNeeded();
-  await serviceBtn.click();
+  await serviceBtn.evaluate(el => el.scrollIntoView());
+  await serviceBtn.click({ force: true });
   const pressed = await serviceBtn.getAttribute('aria-pressed');
   if (pressed !== 'true') {
     throw new Error(`Expected button aria-pressed to be "true", got "${pressed}"`);
