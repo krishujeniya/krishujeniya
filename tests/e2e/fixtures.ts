@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { chromium, expect, test as base, type Browser, type BrowserContext, type Page } from '@playwright/test';
 
 export const test = base.extend<{ browser: Browser; context: BrowserContext; page: Page }>({
