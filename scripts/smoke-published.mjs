@@ -28,10 +28,10 @@ try {
   console.log('Confirmed contact form is rendered.');
 
   // 2. Open a case study / project dialog
-  const projectButton = page.locator('#projects button[aria-haspopup="dialog"]').first();
+  const projectButton = page.locator('#projects').getByRole('button').first();
   await projectButton.scrollIntoViewIfNeeded();
-  await projectButton.click();
-  const dialog = page.locator('div[role="dialog"]');
+  await projectButton.click({ force: true });
+  const dialog = page.locator('#project-modal');
   await dialog.waitFor({ state: 'visible', timeout: 8000 });
   console.log('Confirmed case study modal dialog opened successfully.');
 
