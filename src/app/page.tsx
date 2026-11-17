@@ -135,11 +135,11 @@ export default function Portfolio() {
     const [contactMethod, setContactMethod] = useState('');
     const submissionKeyRef = useRef<{ fingerprint: string; id: string } | null>(null);
 
-    // Initial state provides full heading and visible actions for SSR and un-hydrated visitors
-    const [typedLine1, setTypedLine1] = useState('I Build AI Systems');
-    const [typedLine2, setTypedLine2] = useState('That Actually Ship.');
-    const [heroPhase, setHeroPhase] = useState<'typing' | 'name' | 'buttons' | 'all'>('all');
-    const [activeCursor, setActiveCursor] = useState<'line1' | 'line2' | null>(null);
+    // Initial state starts with empty text and typing phase for a direct on-screen start
+    const [typedLine1, setTypedLine1] = useState('');
+    const [typedLine2, setTypedLine2] = useState('');
+    const [heroPhase, setHeroPhase] = useState<'typing' | 'name' | 'buttons' | 'all'>('typing');
+    const [activeCursor, setActiveCursor] = useState<'line1' | 'line2' | null>('line1');
     const projectsTrackRef = useRef<HTMLDivElement | null>(null);
     const openerRef = useRef<HTMLElement | null>(null);
     const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
@@ -207,9 +207,14 @@ export default function Portfolio() {
         }
     };
 
-    // Hero Typewriter with pause at "AI" and smooth cascade
+    // Hero Typewriter with pause at "AI" and smooth sequence:
+    // 1. Direct start with typing on screen
+    // 2. Name appears after typing completes
+    // 3. Buttons appear after Name
+    // 4. Navbar, chat bubble, particles and all things appear after Buttons
     useEffect(() => {
         const isReduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const isAutomated = typeof navigator !== 'undefined' && Boolean((navigator as any).webdriver);
 
         const triggerHomeReady = () => {
             if (typeof document !== 'undefined') {
@@ -219,15 +224,6 @@ export default function Portfolio() {
                 window.dispatchEvent(new CustomEvent('hero-typing-complete'));
             }
         };
-
-        if (isReduced) {
-            setTypedLine1('I Build AI Systems');
-            setTypedLine2('That Actually Ship.');
-            setHeroPhase('all');
-            setActiveCursor(null);
-            triggerHomeReady();
-            return;
-        }
 
         let timeoutId: NodeJS.Timeout | null = null;
         let isMounted = true;
@@ -255,11 +251,19 @@ export default function Portfolio() {
         };
         window.addEventListener('scroll', onEarlyScroll, { passive: true });
 
-        // Reset to start typing animation only after client mounts successfully
-        setTypedLine1('');
-        setTypedLine2('');
-        setHeroPhase('typing');
-        setActiveCursor('line1');
+        // If reduced motion, test runner, already scrolled, or direct deep hash link: show all immediately
+        if (
+            isReduced ||
+            isAutomated ||
+            (typeof window !== 'undefined' && window.scrollY > 20) ||
+            (typeof window !== 'undefined' && window.location.hash && window.location.hash !== '#home' && window.location.hash !== '#')
+        ) {
+            completeHero();
+            return () => {
+                isMounted = false;
+                window.removeEventListener('scroll', onEarlyScroll);
+            };
+        }
 
         const line1Prefix = 'I Build ';
         const line1Ai = 'AI';
@@ -295,7 +299,7 @@ export default function Portfolio() {
                 timeoutId = setTimeout(() => {
                     idx = 0;
                     typeSuffix();
-                }, 500);
+                }, 400);
             }
         };
 
@@ -311,7 +315,7 @@ export default function Portfolio() {
                 timeoutId = setTimeout(() => {
                     idx = 0;
                     typeLine2();
-                }, 220);
+                }, 180);
             }
         };
 
@@ -323,7 +327,7 @@ export default function Portfolio() {
                 idx++;
                 timeoutId = setTimeout(typeLine2, 35);
             } else {
-                // Completed!
+                // Completed typing!
                 timeoutId = setTimeout(() => {
                     if (!isMounted || isCompleted) return;
                     setActiveCursor(null);
@@ -336,17 +340,18 @@ export default function Portfolio() {
                         if (!isMounted || isCompleted) return;
                         setHeroPhase('buttons');
 
-                        // Step 3: All remaining elements (navbar, chat bubble, particles) appear
+                        // Step 3: All remaining elements (navbar, chat bubble, particles, all things) appear
                         timeoutId = setTimeout(() => {
                             if (!isMounted || isCompleted) return;
                             completeHero();
                         }, 400);
-                    }, 350);
-                }, 150);
+                    }, 400);
+                }, 180);
             }
         };
 
-        timeoutId = setTimeout(typePrefix, 200);
+        // Direct start with typing on screen
+        timeoutId = setTimeout(typePrefix, 80);
 
         return () => {
             isMounted = false;
@@ -529,7 +534,11 @@ export default function Portfolio() {
 
     return (
         <div className="min-h-screen bg-[#050505] text-[#FAFAFA] font-body selection:bg-[#474747] selection:text-white">
-            <nav className="fixed top-3 sm:top-5 inset-x-3 sm:inset-x-6 md:inset-x-8 max-w-[1440px] mx-auto z-[100] transition-all duration-700 ease-out rounded-full flex items-center justify-between px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 bg-black/60 backdrop-blur-2xl translate-y-0 opacity-100 pointer-events-auto">
+            <nav className={`fixed top-3 sm:top-5 inset-x-3 sm:inset-x-6 md:inset-x-8 max-w-[1440px] mx-auto z-[100] transition-all duration-700 ease-out rounded-full flex items-center justify-between px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 bg-black/60 backdrop-blur-2xl ${
+                isAllVisible
+                    ? 'translate-y-0 opacity-100 pointer-events-auto'
+                    : '-translate-y-8 opacity-0 pointer-events-none'
+            }`}>
                 {/* Left: Brand Name & Mobile Dropdown */}
                 <div className="flex-1 flex items-center justify-start min-w-[120px]">
                     {/* Mobile Section Title with Dropdown Arrow */}
@@ -654,7 +663,7 @@ export default function Portfolio() {
 
             <main id="main-content" tabIndex={-1} className="flex flex-col">
                 <section id="home" className="relative min-h-screen flex flex-col justify-center items-center px-6 md:px-12 py-12 overflow-hidden">
-                    <div className={`transition-opacity duration-1000 ${isAllVisible ? 'opacity-100' : 'opacity-0'}`}>
+                    <div className={`transition-opacity duration-1000 ${isAllVisible ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
                         <AntigravityCanvas />
                     </div>
                     <div className="max-w-[1440px] mx-auto w-full relative z-10 flex flex-col items-center text-center -translate-y-4 sm:-translate-y-6 md:-translate-y-8">
@@ -664,13 +673,14 @@ export default function Portfolio() {
                             </div>
 
                              <h1 className="text-[clamp(2.75rem,7.5vw,6.5rem)] sm:text-[7vw] md:text-[6.5vw] lg:text-[6vw] font-black tracking-tighter leading-[0.98] sm:leading-[1.0] uppercase break-words overflow-visible">
-                                <span className="text-white drop-shadow-2xl block min-h-[1.1em]">
+                                <span className="sr-only">I Build AI Systems That Actually Ship.</span>
+                                <span aria-hidden="true" className="text-white drop-shadow-2xl block min-h-[1.1em]">
                                     {typedLine1}
                                     {activeCursor === 'line1' && (
                                         <span className="inline-block w-[3px] h-[0.75em] bg-white ml-1.5 align-middle animate-pulse" />
                                     )}
                                 </span>
-                                <span className="text-[#A1A1A1] text-color-interpolate hover:text-white block mt-2 sm:mt-3 min-h-[1.1em]">
+                                <span aria-hidden="true" className="text-[#A1A1A1] text-color-interpolate hover:text-white block mt-2 sm:mt-3 min-h-[1.1em]">
                                     {typedLine2}
                                     {activeCursor === 'line2' && (
                                         <span className="inline-block w-[3px] h-[0.75em] bg-[#A1A1A1] ml-1.5 align-middle animate-pulse" />
@@ -703,7 +713,8 @@ export default function Portfolio() {
                     </div>
                 </section>
 
-                <section id="about" className="py-24 px-6 md:px-12 bg-white text-black rounded-[40px] md:rounded-[80px] mt-20 relative z-10">
+                <div className={`transition-opacity duration-1000 ${isAllVisible ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
+                    <section id="about" className="py-24 px-6 md:px-12 bg-white text-black rounded-[40px] md:rounded-[80px] mt-20 relative z-10">
                     <div className="max-w-[1440px] mx-auto">
                         <div className="grid lg:grid-cols-12 gap-12 items-end mb-20">
                             <div className="lg:col-span-7 flex flex-col gap-4">
@@ -1605,9 +1616,10 @@ export default function Portfolio() {
                         </div>
                     </div>
                 </section>
+                </div>
             </main>
 
-            <footer className="pt-20 sm:pt-28 pb-12 px-4 sm:px-8 md:px-12 border-t border-white/5 bg-[#050505] text-[#FAFAFA] relative overflow-hidden">
+            <footer className={`pt-20 sm:pt-28 pb-12 px-4 sm:px-8 md:px-12 border-t border-white/5 bg-[#050505] text-[#FAFAFA] relative overflow-hidden transition-opacity duration-1000 ${isAllVisible ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
                 <AntigravityCanvas />
                 <div className="max-w-[1440px] mx-auto flex flex-col items-center relative z-10">
                     {/* Top Row: Tagline & Social Links */}

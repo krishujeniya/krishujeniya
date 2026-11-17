@@ -91,7 +91,7 @@ export function useGsapAnimations() {
             // ── 0. Hero entrance ──
             const heroH1 = document.querySelector('#home h1') as HTMLElement | null;
             if (heroH1) {
-              gsap.fromTo(heroH1, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', delay: 0.1 });
+              gsap.set(heroH1, { opacity: 1, y: 0, clearProps: 'transform' });
             }
 
             // ── 1. About section ──

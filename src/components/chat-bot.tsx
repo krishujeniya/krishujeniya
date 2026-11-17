@@ -204,7 +204,7 @@ export const ChatBot = () => {
 
         const handleReady = () => setIsReady(true);
         window.addEventListener('hero-typing-complete', handleReady, { once: true });
-        const fallbackTimer = setTimeout(() => setIsReady(true), 3500);
+        const fallbackTimer = setTimeout(() => setIsReady(true), 12000);
 
         return () => {
             isMounted.current = false;
@@ -353,7 +353,7 @@ export const ChatBot = () => {
     }, []);
 
     return (
-        <div className={`chatbot-wrapper transition-opacity duration-700 ease-out ${isReady ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
+        <div className={`chatbot-wrapper transition-all duration-700 ease-out ${isReady ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
             {/* Chat window — always rendered, shown/hidden by GSAP */}
             <div
                 ref={windowRef}
@@ -440,7 +440,7 @@ export const ChatBot = () => {
             {/* Chat toggle button */}
             <button
                 ref={toggleRef}
-                className={`chatbot-toggle magnetic-btn transition-transform duration-500 ease-out hover:scale-105 active:scale-95 ${isReady ? 'scale-100' : 'scale-0'}`}
+                className={`chatbot-toggle magnetic-btn transition-all duration-700 ease-out hover:scale-105 active:scale-95 ${isReady ? 'scale-100 opacity-100 pointer-events-auto' : 'scale-0 opacity-0 pointer-events-none'}`}
                 onClick={() => setChatOpen(!chatOpen)}
                 aria-label="Toggle AI chat"
                 aria-expanded={chatOpen}
