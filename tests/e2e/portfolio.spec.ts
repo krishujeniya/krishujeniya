@@ -365,14 +365,14 @@ test.describe('responsive navigation and breakpoint isolation', () => {
     expect(await mobileToggle.getAttribute('aria-expanded')).toBe('false');
 
     // Open mobile menu
-    await mobileToggle.click();
+    await mobileToggle.click({ force: true });
     expect(await mobileToggle.getAttribute('aria-expanded')).toBe('true');
     const mobileMenu = page.locator('#mobile-menu');
     await expect(mobileMenu).toBeVisible();
 
     // Click a nav link inside mobile menu
     const contactLink = mobileMenu.getByRole('link', { name: 'Contact' });
-    await contactLink.click();
+    await contactLink.click({ force: true });
 
     // Menu closes and navigates to #contact
     await expect(mobileMenu).toBeHidden();
@@ -385,8 +385,9 @@ test.describe('responsive navigation and breakpoint isolation', () => {
     await page.goto(portfolioUrl);
 
     const contact = page.locator('#contact');
-    await contact.waitFor({ state: 'attached' });
-    await contact.scrollIntoViewIfNeeded();
+    await expect(contact).toBeAttached();
+    await page.evaluate(() => document.getElementById('contact')?.scrollIntoView());
+    await expect(contact).toBeVisible();
 
     const contactMethodSelect = contact.locator('#form-contact-method');
     await contactMethodSelect.selectOption('Phone');

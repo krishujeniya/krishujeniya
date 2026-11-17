@@ -538,6 +538,7 @@ export default function Portfolio() {
                             onClick={() => setIsMobileNavOpen(!isMobileNavOpen)}
                             aria-expanded={isMobileNavOpen}
                             aria-haspopup="true"
+                            aria-controls="mobile-menu"
                             aria-label="Toggle mobile menu"
                             className="flex items-center gap-1.5 text-xs font-black tracking-tighter text-white py-1 px-1.5 rounded-full hover:bg-white/10 active:scale-95 transition-all outline-none"
                         >
@@ -556,6 +557,7 @@ export default function Portfolio() {
                         {/* Mobile Navigation Dropdown Options */}
                         {isMobileNavOpen && (
                             <div
+                                id="mobile-menu"
                                 role="region"
                                 aria-label="Sections menu"
                                 className="absolute top-full left-0 mt-3 w-48 bg-black/95 backdrop-blur-2xl border border-white/10 rounded-2xl p-2 shadow-2xl z-[150] flex flex-col gap-1"
