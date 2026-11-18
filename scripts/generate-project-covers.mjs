@@ -123,6 +123,14 @@ async function run() {
         'public/images/projects/echonest.webp',
       ],
     },
+    // 12. Strange (Discord bot archive)
+    {
+      source: '12_Strange_4K.png',
+      targets: [
+        'public/images/projects/discord-bot.webp',
+        'public/images/projects/strange.webp',
+      ],
+    },
     // 13. NetSweep
     {
       source: '13_NetSweep_4K.png',
@@ -149,6 +157,50 @@ async function run() {
   for (const item of mappings) {
     await generate4KCover(item.source, item.targets);
   }
+
+  // 16. SparkWA (Monochrome 3D Bridge Mark on pitch-black 16:9 canvas)
+  const sparkSvg = `
+  <svg width="1200" height="675" viewBox="0 0 1200 675" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="coreGlow" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#ffffff" stop-opacity="0.12" />
+        <stop offset="100%" stop-color="#000000" stop-opacity="0" />
+      </radialGradient>
+      <linearGradient id="chromeFace" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#ffffff" />
+        <stop offset="35%" stop-color="#e2e8f0" />
+        <stop offset="70%" stop-color="#94a3b8" />
+        <stop offset="100%" stop-color="#cbd5e1" />
+      </linearGradient>
+      <linearGradient id="beveledRim" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#ffffff" stop-opacity="0.6" />
+        <stop offset="50%" stop-color="#64748b" stop-opacity="0.3" />
+        <stop offset="100%" stop-color="#0f172a" stop-opacity="0.8" />
+      </linearGradient>
+      <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+        <feGaussianBlur stdDeviation="12" result="blur" />
+        <feComposite in="SourceGraphic" in2="blur" operator="over" />
+      </filter>
+    </defs>
+    <rect width="1200" height="675" fill="#000000" />
+    <circle cx="600" cy="337" r="320" fill="url(#coreGlow)" />
+    <g transform="translate(380, 117)">
+      <rect width="440" height="440" rx="96" fill="#080808" stroke="url(#beveledRim)" stroke-width="8" />
+      <rect x="12" y="12" width="416" height="416" rx="84" fill="none" stroke="#ffffff" stroke-width="2" stroke-opacity="0.15" />
+      <g transform="translate(37, 37) scale(3.8)" fill="none" stroke="url(#chromeFace)" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 33v30" stroke-width="6" filter="url(#glow)" />
+        <path d="M76 33v30" stroke-width="6" filter="url(#glow)" />
+        <path d="M25 48h15l10-22-2 22h19L42 74l3-26" stroke-width="5.5" filter="url(#glow)" />
+        <circle cx="20" cy="24" r="4" fill="#ffffff" stroke="none" />
+        <circle cx="76" cy="72" r="4" fill="#ffffff" stroke="none" />
+      </g>
+    </g>
+  </svg>`;
+
+  await sharp(Buffer.from(sparkSvg))
+    .webp({ quality: 95, effort: 4 })
+    .toFile('public/images/projects/sparkwa.webp');
+  console.log('[OK] Generated 16:9 4K cover: public/images/projects/sparkwa.webp (SparkWA Bridge Mark)');
 
   console.log(`[SUCCESS] All ${mappings.length} project covers generated from Monochrome 3D Logo Collection.`);
 }
