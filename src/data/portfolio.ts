@@ -296,7 +296,7 @@ export const portfolioData = {
       slug: 'salary-predictions',
       title: 'Salary Predictions — Production MLOps Engine',
       category: 'Machine Learning / MLOps',
-      imageUrl: "/krishujeniya/images/m1.webp",
+      imageUrl: "/krishujeniya/images/projects/salary-predictions.webp",
       description: 'End-to-end reproducible MLOps pipeline predicting data professional salaries across 5 countries — deployed as an interactive Hugging Face Space.',
       link: 'https://huggingface.co/spaces/krishujeniya/Salary_Predictions_For_Data_Professions',
       linkType: 'space',
