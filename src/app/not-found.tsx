@@ -11,5 +11,12 @@ export default function NotFound() {
     }
   }, []);
 
-  return null;
+  return (
+    <script
+      dangerouslySetInnerHTML={{
+        __html:
+          "var p=window.location.pathname;var t=p.startsWith('/krishujeniya')?'/krishujeniya/':'/';window.location.replace(t);",
+      }}
+    />
+  );
 }
