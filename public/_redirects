@@ -1,6 +1,6 @@
-# Root apex redirect to application basePath
-/                /krishujeniya/           301
-/krishujeniya    /krishujeniya/           301
+# Legacy subpath redirects to apex root
+/krishujeniya    /       301
+/krishujeniya/   /       301
 
-# Subpath asset and page rewrites
-/krishujeniya/*  /:splat                  200
+# Subpath asset rewrite to support portfolio image paths
+/krishujeniya/*  /:splat 200

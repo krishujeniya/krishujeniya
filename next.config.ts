@@ -1,9 +1,10 @@
 import type { NextConfig } from 'next';
 
+const basePath = process.env.BASE_PATH !== undefined ? process.env.BASE_PATH : '/krishujeniya';
+
 const nextConfig: NextConfig = {
   output: 'export',
-  basePath: '/krishujeniya',
-  assetPrefix: '/krishujeniya/',
+  ...(basePath ? { basePath, assetPrefix: `${basePath}/` } : {}),
   trailingSlash: true,
   images: {
     loader: 'custom',

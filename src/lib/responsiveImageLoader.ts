@@ -1,17 +1,18 @@
 import type { ImageLoaderProps } from 'next/image';
 
-const IMAGE_ROOT = '/krishujeniya/images/';
-
 export default function responsiveImageLoader({ src, width }: ImageLoaderProps): string {
-  if (!src.startsWith(IMAGE_ROOT) || !src.endsWith('.webp')) {
+  const isPrefixed = src.startsWith('/krishujeniya/images/');
+  const root = isPrefixed ? '/krishujeniya/images/' : '/images/';
+
+  if (!src.startsWith(root) || !src.endsWith('.webp')) {
     throw new Error('Responsive image loader received an unsupported source.');
   }
 
-  const relativePath = src.slice(IMAGE_ROOT.length);
+  const relativePath = src.slice(root.length);
   if (relativePath.split('/').includes('..')) {
     throw new Error('Responsive image loader received an unsafe source path.');
   }
 
   const variantPath = relativePath.replace(/\.webp$/, `-${width}.webp`);
-  return `${IMAGE_ROOT}responsive/${variantPath}`;
+  return `${root}responsive/${variantPath}`;
 }

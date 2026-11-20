@@ -10,7 +10,7 @@
 **Application Type**: Personal Portfolio & Engineering Showcase Website
 
 ### Declared Service Topology
-- **Cloudflare Pages Edge**: Global edge CDN serving static export on free tier at `https://krishujeniya.pages.dev/` (Apex redirects to `/krishujeniya/`, assets rewritten via `_redirects`).
+- **Cloudflare Pages Edge**: Global edge CDN serving static export on free tier at `https://krishujeniya.pages.dev/` (Root apex served directly; legacy `/krishujeniya/` redirects to `/`).
 - **GitHub Pages**: Static hosting at `https://krishujeniya.github.io/krishujeniya/` deployed via GitHub Actions.
 - **`krishujeniya_portfolio`**: Nginx 1.27 Alpine serving Next.js static export at /krishujeniya/ (Port: `9002 (mapped from 80)`).
 

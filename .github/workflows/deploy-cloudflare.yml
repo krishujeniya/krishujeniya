@@ -48,6 +48,8 @@ jobs:
         run: npm run typecheck
 
       - name: Build Next.js static export
+        env:
+          BASE_PATH: ""
         run: npm run build
 
       - name: Ensure Cloudflare manifests are in build output
@@ -78,10 +80,9 @@ jobs:
         run: |
           for attempt in {1..6}; do
             echo "Attempt $attempt: Probing published Cloudflare Pages edge..."
-            if curl -sI --fail https://krishujeniya.pages.dev/ | grep -Eq "301|308" && \
-               curl -sI --fail https://krishujeniya.pages.dev/krishujeniya/ | grep -Eq "200" && \
-               curl -sI --fail https://krishujeniya.pages.dev/krishujeniya/images/projects/amberclaw.webp | grep -Eq "200"; then
-              echo "Cloudflare Pages production edge verified healthy."
+            if curl -sI --fail https://krishujeniya.pages.dev/ | grep -Eq "200" && \
+               curl -sI --fail https://krishujeniya.pages.dev/images/projects/amberclaw.webp | grep -Eq "200"; then
+              echo "Cloudflare Pages production edge verified healthy at root apex."
               exit 0
             fi
             sleep 5
