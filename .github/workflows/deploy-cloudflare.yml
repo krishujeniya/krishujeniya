@@ -5,6 +5,7 @@ on:
     branches: ["main"]
     paths:
       - ".github/workflows/deploy-cloudflare.yml"
+      - "functions/**"
       - "public/**"
       - "src/**"
       - "package.json"
@@ -84,8 +85,9 @@ jobs:
           for attempt in {1..6}; do
             echo "Attempt $attempt: Probing published Cloudflare Pages edge..."
             if curl -sI --fail https://krishujeniya.pages.dev/ | grep -Eq "200" && \
-               curl -sI --fail https://krishujeniya.pages.dev/images/projects/amberclaw.webp | grep -Eq "200"; then
-              echo "Cloudflare Pages production edge verified healthy at root apex."
+               curl -sI --fail https://krishujeniya.pages.dev/images/projects/amberclaw.webp | grep -Eq "200" && \
+               curl -s --fail https://krishujeniya.pages.dev/api/health | grep -Eq "ready"; then
+              echo "Cloudflare Pages production edge verified healthy at root apex with edge functions."
               exit 0
             fi
             sleep 5
