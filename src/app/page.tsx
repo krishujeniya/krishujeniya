@@ -1639,7 +1639,7 @@ export default function Portfolio() {
                                             </div>
 
                                             <p className="text-[10px] font-medium text-[#525252] leading-relaxed">
-                                                Inquiries are securely submitted via Vercel serverless functions and stored in MongoDB Atlas strictly for review and reply. Contact records and project briefs are retained for up to 30 days and never sold or shared with third parties for marketing. To request early deletion or data removal, email ukideashare0021@gmail.com with your submission details.
+                                                Inquiries are securely submitted via backend services and stored in an encrypted database strictly for review and reply. Contact records and project briefs are retained for up to 30 days and never sold or shared with third parties for marketing. To request early deletion or data removal, email ukideashare0021@gmail.com with your submission details.
                                             </p>
                                             {isSent ? (
                                                 <div role="status" aria-live="polite" className="w-full flex flex-col items-center justify-center gap-2 bg-[#E8F5E9] text-[#1B5E20] py-6 px-6 rounded-3xl text-sm font-black uppercase tracking-[0.2em] border border-[#A5D6A7] mt-8 animate-[fadeScaleIn_0.4s_ease_forwards]">

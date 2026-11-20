@@ -46,7 +46,7 @@ jobs:
       - name: Check dependency consistency via uv
         run: uv pip check
 
-      - name: Validate Vercel configuration
+      - name: Validate backend configuration
         run: uv run python -c "import json; json.load(open('vercel.json', encoding='utf-8'))"
 
       - name: Lint via uv
