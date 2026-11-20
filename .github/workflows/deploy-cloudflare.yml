@@ -72,3 +72,19 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: pages deploy out --project-name=krishujeniya --branch=main
+
+      - name: Verify Cloudflare Pages edge health
+        if: steps.check-secrets.outputs.has_secrets == 'true'
+        run: |
+          for attempt in {1..6}; do
+            echo "Attempt $attempt: Probing published Cloudflare Pages edge..."
+            if curl -sI --fail https://krishujeniya.pages.dev/ | grep -Eq "301|308" && \
+               curl -sI --fail https://krishujeniya.pages.dev/krishujeniya/ | grep -Eq "200" && \
+               curl -sI --fail https://krishujeniya.pages.dev/krishujeniya/images/projects/amberclaw.webp | grep -Eq "200"; then
+              echo "Cloudflare Pages production edge verified healthy."
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "Edge health verification failed."
+          exit 1
