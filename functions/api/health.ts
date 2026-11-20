@@ -1,7 +1,3 @@
-interface PagesContext {
-  request: Request;
-}
-
 export async function onRequestGet(): Promise<Response> {
   return new Response(
     JSON.stringify({
