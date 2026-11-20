@@ -18,34 +18,57 @@ const ALLOWED_HOSTS = new Set([
   "krishujeniya.github.io",
 ]);
 
+const MAX_PAYLOAD_BYTES = 64 * 1024; // 64 KB threshold
+const IP_REGEX = /^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$|^([0-9a-fA-F]{0,4}:){1,7}[0-9a-fA-F]{0,4}$/;
+
 const rateLimitStore = new Map<string, RateLimitRecord>();
+
+function sanitizeString(val: unknown, maxLen: number, fallback = ""): string {
+  if (typeof val !== "string") return fallback;
+  // Strip null bytes and control characters (preserves standard newlines/tabs)
+  const cleaned = val.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, "").trim();
+  return cleaned.slice(0, maxLen);
+}
 
 function isOriginAllowed(originHeader: string | null, refererHeader: string | null): boolean {
   if (originHeader) {
-    return ALLOWED_ORIGINS.has(originHeader);
+    if (ALLOWED_ORIGINS.has(originHeader)) return true;
+    try {
+      const parsed = new URL(originHeader);
+      if (parsed.protocol === "https:" && (parsed.hostname === "krishujeniya.pages.dev" || parsed.hostname.endsWith(".krishujeniya.pages.dev"))) {
+        return true;
+      }
+    } catch {
+      return false;
+    }
+    return false;
   }
   if (refererHeader) {
     try {
       const parsed = new URL(refererHeader);
-      return parsed.protocol === "https:" && ALLOWED_HOSTS.has(parsed.hostname);
+      if (parsed.protocol === "https:" && (ALLOWED_HOSTS.has(parsed.hostname) || parsed.hostname.endsWith(".krishujeniya.pages.dev"))) {
+        return true;
+      }
     } catch {
       return false;
     }
   }
-  // Requests without origin/referer (e.g. direct curl or internal edge proxy)
   return false;
 }
 
 function getClientIp(request: Request): string {
   const cfIp = request.headers.get("cf-connecting-ip");
-  if (cfIp && cfIp.trim().length > 0) {
+  if (cfIp && IP_REGEX.test(cfIp.trim())) {
     return cfIp.trim();
   }
   const forwardedFor = request.headers.get("x-forwarded-for");
-  if (forwardedFor && forwardedFor.trim().length > 0) {
-    return forwardedFor.split(",")[0]?.trim() || "unknown";
+  if (forwardedFor) {
+    const firstIp = forwardedFor.split(",")[0]?.trim();
+    if (firstIp && IP_REGEX.test(firstIp)) {
+      return firstIp;
+    }
   }
-  return "unknown";
+  return "127.0.0.1";
 }
 
 function checkRateLimit(ip: string): boolean {
@@ -73,7 +96,7 @@ export async function onRequestOptions(context: PagesContext): Promise<Response>
   const origin = context.request.headers.get("origin");
   const headers = new Headers();
 
-  if (origin && ALLOWED_ORIGINS.has(origin)) {
+  if (origin && (ALLOWED_ORIGINS.has(origin) || origin.endsWith(".krishujeniya.pages.dev"))) {
     headers.set("Access-Control-Allow-Origin", origin);
     headers.set("Access-Control-Allow-Methods", "POST, OPTIONS");
     headers.set("Access-Control-Allow-Headers", "Content-Type");
@@ -100,7 +123,16 @@ export async function onRequestPost(context: PagesContext): Promise<Response> {
     });
   }
 
-  // 2. Edge-Level IP Rate Limiting
+  // 2. Request Size Validation (Payload Bomb / Memory Exhaustion Defense)
+  const contentLength = request.headers.get("content-length");
+  if (contentLength && parseInt(contentLength, 10) > MAX_PAYLOAD_BYTES) {
+    return new Response(JSON.stringify({ detail: "Payload exceeds 64KB size limit." }), {
+      status: 413,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+
+  // 3. Edge-Level IP Rate Limiting
   const clientIp = getClientIp(request);
   if (!checkRateLimit(clientIp)) {
     return new Response(
@@ -115,7 +147,7 @@ export async function onRequestPost(context: PagesContext): Promise<Response> {
     );
   }
 
-  // 3. Payload Extraction and Parsing
+  // 4. Payload Extraction and Parsing
   let payload: Record<string, unknown>;
   try {
     payload = (await request.json()) as Record<string, unknown>;
@@ -126,13 +158,13 @@ export async function onRequestPost(context: PagesContext): Promise<Response> {
     });
   }
 
-  // 4. Honeypot Bot Filtering (Silent Discard)
-  const honeypot = typeof payload["honeypot"] === "string" ? payload["honeypot"].trim() : "";
-  const submissionId = typeof payload["submissionId"] === "string" ? payload["submissionId"] : "accepted";
+  // 5. Honeypot Bot Filtering (Silent Discard)
+  const honeypot = sanitizeString(payload["honeypot"], 100);
+  const submissionId = sanitizeString(payload["submissionId"], 100, "accepted");
 
   if (honeypot.length > 0) {
     const headers = new Headers({ "Content-Type": "application/json" });
-    if (origin && ALLOWED_ORIGINS.has(origin)) {
+    if (origin && (ALLOWED_ORIGINS.has(origin) || origin.endsWith(".krishujeniya.pages.dev"))) {
       headers.set("Access-Control-Allow-Origin", origin);
     }
     return new Response(JSON.stringify({ ok: true, submissionId }), {
@@ -141,10 +173,10 @@ export async function onRequestPost(context: PagesContext): Promise<Response> {
     });
   }
 
-  // 5. Input Validation
-  const name = typeof payload["name"] === "string" ? payload["name"].trim() : "";
-  const email = typeof payload["email"] === "string" ? payload["email"].trim() : "";
-  const message = typeof payload["message"] === "string" ? payload["message"].trim() : "";
+  // 6. Strict Input Validation & Schema Sanitation
+  const name = sanitizeString(payload["name"], 100);
+  const email = sanitizeString(payload["email"], 120);
+  const message = sanitizeString(payload["message"], 3000);
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   if (!name || name.length > 100 || !email || email.length > 120 || !emailRegex.test(email) || !message || message.length > 3000) {
@@ -154,7 +186,33 @@ export async function onRequestPost(context: PagesContext): Promise<Response> {
     });
   }
 
-  // 6. Upstream Forwarding to Persistence Engine
+  // 7. Schema Whitelisting (Defends against Object Injection / Mass Assignment)
+  const sanitizedPayload: Record<string, unknown> = {
+    name,
+    email,
+    message,
+    company: sanitizeString(payload["company"], 150, "Not provided"),
+    role: sanitizeString(payload["role"], 100, "Not provided"),
+    services: Array.isArray(payload["services"])
+      ? payload["services"].filter((s) => typeof s === "string").map((s) => sanitizeString(s, 100)).slice(0, 5)
+      : [],
+    stage: Array.isArray(payload["stage"])
+      ? payload["stage"].filter((s) => typeof s === "string").map((s) => sanitizeString(s, 100)).slice(0, 5)
+      : [],
+    techStack: sanitizeString(payload["techStack"], 200, "Not provided"),
+    budget: sanitizeString(payload["budget"], 50, "Not selected"),
+    timeline: sanitizeString(payload["timeline"], 50, "Not selected"),
+    discoverySource: sanitizeString(payload["discoverySource"], 100, "Not provided"),
+    preferredContactMethod: sanitizeString(payload["preferredContactMethod"], 50, "Email"),
+    submissionId,
+    honeypot: "",
+  };
+
+  if (typeof payload["whatsappNumber"] === "string" && payload["whatsappNumber"].trim().length > 0) {
+    sanitizedPayload["whatsappNumber"] = sanitizeString(payload["whatsappNumber"], 25);
+  }
+
+  // 8. Upstream Forwarding to Persistence Engine
   try {
     const upstreamUrl = context.env?.UPSTREAM_API_URL || "https://krishujeniya-backend.vercel.app/api/webDATA";
     const upstreamHeaders = new Headers();
@@ -166,13 +224,13 @@ export async function onRequestPost(context: PagesContext): Promise<Response> {
     const upstreamResponse = await fetch(upstreamUrl, {
       method: "POST",
       headers: upstreamHeaders,
-      body: JSON.stringify(payload),
+      body: JSON.stringify(sanitizedPayload),
     });
 
     const responseHeaders = new Headers();
     responseHeaders.set("Content-Type", "application/json");
     responseHeaders.set("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
-    if (origin && ALLOWED_ORIGINS.has(origin)) {
+    if (origin && (ALLOWED_ORIGINS.has(origin) || origin.endsWith(".krishujeniya.pages.dev"))) {
       responseHeaders.set("Access-Control-Allow-Origin", origin);
     }
 
