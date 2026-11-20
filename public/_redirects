@@ -1,0 +1,6 @@
+# Root apex redirect to application basePath
+/                /krishujeniya/           301
+/krishujeniya    /krishujeniya/           301
+
+# Subpath asset and page rewrites
+/krishujeniya/*  /:splat                  200

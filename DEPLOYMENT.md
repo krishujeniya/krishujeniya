@@ -10,9 +10,11 @@
 **Application Type**: Personal Portfolio & Engineering Showcase Website
 
 ### Declared Service Topology
-- **`krishujeniya_portfolio`**: Nginx 1.27 Alpine serving Next.js static export at /krishujeniya/ (Port: `9002 (mapped from 80)`)
+- **Cloudflare Pages Edge**: Global edge CDN serving static export on free tier at `https://krishujeniya.pages.dev/` (Apex redirects to `/krishujeniya/`, assets rewritten via `_redirects`).
+- **GitHub Pages**: Static hosting at `https://krishujeniya.github.io/krishujeniya/` deployed via GitHub Actions.
+- **`krishujeniya_portfolio`**: Nginx 1.27 Alpine serving Next.js static export at /krishujeniya/ (Port: `9002 (mapped from 80)`).
 
-All services are orchestrated via `docker-compose.yml` with isolated internal bridge networking, non-root system users (uid 1001), and layer-cached multi-stage container builds.
+All container services are orchestrated via `docker-compose.yml` with isolated internal bridge networking, non-root system users (uid 1001), and layer-cached multi-stage container builds.
 
 ---
 
@@ -21,7 +23,9 @@ All services are orchestrated via `docker-compose.yml` with isolated internal br
 Supply environment variables via a secure `.env` file (or CI/CD secrets manager). Never commit plaintext credentials to Git.
 
 ### Key Environment Variables
-- `PORT (default 80)`
+- `PORT (default 80)`: Local container mapped port.
+- `CLOUDFLARE_API_TOKEN`: Cloudflare API token with `Cloudflare Pages: Edit` permissions.
+- `CLOUDFLARE_ACCOUNT_ID`: Cloudflare account identifier.
 
 ---
 
@@ -59,17 +63,78 @@ docker pull ghcr.io/krishujeniya/krishujeniya:latest
 docker run -d --restart unless-stopped -p 9002:9002 ghcr.io/krishujeniya/krishujeniya:latest
 ```
 
+### Method C: Cloudflare Pages Deployment (Free Tier — CLI & CI/CD)
+
+Cloudflare Pages provides unlimited bandwidth, global CDN caching, and automatic SSL on the free tier.
+
+#### C1. Automated GitHub Actions Deployment via CLI
+
+1. **Authenticate Wrangler CLI locally**:
+   ```bash
+   wrangler login
+   wrangler whoami
+   ```
+
+2. **Create the Pages project via Wrangler CLI**:
+   ```bash
+   wrangler pages project create krishujeniya --production-branch=main
+   ```
+
+3. **Inject secrets into GitHub repository via GitHub CLI**:
+   ```bash
+   gh secret set CLOUDFLARE_API_TOKEN
+   gh secret set CLOUDFLARE_ACCOUNT_ID
+   ```
+
+4. **Trigger automated CI build and deployment**:
+   ```bash
+   gh workflow run deploy-cloudflare.yml
+   gh run watch
+   ```
+
+#### C2. Direct Terminal Deployment (Manual / Emergency)
+
+When static files are built and you need an immediate direct deploy from your terminal:
+```bash
+npm run cf:deploy
+```
+
+#### C3. Zero-Secret Cloudflare Dashboard Git Connection (Alternative)
+
+If you prefer not to manage GitHub Actions tokens:
+1. Open Cloudflare Dashboard -> **Compute (Workers & Pages)** -> **Create application** -> **Pages** -> **Connect to Git**.
+2. Select repository `krishujeniya/krishujeniya`.
+3. Set build configuration:
+   - Framework preset: `Next.js (Static HTML Export)` or `None`
+   - Build command: `npm run build`
+   - Build output directory: `out`
+   - Environment variables: `NODE_VERSION=22`
+4. Deploy site. Every subsequent push to `main` builds and deploys automatically for free.
+
 ---
 
 ## 4. Health Check & Readiness Probes
 
-### Verification Command
-Run the designated health check probe to confirm operational readiness:
+### Local / VPS Verification Probe
 ```bash
 curl -f http://localhost:9002/healthz
 ```
-
 Expected HTTP Response: `200 OK`
+
+### Cloudflare Pages Verification Probes
+```bash
+# 1. Verify apex 301 redirect
+curl -sI https://krishujeniya.pages.dev/ | grep -E "(HTTP|location)"
+
+# 2. Verify subpath 200 response and security headers
+curl -sI https://krishujeniya.pages.dev/krishujeniya/ | grep -E "(HTTP|x-frame-options|x-content-type-options)"
+
+# 3. Verify static asset rewrite
+curl -sI https://krishujeniya.pages.dev/krishujeniya/images/projects/amberclaw.webp | grep HTTP
+
+# 4. Interactive published smoke test
+PAGE_URL=https://krishujeniya.pages.dev/krishujeniya/ npm run test:smoke
+```
 
 ---
 
@@ -77,8 +142,17 @@ Expected HTTP Response: `200 OK`
 
 If an anomaly, regression, or service failure is detected:
 
-### Step 1: Immediate Container Rollback
-Roll back immediately to the previous immutable release tag or SHA:
+### Cloudflare Pages Instant Rollback
+Rollback in Cloudflare Pages is instant and non-destructive:
+```bash
+# List past deployments
+wrangler pages deployment list --project-name=krishujeniya
+
+# Roll back via Cloudflare dashboard:
+# Pages -> krishujeniya -> Deployments -> Select known good deployment -> "Rollback to this deployment"
+```
+
+### Container Rollback
 ```bash
 # Pull previous known healthy SHA tag
 docker pull ghcr.io/krishujeniya/krishujeniya:sha-<previous-commit-sha>
@@ -86,12 +160,6 @@ docker pull ghcr.io/krishujeniya/krishujeniya:sha-<previous-commit-sha>
 # Or revert compose to previous git revision
 git checkout <previous-stable-tag>
 docker compose up -d
-```
-
-### Step 2: Verification
-Re-run the health probe to confirm traffic restoration:
-```bash
-curl -f http://localhost:9002/healthz
 ```
 
 ---

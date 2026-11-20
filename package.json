@@ -7,6 +7,8 @@
     "predev": "npm run images:responsive",
     "prebuild": "npm run images:responsive",
     "build": "next build",
+    "cf:deploy": "wrangler pages deploy out --project-name=krishujeniya --branch=main",
+    "cf:dev": "wrangler pages dev out",
     "images:responsive": "node scripts/generate-responsive-images.mjs",
     "test:e2e": "playwright test",
     "test:smoke": "node scripts/smoke-published.mjs",
