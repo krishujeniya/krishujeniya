@@ -5,6 +5,8 @@
   Permissions-Policy: camera=(), microphone=(), geolocation=()
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
   Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https: blob:; connect-src 'self' https://krishujeniya.pages.dev https://raw.githubusercontent.com https://github.com; form-action 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self';
+  Link: <https://fonts.googleapis.com>; rel="preconnect", <https://fonts.gstatic.com>; rel="preconnect"; crossorigin
+  Cache-Control: public, max-age=0, s-maxage=300, stale-while-revalidate=86400
 
 /api/*
   Cache-Control: no-store, no-cache, must-revalidate, max-age=0
@@ -19,7 +21,16 @@
   Cache-Control: public, max-age=31536000, immutable
 
 /images/*
-  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+  Cache-Control: public, max-age=604800, s-maxage=2592000, stale-while-revalidate=86400
 
 /krishujeniya/images/*
-  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+  Cache-Control: public, max-age=604800, s-maxage=2592000, stale-while-revalidate=86400
+
+/favicon.ico
+  Cache-Control: public, max-age=604800, s-maxage=2592000
+
+/robots.txt
+  Cache-Control: public, max-age=3600, s-maxage=86400
+
+/sitemap.xml
+  Cache-Control: public, max-age=3600, s-maxage=86400
