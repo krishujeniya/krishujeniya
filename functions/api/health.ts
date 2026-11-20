@@ -15,8 +15,18 @@ export async function onRequestGet(context: PagesContext): Promise<Response> {
       status: 200,
       headers: {
         "Content-Type": "application/json",
-        "Cache-Control": "no-store, no-cache, must-revalidate",
+        "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
       },
     }
   );
+}
+
+export async function onRequestHead(): Promise<Response> {
+  return new Response(null, {
+    status: 200,
+    headers: {
+      "Content-Type": "application/json",
+      "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+    },
+  });
 }

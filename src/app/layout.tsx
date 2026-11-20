@@ -5,6 +5,11 @@ import { cn } from '@/lib/utils';
 import { ThemeProvider } from '@/components/theme-provider';
 import { DynamicCustomCursor as CustomCursor, DynamicChatBot as ChatBot } from '@/components/client-dynamic';
 
+const isCloudflare = process.env.BASE_PATH === '';
+const siteBaseUrl = isCloudflare ? 'https://krishujeniya.pages.dev' : 'https://krishujeniya.github.io';
+const sitePath = isCloudflare ? '/' : '/krishujeniya/';
+const siteFullUrl = `${siteBaseUrl}${sitePath}`;
+
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
@@ -12,7 +17,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://krishujeniya.github.io'),
+  metadataBase: new URL(siteBaseUrl),
   title: {
     default: 'Krish Ujeniya | AI Researcher, Data Scientist & AI Freelancer',
     template: '%s | Krish Ujeniya – AI Researcher & Data Scientist'
@@ -38,12 +43,12 @@ export const metadata: Metadata = {
     'Artificial Intelligence Research',
     'Data Science Freelancer India',
   ],
-  authors: [{ name: 'Krish Ujeniya', url: 'https://krishujeniya.github.io/krishujeniya' }],
+  authors: [{ name: 'Krish Ujeniya', url: siteFullUrl }],
   creator: 'Krish Ujeniya',
   applicationName: 'Krish Ujeniya – AI Researcher & Data Scientist Portfolio',
   category: 'technology',
   alternates: {
-    canonical: '/krishujeniya/',
+    canonical: sitePath,
   },
   robots: { index: true, follow: true, googleBot: { index: true, follow: true } },
   icons: {
@@ -60,7 +65,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://krishujeniya.github.io/krishujeniya/',
+    url: siteFullUrl,
     siteName: 'Krish Ujeniya | AI Researcher & Data Scientist',
     title: 'Krish Ujeniya | AI Researcher, Data Scientist & AI Freelancer',
     description: 'Krish Ujeniya – AI Researcher, Data Scientist, and Freelance AI Engineer. Specializing in LLMs, deep learning, RAG pipelines, and autonomous AI agents for global clients.',
@@ -108,14 +113,14 @@ export default function RootLayout({
                "@graph": [
                  {
                    "@type": "Person",
-                   "@id": "https://krishujeniya.github.io/krishujeniya/#person",
+                   "@id": `${siteFullUrl}#person`,
                    "name": "Krish Ujeniya",
                    "alternateName": "krishujeniya",
                    "jobTitle": ["AI Researcher", "Data Scientist", "AI Freelancer"],
-                   "url": "https://krishujeniya.github.io/krishujeniya/",
+                   "url": siteFullUrl,
                    "email": "ukideashare0021@gmail.com",
                    "description": "Krish Ujeniya is an AI Researcher, Data Scientist, and AI Freelancer specializing in LLMs, RAG systems, autonomous AI agents, deep learning, and MLOps pipelines.",
-                   "image": "https://krishujeniya.github.io/krishujeniya/images/krish-ujeniya-ai-researcher-data-scientist.webp",
+                   "image": `${siteFullUrl}images/krish-ujeniya-ai-researcher-data-scientist.webp`,
                    "knowsAbout": [
                      "Artificial Intelligence Research",
                      "Data Science",
@@ -147,11 +152,11 @@ export default function RootLayout({
                  },
                  {
                    "@type": "WebSite",
-                   "@id": "https://krishujeniya.github.io/krishujeniya/#website",
-                   "url": "https://krishujeniya.github.io/krishujeniya/",
+                   "@id": `${siteFullUrl}#website`,
+                   "url": siteFullUrl,
                    "name": "Krish Ujeniya | AI Researcher, Data Scientist & AI Freelancer",
                    "description": "Portfolio of Krish Ujeniya – AI Researcher, Data Scientist, and Freelance AI Engineer.",
-                   "author": { "@id": "https://krishujeniya.github.io/krishujeniya/#person" }
+                   "author": { "@id": `${siteFullUrl}#person` }
                  }
                ]
              })

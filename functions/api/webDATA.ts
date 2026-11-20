@@ -196,6 +196,17 @@ export async function onRequestGet(): Promise<Response> {
     headers: {
       "Content-Type": "application/json",
       "Allow": "POST, OPTIONS",
+      "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+    },
+  });
+}
+
+export async function onRequestHead(): Promise<Response> {
+  return new Response(null, {
+    status: 405,
+    headers: {
+      "Allow": "POST, OPTIONS",
+      "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
     },
   });
 }
