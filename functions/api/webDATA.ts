@@ -1,5 +1,6 @@
 interface PagesContext {
   request: Request;
+  env?: Record<string, string>;
 }
 
 interface RateLimitRecord {
@@ -155,7 +156,7 @@ export async function onRequestPost(context: PagesContext): Promise<Response> {
 
   // 6. Upstream Forwarding to Persistence Engine
   try {
-    const upstreamUrl = "https://krishujeniya-backend.vercel.app/api/webDATA";
+    const upstreamUrl = context.env?.UPSTREAM_API_URL || "https://krishujeniya-backend.vercel.app/api/webDATA";
     const upstreamHeaders = new Headers();
     upstreamHeaders.set("Content-Type", "application/json");
     upstreamHeaders.set("Origin", "https://krishujeniya.pages.dev");
@@ -168,20 +169,39 @@ export async function onRequestPost(context: PagesContext): Promise<Response> {
       body: JSON.stringify(payload),
     });
 
-    const upstreamBody = await upstreamResponse.text();
     const responseHeaders = new Headers();
     responseHeaders.set("Content-Type", "application/json");
+    responseHeaders.set("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
     if (origin && ALLOWED_ORIGINS.has(origin)) {
       responseHeaders.set("Access-Control-Allow-Origin", origin);
     }
 
-    return new Response(upstreamBody, {
-      status: upstreamResponse.status,
-      headers: responseHeaders,
-    });
+    if (upstreamResponse.ok) {
+      let finalSubmissionId = submissionId;
+      try {
+        const data = (await upstreamResponse.json()) as Record<string, unknown>;
+        if (typeof data["submissionId"] === "string") {
+          finalSubmissionId = data["submissionId"];
+        }
+      } catch {
+        // Fallback to initial submissionId
+      }
+      return new Response(JSON.stringify({ ok: true, submissionId: finalSubmissionId }), {
+        status: 200,
+        headers: responseHeaders,
+      });
+    }
+
+    return new Response(
+      JSON.stringify({ detail: "Unable to process request. Please try again later." }),
+      {
+        status: 400,
+        headers: responseHeaders,
+      }
+    );
   } catch {
     return new Response(
-      JSON.stringify({ detail: "Server temporarily unavailable. Please email ukideashare0021@gmail.com directly." }),
+      JSON.stringify({ detail: "Service temporarily unavailable. Please try again later." }),
       {
         status: 503,
         headers: { "Content-Type": "application/json" },

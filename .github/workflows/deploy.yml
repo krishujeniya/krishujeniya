@@ -190,18 +190,18 @@ jobs:
             sleep 10
           done
           exit 1
-      - name: Check production backend readiness with Obscura
+      - name: Check production edge gateway readiness with Obscura
         run: |
-          health_url="https://krishujeniya-backend.vercel.app/api/health/ready"
+          health_url="https://krishujeniya.pages.dev/api/health"
           body="$RUNNER_TEMP/backend-readiness.json"
           log="$RUNNER_TEMP/obscura-backend-smoke.log"
           for attempt in {1..5}; do
             if obscura fetch "$health_url" --dump original --timeout 30 > "$body" 2> "$log" && \
               grep -Eq '"status"[[:space:]]*:[[:space:]]*"ready"' "$body"; then
-              echo "Production backend readiness confirmed"
+              echo "Production edge gateway readiness confirmed"
               exit 0
             fi
             sleep 5
           done
-          echo "Production backend readiness was not confirmed. Response redacted."
+          echo "Production edge gateway readiness was not confirmed. Response redacted."
           exit 1

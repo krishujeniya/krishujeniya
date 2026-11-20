@@ -32,10 +32,17 @@ const DOCS_COMMIT_SHA = process.env.NEXT_PUBLIC_DOCS_COMMIT_SHA || 'b09e098ef5d2
 const DOCS_BASE_URL = `https://raw.githubusercontent.com/krishujeniya/krishujeniya/${DOCS_COMMIT_SHA}/Docs`;
 const CONTACT_SUBMISSION_STORAGE_KEY = 'portfolio-contact-submission';
 const getContactApiUrl = () => {
-    if (typeof window !== 'undefined' && window.location.hostname === 'krishujeniya.pages.dev') {
-        return '/api/webDATA';
+    if (typeof window !== 'undefined') {
+        if (
+            window.location.hostname === 'krishujeniya.pages.dev' ||
+            window.location.hostname.endsWith('.pages.dev') ||
+            window.location.hostname === 'localhost' ||
+            window.location.hostname === '127.0.0.1'
+        ) {
+            return '/api/webDATA';
+        }
     }
-    return process.env.NEXT_PUBLIC_VERCEL_API_URL || 'https://krishujeniya-backend.vercel.app/api/webDATA';
+    return 'https://krishujeniya.pages.dev/api/webDATA';
 };
 
 const manifestFiles: Record<string, { bytes: number; sha256: string }> = (docsManifest as any)?.files || {};
