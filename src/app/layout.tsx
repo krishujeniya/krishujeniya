@@ -1,4 +1,4 @@
-/* eslint-disable @next/next/no-page-custom-font -- App Router root layout loads these fonts globally. */
+/* eslint-disable @next/next/no-page-custom-font, @next/next/google-font-preconnect -- App Router root layout loads these fonts globally. */
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { cn } from '@/lib/utils';
@@ -102,8 +102,6 @@ export default function RootLayout({
             __html: "if(window.top!==window.self){try{window.top.location=window.self.location;}catch(e){}}",
           }}
         />
-        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-        <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
