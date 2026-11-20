@@ -4,6 +4,9 @@ const basePath = process.env.BASE_PATH !== undefined ? process.env.BASE_PATH : '
 
 const nextConfig: NextConfig = {
   output: 'export',
+  env: {
+    NEXT_PUBLIC_BASE_PATH: basePath,
+  },
   ...(basePath ? { basePath, assetPrefix: `${basePath}/` } : {}),
   trailingSlash: true,
   images: {

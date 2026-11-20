@@ -120,6 +120,17 @@ const storeSubmissionId = (fingerprint: string, id: string) => {
     }
 };
 
+const getBaseUrlPath = (): string => {
+    if (typeof window !== 'undefined') {
+        return window.location.pathname.startsWith('/krishujeniya') ? '/krishujeniya/' : '/';
+    }
+    const envBase = process.env.NEXT_PUBLIC_BASE_PATH;
+    if (envBase && envBase.length > 0 && envBase !== '/') {
+        return `${envBase}/`;
+    }
+    return '/';
+};
+
 export default function Portfolio() {
     useGsapAnimations();
     const [activeSection, setActiveSection] = useState('home');
@@ -469,11 +480,17 @@ export default function Portfolio() {
             const isReload = (navEntries.length > 0 && (navEntries[0] as PerformanceNavigationTiming).type === 'reload')
                 || (typeof performance !== 'undefined' && (performance as any).navigation?.type === 1);
 
+            const basePath = getBaseUrlPath();
+
             if (isReload) {
-                const basePath = window.location.pathname.startsWith('/krishujeniya') ? '/krishujeniya/' : '/';
                 if (window.location.hash || window.location.pathname !== basePath) {
                     window.history.replaceState(null, '', basePath);
                 }
+                window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
+                setSelectedProject(null);
+                setActiveSection('home');
+            } else if (window.location.hash === '#home' || window.location.hash === '#') {
+                window.history.replaceState(null, '', basePath);
                 window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
                 setSelectedProject(null);
                 setActiveSection('home');
@@ -488,6 +505,16 @@ export default function Portfolio() {
         window.addEventListener('scroll', handleScroll, { passive: true });
         const handlePopState = () => {
             const hash = window.location.hash;
+            const basePath = getBaseUrlPath();
+
+            if (hash === '#home' || hash === '#') {
+                window.history.replaceState(null, '', basePath);
+                document.getElementById('home')?.scrollIntoView();
+                setActiveSection('home');
+                setSelectedProject(null);
+                return;
+            }
+
             if (hash.startsWith('#project-')) {
                 const slug = hash.replace('#project-', '');
                 const matched = portfolioData.projects.find(p => p.slug === slug);
@@ -546,7 +573,16 @@ export default function Portfolio() {
     const scrollTo = (id: string) => {
         const el = document.getElementById(id);
         if (el) {
-            if (window.location.hash !== `#${id}`) window.history.pushState({ section: id }, '', `#${id}`);
+            const basePath = getBaseUrlPath();
+            if (id === 'home') {
+                if (window.location.hash || window.location.pathname !== basePath) {
+                    window.history.pushState({ section: 'home' }, '', basePath);
+                }
+            } else {
+                if (window.location.hash !== `#${id}`) {
+                    window.history.pushState({ section: id }, '', `#${id}`);
+                }
+            }
             el.scrollIntoView();
             el.setAttribute('tabindex', '-1');
             el.focus({ preventScroll: true });
@@ -607,7 +643,7 @@ export default function Portfolio() {
                                 ].map((section) => (
                                     <a
                                         key={section.id}
-                                        href={`#${section.id}`}
+                                        href={section.id === 'home' ? getBaseUrlPath() : `#${section.id}`}
                                         onClick={(e) => {
                                             e.preventDefault();
                                             scrollTo(section.id);
@@ -631,20 +667,16 @@ export default function Portfolio() {
                     </div>
 
                     {/* Desktop Brand Title */}
-                    <div
-                        className="hidden md:flex text-sm sm:text-base font-black tracking-tighter cursor-pointer hover:opacity-70 transition-opacity whitespace-nowrap outline-none items-center gap-2"
-                        onClick={() => scrollTo('home')}
-                        role="button"
-                        tabIndex={0}
-                        onKeyDown={(e) => {
-                            if (e.key === 'Enter' || e.key === ' ') {
-                                e.preventDefault();
-                                scrollTo('home');
-                            }
+                    <a
+                        href={getBaseUrlPath()}
+                        className="hidden md:flex text-sm sm:text-base font-black tracking-tighter cursor-pointer hover:opacity-70 transition-opacity whitespace-nowrap outline-none items-center gap-2 no-underline text-inherit"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            scrollTo('home');
                         }}
                     >
                         KRISH <span className="text-[#A1A1A1]">UJENIYA</span>
-                    </div>
+                    </a>
                 </div>
 
                 {/* Center: Desktop Navigation Links (About to Contact) */}
