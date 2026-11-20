@@ -1,0 +1,5 @@
+fastapi==0.162.7
+httpx==0.28.1
+pydantic[email]==2.14.3
+pymongo==4.20.0
+uvicorn==0.54.0
