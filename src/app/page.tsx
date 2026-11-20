@@ -251,12 +251,16 @@ export default function Portfolio() {
         };
         window.addEventListener('scroll', onEarlyScroll, { passive: true });
 
+        const navEntries = typeof performance !== 'undefined' ? performance.getEntriesByType('navigation') : [];
+        const isReload = (navEntries.length > 0 && (navEntries[0] as PerformanceNavigationTiming).type === 'reload')
+            || (typeof performance !== 'undefined' && (performance as any).navigation?.type === 1);
+
         // If reduced motion, test runner, already scrolled, or direct deep hash link: show all immediately
         if (
             isReduced ||
             isAutomated ||
-            (typeof window !== 'undefined' && window.scrollY > 20) ||
-            (typeof window !== 'undefined' && window.location.hash && window.location.hash !== '#home' && window.location.hash !== '#')
+            (!isReload && typeof window !== 'undefined' && window.scrollY > 20) ||
+            (!isReload && typeof window !== 'undefined' && window.location.hash && window.location.hash !== '#home' && window.location.hash !== '#')
         ) {
             completeHero();
             return () => {
@@ -456,11 +460,29 @@ export default function Portfolio() {
         // Run once on mount so the initial state is correct
         getActiveSection();
 
-        // Check for direct project deep-link on initial load
-        if (typeof window !== 'undefined' && window.location.hash.startsWith('#project-')) {
-            const initialSlug = window.location.hash.replace('#project-', '');
-            const matched = portfolioData.projects.find(p => p.slug === initialSlug);
-            if (matched) setSelectedProject(matched);
+        // Enforce base URL reset on reload across all deployment platforms
+        if (typeof window !== 'undefined') {
+            if ('scrollRestoration' in window.history) {
+                window.history.scrollRestoration = 'manual';
+            }
+            const navEntries = typeof performance !== 'undefined' ? performance.getEntriesByType('navigation') : [];
+            const isReload = (navEntries.length > 0 && (navEntries[0] as PerformanceNavigationTiming).type === 'reload')
+                || (typeof performance !== 'undefined' && (performance as any).navigation?.type === 1);
+
+            if (isReload) {
+                const basePath = window.location.pathname.startsWith('/krishujeniya') ? '/krishujeniya/' : '/';
+                if (window.location.hash || window.location.pathname !== basePath) {
+                    window.history.replaceState(null, '', basePath);
+                }
+                window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
+                setSelectedProject(null);
+                setActiveSection('home');
+            } else if (window.location.hash.startsWith('#project-')) {
+                // Check for direct project deep-link on initial load
+                const initialSlug = window.location.hash.replace('#project-', '');
+                const matched = portfolioData.projects.find(p => p.slug === initialSlug);
+                if (matched) setSelectedProject(matched);
+            }
         }
 
         window.addEventListener('scroll', handleScroll, { passive: true });

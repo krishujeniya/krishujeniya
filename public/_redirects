@@ -4,3 +4,6 @@
 
 # Subpath asset rewrite to support portfolio image paths
 /krishujeniya/*  /:splat 200
+
+# Catch-all SPA rewrite: any other page route rewrites to root index.html
+/*               /index.html 200
