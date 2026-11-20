@@ -1817,6 +1817,7 @@ export default function Portfolio() {
                                     <a
                                         href={selectedProject.link}
                                         target="_blank"
+                                        rel="noopener noreferrer"
                                         aria-label={`${selectedProject.linkType === 'repo' ? 'View Repository' : 'View Space'} for ${selectedProject.title}`}
                                         className="flex-grow flex items-center justify-between bg-white text-black px-8 py-5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] hover:bg-[#474747] hover:text-white transition-all duration-500"
                                     >

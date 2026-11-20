@@ -488,6 +488,22 @@ function ChatMsg({ msg, isTyping = false }: { msg: { id: number; from: 'bot' | '
                 >
                     {(() => {
                         const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
+                        const sanitizeUrl = (rawUrl: string): string | null => {
+                            const trimmed = rawUrl.trim();
+                            if (!trimmed) return null;
+                            if (trimmed.startsWith('#') || trimmed.startsWith('/')) {
+                                return trimmed;
+                            }
+                            try {
+                                const parsed = new URL(trimmed);
+                                if (['https:', 'http:', 'mailto:'].includes(parsed.protocol)) {
+                                    return trimmed;
+                                }
+                            } catch {
+                                return null;
+                            }
+                            return null;
+                        };
                         const parts: ReactNode[] = [];
                         let lastIndex = 0;
                         let match: RegExpExecArray | null;
@@ -495,17 +511,22 @@ function ChatMsg({ msg, isTyping = false }: { msg: { id: number; from: 'bot' | '
                             if (match.index > lastIndex) {
                                 parts.push(msg.text.slice(lastIndex, match.index));
                             }
-                            parts.push(
-                                <a
-                                    key={match.index}
-                                    href={match[2]}
-                                    target={match[2].startsWith('#') ? undefined : '_blank'}
-                                    rel={match[2].startsWith('#') ? undefined : 'noopener noreferrer'}
-                                    className="underline text-white font-medium hover:text-white/80 transition-colors"
-                                >
-                                    {match[1]}
-                                </a>
-                            );
+                            const safeHref = sanitizeUrl(match[2]);
+                            if (safeHref) {
+                                parts.push(
+                                    <a
+                                        key={match.index}
+                                        href={safeHref}
+                                        target={safeHref.startsWith('#') ? undefined : '_blank'}
+                                        rel={safeHref.startsWith('#') ? undefined : 'noopener noreferrer'}
+                                        className="underline text-white font-medium hover:text-white/80 transition-colors"
+                                    >
+                                        {match[1]}
+                                    </a>
+                                );
+                            } else {
+                                parts.push(match[1]);
+                            }
                             lastIndex = match.index + match[0].length;
                         }
                         if (lastIndex < msg.text.length) {

@@ -23,19 +23,24 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           fetch-depth: 0
 
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0
         with:
           python-version: '3.12'
 
       - name: Install Strix Security CLI
+        env:
+          STRIX_API_TOKEN: ${{ secrets.STRIX_API_TOKEN }}
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
         run: |
-          curl -sSL https://strix.ai/install | bash || pip install strix-agent || true
-          echo "$HOME/.local/bin" >> $GITHUB_PATH
+          if [ -n "$STRIX_API_TOKEN" ] || [ -n "$LLM_API_KEY" ]; then
+            pip install --no-cache-dir strix-agent || true
+          fi
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
 
       - name: Run Strix Security Verification
         env:
