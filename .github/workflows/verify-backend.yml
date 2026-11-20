@@ -37,11 +37,11 @@ jobs:
       - name: Set up Python via uv
         run: uv python install 3.12
 
-      - name: Create virtual environment via uv
-        run: uv venv
+      - name: Generate deterministic lockfile via uv
+        run: uv lock
 
       - name: Install dependencies via uv
-        run: uv pip install --require-hashes -r requirements-dev.txt
+        run: uv sync --extra dev
 
       - name: Check dependency consistency via uv
         run: uv pip check

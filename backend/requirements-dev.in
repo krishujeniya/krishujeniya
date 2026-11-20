@@ -1,7 +1,6 @@
 -c requirements.txt
 -r requirements.in
 
-pip-audit==2.10.1
 pytest==9.2.0
 pytest-cov==7.1.0
 ruff==0.14.7
