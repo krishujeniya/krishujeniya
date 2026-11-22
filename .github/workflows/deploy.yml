@@ -188,12 +188,12 @@ jobs:
         env:
           PAGE_URL: https://krishujeniya.github.io/krishujeniya/
         run: |
-          for attempt in {1..6}; do
+          for attempt in {1..8}; do
             if node scripts/smoke-published.mjs; then
               exit 0
             fi
-            echo "Attempt $attempt failed. Waiting 10s for GitHub Pages deployment..."
-            sleep 10
+            echo "Attempt $attempt failed. Waiting 15s for GitHub Pages deployment..."
+            sleep 15
           done
           exit 1
       - name: Check production edge gateway readiness with Obscura

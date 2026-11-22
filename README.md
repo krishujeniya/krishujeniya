@@ -12,7 +12,7 @@
 <!-- ================================================================= -->
 <p align="center">
   <a href="https://calendar.app.google/FaaoY3w8L8TYLNr48"><img src="./assets/buttons/schedule-call.svg?v=10" alt="Schedule a Call with Krish Ujeniya" height="40" /></a>
-  <a href="https://krishujeniya.dev/"><img src="./assets/buttons/view-portfolio.svg?v=10" alt="View Krish Ujeniya's Portfolio" height="40" /></a>
+  <a href="https://krishujeniya.pages.dev/"><img src="./assets/buttons/view-portfolio.svg?v=10" alt="View Krish Ujeniya's Portfolio" height="40" /></a>
 </p>
 
 <!-- ================================================================= -->
@@ -426,7 +426,7 @@ Available for freelance engagements, technical consulting, and collaborative res
 
 <p align="center">
   <a href="https://calendar.app.google/FaaoY3w8L8TYLNr48"><img src="./assets/buttons/schedule-call.svg?v=10" alt="Schedule a Call with Krish Ujeniya" height="40" /></a>
-  <a href="https://krishujeniya.dev/"><img src="./assets/buttons/view-portfolio.svg?v=10" alt="View Krish Ujeniya's Portfolio" height="40" /></a>
+  <a href="https://krishujeniya.pages.dev/"><img src="./assets/buttons/view-portfolio.svg?v=10" alt="View Krish Ujeniya's Portfolio" height="40" /></a>
 </p>
 
 </div>
