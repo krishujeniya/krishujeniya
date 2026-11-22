@@ -12,7 +12,7 @@
 <!-- ================================================================= -->
 <p align="center">
   <a href="https://calendar.app.google/FaaoY3w8L8TYLNr48"><img src="./assets/buttons/schedule-call.svg?v=10" alt="Schedule a Call with Krish Ujeniya" height="40" /></a>
-  <a href="https://krishujeniya.github.io/krishujeniya/"><img src="./assets/buttons/view-portfolio.svg?v=10" alt="View Krish Ujeniya's Portfolio" height="40" /></a>
+  <a href="https://krishujeniya.dev/"><img src="./assets/buttons/view-portfolio.svg?v=10" alt="View Krish Ujeniya's Portfolio" height="40" /></a>
 </p>
 
 <!-- ================================================================= -->
@@ -108,7 +108,7 @@ Working production implementations across multi-agent workflows, healthcare spee
 
 ![Python](https://img.shields.io/badge/Python-3.12-3776AB?style=flat-square&logo=python&logoColor=white) ![FastMCP](https://img.shields.io/badge/FastMCP-2.0-blueviolet?style=flat-square) ![LangGraph](https://img.shields.io/badge/LangGraph-FF6F00?style=flat-square) ![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white)
 
-**[📚 Documentation Site ↗](https://krishujeniya.github.io/AGYOS/)** • **[📁 GitHub Repository ↗](https://github.com/krishujeniya/AGYOS)** • **[🎓 Citation CFF ↗](https://github.com/krishujeniya/AGYOS/blob/main/CITATION.cff)**
+**[📚 Documentation Site ↗](https://agyos-docs.pages.dev/)** • **[📁 GitHub Repository ↗](https://github.com/krishujeniya/AGYOS)** • **[🎓 Citation CFF ↗](https://github.com/krishujeniya/AGYOS/blob/main/CITATION.cff)**
 
 </td>
 </tr>
@@ -125,11 +125,11 @@ Working production implementations across multi-agent workflows, healthcare spee
 
 **Autonomic Biosignal Intelligence &amp; Production MLOps Platform.** End-to-end machine learning system for physiological stress prediction from nocturnal polysomnography biosignals. Features real-time inference, TreeSHAP feature attribution, Kolmogorov-Smirnov and PSI drift detection, and automated retraining pipelines.
 
-`🧠 Biosignal Stress Prediction` · `🔬 TreeSHAP Interpretability` · `📊 KS &amp; PSI Drift Detection` · `🚀 Real-Time Vercel API`
+`🧠 Biosignal Stress Prediction` · `🔬 TreeSHAP Interpretability` · `📊 KS &amp; PSI Drift Detection` · `🚀 Real-Time Cloudflare API`
 
 ![Python](https://img.shields.io/badge/Python-3.11-3776AB?style=flat-square&logo=python&logoColor=white) ![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white) ![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-F7931E?style=flat-square&logo=scikitlearn&logoColor=white) ![React](https://img.shields.io/badge/React_18-61DAFB?style=flat-square&logo=react&logoColor=black) ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)
 
-**[⚡ Live Dashboard ↗](https://krishujeniya.github.io/somnostasis/)** • **[📁 GitHub Repository ↗](https://github.com/krishujeniya/somnostasis)** • **[📄 Interactive API Docs ↗](https://somnostasis.vercel.app/docs)**
+**[⚡ Live Dashboard ↗](https://somnostasis.pages.dev/)** • **[📁 GitHub Repository ↗](https://github.com/krishujeniya/somnostasis)** • **[📄 Interactive API Docs ↗](https://somnostasis.pages.dev/docs)**
 
 </td>
 </tr>
@@ -148,9 +148,9 @@ Working production implementations across multi-agent workflows, healthcare spee
 
 `🩺 Precision Pharmacology` · `📊 Multi-Target Inference` · `🔄 Automated ETL Pipeline` · `📋 OpenAPI Specification`
 
-![Python](https://img.shields.io/badge/Python-3.12-3776AB?style=flat-square&logo=python&logoColor=white) ![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white) ![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-F7931E?style=flat-square&logo=scikitlearn&logoColor=white) ![Vercel](https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=vercel&logoColor=white) ![GitHub Pages](https://img.shields.io/badge/GitHub_Pages-222222?style=flat-square&logo=github&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.12-3776AB?style=flat-square&logo=python&logoColor=white) ![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white) ![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-F7931E?style=flat-square&logo=scikitlearn&logoColor=white) ![Cloudflare](https://img.shields.io/badge/Cloudflare-F38020?style=flat-square&logo=cloudflare&logoColor=white)
 
-**[⚡ Live Dashboard ↗](https://krishujeniya.github.io/curavex/)** • **[📁 GitHub Repository ↗](https://github.com/krishujeniya/curavex)** • **[🔬 Architecture ↗](https://github.com/krishujeniya/curavex#system-architecture)**
+**[⚡ Live Dashboard ↗](https://curavex.pages.dev/)** • **[📁 GitHub Repository ↗](https://github.com/krishujeniya/curavex)** • **[🔬 Architecture ↗](https://github.com/krishujeniya/curavex#system-architecture)**
 
 </td>
 </tr>
@@ -171,7 +171,7 @@ Working production implementations across multi-agent workflows, healthcare spee
 
 ![Python](https://img.shields.io/badge/Python-3.12-3776AB?style=flat-square&logo=python&logoColor=white) ![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white) ![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-F7931E?style=flat-square&logo=scikitlearn&logoColor=white) ![React](https://img.shields.io/badge/React_18-61DAFB?style=flat-square&logo=react&logoColor=black) ![Tailwind](https://img.shields.io/badge/Tailwind_3.4-38B2AC?style=flat-square&logo=tailwindcss&logoColor=white)
 
-**[⚡ Live Dashboard ↗](https://krishujeniya.github.io/WaferPulse/)** • **[📁 GitHub Repository ↗](https://github.com/krishujeniya/WaferPulse)** • **[🏛️ Architecture ↗](https://github.com/krishujeniya/WaferPulse#system-architecture)**
+**[⚡ Live Dashboard ↗](https://waferpulse.pages.dev/)** • **[📁 GitHub Repository ↗](https://github.com/krishujeniya/WaferPulse)** • **[🏛️ Architecture ↗](https://github.com/krishujeniya/WaferPulse#system-architecture)**
 
 </td>
 </tr>
@@ -234,7 +234,7 @@ Working production implementations across multi-agent workflows, healthcare spee
 
 ![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=flat-square&logo=python&logoColor=white) ![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white) ![React](https://img.shields.io/badge/React_18-61DAFB?style=flat-square&logo=react&logoColor=black) ![Tailwind](https://img.shields.io/badge/Tailwind_3.4-38B2AC?style=flat-square&logo=tailwindcss&logoColor=white) ![DeepFace](https://img.shields.io/badge/DeepFace-SFace-blueviolet?style=flat-square)
 
-**[⚡ Live Frontend ↗](https://krishujeniya.github.io/Hajree/)** • **[📁 GitHub Repository ↗](https://github.com/krishujeniya/Hajree)** • **[🏛️ Architecture Flow ↗](https://github.com/krishujeniya/Hajree#architecture)**
+**[⚡ Live Frontend ↗](https://hajree.pages.dev/)** • **[📁 GitHub Repository ↗](https://github.com/krishujeniya/Hajree)** • **[🏛️ Architecture Flow ↗](https://github.com/krishujeniya/Hajree#architecture)**
 
 </td>
 </tr>
@@ -426,7 +426,7 @@ Available for freelance engagements, technical consulting, and collaborative res
 
 <p align="center">
   <a href="https://calendar.app.google/FaaoY3w8L8TYLNr48"><img src="./assets/buttons/schedule-call.svg?v=10" alt="Schedule a Call with Krish Ujeniya" height="40" /></a>
-  <a href="https://krishujeniya.github.io/krishujeniya/"><img src="./assets/buttons/view-portfolio.svg?v=10" alt="View Krish Ujeniya's Portfolio" height="40" /></a>
+  <a href="https://krishujeniya.dev/"><img src="./assets/buttons/view-portfolio.svg?v=10" alt="View Krish Ujeniya's Portfolio" height="40" /></a>
 </p>
 
 </div>

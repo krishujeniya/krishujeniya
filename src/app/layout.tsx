@@ -93,7 +93,15 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className="dark">
       <head>
-        <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https: blob:; connect-src 'self' https://krishujeniya.pages.dev https://raw.githubusercontent.com https://github.com; form-action 'self'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests;" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){if(location.hostname.indexOf('github.io')!==-1){var t='https://krishujeniya.dev'+location.pathname.replace(/^\\/krishujeniya\\/?/,'/')+location.search+location.hash;location.replace(t);}})();`,
+          }}
+        />
+        <noscript>
+          <meta http-equiv="refresh" content="0; url=https://krishujeniya.dev/" />
+        </noscript>
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https: blob:; connect-src 'self' https://krishujeniya.dev https://krishujeniya.pages.dev https://raw.githubusercontent.com https://github.com; form-action 'self'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests;" />
         <meta http-equiv="X-Frame-Options" content="DENY" />
         <meta http-equiv="X-Content-Type-Options" content="nosniff" />
         <meta name="referrer" content="strict-origin-when-cross-origin" />

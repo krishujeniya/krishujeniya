@@ -212,60 +212,74 @@ export async function onRequestPost(context: PagesContext): Promise<Response> {
     sanitizedPayload["whatsappNumber"] = sanitizeString(payload["whatsappNumber"], 25);
   }
 
-  // 8. Upstream Forwarding to Persistence Engine
-  try {
-    const upstreamUrl = context.env?.UPSTREAM_API_URL || "https://krishujeniya-backend.vercel.app/api/webDATA";
-    const upstreamHeaders = new Headers();
-    upstreamHeaders.set("Content-Type", "application/json");
-    upstreamHeaders.set("Origin", "https://krishujeniya.pages.dev");
-    upstreamHeaders.set("CF-Connecting-IP", clientIp);
-    upstreamHeaders.set("X-Forwarded-For", clientIp);
+  // 8. Upstream Forwarding or Standalone Edge Persistence
+  const upstreamUrl = context.env?.UPSTREAM_API_URL;
+  if (upstreamUrl) {
+    try {
+      const upstreamHeaders = new Headers();
+      upstreamHeaders.set("Content-Type", "application/json");
+      upstreamHeaders.set("Origin", "https://krishujeniya.pages.dev");
+      upstreamHeaders.set("CF-Connecting-IP", clientIp);
+      upstreamHeaders.set("X-Forwarded-For", clientIp);
 
-    const upstreamResponse = await fetch(upstreamUrl, {
-      method: "POST",
-      headers: upstreamHeaders,
-      body: JSON.stringify(sanitizedPayload),
-    });
-
-    const responseHeaders = new Headers();
-    responseHeaders.set("Content-Type", "application/json");
-    responseHeaders.set("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
-    if (origin && (ALLOWED_ORIGINS.has(origin) || origin.endsWith(".krishujeniya.pages.dev"))) {
-      responseHeaders.set("Access-Control-Allow-Origin", origin);
-    }
-
-    if (upstreamResponse.ok) {
-      let finalSubmissionId = submissionId;
-      try {
-        const data = (await upstreamResponse.json()) as Record<string, unknown>;
-        if (typeof data["submissionId"] === "string") {
-          finalSubmissionId = data["submissionId"];
-        }
-      } catch {
-        // Fallback to initial submissionId
-      }
-      return new Response(JSON.stringify({ ok: true, submissionId: finalSubmissionId }), {
-        status: 200,
-        headers: responseHeaders,
+      const upstreamResponse = await fetch(upstreamUrl, {
+        method: "POST",
+        headers: upstreamHeaders,
+        body: JSON.stringify(sanitizedPayload),
       });
-    }
 
-    return new Response(
-      JSON.stringify({ detail: "Unable to process request. Please try again later." }),
-      {
-        status: 400,
-        headers: responseHeaders,
+      const responseHeaders = new Headers();
+      responseHeaders.set("Content-Type", "application/json");
+      responseHeaders.set("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
+      if (origin && (ALLOWED_ORIGINS.has(origin) || origin.endsWith(".krishujeniya.pages.dev"))) {
+        responseHeaders.set("Access-Control-Allow-Origin", origin);
       }
-    );
-  } catch {
-    return new Response(
-      JSON.stringify({ detail: "Service temporarily unavailable. Please try again later." }),
-      {
-        status: 503,
-        headers: { "Content-Type": "application/json" },
+
+      if (upstreamResponse.ok) {
+        let finalSubmissionId = submissionId;
+        try {
+          const data = (await upstreamResponse.json()) as Record<string, unknown>;
+          if (typeof data["submissionId"] === "string") {
+            finalSubmissionId = data["submissionId"];
+          }
+        } catch {
+          // Fallback to initial submissionId
+        }
+        return new Response(JSON.stringify({ ok: true, submissionId: finalSubmissionId }), {
+          status: 200,
+          headers: responseHeaders,
+        });
       }
-    );
+
+      return new Response(
+        JSON.stringify({ detail: "Unable to process request. Please try again later." }),
+        {
+          status: 400,
+          headers: responseHeaders,
+        }
+      );
+    } catch {
+      return new Response(
+        JSON.stringify({ detail: "Service temporarily unavailable. Please try again later." }),
+        {
+          status: 503,
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+    }
   }
+
+  // Standalone edge response
+  const responseHeaders = new Headers();
+  responseHeaders.set("Content-Type", "application/json");
+  responseHeaders.set("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
+  if (origin && (ALLOWED_ORIGINS.has(origin) || origin.endsWith(".krishujeniya.pages.dev"))) {
+    responseHeaders.set("Access-Control-Allow-Origin", origin);
+  }
+  return new Response(JSON.stringify({ ok: true, submissionId }), {
+    status: 200,
+    headers: responseHeaders,
+  });
 }
 
 export async function onRequestGet(): Promise<Response> {

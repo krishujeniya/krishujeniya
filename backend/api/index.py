@@ -174,7 +174,7 @@ async def parse_contact_form(request: Request) -> ContactForm:
 def get_client_ip(request: Request) -> str:
     raw_ip = (
         request.headers.get("cf-connecting-ip")
-        or request.headers.get("x-vercel-forwarded-for")
+        or request.headers.get("x-forwarded-for")
         or (request.client.host if request.client else "")
     )
     client_ip = raw_ip.split(",")[0].strip()

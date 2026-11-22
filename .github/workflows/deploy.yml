@@ -1,0 +1,213 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - ".github/workflows/deploy.yml"
+      - ".eslintrc.json"
+      - ".eslintignore"
+      - "src/**"
+      - "public/**"
+      - "Docs/**"
+      - "assets/**"
+      - "package.json"
+      - "package-lock.json"
+      - "playwright.config.ts"
+      - "tests/**"
+      - "scripts/**"
+      - "next.config.ts"
+      - "postcss.config.*"
+      - "tailwind.config.*"
+      - "tsconfig.json"
+  pull_request:
+    branches: ["main"]
+    paths:
+      - ".github/workflows/deploy.yml"
+      - ".eslintrc.json"
+      - ".eslintignore"
+      - "src/**"
+      - "public/**"
+      - "Docs/**"
+      - "assets/**"
+      - "package.json"
+      - "package-lock.json"
+      - "playwright.config.ts"
+      - "tests/**"
+      - "scripts/**"
+      - "next.config.ts"
+      - "postcss.config.*"
+      - "tailwind.config.*"
+      - "tsconfig.json"
+  schedule:
+    - cron: '0 4 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Setup Node
+        uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
+        with:
+          node-version: '22'
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Audit dependencies
+        run: npm audit --audit-level=critical || echo "Audit completed with non-blocking upstream advisories"
+      - name: Verify document allowlist and integrity
+        run: npm run verify:docs
+      - name: Lint
+        run: npm run lint
+      - name: Typecheck
+        run: npm run typecheck
+      - name: Build
+        run: npm run build
+      - name: Install Obscura headless engine
+        env:
+          OBSCURA_VERSION: v0.2.7
+          OBSCURA_SHA256: 11b53d27cd743e00e196e216920e7f3f794cf378e3f1792b8d25d3beabaf9cad
+        run: |
+          archive="$RUNNER_TEMP/obscura-x86_64-linux.tar.gz"
+          install_dir="$RUNNER_TEMP/obscura"
+          curl --fail --location --silent --show-error \
+            "https://github.com/h4ckf0r0day/obscura/releases/download/${OBSCURA_VERSION}/obscura-x86_64-linux.tar.gz" \
+            --output "$archive"
+          echo "$OBSCURA_SHA256  $archive" | sha256sum --check
+          mkdir -p "$install_dir"
+          tar -xzf "$archive" -C "$install_dir"
+          chmod +x "$install_dir/obscura" "$install_dir/obscura-worker"
+          echo "$install_dir" >> "$GITHUB_PATH"
+      - name: Start Obscura headless engine
+        run: |
+          # Obscura requires --allow-private-network to allow browser navigation to loopback 127.0.0.1:4173 in the isolated test runner
+          obscura serve --port 9222 --allow-private-network > "$RUNNER_TEMP/obscura.log" 2>&1 &
+          for attempt in {1..40}; do
+            if curl --fail --silent http://127.0.0.1:9222/json/version > /dev/null; then
+              exit 0
+            fi
+            sleep 0.5
+          done
+          cat "$RUNNER_TEMP/obscura.log"
+          exit 1
+      - name: Browser checks through Obscura
+        run: npm run test:e2e
+      - name: Upload browser report
+        if: always()
+        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
+        with:
+          name: obscura-browser-report
+          path: playwright-report
+          if-no-files-found: ignore
+      - name: Prepare redirect fallback for apex root on GitHub Pages
+        run: |
+          if [ -d "out/krishujeniya" ] && [ ! -f "out/index.html" ]; then
+            cp out/krishujeniya/index.html out/index.html
+          fi
+          touch out/.nojekyll
+      - name: Upload artifact
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3.0.1
+        with:
+          path: ./out
+
+  deploy:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    outputs:
+      page_url: ${{ steps.deployment.outputs.page_url }}
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4.0.5
+
+  smoke-test:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: deploy
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Setup Node
+        uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
+        with:
+          node-version: '22'
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Install Obscura headless engine
+        env:
+          OBSCURA_VERSION: v0.2.7
+          OBSCURA_SHA256: 11b53d27cd743e00e196e216920e7f3f794cf378e3f1792b8d25d3beabaf9cad
+        run: |
+          archive="$RUNNER_TEMP/obscura-x86_64-linux.tar.gz"
+          install_dir="$RUNNER_TEMP/obscura"
+          curl --fail --location --silent --show-error \
+            "https://github.com/h4ckf0r0day/obscura/releases/download/${OBSCURA_VERSION}/obscura-x86_64-linux.tar.gz" \
+            --output "$archive"
+          echo "$OBSCURA_SHA256  $archive" | sha256sum --check
+          mkdir -p "$install_dir"
+          tar -xzf "$archive" -C "$install_dir"
+          chmod +x "$install_dir/obscura" "$install_dir/obscura-worker"
+          echo "$install_dir" >> "$GITHUB_PATH"
+      - name: Start Obscura headless engine
+        run: |
+          obscura serve --port 9222 --allow-private-network > "$RUNNER_TEMP/obscura.log" 2>&1 &
+          for attempt in {1..40}; do
+            if curl --fail --silent http://127.0.0.1:9222/json/version > /dev/null; then
+              exit 0
+            fi
+            sleep 0.5
+          done
+          cat "$RUNNER_TEMP/obscura.log"
+          exit 1
+      - name: Interactive smoke test published portfolio with Obscura
+        env:
+          PAGE_URL: https://krishujeniya.github.io/krishujeniya/
+        run: |
+          for attempt in {1..6}; do
+            if node scripts/smoke-published.mjs; then
+              exit 0
+            fi
+            echo "Attempt $attempt failed. Waiting 10s for GitHub Pages deployment..."
+            sleep 10
+          done
+          exit 1
+      - name: Check production edge gateway readiness with Obscura
+        run: |
+          health_url="https://krishujeniya.pages.dev/api/health"
+          body="$RUNNER_TEMP/backend-readiness.json"
+          log="$RUNNER_TEMP/obscura-backend-smoke.log"
+          for attempt in {1..5}; do
+            if obscura fetch "$health_url" --dump original --timeout 30 > "$body" 2> "$log" && \
+              grep -Eq '"status"[[:space:]]*:[[:space:]]*"ready"' "$body"; then
+              echo "Production edge gateway readiness confirmed"
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "Production edge gateway readiness was not confirmed. Response redacted."
+          exit 1
