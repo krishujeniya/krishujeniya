@@ -5,6 +5,7 @@ on:
     branches: ["main"]
     paths:
       - ".github/workflows/deploy-cloudflare.yml"
+      - "edge/**"
       - "functions/**"
       - "public/**"
       - "src/**"
@@ -13,6 +14,7 @@ on:
       - "next.config.ts"
       - "wrangler.toml"
       - "wrangler.jsonc"
+      - "wrangler.worker.jsonc"
   workflow_dispatch:
 
 permissions:
@@ -79,6 +81,14 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: pages deploy out --project-name=krishujeniya --branch=main
+
+      - name: Deploy Cloudflare Worker API via Wrangler
+        if: steps.check-secrets.outputs.has_secrets == 'true'
+        uses: cloudflare/wrangler-action@9acf94ace14e7dc412b076f2c5c20b8ce93c79cd # v3.14.0
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: deploy --config wrangler.worker.jsonc
 
       - name: Verify Cloudflare Pages edge health
         if: steps.check-secrets.outputs.has_secrets == 'true'

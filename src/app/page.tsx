@@ -34,15 +34,13 @@ const CONTACT_SUBMISSION_STORAGE_KEY = 'portfolio-contact-submission';
 const getContactApiUrl = () => {
     if (typeof window !== 'undefined') {
         if (
-            window.location.hostname === 'krishujeniya.pages.dev' ||
-            window.location.hostname.endsWith('.pages.dev') ||
             window.location.hostname === 'localhost' ||
             window.location.hostname === '127.0.0.1'
         ) {
             return '/api/webDATA';
         }
     }
-    return 'https://krishujeniya.pages.dev/api/webDATA';
+    return 'https://api.krishujeniya.workers.dev/api/webDATA';
 };
 
 const manifestFiles: Record<string, { bytes: number; sha256: string }> = (docsManifest as any)?.files || {};
@@ -1335,15 +1333,33 @@ export default function Portfolio() {
                                                 submissionKeyRef.current = { fingerprint, id: submissionId };
                                                 if (fingerprintHash) storeSubmissionId(fingerprintHash, submissionId);
 
-                                                const response = await fetch(getContactApiUrl(), {
-                                                    method: 'POST',
-                                                    headers: { 'Content-Type': 'application/json' },
-                                                    body: JSON.stringify({
-                                                        ...submission,
-                                                        submissionId,
-                                                    }),
-                                                    signal: controller.signal,
-                                                });
+                                                let response: Response;
+                                                const primaryApiUrl = getContactApiUrl();
+                                                try {
+                                                    response = await fetch(primaryApiUrl, {
+                                                        method: 'POST',
+                                                        headers: { 'Content-Type': 'application/json' },
+                                                        body: JSON.stringify({
+                                                            ...submission,
+                                                            submissionId,
+                                                        }),
+                                                        signal: controller.signal,
+                                                    });
+                                                } catch (fetchError) {
+                                                    if (primaryApiUrl.startsWith('https://api.')) {
+                                                        response = await fetch('/api/webDATA', {
+                                                            method: 'POST',
+                                                            headers: { 'Content-Type': 'application/json' },
+                                                            body: JSON.stringify({
+                                                                ...submission,
+                                                                submissionId,
+                                                            }),
+                                                            signal: controller.signal,
+                                                        });
+                                                    } else {
+                                                        throw fetchError;
+                                                    }
+                                                }
                                                 clearTimeout(timeoutId);
 
                                                 if (response.ok) {
