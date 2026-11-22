@@ -40,7 +40,7 @@ const getContactApiUrl = () => {
             return '/api/webDATA';
         }
     }
-    return 'https://api.curavex.workers.dev/api/webDATA';
+    return 'https://api.krishujeniya.workers.dev/api/webDATA';
 };
 
 const manifestFiles: Record<string, { bytes: number; sha256: string }> = (docsManifest as any)?.files || {};

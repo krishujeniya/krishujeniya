@@ -4,7 +4,7 @@
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https: blob:; connect-src 'self' https://krishujeniya.pages.dev https://api.curavex.workers.dev https://*.workers.dev https://raw.githubusercontent.com https://github.com; form-action 'self' https://api.curavex.workers.dev; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; upgrade-insecure-requests;
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https: blob:; connect-src 'self' https://krishujeniya.pages.dev https://api.krishujeniya.workers.dev https://*.workers.dev https://raw.githubusercontent.com https://github.com; form-action 'self' https://api.krishujeniya.workers.dev; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; upgrade-insecure-requests;
   Cross-Origin-Opener-Policy: same-origin
   Cross-Origin-Resource-Policy: same-origin
   X-Permitted-Cross-Domain-Policies: none

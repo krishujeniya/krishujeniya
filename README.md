@@ -108,7 +108,7 @@ Working production implementations across multi-agent workflows, healthcare spee
 
 ![Python](https://img.shields.io/badge/Python-3.12-3776AB?style=flat-square&logo=python&logoColor=white) ![FastMCP](https://img.shields.io/badge/FastMCP-2.0-blueviolet?style=flat-square) ![LangGraph](https://img.shields.io/badge/LangGraph-FF6F00?style=flat-square) ![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white)
 
-**[📚 Documentation Site ↗](https://agyos-docs.pages.dev/)** • **[📁 GitHub Repository ↗](https://github.com/krishujeniya/AGYOS)** • **[🎓 Citation CFF ↗](https://github.com/krishujeniya/AGYOS/blob/main/CITATION.cff)**
+**[📚 Documentation Site ↗](https://agyos.pages.dev/)** • **[📁 GitHub Repository ↗](https://github.com/krishujeniya/AGYOS)** • **[🎓 Citation CFF ↗](https://github.com/krishujeniya/AGYOS/blob/main/CITATION.cff)**
 
 </td>
 </tr>
