@@ -1,6 +1,24 @@
 interface PagesContext {
   request: Request;
-  env?: Record<string, string>;
+  env?: {
+    DB?: {
+      prepare: (query: string) => {
+        bind: (...args: unknown[]) => {
+          run: () => Promise<unknown>;
+        };
+        run: () => Promise<unknown>;
+      };
+    };
+    SHARED_CONFIG_KV?: {
+      put: (key: string, value: string, options?: { expirationTtl?: number }) => Promise<void>;
+      get: (key: string) => Promise<string | null>;
+    };
+    AI?: {
+      run: (model: string, input: unknown) => Promise<unknown>;
+    };
+    UPSTREAM_API_URL?: string;
+    ENVIRONMENT?: string;
+  };
 }
 
 interface RateLimitRecord {
@@ -212,7 +230,55 @@ export async function onRequestPost(context: PagesContext): Promise<Response> {
     sanitizedPayload["whatsappNumber"] = sanitizeString(payload["whatsappNumber"], 25);
   }
 
-  // 8. Upstream Forwarding or Standalone Edge Persistence
+  // 8. Cloudflare Native Storage Persistence (D1 Relational DB & KV Cache)
+  if (context.env?.DB) {
+    try {
+      await context.env.DB.prepare(
+        `CREATE TABLE IF NOT EXISTS contact_inquiries (
+          id TEXT PRIMARY KEY,
+          name TEXT,
+          email TEXT,
+          company TEXT,
+          role TEXT,
+          message TEXT,
+          created_at TEXT
+        )`
+      ).run().catch(() => {});
+
+      await context.env.DB.prepare(
+        `INSERT INTO contact_inquiries (id, name, email, company, role, message, created_at)
+         VALUES (?, ?, ?, ?, ?, ?, ?)`
+      ).bind(
+        submissionId,
+        name,
+        email,
+        (sanitizedPayload["company"] as string) || "Not provided",
+        (sanitizedPayload["role"] as string) || "Not provided",
+        message,
+        new Date().toISOString()
+      ).run().catch(() => {});
+    } catch {
+      // Resilient non-blocking persistence
+    }
+  }
+
+  if (context.env?.SHARED_CONFIG_KV) {
+    try {
+      await context.env.SHARED_CONFIG_KV.put(
+        `inquiry:${submissionId}`,
+        JSON.stringify({
+          ...sanitizedPayload,
+          clientIp,
+          timestamp: new Date().toISOString(),
+        }),
+        { expirationTtl: 2592000 }
+      ).catch(() => {});
+    } catch {
+      // Resilient non-blocking persistence
+    }
+  }
+
+  // 9. Upstream Forwarding or Standalone Edge Persistence
   const upstreamUrl = context.env?.UPSTREAM_API_URL;
   if (upstreamUrl) {
     try {

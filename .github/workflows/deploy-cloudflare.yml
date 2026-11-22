@@ -12,6 +12,7 @@ on:
       - "package-lock.json"
       - "next.config.ts"
       - "wrangler.toml"
+      - "wrangler.jsonc"
   workflow_dispatch:
 
 permissions:
